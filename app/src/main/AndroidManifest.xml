@@ -58,7 +58,15 @@
             <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE" />
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
-    </receiver>
+        </receiver>
+        <receiver android:name=".GGWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_meta" />
+        </receiver>
+
     </application>
 
 </manifest>
