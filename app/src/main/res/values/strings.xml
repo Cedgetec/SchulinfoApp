@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">SchoolinfoAPP</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-    <string name="substitutionplan_change">Substitution schedule amendment</string>
+    <string name="drawer_open">Open navigation</string>
+    <string name="drawer_close">Close navigation</string>
+    <string name="substitutionplan_change">Substitution schedule change</string>
     <string name="the_sp_has_changed">The substitution schedule did change</string>
     <string name="affected_lessons">Affected lessons:</string>
     <string name="no_entries_in_substitutionplan">No entries in schedule</string>
@@ -13,17 +13,17 @@
     <string name="mainfilter_mode">Mode</string>
     <string name="mainfilter_content">Filter</string>
     <string name="value">Value</string>
-    <string name="helptext">The Main filter ensures the right substitution schedule is displayed for the specified class or specified teacher in the overview.\n\nThe Subject/Course filters are used to enter subjects/courses that you do not want to see in the overview, for example French or Latin.</string>
+    <string name="helptext">The Main filter ensures that the right substitution schedule is displayed for the specified class or specified teacher in the overview.\n\nThe Subject/Course filters are used to enter subjects/courses that you do not want to see in the overview, for example French or Latin.</string>
     <string name="settings">Settings</string>
-    <string name="check_connection_and_repeat">Check connection and repeat</string>
+    <string name="check_connection_and_repeat">Check internet connection and repeat</string>
     <string name="again">Try again</string>
     <string name="login_required">Login required!</string>
     <string name="do_login">Login</string>
     <string name="login">Login</string>
     <string name="do_login_submit">Log In</string>
-    <string name="username_or_password_wrong">Username or password wrong</string>
+    <string name="username_or_password_wrong">Username or password incorrect</string>
     <string name="could_not_contact_logon_server">Could not contact logon server</string>
-    <string name="unknown_error_at_logon">Unknown error at logon</string>
+    <string name="unknown_error_at_logon">Unknown error occurred while trying to logon</string>
     <string name="abort">Cancel</string>
     <string name="overview">Overview</string>
     <string name="today">Today</string>
@@ -38,7 +38,7 @@
     <string name="canceled">Canceled</string>
     <string name="shifted_to_today">Shifted to</string>
     <string name="shifted_to">Shifted to</string>
-    <string name="autonomous_work">Autonomous work</string>
+    <string name="autonomous_work">Self depentent work</string>
     <string name="instead_of">Instead of</string>
     <string name="elemination">Canceled</string>
     <string name="logout_successfull">Logout successful</string>
@@ -52,12 +52,12 @@
     <string name="touch_to_update">Touch to update</string>
     <string name="not_available_in_debug_mode">Not available in debug mode</string>
     <string name="update_available">Update available</string>
-    <string name="should_the_app_be_updated">Should the SchulinfoAPP be updated?</string>
+    <string name="should_the_app_be_updated">Update SchoolinfoAPP?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="no_new_version_available">No new version available</string>
+    <string name="no_new_version_available">Everthing up to date</string>
     <string name="logout">Logout</string>
-    <string name="logout_realy">Logout really?</string>
+    <string name="logout_realy">Are you sure that you want to logout?</string>
     <string name="logout_on_all_devices">Logout on all devices</string>
     <string name="youre_not_logged_in">You are not logged in</string>
     <string name="touch_to_logout">Touch to logout</string>
@@ -78,7 +78,7 @@
     <string name="build_version">Build version</string>
     <string name="deny_substitutionplan_updates">Deny automatic substitution schedule updates</string>
     <string name="update_everytime">Update always</string>
-    <string name="as_of">As of</string>
+    <string name="as_of">From</string>
     <string name="refresh">Refresh</string>
     <string name="filter">Filter</string>
     <string name="filters">Subject filters</string>
@@ -93,7 +93,7 @@
     <string name="filter_active">1 filter active</string>
     <string name="no_filter_active">No filter active</string>
     <string name="helpdesk">Helpdesk</string>
-    <string name="contact_us_if_you_have_a_problem_with_this_app">Contact us, if you have a problem with this app</string>
+    <string name="contact_us_if_you_have_a_problem_with_this_app">Contact us, if you have a problem or enhancement for this app</string>
     <string name="submit">Submit</string>
     <string name="name">Name</string>
     <string name="email_address">Email address</string>
@@ -109,8 +109,8 @@
     <string name="not_selected">Not selected</string>
     <string name="autoupdate">Check for app updates</string>
     <string name="autoupdate_summary">Notify if new version is available</string>
-    <string name="infoappupdate">SchulinfoAPP update</string>
-    <string name="appupdate_available">An update for the SchulinfoAPP is available</string>
+    <string name="infoappupdate">SchoolinfoAPP update</string>
+    <string name="appupdate_available">An update for the SchoolinfoAPP is available</string>
     <string name="read">Read</string>
     <string name="nothing">Nothing</string>
     <string name="help">Help</string>
@@ -134,7 +134,7 @@
     <string name="lhour">Lesson</string>
     <string name="religion">Religion</string>
     <string name="next">Next</string>
-    <string name="setup_title_1">Welcome to the SchoolInfoAPP!</string>
-    <string name="setup_description">Welcome to the SchoolInfoAPP!</string>
+    <string name="setup_title_1">Welcome to the SchoolinfoAPP!</string>
+    <string name="setup_description">Welcome to the SchoolinfoAPP!</string>
 
 </resources>

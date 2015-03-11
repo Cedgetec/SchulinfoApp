@@ -38,7 +38,7 @@
     <string name="canceled">Entfällt</string>
     <string name="shifted_to_today">Verlegt in</string>
     <string name="shifted_to">Verlegt nach</string>
-    <string name="autonomous_work">EVA</string>
+    <string name="autonomous_work">Eigenverantwortliches Arbeiten</string>
     <string name="instead_of">Statt</string>
     <string name="elemination">Entfall</string>
     <string name="logout_successfull">Abmeldung erfolgreich</string>
@@ -52,7 +52,7 @@
     <string name="touch_to_update">Zum\u00A0Aktualisieren\u00A0berühren</string>
     <string name="not_available_in_debug_mode">Im Debugmodus nicht verfügbar</string>
     <string name="update_available">Aktualisierung verfügbar</string>
-    <string name="should_the_app_be_updated">Soll die SchulinfoAPP aktualisiert werden?</string>
+    <string name="should_the_app_be_updated">SchulinfoAPP aktualisieren?</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="no_new_version_available">Keine neue Version verfügbar</string>
@@ -67,7 +67,7 @@
     <string name="username">Benutzername</string>
     <string name="general">Allgemein</string>
     <string name="show_notifications">Benachrichtigungen anzeigen</string>
-    <string name="notify_if_youre_class_is_affected">Benachrichtigen, wenn für deine Klasse etwas auf dem Vertretungsplan steht</string>
+    <string name="notify_if_youre_class_is_affected">Benachrichtigen, wenn für deine Klasse etwas ausfällt</string>
     <string name="automatic_updates">Automatische Updates</string>
     <string name="only_update_over_wireless_lan">Nur über WLAN automatisch aktualisieren</string>
     <string name="information">Info</string>
@@ -95,7 +95,7 @@
     <string name="helpdesk">Helpdesk</string>
     <string name="contact_us_if_you_have_a_problem_with_this_app">Kontaktieren Sie uns, falls Sie ein Problem mit der App haben</string>
     <string name="submit">Absenden</string>
-    <string name="email_address">E-Mail Adresse</string>
+    <string name="email_address">E-Mail-Adresse</string>
     <string name="email_subject">Betreff</string>
     <string name="message">Nachricht</string>
     <string name="name">Name</string>
@@ -109,8 +109,8 @@
     <string name="not_selected">Nicht ausgewählt</string>
     <string name="autoupdate">App-Updates</string>
     <string name="autoupdate_summary">Benachrichtigen, wenn eine neue Version der App verfügbar ist</string>
-    <string name="infoappupdate">SchulinfoAPP Update</string>
-    <string name="appupdate_available">Ein Update für die SchulinfoAPP ist verfügbar</string>
+    <string name="infoappupdate">SchulinfoAPP Aktualisierung</string>
+    <string name="appupdate_available">Eine Aktualisierung für die SchulinfoAPP ist verfügbar</string>
     <string name="read">Gelesen</string>
     <string name="nothing">Nichts</string>
     <string name="help">Hilfe</string>
@@ -134,7 +134,7 @@
     <string name="lhour">Stunde</string>
     <string name="religion">Religion</string>
     <string name="next">Weiter</string>
-    <string name="setup_title_1">Willkommen in der SchulInfoAPP!</string>
-    <string name="setup_description">Willkommen in der SchulInfoAPP!</string>
+    <string name="setup_title_1">Willkommen in der SchulinfoAPP!</string>
+    <string name="setup_description">Willkommen in der SchulinfoAPP!</string>
 
 </resources>
