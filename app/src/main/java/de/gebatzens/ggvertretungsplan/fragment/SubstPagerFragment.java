@@ -163,6 +163,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             CardView cv2 = new CardView(getActivity());
             cv2.setContentPadding(toPixels(16),toPixels(16),toPixels(16),toPixels(16));
             cv2.setCardBackgroundColor(Color.WHITE);
+            cv2.setRadius(0);
 
             LinearLayout l2 = new LinearLayout(getActivity());
 
@@ -238,6 +239,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             CardView cv2 = new CardView(getActivity());
             cv2.setContentPadding(toPixels(16),toPixels(16),toPixels(16),toPixels(16));
             cv2.setCardBackgroundColor(Color.WHITE);
+            cv2.setRadius(0);
 
             LinearLayout l2 = new LinearLayout(getActivity());
 
@@ -248,6 +250,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
             LinearLayout l4 = new LinearLayout(getActivity());
             l4.setGravity(Gravity.RIGHT);
+            
             l4.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
             Spinner spin = new Spinner(getActivity());
