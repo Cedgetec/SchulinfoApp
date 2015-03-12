@@ -78,7 +78,7 @@
     <string name="build_version">Build version</string>
     <string name="deny_substitutionplan_updates">Deny automatic substitution schedule updates</string>
     <string name="update_everytime">Update always</string>
-    <string name="as_of">From</string>
+    <string name="as_of">Last updated</string>
     <string name="refresh">Refresh</string>
     <string name="filter">Filter</string>
     <string name="filters">Subject filters</string>
