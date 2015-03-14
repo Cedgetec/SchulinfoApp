@@ -34,8 +34,13 @@ import org.fusesource.mqtt.client.QoS;
 import org.fusesource.mqtt.client.Topic;
 
 import java.net.URISyntaxException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import de.gebatzens.ggvertretungsplan.provider.GGProvider;
 import de.gebatzens.ggvertretungsplan.provider.VPProvider;
@@ -66,6 +71,7 @@ public class MQTTService extends IntentService {
         MQTT client = new MQTT();
         try {
             client.setHost("tls://10.49.1.19:1883");
+            client.setSslContext(sc);
         } catch (URISyntaxException e) {
             Log.e("ggmqtt", "Failed to set Host", e);
         }
@@ -73,7 +79,7 @@ public class MQTTService extends IntentService {
         BlockingConnection con = client.blockingConnection();
         try {
             con.connect();
-            Log.w("ggmqtt", "Connected");
+            Log.w("ggmqtt", "Connected " + token);
             con.subscribe(new Topic[]{new Topic("gg/schulinfoapp/" + token, QoS.AT_LEAST_ONCE)});
             while(true) {
                 Message message = con.receive();
@@ -105,6 +111,32 @@ public class MQTTService extends IntentService {
             PendingIntent localPendingIntent = PendingIntent.getService(getApplicationContext(), 1, localIntent, PendingIntent.FLAG_ONE_SHOT);
             ((AlarmManager)getApplicationContext().getSystemService(ALARM_SERVICE)).set(3, 1000L + SystemClock.elapsedRealtime(), localPendingIntent);
             super.onTaskRemoved(paramIntent);
+        }
+    }
+    private static TrustManager[] mqttTrustMgr = new TrustManager[]{ new X509TrustManager() {
+
+        @Override
+        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+            return null;
+        }
+
+        @Override
+        public void checkClientTrusted(X509Certificate[] certs, String authType) {
+
+        }
+
+        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+        }
+    }
+    };
+    public static SSLContext sc;
+    static {
+        try {
+            sc = SSLContext.getInstance("TLS");
+            sc.init(null, mqttTrustMgr, new java.security.SecureRandom());
+        } catch(Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
