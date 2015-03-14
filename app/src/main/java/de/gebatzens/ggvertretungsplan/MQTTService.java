@@ -70,8 +70,8 @@ public class MQTTService extends IntentService {
 
         MQTT client = new MQTT();
         try {
-            client.setHost("tls://10.49.1.19:1883");
             client.setSslContext(sc);
+            client.setHost("tlsv1://gymnasium-glinde.logoip.de:1883");
         } catch (URISyntaxException e) {
             Log.e("ggmqtt", "Failed to set Host", e);
         }
@@ -81,6 +81,7 @@ public class MQTTService extends IntentService {
             con.connect();
             Log.w("ggmqtt", "Connected " + token);
             con.subscribe(new Topic[]{new Topic("gg/schulinfoapp/" + token, QoS.AT_LEAST_ONCE)});
+            Log.w("ggmqtt", "Subscribed to gg/schulinfoapp/"+token);
             while(true) {
                 Message message = con.receive();
                 String msg = new String(message.getPayload(), "UTF-8");
