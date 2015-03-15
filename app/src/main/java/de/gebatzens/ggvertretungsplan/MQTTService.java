@@ -33,9 +33,13 @@ import org.fusesource.mqtt.client.Message;
 import org.fusesource.mqtt.client.QoS;
 import org.fusesource.mqtt.client.Topic;
 
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -70,7 +74,7 @@ public class MQTTService extends IntentService {
 
         MQTT client = new MQTT();
         try {
-            client.setSslContext(sc);
+            client.setSslContext(GGProvider.sc);
             client.setHost("tlsv1://gymnasium-glinde.logoip.de:1883");
         } catch (URISyntaxException e) {
             Log.e("ggmqtt", "Failed to set Host", e);
@@ -112,32 +116,6 @@ public class MQTTService extends IntentService {
             PendingIntent localPendingIntent = PendingIntent.getService(getApplicationContext(), 1, localIntent, PendingIntent.FLAG_ONE_SHOT);
             ((AlarmManager)getApplicationContext().getSystemService(ALARM_SERVICE)).set(3, 1000L + SystemClock.elapsedRealtime(), localPendingIntent);
             super.onTaskRemoved(paramIntent);
-        }
-    }
-    private static TrustManager[] mqttTrustMgr = new TrustManager[]{ new X509TrustManager() {
-
-        @Override
-        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-            return null;
-        }
-
-        @Override
-        public void checkClientTrusted(X509Certificate[] certs, String authType) {
-
-        }
-
-        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-
-        }
-    }
-    };
-    public static SSLContext sc;
-    static {
-        try {
-            sc = SSLContext.getInstance("TLS");
-            sc.init(null, mqttTrustMgr, new java.security.SecureRandom());
-        } catch(Exception e) {
-            throw new RuntimeException(e);
         }
     }
 }

@@ -33,11 +33,13 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -724,6 +726,7 @@ public class GGProvider extends VPProvider {
                 "2e36e68d7b5f2a76500832df8a133e14a4b424bbd818da58f739da7a578e66dfe9" +
                 "4ba16506e7c88c66ff25f7f90ac8b2c3f9f347d5b54351dfd971f29";
 
+
         @Override
         public java.security.cert.X509Certificate[] getAcceptedIssuers() {
             return null;
@@ -735,15 +738,30 @@ public class GGProvider extends VPProvider {
         }
 
         public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-            //Receive certificate information from the obtained certificate
-            String recveived_pub_key = chain[0].getPublicKey().toString();
+            try {
+                InputStream inStream = GGApp.GG_APP.getAssets().open("ca.crt");
+                CertificateFactory cf = CertificateFactory.getInstance("X.509");
+                X509Certificate ca = (X509Certificate) cf.generateCertificate(inStream);
+                inStream.close();
 
-            //Extract the public key from the certificate information
-            String obtained_key = recveived_pub_key.split("\\{")[1].split("\\}")[0].split(",")[0].split("=")[1];
-            if(!pub_key.equals(obtained_key)) {
-                //If the public key is not correct throw an exception, to prevent connecting
-                // to this evil server
-                throw new CertificateException();
+                chain[0].verify(ca.getPublicKey());
+
+
+            } catch (Exception ex) {
+                Log.w("ggca", "Falling back to old public key");
+                //Receive certificate information from the obtained certificate
+                String recveived_pub_key = chain[0].getPublicKey().toString();
+
+                //Extract the public key from the certificate information
+                String obtained_key = recveived_pub_key.split("\\{")[1].split("\\}")[0].split(",")[0].split("=")[1];
+                if(!pub_key.equals(obtained_key)) {
+                    //If the public key is not correct throw an exception, to prevent connecting
+                    // to this evil server
+                    Log.e("ggca", "Failed to verify server identity");
+                    throw new CertificateException();
+                } else
+                    Log.w("ggca", "Server is using old certificate");
+
             }
         }
     }
