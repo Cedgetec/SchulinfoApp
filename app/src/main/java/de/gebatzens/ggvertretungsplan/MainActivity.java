@@ -50,10 +50,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.gebatzens.ggvertretungsplan.fragment.ExamFragment;
-import de.gebatzens.ggvertretungsplan.fragment.SubstFragment;
 import de.gebatzens.ggvertretungsplan.fragment.MensaFragment;
 import de.gebatzens.ggvertretungsplan.fragment.NewsFragment;
 import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
+import de.gebatzens.ggvertretungsplan.fragment.SubstFragment;
 import de.gebatzens.ggvertretungsplan.view.NavigationListAdapter;
 
 

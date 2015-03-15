@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.R;
-import de.gebatzens.ggvertretungsplan.fragment.ExamFragment;
 
 public class Filter {
     public FilterType type;

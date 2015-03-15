@@ -30,7 +30,6 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import de.gebatzens.ggvertretungsplan.GGApp;
-import de.gebatzens.ggvertretungsplan.fragment.ExamFragment;
 import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
 
 public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragment.RemoteData {

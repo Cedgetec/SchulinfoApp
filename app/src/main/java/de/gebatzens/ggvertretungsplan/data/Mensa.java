@@ -35,7 +35,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import de.gebatzens.ggvertretungsplan.GGApp;
-import de.gebatzens.ggvertretungsplan.fragment.MensaFragment;
 import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
 
 public class Mensa extends ArrayList<Mensa.MensaItem> implements RemoteDataFragment.RemoteData {

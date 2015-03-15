@@ -221,6 +221,7 @@ public class GGBroadcast extends BroadcastReceiver {
             PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
 
             am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 1000, AlarmManager.INTERVAL_HALF_HOUR, pi);
+
         } else if (intent.getAction().equals("de.gebatzens.ACTION_ALARM")) {
             new AsyncTask<GGApp, Void, Void>() {
 

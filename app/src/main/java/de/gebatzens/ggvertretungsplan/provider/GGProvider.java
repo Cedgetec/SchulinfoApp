@@ -19,6 +19,7 @@
 
 package de.gebatzens.ggvertretungsplan.provider;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -52,6 +53,7 @@ import javax.net.ssl.X509TrustManager;
 
 import de.gebatzens.ggvertretungsplan.FilterActivity;
 import de.gebatzens.ggvertretungsplan.GGApp;
+import de.gebatzens.ggvertretungsplan.MQTTService;
 import de.gebatzens.ggvertretungsplan.R;
 import de.gebatzens.ggvertretungsplan.VPLoginException;
 import de.gebatzens.ggvertretungsplan.data.Exams;
@@ -123,6 +125,7 @@ public class GGProvider extends VPProvider {
         GGApp.GG_APP.deleteFile("ggvptomorrow");
         GGApp.GG_APP.deleteFile("ggnews");
         GGApp.GG_APP.deleteFile("ggmensa");
+        GGApp.GG_APP.stopService(new Intent(GGApp.GG_APP, MQTTService.class));
 
         prefs.edit().clear().commit();
         if(!logout_local_only) {
@@ -667,6 +670,8 @@ public class GGProvider extends VPProvider {
                             prefs.edit().putString(name, parser.nextText()).apply();
                         }
                     }
+
+                    GGApp.GG_APP.startService(new Intent(GGApp.GG_APP, MQTTService.class));
 
                     String group = prefs.getString("group", null);
                     if(group != null && !group.equals("lehrer")) {
