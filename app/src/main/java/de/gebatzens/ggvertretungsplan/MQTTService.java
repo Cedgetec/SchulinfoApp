@@ -89,6 +89,13 @@ public class MQTTService extends IntentService {
         } catch (Exception e) {
             Log.e("ggmqtt", "Failed to connect to Server", e);
         }
+
+        while(true) {
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+            }
+        }
     }
 
     @Override

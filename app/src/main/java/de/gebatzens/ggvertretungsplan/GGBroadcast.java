@@ -213,6 +213,8 @@ public class GGBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.w("ggvp", "onReceive " + intent.getAction());
+        Intent intent1 = new Intent(context, MQTTService.class);
+        context.startService(intent1);
         if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
