@@ -51,7 +51,7 @@ public class MQTTService extends IntentService {
             return;
         }
 
-        String token;
+        final String token;
         if((token = provider.prefs.getString("token", null)) == null) {
             Log.w("ggmqtt", "Not Logged in");
             return;
@@ -69,6 +69,8 @@ public class MQTTService extends IntentService {
 
                 @Override
                 public void publishArrived(String topic, byte[] bytes) {
+                    if(!topic.equals("gg/schulinfoapp/"+token))
+                        return;
                     String msg = null;
                     try {
                         msg = new String(bytes, "UTF-8");
