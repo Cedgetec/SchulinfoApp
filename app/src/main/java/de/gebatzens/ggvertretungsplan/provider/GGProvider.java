@@ -121,7 +121,7 @@ public class GGProvider extends VPProvider {
     }
 
     @Override
-    public void logout(Boolean logout_local_only, final Boolean delete_token) {
+    public void logout(boolean logout_local_only, final boolean delete_token) {
         GGApp.GG_APP.deleteFile("gguserinfo");
         GGApp.GG_APP.deleteFile("ggvptoday");
         GGApp.GG_APP.deleteFile("ggvptomorrow");
@@ -773,6 +773,7 @@ public class GGProvider extends VPProvider {
             sc = SSLContext.getInstance("TLS");
             sc.init(null, ggTrustMgr, new java.security.SecureRandom());
             sslSocketFactory = sc.getSocketFactory();
+
         } catch(Exception e) {
             throw new RuntimeException(e);
         }

@@ -32,8 +32,12 @@ import org.fusesource.mqtt.client.MQTT;
 import org.fusesource.mqtt.client.Message;
 import org.fusesource.mqtt.client.QoS;
 import org.fusesource.mqtt.client.Topic;
+import org.meqantt.MqttListener;
+import org.meqantt.SocketClient;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -72,31 +76,35 @@ public class MQTTService extends IntentService {
             return;
         }
 
-        MQTT client = new MQTT();
+        SocketClient client2 = new SocketClient("GGSchulinfoApp");
         try {
-            client.setSslContext(GGProvider.sc);
-            client.setHost("tlsv1://gymnasium-glinde.logoip.de:1883");
-        } catch (URISyntaxException e) {
-            Log.e("ggmqtt", "Failed to set Host", e);
-        }
-        client.setConnectAttemptsMax(1);
-        BlockingConnection con = client.blockingConnection();
-        try {
-            con.connect();
+            client2.connect("gymnasium-glinde.logoip.de", 1883, new String[]{"TLSv1"}, GGProvider.sslSocketFactory);
             Log.w("ggmqtt", "Connected " + token);
-            con.subscribe(new Topic[]{new Topic("gg/schulinfoapp/" + token, QoS.AT_LEAST_ONCE)});
-            Log.w("ggmqtt", "Subscribed to gg/schulinfoapp/"+token);
-            while(true) {
-                Message message = con.receive();
-                String msg = new String(message.getPayload(), "UTF-8");
-                Log.i("ggmqtt", "RECEIVED MESSAGE " + message.getTopic() + " " + msg);
-                String[] s = msg.split(";");
-                if(s.length > 1)
-                    GGApp.GG_APP.createNotification(R.drawable.ic_gg_star, s[0], s[1], new Intent(this, MainActivity.class), id++, "test");
-                message.ack();
-            }
+            client2.setListener(new MqttListener() {
+                @Override
+                public void disconnected() {
+                    Log.w("ggmqtt", "Disconnected!");
+                }
+
+                @Override
+                public void publishArrived(String topic, byte[] bytes) {
+                    String msg = null;
+                    try {
+                        msg = new String(bytes, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+                    Log.i("ggmqtt", "RECEIVED MESSAGE " + topic + " " + msg);
+                    String[] s = msg.split(";");
+                    if(s.length > 1)
+                        GGApp.GG_APP.createNotification(R.drawable.ic_gg_star, s[0], s[1], new Intent(MQTTService.this, MainActivity.class), id++);
+                }
+            });
+            client2.subscribe("gg/schulinfoapp/" + token);
+
         } catch (Exception e) {
-            Log.e("ggmqtt", "Failed to connect to server", e);
+            Log.e("ggmqtt", "Failed to connect to Server", e);
         }
     }
 

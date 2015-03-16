@@ -78,7 +78,7 @@ public abstract class VPProvider {
     public abstract String getWebsite();
     public abstract boolean loginNeeded();
     public abstract int login(String u, String p);
-    public abstract void logout(Boolean logout_local_only, Boolean delete_token);
+    public abstract void logout(boolean logoutLocal, boolean deleteToken);
     public abstract News getNews();
     public abstract Mensa getMensa();
     public abstract Exams getExams();
