@@ -26,10 +26,14 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.util.Log;
 
-import org.meqantt.MqttListener;
-import org.meqantt.SocketClient;
+import org.fusesource.mqtt.client.BlockingConnection;
+import org.fusesource.mqtt.client.MQTT;
+import org.fusesource.mqtt.client.Message;
+import org.fusesource.mqtt.client.QoS;
+import org.fusesource.mqtt.client.Topic;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 
 import de.gebatzens.ggvertretungsplan.provider.GGProvider;
 import de.gebatzens.ggvertretungsplan.provider.VPProvider;
@@ -61,44 +65,33 @@ public class MQTTService extends IntentService {
             return;
         }
 
-        SocketClient client2 = new SocketClient("GGSchulinfoApp");
+        MQTT client = new MQTT();
+        client.setClientId("GGSchulinfoApp/"+provider.getUsername());
         try {
-            client2.connect("gymnasium-glinde.logoip.de", 1883, null, GGProvider.sslSocketFactory);
-            Log.w("ggmqtt", "Connected " + token);
-            client2.setListener(new MqttListener() {
-                @Override
-                public void disconnected() {
-                    Log.w("ggmqtt", "Disconnected!");
-                    Intent localIntent = new Intent(getApplicationContext(), MQTTService.class);
-                    localIntent.setPackage(getPackageName());
-                    PendingIntent localPendingIntent = PendingIntent.getService(getApplicationContext(), 1, localIntent, PendingIntent.FLAG_ONE_SHOT);
-                    ((AlarmManager)getApplicationContext().getSystemService(ALARM_SERVICE)).set(3, 10000L + SystemClock.elapsedRealtime(), localPendingIntent);
-                    stopService(new Intent(MQTTService.this, MQTTService.class));
-
-                }
-
-                @Override
-                public void publishArrived(String topic, byte[] bytes) {
-                    if(!topic.equals("gg/schulinfoapp/"+token))
-                        return;
-                    String msg = null;
-                    try {
-                        msg = new String(bytes, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                        return;
-                    }
-                    Log.i("ggmqtt", "RECEIVED MESSAGE " + topic + " " + msg);
-                    String[] s = msg.split(";");
-                    if(s.length > 1)
-                        GGApp.GG_APP.createNotification(R.drawable.ic_gg_star, s[0], s[1], new Intent(MQTTService.this, MainActivity.class), id++);
-                }
-            });
-            client2.subscribe("gg/schulinfoapp/" + token);
-
-        } catch (Exception e) {
-            Log.e("ggmqtt", "Failed to connect to Server", e);
+            client.setHost("tls://gymnasium-glinde.logoip.de:1883");
+            client.setSslContext(GGProvider.sc);
+        } catch (URISyntaxException e) {
+            Log.e("ggmqtt", "Failed to set Host", e);
         }
+        client.setConnectAttemptsMax(1);
+        BlockingConnection con = client.blockingConnection();
+        try {
+            con.connect();
+            Log.w("ggmqtt", "Connected " + token);
+            con.subscribe(new Topic[]{new Topic("gg/schulinfoapp/" + token, QoS.AT_LEAST_ONCE)});
+            while(true) {
+                Message message = con.receive();
+                String msg = new String(message.getPayload(), "UTF-8");
+                Log.i("ggmqtt", "RECEIVED MESSAGE " + message.getTopic() + " " + msg);
+                String[] s = msg.split(";");
+                if(s.length > 1)
+                    GGApp.GG_APP.createNotification(R.drawable.ic_gg_star, s[0], s[1], new Intent(this, MainActivity.class), id++, "test");
+                message.ack();
+            }
+        } catch (Exception e) {
+            Log.e("ggmqtt", "Failed to connect to server", e);
+        }
+
     }
 
     @Override
