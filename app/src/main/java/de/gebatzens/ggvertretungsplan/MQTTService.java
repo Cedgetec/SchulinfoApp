@@ -37,6 +37,7 @@ import de.gebatzens.ggvertretungsplan.provider.VPProvider;
 public class MQTTService extends IntentService {
 
     int id = 1000;
+    boolean started = false;
 
     public MQTTService() {
         super("GGService");
@@ -44,6 +45,9 @@ public class MQTTService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        if(started)
+            return;
+        started = true;
         Log.w("ggmqtt", "MQTT Service started");
         VPProvider provider = GGApp.GG_APP.provider;
         if(!(provider instanceof GGProvider)) {
@@ -59,12 +63,18 @@ public class MQTTService extends IntentService {
 
         SocketClient client2 = new SocketClient("GGSchulinfoApp");
         try {
-            client2.connect("gymnasium-glinde.logoip.de", 1883, new String[]{"TLSv1"}, GGProvider.sslSocketFactory);
+            client2.connect("gymnasium-glinde.logoip.de", 1883, null, GGProvider.sslSocketFactory);
             Log.w("ggmqtt", "Connected " + token);
             client2.setListener(new MqttListener() {
                 @Override
                 public void disconnected() {
                     Log.w("ggmqtt", "Disconnected!");
+                    Intent localIntent = new Intent(getApplicationContext(), MQTTService.class);
+                    localIntent.setPackage(getPackageName());
+                    PendingIntent localPendingIntent = PendingIntent.getService(getApplicationContext(), 1, localIntent, PendingIntent.FLAG_ONE_SHOT);
+                    ((AlarmManager)getApplicationContext().getSystemService(ALARM_SERVICE)).set(3, 10000L + SystemClock.elapsedRealtime(), localPendingIntent);
+                    stopService(new Intent(MQTTService.this, MQTTService.class));
+
                 }
 
                 @Override
@@ -88,13 +98,6 @@ public class MQTTService extends IntentService {
 
         } catch (Exception e) {
             Log.e("ggmqtt", "Failed to connect to Server", e);
-        }
-
-        while(true) {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-            }
         }
     }
 

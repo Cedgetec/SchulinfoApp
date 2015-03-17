@@ -1,5 +1,5 @@
 --- SocketClient.java	2015-03-16 19:51:43.706773425 +0100
-+++ SocketClient.java	2015-03-16 20:46:06.174187782 +0100
++++ SocketClient.java	2015-03-17 22:36:55.155539430 +0100
 @@ -22,6 +22,9 @@
  import java.net.UnknownHostException;
  import java.util.concurrent.Semaphore;
@@ -48,7 +48,16 @@
  	public void publish(String topic, String message) throws IOException {
  		PublishMessage msg = new PublishMessage(topic, message);
  		out.writeMessage(msg);
-@@ -98,8 +125,8 @@
+@@ -75,6 +102,8 @@
+ 		DisconnectMessage msg = new DisconnectMessage();
+ 		out.writeMessage(msg);
+ 		socket.close();
++		if(listener != null)
++                    listener.disconnected();
+ 	}
+ 
+ 	private void handleMessage(Message msg) {
+@@ -98,8 +127,8 @@
  	}
  
  	private void handleMessage(PublishMessage msg) {
@@ -59,23 +68,22 @@
  	}
  
  	private class MqttReader extends Thread {
-@@ -109,11 +136,18 @@
- 			Message msg;
- 			try {
- 				while (true) {
--					msg = in.readMessage();
-+					try {
-+						msg = in.readMessage();
-+					} catch(IllegalArgumentException e) {
-+						continue;
-+					}
+@@ -112,8 +141,17 @@
+ 					msg = in.readMessage();
  					handleMessage(msg);
  				}
- 			} catch (IOException e) {
-+                            e.printStackTrace();
+-			} catch (IOException e) {
++			} catch (Exception e) {
++                        	e.printStackTrace();
  			}
-+			if(listener != null)
-+                            listener.disconnected();
++			
++			try {
++                            disconnect();
++                        } catch(IOException io) {
++                            io.printStackTrace();
++                            
++                        }
++			
  		}
  	}
  
