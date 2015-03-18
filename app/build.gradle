@@ -20,7 +20,6 @@ android {
 
     lintOptions {
         disable 'SimpleDateFormat', 'DefaultLocale', 'HardcodedText'
-	    abortOnError false
     }
 }
 
