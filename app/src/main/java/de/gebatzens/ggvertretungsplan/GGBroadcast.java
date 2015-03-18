@@ -1,20 +1,17 @@
 /*
- * Copyright (C) 2015 Hauke Oldsen
+ * Copyright 2015 Hauke Oldsen
  *
- * This file is part of GGVertretungsplan.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * GGVertretungsplan is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * GGVertretungsplan is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with GGVertretungsplan.  If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package de.gebatzens.ggvertretungsplan;
@@ -158,7 +155,7 @@ public class GGBroadcast extends BroadcastReceiver {
             Intent intent = new Intent(gg, MainActivity.class);
             intent.putExtra("fragment", "PLAN");
             gg.createNotification(R.drawable.ic_gg_star, gg.getString(R.string.substitutionplan_change), gg.getString(R.string.the_sp_has_changed),
-                    intent, 123, gg.getString(R.string.affected_lessons) , VPProvider.getWeekday(today.date) + ": " + stdt,
+                    intent, 123, false, gg.getString(R.string.affected_lessons) , VPProvider.getWeekday(today.date) + ": " + stdt,
                     VPProvider.getWeekday(tomo.date) + ": " + stdtm);
         } else
             Log.d("ggvp", "Up to date!");
@@ -186,7 +183,7 @@ public class GGBroadcast extends BroadcastReceiver {
                 intent.putExtra("update", true);
                 intent.putExtra("version", version);
                 gg.createNotification(R.drawable.ic_notification_update, gg.getString(R.string.infoappupdate), gg.getString(R.string.appupdate_available),
-                        intent, 124);
+                        intent, 124, false);
             }
         } catch(Exception e) {
             e.printStackTrace();

@@ -1,20 +1,17 @@
 /*
- * Copyright (C) 2015 Hauke Oldsen
+ * Copyright 2015 Hauke Oldsen
  *
- * This file is part of GGVertretungsplan.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * GGVertretungsplan is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * GGVertretungsplan is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with GGVertretungsplan.  If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package de.gebatzens.ggvertretungsplan;
@@ -34,6 +31,7 @@ import org.fusesource.mqtt.client.Topic;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 
 import de.gebatzens.ggvertretungsplan.provider.GGProvider;
 import de.gebatzens.ggvertretungsplan.provider.VPProvider;
@@ -81,17 +79,36 @@ public class MQTTService extends IntentService {
             con.subscribe(new Topic[]{new Topic("gg/schulinfoapp/" + token, QoS.AT_LEAST_ONCE)});
             while(true) {
                 Message message = con.receive();
-                String msg = new String(message.getPayload(), "UTF-8");
-                Log.i("ggmqtt", "RECEIVED MESSAGE " + message.getTopic() + " " + msg);
-                String[] s = msg.split(";");
-                if(s.length > 1)
-                    GGApp.GG_APP.createNotification(R.drawable.ic_gg_star, s[0], s[1], new Intent(this, MainActivity.class), id++, "test");
+                //String msg = new String(message.getPayload(), "UTF-8");
+                //Log.i("ggmqtt", "RECEIVED MESSAGE " + message.getTopic() + " " + msg);
+                //String[] s = msg.split(";");
+                //if(s.length > 1)
+                //    GGApp.GG_APP.createNotification(R.drawable.ic_gg_star, s[0], s[1], new Intent(this, MainActivity.class), id++, "test");
+                handleMessage(message.getPayload());
                 message.ack();
             }
         } catch (Exception e) {
             Log.e("ggmqtt", "Failed to connect to server", e);
         }
 
+    }
+
+    public void handleMessage(byte[] rawMsg) {
+        String msg = new String(rawMsg, 0, rawMsg.length, Charset.forName("UTF-8"));
+        String[] lines = msg.split("\n");
+        Log.i("ggmqtt", "Received message: " + msg);
+        try {
+            String[] l1 = lines[0].split(" ");
+            if(l1[0].equals("Notification")) {
+
+                String[] s = lines[1].split(";");
+                GGApp.GG_APP.createNotification(R.drawable.ic_gg_star, s[0], s[1], new Intent(this, MainActivity.class), id++, l1[1].equals("true"));
+            } else if(l1[0].equals("Update")) {
+                //TODO
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

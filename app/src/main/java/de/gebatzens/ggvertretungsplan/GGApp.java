@@ -1,20 +1,17 @@
 /*
- * Copyright (C) 2015 Hauke Oldsen
+ * Copyright 2015 Hauke Oldsen
  *
- * This file is part of GGVertretungsplan.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * GGVertretungsplan is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * GGVertretungsplan is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with GGVertretungsplan.  If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package de.gebatzens.ggvertretungsplan;
@@ -26,6 +23,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -94,7 +92,7 @@ public class GGApp extends Application {
         mProviderList.put("sws", SWSProvider.class);
     }
 
-    public void createNotification(int icon, String title, String message, Intent intent, int id, String... strings) {
+    public void createNotification(int icon, String title, String message, Intent intent, int id, boolean important, String... strings) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(icon)
@@ -115,11 +113,10 @@ public class GGApp extends Application {
             mBuilder.setStyle(inboxStyle);
         }
         mBuilder.setColor(GGApp.GG_APP.provider.getDarkColor());
-
-        // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
+        if(important) {
+            mBuilder.setVibrate(new long[]{0, 1000});
+            mBuilder.setLights(Color.argb(255, 0, 0, 255), 1000, 1000);
+        }
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         // Adds the back stack for the Intent (but not the Intent itself)
         stackBuilder.addParentStack(MainActivity.class);
