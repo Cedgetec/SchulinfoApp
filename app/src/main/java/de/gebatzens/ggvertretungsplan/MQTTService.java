@@ -76,6 +76,12 @@ public class MQTTService extends IntentService {
                 @Override
                 public void connectionLost(Throwable throwable) {
                     Log.e("ggmqtt", "Connection lost", throwable);
+
+                    Intent localIntent = new Intent(getApplicationContext(), getClass());
+                    localIntent.setPackage(getPackageName());
+                    PendingIntent localPendingIntent = PendingIntent.getService(getApplicationContext(), 1, localIntent, PendingIntent.FLAG_ONE_SHOT);
+                    ((AlarmManager)getApplicationContext().getSystemService(ALARM_SERVICE)).set(3, 1000L + SystemClock.elapsedRealtime(), localPendingIntent);
+
                 }
 
                 @Override
@@ -88,8 +94,17 @@ public class MQTTService extends IntentService {
 
                 }
             });
+
+            while(client.isConnected()) {
+                Thread.sleep(10000);
+            }
         } catch (Exception e) {
             Log.e("ggmqtt", "Failed to connect to server", e);
+
+            Intent localIntent = new Intent(getApplicationContext(), getClass());
+            localIntent.setPackage(getPackageName());
+            PendingIntent localPendingIntent = PendingIntent.getService(getApplicationContext(), 1, localIntent, PendingIntent.FLAG_ONE_SHOT);
+            ((AlarmManager)getApplicationContext().getSystemService(ALARM_SERVICE)).set(3, 60000L + SystemClock.elapsedRealtime(), localPendingIntent);
         }
 
     }
@@ -114,6 +129,7 @@ public class MQTTService extends IntentService {
 
     @Override
     public void onTaskRemoved(Intent paramIntent) {
+        Log.w("ggmqtt", "Task removed");
         try {
             if(!paramIntent.getStringExtra("runtimeLevel").trim().equals("exit")) {
                 Intent localIntent = new Intent(getApplicationContext(), getClass());
