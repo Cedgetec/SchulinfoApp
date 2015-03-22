@@ -80,7 +80,7 @@ public class MQTTService extends IntentService {
                     Intent localIntent = new Intent(getApplicationContext(), getClass());
                     localIntent.setPackage(getPackageName());
                     PendingIntent localPendingIntent = PendingIntent.getService(getApplicationContext(), 1, localIntent, PendingIntent.FLAG_ONE_SHOT);
-                    ((AlarmManager)getApplicationContext().getSystemService(ALARM_SERVICE)).set(3, 1000L + SystemClock.elapsedRealtime(), localPendingIntent);
+                    ((AlarmManager)getApplicationContext().getSystemService(ALARM_SERVICE)).set(3, 6000L + SystemClock.elapsedRealtime(), localPendingIntent);
 
                 }
 
@@ -96,7 +96,7 @@ public class MQTTService extends IntentService {
             });
 
             while(client.isConnected()) {
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             }
         } catch (Exception e) {
             Log.e("ggmqtt", "Failed to connect to server", e);

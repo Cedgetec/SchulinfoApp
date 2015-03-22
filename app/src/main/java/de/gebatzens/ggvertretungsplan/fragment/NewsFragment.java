@@ -16,9 +16,13 @@
 package de.gebatzens.ggvertretungsplan.fragment;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +86,7 @@ public class NewsFragment extends RemoteDataFragment {
     }
 
     @Override
-    public void createView(LayoutInflater inflater, ViewGroup view) {
+    public void createView(final LayoutInflater inflater, ViewGroup view) {
         lv = new ListView(getActivity());
         int p = toPixels(10);
         //lv.getDivider().setColorFilter(GGApp.GG_APP.provider.getColor(), PorterDuff.Mode.ADD);
@@ -96,16 +100,22 @@ public class NewsFragment extends RemoteDataFragment {
                 TextView txtContent =  (TextView) view.findViewById(R.id.newsContent);
                 String mTitle = txtTitle.getText().toString();
                 String mContent = txtContent.getText().toString();
-                AlertDialog.Builder ad = new AlertDialog.Builder(view.getContext());
+                AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
+                ad.setView(inflater.inflate(R.layout.news_dialog, null));
                 ad.setTitle(mTitle);
-                ad.setMessage(mContent);
-                ad.setNegativeButton(GGApp.GG_APP.getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
+                ad.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
-                ad.show();
+                Dialog d = ad.create();
+                d.show();
+                TextView tv = (TextView) d.findViewById(R.id.newsd_text);
+                tv.setMovementMethod(LinkMovementMethod.getInstance());
+                tv.setText(Html.fromHtml(mContent));
+
+                Log.w("ggvp", mContent);
                 if(!mDatabaseHelper.checkNewsRead(mTitle)) {
                     mDatabaseHelper.addReadNews(mTitle);
                     nfla.notifyDataSetChanged();
