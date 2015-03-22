@@ -21,6 +21,7 @@ package de.gebatzens.ggvertretungsplan.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.R;
 
 public class NavigationListAdapter extends BaseAdapter {
@@ -36,6 +38,8 @@ public class NavigationListAdapter extends BaseAdapter {
     private String[] mTitle;
     private int[] mIcon;
     private LayoutInflater inflater;
+    public int mSelected = -1;
+    public int mColor = Color.GRAY;
  
     public NavigationListAdapter(Context pContext, String[] pTitle, int[] pIcon) {
         context = pContext;
@@ -52,14 +56,18 @@ public class NavigationListAdapter extends BaseAdapter {
         ImageView imgIcon = (ImageView) itemView.findViewById(R.id.menuIcon);
         txtTitle.setText(mTitle[position]);
         imgIcon.setImageResource(mIcon[position]);
+        if(mSelected==position) {
+            txtTitle.setTextColor(mColor);
+            imgIcon.setColorFilter(mColor);
+        }
         return itemView;
     }
- 
+
     @Override
     public int getCount() {
         return mTitle.length;
     }
- 
+
     @Override
     public Object getItem(int position) {
         return mTitle[position];

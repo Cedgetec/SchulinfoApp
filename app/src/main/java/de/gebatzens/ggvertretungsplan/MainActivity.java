@@ -63,11 +63,12 @@ public class MainActivity extends FragmentActivity {
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mToggle;
     String[] mStrings;
-    int[] mIcons = new int[] {R.drawable.drawer_list_button_image_vertretungsplan, R.drawable.drawer_list_button_image_news, R.drawable.drawer_list_button_image_mensa,
-                                R.drawable.drawer_list_button_image_exam};
+    int[] mIcons = new int[] {R.drawable.vertretungsplan_icon, R.drawable.news_icon, R.drawable.mensa_icon,
+                                R.drawable.exam_icon};
     ImageView mNacvigationImage;
     View mNavigationSchoolpictureLink;
     public Bundle savedState;
+    NavigationListAdapter nla;
 
     public RemoteDataFragment createFragment() {
         switch(GGApp.GG_APP.getFragmentType()) {
@@ -200,15 +201,19 @@ public class MainActivity extends FragmentActivity {
 
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         //ArrayAdapter<String> aa = new ArrayAdapter<String>(this, R.layout.drawer_list_item, mStrings);
-        NavigationListAdapter aa = new NavigationListAdapter(this, mStrings, mIcons);
-        mDrawerList.setAdapter(aa);
-        mDrawerList.setItemChecked(Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType()), true);
+        nla = new NavigationListAdapter(this, mStrings, mIcons);
+        mDrawerList.setAdapter(nla);
+        nla.mSelected = Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType());
+        nla.mColor = GGApp.GG_APP.provider.getColor();
+        //mDrawerList.setItemChecked(Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType()), true);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(GGApp.GG_APP.getFragmentType() != GGApp.FragmentType.values()[position]) {
                     GGApp.GG_APP.setFragmentType(GGApp.FragmentType.values()[position]);
+                    nla.mSelected = position;
+                    nla.notifyDataSetChanged();
                     mDrawerLayout.closeDrawers();
                     mToolbar.setSubtitle(mStrings[position]);
                     mContent = createFragment();
