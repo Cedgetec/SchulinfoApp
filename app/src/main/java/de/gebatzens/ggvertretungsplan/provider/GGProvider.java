@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.text.Html;
 import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
@@ -398,10 +399,10 @@ public class GGProvider extends VPProvider {
                                 s[3] = parser.nextText();
 
                             else if (parser.getName().equals("title"))
-                                s[4] = parser.nextText();
+                                s[4] = parser.nextText().replace("&gt", ">").replace("&lt", "<");
 
                             else if (parser.getName().equals("text"))
-                                s[5] = parser.nextText();
+                                s[5] = parser.nextText().replace("&gt", ">").replace("&lt", "<");
                         }
                     }
                 }

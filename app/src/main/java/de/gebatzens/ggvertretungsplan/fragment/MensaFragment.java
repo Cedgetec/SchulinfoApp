@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,7 +52,6 @@ import de.gebatzens.ggvertretungsplan.data.Mensa;
 public class MensaFragment extends RemoteDataFragment {
 
     SwipeRefreshLayout swipeContainer;
-    String cache_file_prefix = "cache_mensa_";
     Boolean screen_orientation_horizotal = false;
 
     public MensaFragment() {
@@ -158,19 +158,12 @@ public class MensaFragment extends RemoteDataFragment {
             protected ViewHolder doInBackground(ViewHolder... params) {
                 //params[0].bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.block_house_steak);
                 try {
-                    Bitmap bitmap;
-                    if(cacheCheckDir()) {
-                        bitmap = cacheGetBitmap(params[0].filename);
-                        if(bitmap!=null) {
-                            params[0].bitmap = bitmap;
-                        } else {
-                            bitmap = GGApp.GG_APP.provider.getMensaImage(params[0].filename);
-                            cacheSetBitmap(params[0].filename, bitmap);
-                            params[0].bitmap = bitmap;
-                        }
+                    Bitmap bitmap = cacheGetBitmap(params[0].filename);
+                    if(bitmap!=null) {
+                        params[0].bitmap = bitmap;
                     } else {
                         bitmap = GGApp.GG_APP.provider.getMensaImage(params[0].filename);
-                        cacheSetBitmap(params[0].filename, bitmap);
+                        cacheSaveBitmap(params[0].filename, bitmap);
                         params[0].bitmap = bitmap;
                     }
                 } catch (IOException e) {
@@ -240,43 +233,20 @@ public class MensaFragment extends RemoteDataFragment {
         }
     }
 
-    private boolean cacheCheckDir() {
-        File schulinfoapp_dir = new File(Environment.getExternalStorageDirectory() + "/SchulinfoAPP");
-        if(schulinfoapp_dir.isDirectory()) {
-            return true;
-        } else {
-            schulinfoapp_dir.mkdirs();
-            if(schulinfoapp_dir.isDirectory()) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
     public Bitmap cacheGetBitmap(String filename) {
-        File bitmap_file = new File(Environment.getExternalStorageDirectory() + "/SchulinfoAPP/" + cache_file_prefix + filename);
-        if(bitmap_file.exists()) {
-            return BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/SchulinfoAPP/" + cache_file_prefix + filename);
-        } else {
+        try {
+            return BitmapFactory.decodeStream(getActivity().openFileInput("cache_" + filename));
+        } catch(Exception e) {
             return null;
         }
     }
 
-    private void cacheSetBitmap(String filename, Bitmap image) {
-        File bitmap_file = new File(Environment.getExternalStorageDirectory() + "/SchulinfoAPP/" + cache_file_prefix + filename);
+    private void cacheSaveBitmap(String filename, Bitmap image) {
         try {
-            if(!bitmap_file.exists()) {
-                bitmap_file.createNewFile();
-            }
-            FileOutputStream fos = new FileOutputStream(bitmap_file);
+            OutputStream fos = getActivity().openFileOutput("cache_" + filename, Context.MODE_PRIVATE);
             image.compress(Bitmap.CompressFormat.PNG, 90, fos);
             fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
