@@ -35,12 +35,12 @@
     <string name="supervision">Betreuung</string>
     <string name="lunch">Mittagspause</string>
     <string name="task_through">Aufgabe durch</string>
-    <string name="canceled">Entfällt</string>
+    <string name="canceled">Fällt aus</string>
     <string name="shifted_to_today">Verlegt in</string>
     <string name="shifted_to">Verlegt nach</string>
     <string name="autonomous_work">Eigenverantwortliches Arbeiten</string>
     <string name="instead_of">Statt</string>
-    <string name="elemination">Entfall</string>
+    <string name="elemination">Ausfall</string>
     <string name="logout_successfull">Abmeldung erfolgreich</string>
     <string name="logout_error">Abmeldefehler</string>
     <string name="no_internet_connection">Keine Internetverbindung</string>
