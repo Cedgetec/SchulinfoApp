@@ -80,7 +80,7 @@ public class MQTTService extends IntentService {
                     Intent localIntent = new Intent(getApplicationContext(), getClass());
                     localIntent.setPackage(getPackageName());
                     PendingIntent localPendingIntent = PendingIntent.getService(getApplicationContext(), 1, localIntent, PendingIntent.FLAG_ONE_SHOT);
-                    ((AlarmManager)getApplicationContext().getSystemService(ALARM_SERVICE)).set(3, 6000L + SystemClock.elapsedRealtime(), localPendingIntent);
+                    ((AlarmManager)getApplicationContext().getSystemService(ALARM_SERVICE)).set(AlarmManager.ELAPSED_REALTIME_WAKEUP, 6000L + SystemClock.elapsedRealtime(), localPendingIntent);
 
                 }
 
