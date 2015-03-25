@@ -42,7 +42,7 @@
             android:summary="https://github.com/Gebatzens/GG-Vertretung"
             android:key="githublink"/>
         <Preference android:title="@string/license"
-            android:summary="GNU GPL"
+            android:summary="Apache License 2.0"
             android:key="license"/>
         <Preference android:title="@string/build_version"
             android:summary="Version: x.x.x"
