@@ -6,3 +6,4 @@
 - [ ] Klausurenplan für SWS
 - [ ] MQTT-Messages speichern
 - [ ] HiddenActivity
+- [ ] GEMS Wiesenfeld
