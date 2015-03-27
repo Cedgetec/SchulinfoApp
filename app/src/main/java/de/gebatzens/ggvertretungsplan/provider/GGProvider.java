@@ -53,6 +53,7 @@ import javax.net.ssl.X509TrustManager;
 
 import de.gebatzens.ggvertretungsplan.FilterActivity;
 import de.gebatzens.ggvertretungsplan.GGApp;
+import de.gebatzens.ggvertretungsplan.GGImageGetter;
 import de.gebatzens.ggvertretungsplan.MQTTService;
 import de.gebatzens.ggvertretungsplan.R;
 import de.gebatzens.ggvertretungsplan.VPLoginException;
@@ -65,6 +66,7 @@ import de.gebatzens.ggvertretungsplan.data.News;
 public class GGProvider extends VPProvider {
 
     public static final String BASE_URL = "https://gymnasium-glinde.logoip.de/";
+    public static final GGImageGetter IMAGE_GETTER = new GGImageGetter();
 
     GGApp ggapp;
     Session session;
@@ -386,23 +388,26 @@ public class GGProvider extends VPProvider {
                             if (parser.getEventType() != XmlPullParser.START_TAG)
                                 continue;
 
+                            String text = parser.nextText();
+
                             if (parser.getName().equals("id"))
-                                s[0] = parser.nextText();
+                                s[0] = text;
 
                             else if (parser.getName().equals("date"))
-                                s[1] = parser.nextText();
+                                s[1] = text;
 
                             else if (parser.getName().equals("topic"))
-                                s[2] = parser.nextText();
+                                s[2] = text;
 
                             else if (parser.getName().equals("source"))
-                                s[3] = parser.nextText();
+                                s[3] = text;
 
                             else if (parser.getName().equals("title"))
-                                s[4] = parser.nextText().replace("&gt", ">").replace("&lt", "<");
+                                s[4] = text;
 
                             else if (parser.getName().equals("text"))
-                                s[5] = parser.nextText().replace("&gt", ">").replace("&lt", "<");
+                                s[5] = text;
+
                         }
                     }
                 }

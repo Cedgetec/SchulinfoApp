@@ -34,6 +34,8 @@ import android.widget.TextView;
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.NewsFragmentDatabaseHelper;
 import de.gebatzens.ggvertretungsplan.R;
+import de.gebatzens.ggvertretungsplan.data.News;
+import de.gebatzens.ggvertretungsplan.provider.GGProvider;
 
 public class NewsFragment extends RemoteDataFragment {
 
@@ -96,13 +98,13 @@ public class NewsFragment extends RemoteDataFragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView txtTitle = (TextView) view.findViewById(R.id.newsTitle);
-                TextView txtContent =  (TextView) view.findViewById(R.id.newsContent);
-                String mTitle = txtTitle.getText().toString();
-                String mContent = txtContent.getText().toString();
+                News news = GGApp.GG_APP.news;
+                String title = news.get(position)[4];
+                String content = news.get(position)[5];
+
                 AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
                 ad.setView(inflater.inflate(R.layout.news_dialog, null));
-                ad.setTitle(mTitle);
+                ad.setTitle(title);
                 ad.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -113,11 +115,10 @@ public class NewsFragment extends RemoteDataFragment {
                 d.show();
                 TextView tv = (TextView) d.findViewById(R.id.newsd_text);
                 tv.setMovementMethod(LinkMovementMethod.getInstance());
-                tv.setText(Html.fromHtml(mContent));
+                tv.setText(Html.fromHtml(content, null, null));
 
-                Log.w("ggvp", mContent);
-                if(!mDatabaseHelper.checkNewsRead(mTitle)) {
-                    mDatabaseHelper.addReadNews(mTitle);
+                if(!mDatabaseHelper.checkNewsRead(title)) {
+                    mDatabaseHelper.addReadNews(title);
                     nfla.notifyDataSetChanged();
                 }
             }
