@@ -16,6 +16,7 @@
 
 package de.gebatzens.ggvertretungsplan.fragment;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -95,8 +96,12 @@ public class ExamFragment extends RemoteDataFragment {
         LinearLayout l = new LinearLayout(getActivity());
         l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         l.setOrientation(LinearLayout.VERTICAL);
-        int p = toPixels(6);
-        l.setPadding(p, p, p, p);
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            l.setPadding(toPixels(55),toPixels(4),toPixels(55),toPixels(4));
+        }
+        else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            l.setPadding(toPixels(4),toPixels(4),toPixels(4),toPixels(4));
+        }
         sv.addView(l);
         Exams filtered = GGApp.GG_APP.exams.filter(GGApp.GG_APP.filters);
         if(!filtered.isEmpty()) {

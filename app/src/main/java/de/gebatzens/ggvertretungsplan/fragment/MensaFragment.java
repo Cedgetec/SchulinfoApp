@@ -16,8 +16,10 @@
 package de.gebatzens.ggvertretungsplan.fragment;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,6 +31,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -99,8 +102,27 @@ public class MensaFragment extends RemoteDataFragment {
 
     @Override
     public void createView(LayoutInflater inflater, ViewGroup view) {
+        ScrollView sv = new ScrollView(getActivity());
+        sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        sv.setTag("mensa_scroll");
+        LinearLayout l = new LinearLayout(getActivity());
+        l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        l.setOrientation(LinearLayout.VERTICAL);
+        ((LinearLayout) view.findViewById(R.id.mensa_content)).addView(sv);
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            l.setPadding(toPixels(55),toPixels(4),toPixels(55),toPixels(4));
+        }
+        else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            l.setPadding(toPixels(4),toPixels(4),toPixels(4),toPixels(4));
+        }
+        sv.addView(l);
         if(GGApp.GG_APP.mensa.isEmpty()) {
-            createText(view, getString(R.string.no_entries));
+            FrameLayout f2 = new FrameLayout(getActivity());
+            f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
+            CardView cv = createCardView();
+            f2.addView(cv);
+            createTextView(getResources().getString(R.string.no_entries), 20, inflater, cv);
+            l.addView(f2);
             Log.w("asd", "ASDASDASD");
         } else {
             Display display = ((WindowManager) getActivity().getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
@@ -111,16 +133,6 @@ public class MensaFragment extends RemoteDataFragment {
             } else {
                 screen_orientation_horizotal = false;
             }
-            final ScrollView sv = new ScrollView(getActivity());
-            sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            sv.setTag("mensa_scroll");
-            ((LinearLayout) view.findViewById(R.id.mensa_content)).addView(sv);
-            final LinearLayout l = new LinearLayout(getActivity());
-            l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            l.setOrientation(LinearLayout.VERTICAL);
-            int p = toPixels(6);
-            l.setPadding(p, p, p, p);
-            sv.addView(l);
             for (Mensa.MensaItem item : GGApp.GG_APP.mensa) {
                 if (!item.isPast())
                     l.addView(createCardItem(item, inflater));

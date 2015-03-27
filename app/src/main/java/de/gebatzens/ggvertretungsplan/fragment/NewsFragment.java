@@ -18,6 +18,7 @@ package de.gebatzens.ggvertretungsplan.fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
@@ -90,7 +91,6 @@ public class NewsFragment extends RemoteDataFragment {
     @Override
     public void createView(final LayoutInflater inflater, ViewGroup view) {
         lv = new ListView(getActivity());
-        int p = toPixels(10);
         //lv.getDivider().setColorFilter(GGApp.GG_APP.provider.getColor(), PorterDuff.Mode.ADD);
         lv.setDrawSelectorOnTop(true);
         lv.setDivider(getResources().getDrawable(R.drawable.listview_divider));
