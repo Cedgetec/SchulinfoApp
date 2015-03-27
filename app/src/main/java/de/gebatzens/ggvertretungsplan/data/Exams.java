@@ -65,6 +65,23 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
         }
     }
 
+    public Exams filter(Filter.FilterList filters) {
+        Exams e = new Exams();
+        for(ExamItem item : this) {
+            boolean b = filters.mainFilter.matches(item);
+            if(b) {
+                for(Filter f : filters) {
+                    if(f.matches(item))
+                        b = false;
+                }
+                if(b) {
+                    e.add(item);
+                }
+            }
+        }
+        return e;
+    }
+
     public boolean load(String file) {
         clear();
         try {

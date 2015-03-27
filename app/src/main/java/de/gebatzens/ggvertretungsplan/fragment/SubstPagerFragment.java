@@ -219,7 +219,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
         } else if(type == TYPE_OVERVIEW) {
             //Keine Klasse
-            createButtonWithText(getActivity(), l, getResources().getString(R.string.no_filter_applied), getResources().getString(R.string.settings), new View.OnClickListener() {
+            createButtonWithText( l, getResources().getString(R.string.no_filter_applied), getResources().getString(R.string.settings), new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {

@@ -99,28 +99,33 @@ public class MensaFragment extends RemoteDataFragment {
 
     @Override
     public void createView(LayoutInflater inflater, ViewGroup view) {
-        Display display = ((WindowManager) getActivity().getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        int rotation = display.getRotation();
-        Log.d("Screen orientation", String.valueOf(rotation));
-        if((rotation == 3)||(rotation == 1)) {
-            screen_orientation_horizotal = true;
+        if(GGApp.GG_APP.mensa.isEmpty()) {
+            createText(view, getString(R.string.no_entries));
+            Log.w("asd", "ASDASDASD");
         } else {
-            screen_orientation_horizotal = false;
-        }
-        final ScrollView sv = new ScrollView(getActivity());
-        sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        sv.setTag("mensa_scroll");
-        ((LinearLayout) view.findViewById(R.id.mensa_content)).addView(sv);
-        final LinearLayout l = new LinearLayout(getActivity());
-        l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        l.setOrientation(LinearLayout.VERTICAL);
-        int p = toPixels(6);
-        l.setPadding(p, p, p, p);
-        sv.addView(l);
-        for(Mensa.MensaItem item : GGApp.GG_APP.mensa) {
-            if(!item.isPast())
-                l.addView(createCardItem(item, inflater));
+            Display display = ((WindowManager) getActivity().getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+            int rotation = display.getRotation();
+            Log.d("Screen orientation", String.valueOf(rotation));
+            if ((rotation == 3) || (rotation == 1)) {
+                screen_orientation_horizotal = true;
+            } else {
+                screen_orientation_horizotal = false;
+            }
+            final ScrollView sv = new ScrollView(getActivity());
+            sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            sv.setTag("mensa_scroll");
+            ((LinearLayout) view.findViewById(R.id.mensa_content)).addView(sv);
+            final LinearLayout l = new LinearLayout(getActivity());
+            l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            l.setOrientation(LinearLayout.VERTICAL);
+            int p = toPixels(6);
+            l.setPadding(p, p, p, p);
+            sv.addView(l);
+            for (Mensa.MensaItem item : GGApp.GG_APP.mensa) {
+                if (!item.isPast())
+                    l.addView(createCardItem(item, inflater));
 
+            }
         }
     }
 

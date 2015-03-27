@@ -92,29 +92,34 @@ public class ExamFragment extends RemoteDataFragment {
         ScrollView sv = new ScrollView(getActivity());
         sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         sv.setTag("exam_scroll");
-        ((LinearLayout) view.findViewById(R.id.exam_content)).addView(sv);
         LinearLayout l = new LinearLayout(getActivity());
         l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         l.setOrientation(LinearLayout.VERTICAL);
         int p = toPixels(6);
         l.setPadding(p, p, p, p);
         sv.addView(l);
-        createTextView(getResources().getString(R.string.my_exams), toPixels(12), inflater, l);
-        for(Exams.ExamItem item : GGApp.GG_APP.exams) {
-            if(GGApp.GG_APP.filters.mainFilter.matches(item)) {
+        Exams filtered = GGApp.GG_APP.exams.filter(GGApp.GG_APP.filters);
+        if(!filtered.isEmpty()) {
+            createTextView(getResources().getString(R.string.my_exams), toPixels(12), inflater, l);
+            for (Exams.ExamItem item : filtered) {
                 CardView cv = createCardItem(item, inflater);
-                if(cv != null) {
+                if (cv != null) {
                     l.addView(cv);
                 }
             }
-
         }
-        createTextView(getResources().getString(R.string.all_exams),toPixels(12),inflater,l);
-        for(Exams.ExamItem item : GGApp.GG_APP.exams) {
-            CardView cv = createCardItem(item, inflater);
-            if(cv != null) {
-                l.addView(cv);
+
+        if(GGApp.GG_APP.exams.size() != 0) {
+            createTextView(getResources().getString(R.string.all_exams), toPixels(12), inflater, l);
+            for (Exams.ExamItem item : GGApp.GG_APP.exams) {
+                CardView cv = createCardItem(item, inflater);
+                if (cv != null) {
+                    l.addView(cv);
+                }
             }
+            ((LinearLayout) view.findViewById(R.id.exam_content)).addView(sv);
+        } else {
+            createText(view, getString(R.string.no_entries));
         }
         cardColorIndex = 0;
     }

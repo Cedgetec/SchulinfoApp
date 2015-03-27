@@ -137,5 +137,6 @@
     <string name="setup_title_1">Welcome to the SchoolinfoAPP!</string>
     <string name="setup_description">Welcome to the SchoolinfoAPP!</string>
     <string name="lessons">Lessons</string>
+    <string name="no_entries">No entries</string>
 
 </resources>

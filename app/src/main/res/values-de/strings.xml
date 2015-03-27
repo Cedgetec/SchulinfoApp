@@ -137,5 +137,6 @@
     <string name="setup_title_1">Willkommen in der SchulinfoAPP!</string>
     <string name="setup_description">Willkommen in der SchulinfoAPP!</string>
     <string name="lessons">Stunden</string>
+    <string name="no_entries">Keine Einträge</string>
 
 </resources>

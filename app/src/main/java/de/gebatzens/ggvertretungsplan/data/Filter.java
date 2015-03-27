@@ -42,9 +42,9 @@ public class Filter {
     public boolean matches(Exams.ExamItem item) {
         switch(type) {
             case CLASS:
-                return item.schoolclass.toLowerCase().contains(filter.toLowerCase());
+                return item.schoolclass.toLowerCase().equals(filter.toLowerCase());
             case TEACHER:
-                return item.teacher.toLowerCase().contains(filter.toLowerCase());
+                return item.teacher.toLowerCase().equals(filter.toLowerCase());
             case SUBJECT:
                 return item.subject.toLowerCase().equals(filter.toLowerCase());
         }

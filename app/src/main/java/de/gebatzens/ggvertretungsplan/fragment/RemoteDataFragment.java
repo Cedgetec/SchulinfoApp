@@ -115,11 +115,11 @@ public abstract class RemoteDataFragment extends Fragment {
         return l;
     }
 
-    public void createButtonWithText(Activity activity, ViewGroup l, String text, String button, View.OnClickListener onclick) {
-        RelativeLayout r = new RelativeLayout(activity);
+    public void createButtonWithText(ViewGroup l, String text, String button, View.OnClickListener onclick) {
+        RelativeLayout r = new RelativeLayout(getActivity());
         r.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        TextView tv = new TextView(activity);
+        TextView tv = new TextView(getActivity());
         RelativeLayout.LayoutParams tvparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         tvparams.addRule(RelativeLayout.ABOVE, R.id.reload_button);
         tvparams.addRule(RelativeLayout.CENTER_HORIZONTAL);
@@ -130,7 +130,7 @@ public abstract class RemoteDataFragment extends Fragment {
         tv.setGravity(Gravity.CENTER_HORIZONTAL);
         r.addView(tv);
 
-        Button b = new Button(activity);
+        Button b = new Button(getActivity());
         RelativeLayout.LayoutParams bparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         bparams.addRule(RelativeLayout.CENTER_VERTICAL);
         bparams.addRule(RelativeLayout.CENTER_HORIZONTAL);
@@ -146,6 +146,23 @@ public abstract class RemoteDataFragment extends Fragment {
         l.addView(r);
     }
 
+    public void createText(ViewGroup l, String text) {
+        RelativeLayout r = new RelativeLayout(getActivity());
+        r.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        r.setGravity(Gravity.CENTER);
+
+        TextView tv = new TextView(getActivity());
+        RelativeLayout.LayoutParams tvparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        tv.setLayoutParams(tvparams);
+        tv.setText(text);
+        tv.setTextSize(30);
+        tv.setTextColor(getResources().getColor(R.color.primary_text_default_material_dark));
+        tv.setPadding( 0, 0, 0, toPixels(15));
+        r.addView(tv);
+
+        l.addView(r);
+    }
+
     public void createRootView(final LayoutInflater inflater, ViewGroup vg) {
         RemoteData data = GGApp.GG_APP.getDataForFragment(type);
         if(data == null) {
@@ -153,7 +170,7 @@ public abstract class RemoteDataFragment extends Fragment {
         } else if(data.getThrowable() != null) {
             Throwable t = data.getThrowable();
             if(t instanceof VPLoginException) {
-                createButtonWithText(getActivity(), vg, getResources().getString(R.string.login_required), getResources().getString(R.string.do_login), new View.OnClickListener() {
+                createButtonWithText(vg, getResources().getString(R.string.login_required), getResources().getString(R.string.do_login), new View.OnClickListener() {
                     @Override
                     public void onClick(View c) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -215,7 +232,7 @@ public abstract class RemoteDataFragment extends Fragment {
                     }
                 });
             } else {
-                createButtonWithText(getActivity(), vg, getResources().getString(R.string.check_connection_and_repeat), getResources().getString(R.string.again), new View.OnClickListener() {
+                createButtonWithText(vg, getResources().getString(R.string.check_connection_and_repeat), getResources().getString(R.string.again), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         GGApp.GG_APP.refreshAsync(null, true, GGApp.FragmentType.PLAN);

@@ -43,6 +43,15 @@ public class Mensa extends ArrayList<Mensa.MensaItem> implements RemoteDataFragm
         return throwable;
     }
 
+    @Override
+    public boolean isEmpty() {
+        boolean b = true;
+        for(MensaItem item : this)
+            if(!item.isPast())
+                b = false;
+        return b;
+    }
+
     public void save(String file) {
         try {
             OutputStream out = GGApp.GG_APP.openFileOutput(file, Context.MODE_PRIVATE);
