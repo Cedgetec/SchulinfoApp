@@ -16,6 +16,7 @@
 package de.gebatzens.ggvertretungsplan.fragment;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -141,7 +142,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
         LinearLayout l = new LinearLayout(getActivity());
         l.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
         l.setOrientation(LinearLayout.VERTICAL);
-        l.setPadding(toPixels(4),toPixels(4),toPixels(4),toPixels(4));
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            l.setPadding(toPixels(55),toPixels(4),toPixels(55),toPixels(4));
+        }
+        else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            l.setPadding(toPixels(4),toPixels(4),toPixels(4),toPixels(4));
+        }
         group.addView(sv);
         if(planh == null || planm == null) {
             TextView tv = new TextView(getActivity());
@@ -219,7 +225,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
         } else if(type == TYPE_OVERVIEW) {
             //Keine Klasse
-            createButtonWithText(getActivity(), l, getResources().getString(R.string.no_filter_applied), getResources().getString(R.string.settings), new View.OnClickListener() {
+            createButtonWithText( l, getResources().getString(R.string.no_filter_applied), getResources().getString(R.string.settings), new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {

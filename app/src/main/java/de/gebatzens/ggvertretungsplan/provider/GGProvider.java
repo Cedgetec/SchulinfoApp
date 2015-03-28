@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.text.Html;
 import android.util.Log;
 import android.util.Xml;
@@ -51,6 +52,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import de.gebatzens.ggvertretungsplan.BuildConfig;
 import de.gebatzens.ggvertretungsplan.FilterActivity;
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.GGImageGetter;
@@ -787,6 +789,7 @@ public class GGProvider extends VPProvider {
             startNewSession(prefs.getString("token", null));
         HttpsURLConnection con = (HttpsURLConnection) new URL(url).openConnection();
         con.setSSLSocketFactory(sslSocketFactory);
+        con.setRequestProperty("User-Agent", "SchulinfoAPP " + BuildConfig.VERSION_NAME + " " + BuildConfig.VERSION_CODE + " " + BuildConfig.BUILD_TYPE + " Android " + Build.VERSION.RELEASE + " " + Build.PRODUCT);
         con.setConnectTimeout(3000);
 
         Log.w("ggvp", "connection to " + con.getURL().getHost() + " established");
