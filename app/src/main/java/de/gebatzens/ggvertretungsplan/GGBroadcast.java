@@ -154,7 +154,7 @@ public class GGBroadcast extends BroadcastReceiver {
                 stdtm = gg.getString(R.string.nothing);
             Intent intent = new Intent(gg, MainActivity.class);
             intent.putExtra("fragment", "PLAN");
-            gg.createNotification(R.drawable.ic_gg_star, gg.getString(R.string.substitutionplan_change), gg.getString(R.string.the_sp_has_changed),
+            gg.createNotification(R.drawable.ic_gg_notification, gg.getString(R.string.substitutionplan_change), gg.getString(R.string.the_sp_has_changed),
                     intent, 123, false, gg.getString(R.string.affected_lessons) , VPProvider.getWeekday(today.date) + ": " + stdt,
                     VPProvider.getWeekday(tomo.date) + ": " + stdtm);
         } else

@@ -161,14 +161,14 @@ public class ExamFragment extends RemoteDataFragment {
         String lesson = exam_item.lesson;
         if(Integer.parseInt(exam_item.length) > 1)
             lesson += ". - " + (Integer.parseInt(exam_item.lesson) + Integer.parseInt(exam_item.length) - 1) + ".";
-        ((TextView) ecv.findViewById(R.id.ecv_date)).setText(getFormatedDate(exam_item.date));
+        ((TextView) ecv.findViewById(R.id.ecv_date)).setText(getFormattedDate(exam_item.date));
         ((TextView) ecv.findViewById(R.id.ecv_lesson)).setText(getDay(exam_item.date));
         ((TextView) ecv.findViewById(R.id.ecv_subject_teacher)).setText(GGPlan.Entry.translateSubject(exam_item.subject) + " [" + exam_item.teacher + "]");
         ((TextView) ecv.findViewById(R.id.ecv_schoolclass)).setText(exam_item.schoolclass + "\n" + getString(R.string.lessons) + " " + lesson);
         return ecv;
     }
 
-    private String getFormatedDate(String date) {
+    private String getFormattedDate(String date) {
         String formattedDate;
         DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat dateFormatter;

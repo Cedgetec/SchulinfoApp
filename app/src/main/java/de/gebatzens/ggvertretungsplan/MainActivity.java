@@ -272,7 +272,8 @@ public class MainActivity extends FragmentActivity {
 
 
         //wait for vps
-        new AsyncTask<Object, Void, Void>() {
+        // ????
+        /*new AsyncTask<Object, Void, Void>() {
 
             @Override
             protected Void doInBackground(Object... params) {
@@ -296,7 +297,7 @@ public class MainActivity extends FragmentActivity {
 
                 return null;
             }
-        }.execute();
+        }.execute();*/
 
     }
 
