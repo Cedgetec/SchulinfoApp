@@ -121,22 +121,31 @@
     <string name="firstuse">Erste Schritte</string>
     <string name="all_exams">Alle Klausuren</string>
     <string name="my_exams">Meine Klausuren</string>
-    <string name="maths">Mathematik</string>
-    <string name="german">Deutsch</string>
-    <string name="english">Englisch</string>
-    <string name="physics">Physik</string>
-    <string name="history">Geschichte</string>
-    <string name="geo">Geographie</string>
-    <string name="latin">Latein</string>
-    <string name="chem">Chemie</string>
-    <string name="compsc">Informatik</string>
-    <string name="phil">Philosophie</string>
     <string name="lhour">Stunde</string>
-    <string name="religion">Religion</string>
     <string name="next">Weiter</string>
     <string name="setup_title_1">Willkommen in der SchulinfoAPP!</string>
     <string name="setup_description">Willkommen in der SchulinfoAPP!</string>
     <string name="lessons">Stunden</string>
     <string name="no_entries">Keine Einträge</string>
+
+    <string-array name="subjects">
+        <item>d|Deutsch</item>
+        <item>e|Englisch</item>
+        <item>m|Mathematik</item>
+        <item>phy|Physik</item>
+        <item>ge|Geschichte</item>
+        <item>geo|Geographie</item>
+        <item>la|Latein</item>
+        <item>ch|Chemie</item>
+        <item>phi|Philosophie</item>
+        <item>inf|Informatik</item>
+        <item>evr|Religion</item>
+        <item>mu|Musik</item>
+        <item>ku|Kunst</item>
+        <item>bi|Biologie</item>
+        <item>wpo|Wipo</item>
+        <item>fr|Französisch</item>
+        <item>chi|Chinesisch</item>
+    </string-array>
 
 </resources>

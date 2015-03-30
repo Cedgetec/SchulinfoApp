@@ -121,22 +121,31 @@
     <string name="firstuse">First use</string>
     <string name="my_exams">My exams</string>
     <string name="all_exams">All exams</string>
-    <string name="maths">Mathematics</string>
-    <string name="german">German</string>
-    <string name="english">English</string>
-    <string name="physics">Physics</string>
-    <string name="history">History</string>
-    <string name="geo">Geography</string>
-    <string name="latin">Latin</string>
-    <string name="chem">Chemistry</string>
-    <string name="compsc">Computer science</string>
-    <string name="phil">Philosophy</string>
     <string name="lhour">Lesson</string>
-    <string name="religion">Religion</string>
     <string name="next">Next</string>
     <string name="setup_title_1">Welcome to the SchoolinfoAPP!</string>
     <string name="setup_description">Welcome to the SchoolinfoAPP!</string>
     <string name="lessons">Lessons</string>
     <string name="no_entries">No entries</string>
+
+    <string-array name="subjects">
+        <item>d|German</item>
+        <item>e|English</item>
+        <item>m|Mathematics</item>
+        <item>phy|Physics</item>
+        <item>ge|History</item>
+        <item>geo|Geography</item>
+        <item>la|Latin</item>
+        <item>ch|Chemistry</item>
+        <item>phi|Philosophy</item>
+        <item>inf|Computer science</item>
+        <item>evr|Religion</item>
+        <item>mu|Music</item>
+        <item>ku|Arts</item>
+        <item>bi|Biology</item>
+        <item>wpo|Economics</item>
+        <item>fr|French</item>
+        <item>chi|Chinese</item>
+    </string-array>
 
 </resources>

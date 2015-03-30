@@ -47,17 +47,22 @@ import de.gebatzens.ggvertretungsplan.provider.VPProvider;
 
 public class GGApp extends Application {
 
-    public GGPlan.GGPlans plans = null;
+    public static final int UPDATE_DISABLE = 0, UPDATE_WLAN = 1, UPDATE_ALL = 2;
+    public static GGApp GG_APP;
+
+    public GGPlan.GGPlans plans;
     public News news;
     public Mensa mensa;
+    public Exams exams;
+
     public MainActivity activity;
     public VPProvider provider;
-    public Exams exams;
-    public static final int UPDATE_DISABLE = 0, UPDATE_WLAN = 1, UPDATE_ALL = 2;
+
     private SharedPreferences preferences;
-    public static GGApp GG_APP;
+
     private HashMap<String, Class<? extends VPProvider>> mProviderList = new HashMap<String, Class<? extends VPProvider>>();
     public Filter.FilterList filters = new Filter.FilterList();
+    public HashMap<String, String> subjects = new HashMap<String, String>();
 
     @Override
     public void onCreate() {
@@ -68,6 +73,7 @@ public class GGApp extends Application {
         GGBroadcast.createAlarm(this);
         recreateProvider();
         filters = FilterActivity.loadFilter();
+        loadSubjectMap();
 
     }
 
@@ -90,6 +96,18 @@ public class GGApp extends Application {
         mProviderList.clear();
         mProviderList.put("gg", GGProvider.class);
         mProviderList.put("sws", SWSProvider.class);
+    }
+
+    private void loadSubjectMap() {
+        subjects.clear();
+        String[] array = getResources().getStringArray(R.array.subjects);
+        for(String s : array) {
+            String[] parts = s.split("\\|");
+            String value = parts[parts.length - 1];
+            for(int i = 0; i < parts.length - 1; i++) {
+                subjects.put(parts[i], value);
+            }
+        }
     }
 
     public void createNotification(int icon, String title, String message, Intent intent, int id, boolean important, String... strings) {

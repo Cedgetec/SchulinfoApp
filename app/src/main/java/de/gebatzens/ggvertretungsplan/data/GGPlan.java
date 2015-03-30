@@ -322,32 +322,11 @@ public class GGPlan {
         }
 
         public static String translateSubject(String s) {
-            String st = s.toLowerCase();
-            int res = -1;
-            if(s.equals("m"))
-                res = R.string.maths;
-            else if(st.equals("d"))
-                res = R.string.german;
-            else if(st.equals("e"))
-                res = R.string.english;
-            else if(st.equals("ge"))
-                res = R.string.history;
-            else if(st.equals("phy"))
-                res = R.string.physics;
-            else if(st.equals("geo"))
-                res = R.string.geo;
-            else if(st.equals("la"))
-                res = R.string.latin;
-            else if(st.equals("ch"))
-                res = R.string.chem;
-            else if(st.equals("phi"))
-                res = R.string.phil;
-            else if(st.equals("inf"))
-                res = R.string.compsc;
-            else if(st.equals("evr"))
-                res = R.string.religion;
-
-            return res == -1 ? s : GGApp.GG_APP.getString(res);
+            String t = GGApp.GG_APP.subjects.get(s.toLowerCase());
+            if(t == null)
+                return s;
+            else
+                return t;
         }
     }
 
