@@ -39,7 +39,7 @@
             android:dialogMessage="Von Verplanten für Verplante, Ihr Vertretungsplan!\n\nHauke Oldsen\nLasse Rosenow\nLennart Schmidt\nFabian Schultis"
             android:negativeButtonText=""/>
         <Preference android:title="@string/github"
-            android:summary="https://github.com/Gebatzens/GG-Vertretung"
+            android:summary="https://github.com/GGDevelopers/SchulinfoAPP"
             android:key="githublink"/>
         <Preference android:title="@string/license"
             android:summary="Apache License 2.0"

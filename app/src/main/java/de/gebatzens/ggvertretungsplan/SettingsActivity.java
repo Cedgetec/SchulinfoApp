@@ -123,7 +123,7 @@ public class SettingsActivity extends Activity {
             pref_githublink.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     Intent linkIntent = new Intent(Intent.ACTION_VIEW);
-                    linkIntent.setData(Uri.parse("https://github.com/Gebatzens/GG-Vertretung"));
+                    linkIntent.setData(Uri.parse("https://github.com/GGDevelopers/SchulinfoAPP"));
                     startActivity(linkIntent);
                     return true;
                 }
