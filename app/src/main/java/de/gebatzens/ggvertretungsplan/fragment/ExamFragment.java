@@ -114,6 +114,8 @@ public class ExamFragment extends RemoteDataFragment {
             }
         }
 
+        cardColorIndex = 0;
+
         if(GGApp.GG_APP.exams.size() != 0) {
             createTextView(getResources().getString(R.string.all_exams), toPixels(12), inflater, l);
             for (Exams.ExamItem item : GGApp.GG_APP.exams) {
