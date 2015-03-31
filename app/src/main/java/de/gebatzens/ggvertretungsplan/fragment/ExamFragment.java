@@ -92,7 +92,7 @@ public class ExamFragment extends RemoteDataFragment {
     public void createView(LayoutInflater inflater, ViewGroup view) {
         ScrollView sv = new ScrollView(getActivity());
         sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        sv.setTag("exam_scroll");
+        sv.setTag("gg_scroll");
         LinearLayout l = new LinearLayout(getActivity());
         l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         l.setOrientation(LinearLayout.VERTICAL);

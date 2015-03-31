@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <de.gebatzens.ggvertretungsplan.view.MensaSwipeLayout
+        <de.gebatzens.ggvertretungsplan.view.GGSwipeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/refresh">
@@ -19,7 +19,7 @@
                     android:id="@+id/mensa_content"/>
 
 
-        </de.gebatzens.ggvertretungsplan.view.MensaSwipeLayout>
+        </de.gebatzens.ggvertretungsplan.view.GGSwipeLayout>
 
         <View
             android:layout_width="match_parent"

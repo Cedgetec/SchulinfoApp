@@ -136,7 +136,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
         ScrollView sv = new ScrollView(getActivity());
         sv.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
         sv.setFillViewport(true);
-        sv.setTag("ggfrag_scrollview");
+        sv.setTag("gg_scroll");
         LinearLayout l0 = new LinearLayout(getActivity());
         l0.setOrientation(LinearLayout.VERTICAL);
         LinearLayout l = new LinearLayout(getActivity());

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <de.gebatzens.ggvertretungsplan.view.SubstSwipeLayout
+        <de.gebatzens.ggvertretungsplan.view.GGSwipeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/refresh"
             android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
 
-        </de.gebatzens.ggvertretungsplan.view.SubstSwipeLayout>
+        </de.gebatzens.ggvertretungsplan.view.GGSwipeLayout>
 
         <View
             android:layout_width="fill_parent"
