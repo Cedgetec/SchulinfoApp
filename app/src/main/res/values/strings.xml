@@ -83,6 +83,7 @@
     <string name="filter">Filter</string>
     <string name="filters">Subject filters</string>
     <string name="teacher">Teacher</string>
+    <string name="teacher_shortcut">Teacher shortcut</string>
     <string name="subject_course">Subject</string>
     <string name="invalid_filter">Invalid filter</string>
     <string name="add">Add</string>

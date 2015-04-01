@@ -127,6 +127,7 @@ public class FilterActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         EditText text = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
+                        text.setHint(getApplication().getString(R.string.schoolclass));
                         String text2 = text.getText().toString().trim();
                         if (text2.isEmpty())
                             Toast.makeText(((Dialog) dialog).getContext(), getApplication().getString(R.string.invalid_filter), Toast.LENGTH_SHORT).show();
@@ -150,6 +151,7 @@ public class FilterActivity extends Activity {
                 d.show();
                 Filter.FilterList list = GGApp.GG_APP.filters;
                 EditText mainEdit = (EditText) d.findViewById(R.id.filter_text);
+                mainEdit.setHint(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.schoolclass) : getApplication().getString(R.string.teacher_shortcut));
                 mainEdit.setText(list.mainFilter.filter);
             }
         });
@@ -202,6 +204,7 @@ public class FilterActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         EditText text = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
+                        text.setHint(getApplication().getString(R.string.subject_course));
                         Filter f = new Filter();
                         f.type = Filter.FilterType.SUBJECT;
                         f.filter = text.getText().toString().trim();
@@ -225,6 +228,8 @@ public class FilterActivity extends Activity {
                 AlertDialog d = builder.create();
                 d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 d.show();
+                EditText mainEdit = (EditText) d.findViewById(R.id.filter_text);
+                mainEdit.setHint(getApplication().getString(R.string.subject_course));
             }
         });
 
