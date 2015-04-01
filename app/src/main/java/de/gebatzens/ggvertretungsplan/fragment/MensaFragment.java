@@ -123,7 +123,6 @@ public class MensaFragment extends RemoteDataFragment {
             f2.addView(cv);
             createTextView(getResources().getString(R.string.no_entries), 20, inflater, cv);
             l.addView(f2);
-            Log.w("asd", "ASDASDASD");
         } else {
             Display display = ((WindowManager) getActivity().getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
             int rotation = display.getRotation();
