@@ -51,7 +51,6 @@ public class GGPlan {
         public Throwable throwable;
         public GGPlan today, tomorrow;
 
-
         @Override
         public Throwable getThrowable() {
             return throwable;
