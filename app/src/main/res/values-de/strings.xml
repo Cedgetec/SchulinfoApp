@@ -87,6 +87,7 @@
     <string name="invalid_filter">Ungültiger Filter</string>
     <string name="subject_course">Fach/Kurs</string>
     <string name="teacher">Lehrer</string>
+    <string name="teacher_shortcut">Lehrerkürzel</string>
     <string name="edit_filter">Filter bearbeiten</string>
     <string name="all">Alle</string>
     <string name="no_filter_active">Kein Filter aktiv</string>
