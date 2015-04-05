@@ -105,7 +105,7 @@ public class ExamFragment extends RemoteDataFragment {
         sv.addView(l);
         Exams filtered = GGApp.GG_APP.exams.filter(GGApp.GG_APP.filters);
         if(!filtered.isEmpty()) {
-            createTextView(getResources().getString(R.string.my_exams), toPixels(12), inflater, l);
+            createTextView(getResources().getString(R.string.my_exams), 30, inflater, l);
             for (Exams.ExamItem item : filtered) {
                 CardView cv = createCardItem(item, inflater);
                 if (cv != null) {
@@ -117,7 +117,7 @@ public class ExamFragment extends RemoteDataFragment {
         cardColorIndex = 0;
 
         if(GGApp.GG_APP.exams.size() != 0) {
-            createTextView(getResources().getString(R.string.all_exams), toPixels(12), inflater, l);
+            createTextView(getResources().getString(R.string.all_exams), 30, inflater, l);
             for (Exams.ExamItem item : GGApp.GG_APP.exams) {
                 CardView cv = createCardItem(item, inflater);
                 if (cv != null) {
