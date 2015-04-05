@@ -205,7 +205,7 @@ public class MainActivity extends FragmentActivity {
         mDrawerList.setAdapter(nla);
         nla.mSelected = Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType());
         nla.mColor = GGApp.GG_APP.provider.getColor();
-        //mDrawerList.setItemChecked(Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType()), true);
+        mDrawerList.setItemChecked(nla.mSelected, true);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
