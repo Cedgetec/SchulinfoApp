@@ -64,7 +64,7 @@ public class NewsFragmentListAdapter extends BaseAdapter {
         DateFormat dateFormatter = new SimpleDateFormat("d. MMM yy");
         try
         {
-            String startDate = mArrayList.get(position)[1];
+            String startDate = mArrayList.get(position).date;
             Date parsedDate = parser.parse(startDate);
             formattedDate = dateFormatter.format(parsedDate);
         }
@@ -74,16 +74,16 @@ public class NewsFragmentListAdapter extends BaseAdapter {
         }
 
         txtDate.setText(formattedDate);
-        txtDate.setTextColor(GGApp.GG_APP.provider.getColor());
-        txtTitle.setText(mArrayList.get(position)[4]);
-        txtContent.setText(Html.fromHtml(mArrayList.get(position)[5]));
+        txtDate.setTextColor(GGApp.GG_APP.school.color);
+        txtTitle.setText(mArrayList.get(position).title);
+        txtContent.setText(Html.fromHtml(mArrayList.get(position).text));
         //imgIcon.setImageResource(R.drawable.news_icon_white);
        // imgIcon.setBackgroundResource(R.drawable.news_img_background);
         //GradientDrawable drawable = (GradientDrawable) imgIcon.getBackground();
         //drawable.setColor(GGApp.GG_APP.provider.getColor());
         //imgIcon.setImageResource(mIcnewson[position]);
 
-        if(mDatabaseHelper.checkNewsRead(mArrayList.get(position)[4])) {
+        if(mDatabaseHelper.checkNewsRead(mArrayList.get(position).title)) {
             txtDate.setTextColor(Color.parseColor("#727272"));
             txtDate.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
             txtTitle.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
@@ -100,7 +100,7 @@ public class NewsFragmentListAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return mArrayList.get(position)[4];
+        return mArrayList.get(position).title;
     }
 
     @Override

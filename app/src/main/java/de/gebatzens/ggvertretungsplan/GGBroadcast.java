@@ -33,7 +33,7 @@ import java.util.Properties;
 
 import de.gebatzens.ggvertretungsplan.data.GGPlan;
 import de.gebatzens.ggvertretungsplan.fragment.SubstFragment;
-import de.gebatzens.ggvertretungsplan.provider.VPProvider;
+import de.gebatzens.ggvertretungsplan.provider.GGRemote;
 
 public class GGBroadcast extends BroadcastReceiver {
 
@@ -49,9 +49,9 @@ public class GGBroadcast extends BroadcastReceiver {
             Log.w("ggvp", "wlan not conected");
             return;
         }
-        VPProvider prov = gg.provider;
+        GGRemote r = GGApp.GG_APP.remote;
 
-        GGPlan.GGPlans plans = prov.getPlans(false);
+        GGPlan.GGPlans plans = r.getPlans(false);
         gg.plans = plans;
         GGPlan today = plans.today;
         GGPlan tomo = plans.tomorrow;
@@ -86,7 +86,7 @@ public class GGBroadcast extends BroadcastReceiver {
         String[] tdn = new String[listtd.size()];
         int i = 0;
         for(GGPlan.Entry e : listtd) {
-            tdn[i] = e.hour;
+            tdn[i] = e.lesson;
             i++;
         }
         if(td[0].isEmpty())
@@ -102,7 +102,7 @@ public class GGBroadcast extends BroadcastReceiver {
         String[] tmn = new String[listtm.size()];
         i = 0;
         for(GGPlan.Entry e : listtm) {
-            tmn[i] = e.hour;
+            tmn[i] = e.lesson;
             i++;
         }
         if(tm[0].isEmpty())
@@ -155,8 +155,8 @@ public class GGBroadcast extends BroadcastReceiver {
             Intent intent = new Intent(gg, MainActivity.class);
             intent.putExtra("fragment", "PLAN");
             gg.createNotification(R.drawable.ic_gg_notification, gg.getString(R.string.substitutionplan_change), gg.getString(R.string.the_sp_has_changed),
-                    intent, 123, false, gg.getString(R.string.affected_lessons) , VPProvider.getWeekday(today.date) + ": " + stdt,
-                    VPProvider.getWeekday(tomo.date) + ": " + stdtm);
+                    intent, 123, false, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
+                    tomo.getWeekday() + ": " + stdtm);
         } else
             Log.d("ggvp", "Up to date!");
 

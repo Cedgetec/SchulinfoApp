@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <string-array name="schuleArray" translatable="false">
-        <item>Gymnasium Glinde</item>
-        <item>Sachsenwaldschule</item>
-    </string-array>
-    <string-array name="schuleValues" translatable="false">
-        <item>gg</item>
-        <item>sws</item>
-    </string-array>
     <string-array name="appupdatesArray" translatable="false">
         <item>@string/deny_substitutionplan_updates</item>
         <item>@string/only_update_over_wireless_lan</item>

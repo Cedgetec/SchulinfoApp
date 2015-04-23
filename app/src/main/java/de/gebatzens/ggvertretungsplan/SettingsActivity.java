@@ -47,7 +47,7 @@ import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import de.gebatzens.ggvertretungsplan.provider.GGProvider;
+import de.gebatzens.ggvertretungsplan.provider.GGRemote;
 
 public class SettingsActivity extends Activity {
 
@@ -66,10 +66,6 @@ public class SettingsActivity extends Activity {
             addPreferencesFromResource(R.xml.preferences);
             SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
             sp.registerOnSharedPreferenceChangeListener(this);
-            String pref_schule_content = gg.provider.getFullName();
-
-            Preference pref_schule = findPreference("schule");
-            pref_schule.setSummary(pref_schule_content);
 
             Preference update = findPreference("appupdates");
             update.setSummary(gg.translateUpdateType(gg.getUpdateType()));
@@ -134,7 +130,7 @@ public class SettingsActivity extends Activity {
             pref_username.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    if(gg.provider.getUsername() != null) {
+                    if(gg.remote.isLoggedIn()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle(getResources().getString(R.string.logout));
                         LinearLayout ll = new LinearLayout(getActivity());
@@ -153,7 +149,7 @@ public class SettingsActivity extends Activity {
                         builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                GGApp.GG_APP.provider.logout(false, (Boolean) cb.isChecked());
+                                GGApp.GG_APP.remote.logout(false, cb.isChecked());
                                 changed = true;
                                 pref_username.setSummary(getResources().getString(R.string.youre_not_logged_in));
                                 dialog.dismiss();
@@ -167,7 +163,6 @@ public class SettingsActivity extends Activity {
                         });
                         builder.create().show();
                     } else {
-                        //Überall in der App steht "Du", also sollte das mal einheitlich werden
                         Toast.makeText(getActivity(),getResources().getString(R.string.youre_not_logged_in), Toast.LENGTH_SHORT).show();
                     }
 
@@ -175,9 +170,8 @@ public class SettingsActivity extends Activity {
                 }
             });
 
-            String username = gg.provider.getUsername();
-            if(username != null) {
-                    pref_username.setSummary(username + " (" + getResources().getString(R.string.touch_to_logout) + ")");
+            if(gg.remote.isLoggedIn()) {
+                    pref_username.setSummary(gg.remote.getUsername() + " (" + getResources().getString(R.string.touch_to_logout) + ")");
             }
 
             Preference filter = findPreference("filter");
@@ -213,15 +207,7 @@ public class SettingsActivity extends Activity {
             changed = true;
 
 
-            if (key.equals("schule")) {
-                ListPreference listPref = (ListPreference) pref;
-                pref.setSummary(listPref.getEntry());
-                String username = GGApp.GG_APP.provider.getUsername();
-                if(username == null)
-                    findPreference("authentication_username").setSummary(getResources().getString(R.string.youre_not_logged_in));
-                else
-                    findPreference("authentication_username").setSummary(username + " (" + getResources().getString(R.string.touch_to_logout) + ")");
-            } else if(key.equals("appupdates")) {
+            if(key.equals("appupdates")) {
                 ListPreference listPreference = (ListPreference) pref;
                 listPreference.setSummary(listPreference.getEntry());
             }
@@ -239,7 +225,7 @@ public class SettingsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(GGApp.GG_APP.provider.getTheme());
+        //setTheme(GGApp.GG_APP.provider.getTheme());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             GGApp.GG_APP.setStatusBarColor(getWindow());
         }
@@ -261,7 +247,7 @@ public class SettingsActivity extends Activity {
         }
 
         mToolBar = (Toolbar) contentView.findViewById(R.id.toolbar);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.provider.getColor());
+        mToolBar.setBackgroundColor(GGApp.GG_APP.school.color);
         mToolBar.setTitleTextColor(Color.WHITE);
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -331,7 +317,7 @@ public class SettingsActivity extends Activity {
     public static String getVersion() throws Exception {
         HttpsURLConnection con = (HttpsURLConnection) new URL("https://gymnasium-glinde.logoip.de/infoapp/update.php?version").openConnection();
         con.setRequestMethod("POST");
-        con.setSSLSocketFactory(GGProvider.sslSocketFactory);
+        con.setSSLSocketFactory(GGRemote.sslSocketFactory);
 
         if (con.getResponseCode() == 200) {
             BufferedInputStream in = new BufferedInputStream(con.getInputStream());
@@ -349,7 +335,7 @@ public class SettingsActivity extends Activity {
     public void showUpdateDialog(final String version) throws Exception {
         HttpsURLConnection con_changelog = (HttpsURLConnection) new URL("https://gymnasium-glinde.logoip.de/infoapp/update.php?changelog="+version).openConnection();
         con_changelog.setRequestMethod("GET");
-        con_changelog.setSSLSocketFactory(GGProvider.sslSocketFactory);
+        con_changelog.setSSLSocketFactory(GGRemote.sslSocketFactory);
 
         if(con_changelog.getResponseCode() == 200) {
             BufferedInputStream in_changelog = new BufferedInputStream(con_changelog.getInputStream());

@@ -25,6 +25,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +48,10 @@ public class GGPlan {
 
     }
 
+    public String getWeekday() {
+        return new SimpleDateFormat("EEE").format(date);
+    }
+
     public static class GGPlans implements RemoteDataFragment.RemoteData {
 
         public Throwable throwable;
@@ -57,19 +63,18 @@ public class GGPlan {
         }
 
         @Override
-        public void save(String file) {
-            today.save(file + "today");
-            tomorrow.save(file + "tomorrow");
+        public void save() {
+            today.save("stoday");
+            tomorrow.save("stomorrow");
         }
 
         @Override
-        public boolean load(String file) {
-            return today.load(file + "today") && tomorrow.load(file + "tomorrow");
+        public boolean load() {
+            return today.load("stoday") && tomorrow.load("stomorrow");
         }
     }
 
     public boolean load(String file) {
-        Log.w("ggvp", "Lade " + file);
         entries.clear();
         special.clear();
         loadDate = "";
@@ -83,7 +88,7 @@ public class GGPlan {
                 if(name.equals("loadDate"))
                     loadDate = reader.nextString();
                 else if(name.equals("date")) {
-                    date = new Date(reader.nextLong());
+                    date.setTime(reader.nextLong());
                 } else if(name.equals("messages")) {
                     reader.beginArray();
                     while(reader.hasNext()) {
@@ -95,12 +100,13 @@ public class GGPlan {
                     while(reader.hasNext()) {
                         reader.beginObject();
                         Entry e = new Entry();
+                        e.date = date;
                         while(reader.hasNext()) {
                             String name2 = reader.nextName();
                             if(name2.equals("class"))
                                 e.clazz = reader.nextString();
-                            else if(name2.equals("hour"))
-                                e.hour = reader.nextString();
+                            else if(name2.equals("lesson"))
+                                e.lesson = reader.nextString();
                             else if(name2.equals("subst"))
                                 e.subst = reader.nextString();
                             else if(name2.equals("subject"))
@@ -133,7 +139,7 @@ public class GGPlan {
             reader.close();
 
         } catch(Exception e) {
-            e.printStackTrace();
+            Log.w("ggvp", "Failed to load " + file);
             return false;
         }
         return true;
@@ -160,7 +166,7 @@ public class GGPlan {
             for(Entry e : entries) {
                 writer.beginObject();
                 writer.name("class").value(e.clazz);
-                writer.name("hour").value(e.hour);
+                writer.name("lesson").value(e.lesson);
                 writer.name("subst").value(e.subst);
                 writer.name("subject").value(e.subject);
                 writer.name("comment").value(e.comment);
@@ -225,11 +231,11 @@ public class GGPlan {
         //String missing;
         public String subst = "";
         public String subject = "";
-        //Neues Fach
         public String repsub = "";
         public String comment = "";
-        public String hour = "";
+        public String lesson = "";
         public String room = "";
+        public Date date;
 
         @Override
         public boolean equals(Object o) {
@@ -237,78 +243,74 @@ public class GGPlan {
                 Entry e = (Entry) o;
                 return e.type.equals(type) && e.clazz.equals(clazz) && e.subject.equals(subject)
                         && e.subst.equals(subst) && e.comment.equals(comment)
-                        && e.hour.equals(hour) && e.room.equals(room) && e.repsub.equals(repsub);
+                        && e.lesson.equals(lesson) && e.room.equals(room) && e.repsub.equals(repsub);
             } else
                 return false;
         }
 
         @Override
         public String toString() {
-            return "Entry[" + type + " " + clazz + " " + subject + " " + subst + " " + comment + " " + hour + " " + room + " " + repsub;
+            return "Entry[" + type + " " + clazz + " " + subject + " " + subst + " " + comment + " " + lesson + " " + room + " " + repsub + "]";
         }
 
-        /**
-         * Comment hat Inhalt, type noch nicht
-         *
-         */
         public void unify() {
-            Pattern aufg = Pattern.compile("Aufg. durch (\\w+)");
-            String commentl = comment.toLowerCase();
 
-            Matcher aufgm = aufg.matcher(comment);
+            Matcher task = Pattern.compile("task (.*)").matcher(comment);
 
-            if(commentl.contains("eigenverantwortlich") || commentl.contains("eva")) {
+            if(type.equals("entf")) {
+                type = GGApp.GG_APP.getString(R.string.elemination);
+
+                if(task.find())
+                    comment = GGApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
+            } else if(type.equals("eva")) {
                 type = "EVA";
 
-                if(aufgm.find()) {
-                    comment = GGApp.GG_APP.getResources().getString(R.string.task_through) + " " + aufgm.group(1);
-                } else
-                    comment = "";
+                if(task.find())
+                    comment = GGApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
+            } else if(type.equals("subst")) {
+                type = GGApp.GG_APP.getString(R.string.substitute);
 
-            } else if(commentl.contains("siehe")) {
-                type =  GGApp.GG_APP.getResources().getString(R.string.elemination) + " / " +  GGApp.GG_APP.getResources().getString(R.string.shift);
+                if(task.find())
+                    comment = GGApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
+            } else if(type.equals("exam")) {
+                type = GGApp.GG_APP.getString(R.string.exam);
+            } else if(type.equals("lesson")) {
+                type = GGApp.GG_APP.getString(R.string.lesson);
+            } else if(type.equals("shifted")) {
+                type = GGApp.GG_APP.getString(R.string.elemination) + " / " +  GGApp.GG_APP.getResources().getString(R.string.shift);
 
-                Matcher m = Pattern.compile("[Ss]iehe (.*)").matcher(comment);
-                if (m.find())
-                    if (m.group(1).contains("heute")) {
-                        comment =  GGApp.GG_APP.getResources().getString(R.string.shifted_to_today) + " " + m.group(1).replaceAll("heute,? ", "");
-                    } else {
-                        comment =  GGApp.GG_APP.getResources().getString(R.string.shifted_to) + " " + m.group(1);
-                    }
-            } else if(commentl.contains("f.a.") || commentl.contains("fällt aus") || commentl.contains("entfall")) {
-                type =  GGApp.GG_APP.getResources().getString(R.string.elemination);
+                Matcher m = Pattern.compile("shift (\\S*) (\\S*)").matcher(comment);
 
-                if(aufgm.find())
-                    comment =  GGApp.GG_APP.getResources().getString(R.string.task_through) + " " + aufgm.group(1);
-                else
-                    comment = "";
-            } else if(commentl.contains("klausur")) {
-                type =  GGApp.GG_APP.getResources().getString(R.string.exam);
-                comment = "";
-            } else if(commentl.contains("unterricht findet statt") || commentl.contains("absenz")) {
-                type =  GGApp.GG_APP.getResources().getString(R.string.lesson);
-            } else if(commentl.contains("statt")) {
-                type =  GGApp.GG_APP.getResources().getString(R.string.substitute) + " / " +  GGApp.GG_APP.getResources().getString(R.string.shift);
+                if(m.find()) {
+                    Date sdate = parseDate(m.group(1));
+                    String lesson = m.group(2);
 
-                Matcher m1 = Pattern.compile("[Ss]tatt (.*?)Std.").matcher(comment);
-                Matcher m2 = Pattern.compile(":(.*)").matcher(comment);
+                    if(sdate.equals(date))
+                        comment = GGApp.GG_APP.getString(R.string.shifted_to_today) + " " + lesson + ". " + GGApp.GG_APP.getString(R.string.lhour);
+                    else
+                        comment = GGApp.GG_APP.getString(R.string.shifted_to) + " " + new SimpleDateFormat("EEE").format(sdate) + ", " +
+                                DateFormat.getDateInstance().format(sdate) + " " + lesson + ". " + GGApp.GG_APP.getString(R.string.lhour);
+                }
+            } else if(type.equals("instead")) {
+                type = GGApp.GG_APP.getString(R.string.substitute) + " / " +  GGApp.GG_APP.getResources().getString(R.string.shift);
 
-                if(m1.find())
-                    comment =  GGApp.GG_APP.getResources().getString(R.string.instead_of) + " " + m1.group(1).replaceAll("\\w+ \\(heute\\)", "").replaceAll("heute,? ", "") + " " +  GGApp.GG_APP.getResources().getString(R.string.lhour);
+                Matcher m = Pattern.compile("instead (\\S*) (\\S*)").matcher(comment);
 
-                if(m2.find())
-                    repsub = m2.group(1).trim();
-            } else if(commentl.contains("betreuung")) {
-                type =  GGApp.GG_APP.getResources().getString(R.string.supervision);
-                comment = "";
-            } else {
-                type =  GGApp.GG_APP.getResources().getString(R.string.substitute);
+                if(m.find()) {
+                    Date idate = parseDate(m.group(1));
+                    String lesson = m.group(2);
 
-                if(aufgm.find())
-                    comment =  GGApp.GG_APP.getResources().getString(R.string.task_through) + " " + aufgm.group(1);
+                    if(idate.equals(date))
+                        comment = GGApp.GG_APP.getString(R.string.instead_of) + " " + lesson + ". " + GGApp.GG_APP.getString(R.string.lhour);
+                    else
+                        comment = GGApp.GG_APP.getString(R.string.instead_of) + " " + new SimpleDateFormat("EEE").format(idate) + ", " +
+                                DateFormat.getDateInstance().format(idate) + " " + lesson + ". " + GGApp.GG_APP.getString(R.string.lhour);
+                }
 
-                if(commentl.contains("mittag"))
-                    comment =  GGApp.GG_APP.getResources().getString(R.string.lunch);
+            } else if(type.equals("supervision")) {
+                type = GGApp.GG_APP.getString(R.string.supervision);
+            } else if(type.equals("lunch")) {
+                type = GGApp.GG_APP.getString(R.string.lunch);
             }
 
             if(subject.isEmpty() && !repsub.isEmpty())
@@ -326,6 +328,15 @@ public class GGPlan {
                 return s;
             else
                 return t;
+        }
+    }
+
+    public static Date parseDate(String date) {
+        SimpleDateFormat fmt = new SimpleDateFormat("d.M.yyyy");
+        try {
+            return fmt.parse(date);
+        } catch(Exception e) {
+            return null;
         }
     }
 

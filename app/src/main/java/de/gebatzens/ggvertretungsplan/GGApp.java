@@ -41,9 +41,7 @@ import de.gebatzens.ggvertretungsplan.data.GGPlan;
 import de.gebatzens.ggvertretungsplan.data.Mensa;
 import de.gebatzens.ggvertretungsplan.data.News;
 import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
-import de.gebatzens.ggvertretungsplan.provider.GGProvider;
-import de.gebatzens.ggvertretungsplan.provider.SWSProvider;
-import de.gebatzens.ggvertretungsplan.provider.VPProvider;
+import de.gebatzens.ggvertretungsplan.provider.GGRemote;
 
 public class GGApp extends Application {
 
@@ -56,11 +54,11 @@ public class GGApp extends Application {
     public Exams exams;
 
     public MainActivity activity;
-    public VPProvider provider;
+    public GGRemote remote;
+    public School school;
 
     private SharedPreferences preferences;
 
-    private HashMap<String, Class<? extends VPProvider>> mProviderList = new HashMap<String, Class<? extends VPProvider>>();
     public Filter.FilterList filters = new Filter.FilterList();
     public HashMap<String, String> subjects = new HashMap<String, String>();
 
@@ -68,10 +66,14 @@ public class GGApp extends Application {
     public void onCreate() {
         super.onCreate();
         GG_APP = this;
-        registerProviders();
+        remote = new GGRemote();
+        school = new School();
+        school.sid = "gg";
+        school.name = "Gymnasium Glinde";
+        school.loginNeeded = true;
+        school.website = "http://gymglinde.de/";
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         GGBroadcast.createAlarm(this);
-        recreateProvider();
         filters = FilterActivity.loadFilter();
         loadSubjectMap();
 
@@ -90,12 +92,6 @@ public class GGApp extends Application {
             default:
                 return null;
         }
-    }
-
-    public void registerProviders() {
-        mProviderList.clear();
-        mProviderList.put("gg", GGProvider.class);
-        mProviderList.put("sws", SWSProvider.class);
     }
 
     private void loadSubjectMap() {
@@ -130,7 +126,7 @@ public class GGApp extends Application {
 
             mBuilder.setStyle(inboxStyle);
         }
-        mBuilder.setColor(GGApp.GG_APP.provider.getDarkColor());
+        mBuilder.setColor(GGApp.GG_APP.school.darkColor);
         if(important) {
             mBuilder.setVibrate(new long[]{0, 1000});
             mBuilder.setLights(Color.argb(255, 0, 0, 255), 1000, 1000);
@@ -162,25 +158,6 @@ public class GGApp extends Application {
 
     public void showToast(String s) {
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-    }
-
-    public void recreateProvider() {
-        createProvider(getSelectedProvider());
-        if(provider instanceof GGProvider)
-            startService(new Intent(this, MQTTService.class));
-    }
-
-    public void createProvider(String id) {
-        Log.w("ggvp", "createProvider " + id);
-        Class<? extends VPProvider> clas = mProviderList.get(id);
-        if(clas == null)
-            throw new RuntimeException("Provider for " + id + " not found");
-
-        try {
-            provider = (VPProvider) clas.getConstructors()[0].newInstance(this, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public int translateUpdateType(String s) {
@@ -215,27 +192,25 @@ public class GGApp extends Application {
     }
 
     public void refreshAsync(final Runnable finished, final boolean updateFragments, final FragmentType type) {
-        Log.w("ggvp", "refreshAsync " + type + " " + provider);
-
         new Thread() {
             @Override
             public void run() {
                 boolean update = updateFragments;
                 switch(type) {
                     case PLAN:
-                        GGPlan.GGPlans nplans = provider.getPlans(updateFragments);
+                        GGPlan.GGPlans nplans = remote.getPlans(updateFragments);
                         //if(plans != null)
                         //    update = update && !(nplans[0].equals(plans[0]) && nplans[1].equals(plans[1]));
                         plans = nplans;
                         break;
                     case NEWS:
-                        news = provider.getNews();
+                        news = remote.getNews();
                         break;
                     case MENSA:
-                        mensa = provider.getMensa();
+                        mensa = remote.getMensa();
                         break;
                     case EXAMS:
-                        exams = provider.getExams();
+                        exams = remote.getExams();
                         break;
                 }
 
@@ -257,7 +232,7 @@ public class GGApp extends Application {
     public void setStatusBarColor(Window w) {
         w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        w.setStatusBarColor(GGApp.GG_APP.provider.getDarkColor());
+        w.setStatusBarColor(GGApp.GG_APP.school.darkColor);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

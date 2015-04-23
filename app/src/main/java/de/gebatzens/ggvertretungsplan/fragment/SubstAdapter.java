@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.MainActivity;
 import de.gebatzens.ggvertretungsplan.R;
-import de.gebatzens.ggvertretungsplan.provider.VPProvider;
 
 public class SubstAdapter extends FragmentPagerAdapter {
 
@@ -91,9 +90,9 @@ public class SubstAdapter extends FragmentPagerAdapter {
             case 0:
                 return GGApp.GG_APP.getResources().getString(R.string.overview);
             case 1:
-                return GGApp.GG_APP.plans == null ? GGApp.GG_APP.getResources().getString(R.string.today)  : VPProvider.getWeekday(GGApp.GG_APP.plans.today.date);
+                return GGApp.GG_APP.plans == null ? GGApp.GG_APP.getResources().getString(R.string.today)  : GGApp.GG_APP.plans.today.getWeekday();
             case 2:
-                return GGApp.GG_APP.plans == null ? GGApp.GG_APP.getResources().getString(R.string.tomorrow) : VPProvider.getWeekday(GGApp.GG_APP.plans.tomorrow.date);
+                return GGApp.GG_APP.plans == null ? GGApp.GG_APP.getResources().getString(R.string.tomorrow) : GGApp.GG_APP.plans.tomorrow.getWeekday();
             default:
                 return null;
         }

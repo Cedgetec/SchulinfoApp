@@ -32,8 +32,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.nio.charset.Charset;
 
-import de.gebatzens.ggvertretungsplan.provider.GGProvider;
-import de.gebatzens.ggvertretungsplan.provider.VPProvider;
+import de.gebatzens.ggvertretungsplan.provider.GGRemote;
 
 public class MQTTService extends IntentService {
 
@@ -50,26 +49,21 @@ public class MQTTService extends IntentService {
             return;
         started = true;
         Log.w("ggmqtt", "MQTT Service started");
-        VPProvider provider = GGApp.GG_APP.provider;
-        if(!(provider instanceof GGProvider)) {
-            Log.w("ggmqtt", "Provider not GGProvider " + provider);
-            return;
-        }
 
         final String token;
-        if((token = provider.prefs.getString("token", null)) == null) {
+        if((token = GGApp.GG_APP.remote.getToken()) == null) {
             Log.w("ggmqtt", "Not Logged in");
             return;
         }
 
 
         try {
-            MqttClient client = new MqttClient("ssl://gymnasium-glinde.logoip.de:1883", "SchulinfoApp/" + provider.getUsername(), new MemoryPersistence());
+            MqttClient client = new MqttClient("ssl://gymnasium-glinde.logoip.de:1883", "SchulinfoApp/" + GGApp.GG_APP.remote.getUsername(), new MemoryPersistence());
             MqttConnectOptions options = new MqttConnectOptions();
-            options.setSocketFactory(GGProvider.sslSocketFactory);
+            options.setSocketFactory(GGRemote.sslSocketFactory);
             options.setCleanSession(true);
             client.connect(options);
-            client.subscribe("gg/schulinfoapp/" + token);
+            client.subscribe(GGApp.GG_APP.school.sid + "/schulinfoapp/" + token);
             Log.w("ggmqtt", "Connected and subscribed " + token);
 
             client.setCallback(new MqttCallback() {

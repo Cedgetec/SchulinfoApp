@@ -25,6 +25,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.widget.Toolbar;
 import android.util.JsonReader;
 import android.util.JsonWriter;
@@ -61,7 +62,7 @@ public class FilterActivity extends Activity {
 
     @Override
     public void onCreate(Bundle bundle) {
-        setTheme(GGApp.GG_APP.provider.getTheme());
+        //setTheme(GGApp.GG_APP.school.getTheme());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             GGApp.GG_APP.setStatusBarColor(getWindow());
         }
@@ -77,9 +78,9 @@ public class FilterActivity extends Activity {
         setListViewHeightBasedOnChildren(listView);
 
         TextView tv = (TextView) findViewById(R.id.filter_sep_1);
-        tv.setTextColor(GGApp.GG_APP.provider.getColor());
+        tv.setTextColor(GGApp.GG_APP.school.color);
         TextView tv2 = (TextView) findViewById(R.id.filter_sep_2);
-        tv2.setTextColor(GGApp.GG_APP.provider.getColor());
+        tv2.setTextColor(GGApp.GG_APP.school.color);
 
         Filter.FilterList list = GGApp.GG_APP.filters;
         mainFilterCategory = (TextView) findViewById(R.id.filter_main_category);
@@ -157,7 +158,7 @@ public class FilterActivity extends Activity {
         });
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.provider.getColor());
+        mToolBar.setBackgroundColor(GGApp.GG_APP.school.color);
         mToolBar.setTitleTextColor(Color.WHITE);
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -192,7 +193,7 @@ public class FilterActivity extends Activity {
         mAddFilterButton.setBackgroundResource(R.drawable.floating_action_circle);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             StateListDrawable drawable = (StateListDrawable) mAddFilterButton.getBackground();
-            drawable.setColorFilter(GGApp.GG_APP.provider.getColor(), PorterDuff.Mode.SRC_ATOP);
+            drawable.setColorFilter(GGApp.GG_APP.school.color, PorterDuff.Mode.SRC_ATOP);
         }
         mAddFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override

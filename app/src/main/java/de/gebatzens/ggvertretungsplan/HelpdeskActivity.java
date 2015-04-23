@@ -38,7 +38,7 @@ import java.net.URLEncoder;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import de.gebatzens.ggvertretungsplan.provider.GGProvider;
+import de.gebatzens.ggvertretungsplan.provider.GGRemote;
 
 public class HelpdeskActivity extends Activity {
 
@@ -46,7 +46,7 @@ public class HelpdeskActivity extends Activity {
 
     @Override
     public void onCreate(Bundle bundle) {
-        setTheme(GGApp.GG_APP.provider.getTheme());
+        //setTheme(GGApp.GG_APP.provider.getTheme());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             GGApp.GG_APP.setStatusBarColor(getWindow());
         }
@@ -54,7 +54,7 @@ public class HelpdeskActivity extends Activity {
         setContentView(R.layout.activity_helpdesk);
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.provider.getColor());
+        mToolBar.setBackgroundColor(GGApp.GG_APP.school.color);
         mToolBar.setTitleTextColor(Color.WHITE);
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -71,8 +71,8 @@ public class HelpdeskActivity extends Activity {
         final TextView mTextViewSubject = (TextView) findViewById(R.id.reportSubject);
         final TextView mTextViewMessage = (TextView) findViewById(R.id.reportMessage);
 
-        String s1 = GGApp.GG_APP.provider.prefs.getString("firstname", null);
-        String s2 = GGApp.GG_APP.provider.prefs.getString("lastname", null);
+        String s1 = GGApp.GG_APP.remote.getFirstName();
+        String s2 = GGApp.GG_APP.remote.getLastName();
         if(s1 != null && s2 != null) {
             mTextViewName.setText(s1 + " " + s2);
         }
@@ -94,13 +94,13 @@ public class HelpdeskActivity extends Activity {
                                         HttpsURLConnection con = (HttpsURLConnection) new URL("https://gymnasium-glinde.logoip.de/infoapp/infoapp_helpdesk.php").openConnection();
 
                                         con.setRequestMethod("POST");
-                                        con.setSSLSocketFactory(GGProvider.sslSocketFactory);
+                                        con.setSSLSocketFactory(GGRemote.sslSocketFactory);
 
                                         con.setDoOutput(true);
                                         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
                                         String urlParams;
-                                        if (GGApp.GG_APP.provider.getUsername() != null && !GGApp.GG_APP.provider.getUsername().equals("")) {
-                                            urlParams = "name=" + URLEncoder.encode(params[0], "UTF-8") + "&email=" + URLEncoder.encode(params[1], "UTF-8") + "&subject=" + URLEncoder.encode(params[2], "UTF-8") + "&message=" + URLEncoder.encode(params[3], "UTF-8") + "&username=" + URLEncoder.encode(GGApp.GG_APP.provider.getUsername(), "UTF-8");
+                                        if (GGApp.GG_APP.remote.getUsername() != null && !GGApp.GG_APP.remote.getUsername().equals("")) {
+                                            urlParams = "name=" + URLEncoder.encode(params[0], "UTF-8") + "&email=" + URLEncoder.encode(params[1], "UTF-8") + "&subject=" + URLEncoder.encode(params[2], "UTF-8") + "&message=" + URLEncoder.encode(params[3], "UTF-8") + "&username=" + URLEncoder.encode(GGApp.GG_APP.remote.getUsername(), "UTF-8");
                                         } else {
                                             urlParams = "name=" + URLEncoder.encode(params[0], "UTF-8") + "&email=" + URLEncoder.encode(params[1], "UTF-8") + "&subject=" + URLEncoder.encode(params[2], "UTF-8") + "&message=" + URLEncoder.encode(params[3], "UTF-8");
                                         }

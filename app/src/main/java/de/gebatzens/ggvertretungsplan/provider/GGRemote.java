@@ -16,12 +16,15 @@
 
 package de.gebatzens.ggvertretungsplan.provider;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.text.Html;
+import android.provider.Settings;
+import android.util.JsonReader;
 import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
@@ -65,16 +68,18 @@ import de.gebatzens.ggvertretungsplan.data.GGPlan;
 import de.gebatzens.ggvertretungsplan.data.Mensa;
 import de.gebatzens.ggvertretungsplan.data.News;
 
-public class GGProvider extends VPProvider {
+public class GGRemote {
 
     public static final String BASE_URL = "https://gymnasium-glinde.logoip.de/";
+    public static final String PREFS_NAME = "remoteprefs";
     public static final GGImageGetter IMAGE_GETTER = new GGImageGetter();
 
-    GGApp ggapp;
+    SharedPreferences prefs;
     Session session;
 
-    public GGProvider(GGApp gg, String id) {
-        super(gg, id);
+    public GGRemote() {
+
+        prefs = GGApp.GG_APP.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
         new Thread() {
             @Override
@@ -93,7 +98,7 @@ public class GGProvider extends VPProvider {
         if(token == null || token.isEmpty())
             return;
 
-        HttpsURLConnection con = openConnection(BASE_URL + "infoapp/token.php?token=" + token, false);
+        HttpsURLConnection con = openConnection("/infoapp/token.php?token=" + token, false);
 
         if(con.getResponseCode() == 401) {
             logout(true, true);
@@ -122,13 +127,12 @@ public class GGProvider extends VPProvider {
 
     }
 
-    @Override
     public void logout(boolean logout_local_only, final boolean delete_token) {
-        GGApp.GG_APP.deleteFile("gguserinfo");
-        GGApp.GG_APP.deleteFile("ggvptoday");
-        GGApp.GG_APP.deleteFile("ggvptomorrow");
-        GGApp.GG_APP.deleteFile("ggnews");
-        GGApp.GG_APP.deleteFile("ggmensa");
+        GGApp.GG_APP.deleteFile(PREFS_NAME);
+        GGApp.GG_APP.deleteFile("vptoday");
+        GGApp.GG_APP.deleteFile("vptomorrow");
+        GGApp.GG_APP.deleteFile("news");
+        GGApp.GG_APP.deleteFile("mensa");
         GGApp.GG_APP.stopService(new Intent(GGApp.GG_APP, MQTTService.class));
 
         prefs.edit().clear().commit();
@@ -188,9 +192,7 @@ public class GGProvider extends VPProvider {
         session = null;
     }
 
-    @Override
     public GGPlan.GGPlans getPlans(boolean toast) {
-        Log.w("ggvp", "Get GG Plans " + session);
         GGPlan.GGPlans plans = new GGPlan.GGPlans();
         plans.tomorrow = new GGPlan();
         plans.today = new GGPlan();
@@ -200,72 +202,56 @@ public class GGProvider extends VPProvider {
         try {
             if (session == null) {
                 startNewSession(prefs.getString("token", null));
+
+                // token expired
                 if (session == null)
                     throw new VPLoginException();
             }
 
-            HttpsURLConnection con = openConnection(BASE_URL + "infoapp/infoapp_provider_new.php?site=substitutionplan&sessid=" + session.id, true);
+            HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=substitutionplan&sessid=" + session.id, true);
             con.setRequestMethod("GET");
 
-            if(con.getResponseCode() == 401) {
+            /*if(con.getResponseCode() == 401) {
                 logout(true, true);
                 throw new VPLoginException();
-            } else if(con.getResponseCode() == 419) {
+            } else */if(con.getResponseCode() == 419) {
                 startNewSession(prefs.getString("token", null));
                 if(session == null) {
-                    //Should not happen
+                    //Should happen when token expires
                     throw new VPLoginException();
                 } else {
                     return getPlans(toast);
                 }
             }
 
-                XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(new BufferedReader(new InputStreamReader(con.getInputStream())));
-            parser.nextTag();
-            parser.require(XmlPullParser.START_TAG, null, "substitutionplan");
+            JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
+            reader.beginObject();
 
-            while(parser.next() != XmlPullParser.END_TAG) {
-                if(parser.getEventType() != XmlPullParser.START_TAG)
-                    continue;
-
-                String name = parser.getName();
-                if(name.equals("metadata")) {
-                    parser.require(XmlPullParser.START_TAG, null, "metadata");
-                    while(parser.next() != XmlPullParser.END_TAG) {
-                        if(parser.getEventType() != XmlPullParser.START_TAG)
-                            continue;
-
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                        String name2 = parser.getName();
-                        if(name2.equals("date-today"))
-                            plans.today.date = format.parse(parser.nextText());
-                        else if(name2.equals("date-tomorrow"))
-                            plans.tomorrow.date = format.parse(parser.nextText());
-
+            while(reader.hasNext()) {
+                String name = reader.nextName();
+                if(name.equals("today"))
+                    plans.today.date = GGPlan.parseDate(reader.nextString());
+                else if(name.equals("tomorrow"))
+                    plans.tomorrow.date = GGPlan.parseDate(reader.nextString());
+                else if(name.equals("entries_today"))
+                    getPlan(reader, plans.today);
+                else if(name.equals("entries_tomorrow"))
+                    getPlan(reader, plans.tomorrow);
+                else if(name.equals("messages_today")) {
+                    reader.beginArray();
+                    while(reader.hasNext()) {
+                        plans.today.special.add("&#8226;  " + reader.nextString());
                     }
-                } else if(name.equals("list-today")) {
-                    getPlan(parser, plans.today);
-                } else if(name.equals("list-tomorrow")) {
-                    getPlan(parser, plans.tomorrow);
-                } else if(name.equals("important-today")) {
-                    while(parser.next() != XmlPullParser.END_TAG) {
-                        if(parser.getEventType() != XmlPullParser.START_TAG)
-                            continue;
-
-                        if(parser.getName().equals("item"))
-                            plans.today.special.add("&#8226;  " + parser.nextText());
+                    reader.endArray();
+                } else if(name.equals("messages_tomorrow")) {
+                    reader.beginArray();
+                    while(reader.hasNext()) {
+                        plans.tomorrow.special.add("&#8226;  " + reader.nextString());
                     }
-                } else if(name.equals("important-tomorrow")) {
-                    while(parser.next() != XmlPullParser.END_TAG) {
-                        if(parser.getEventType() != XmlPullParser.START_TAG)
-                            continue;
+                    reader.endArray();
+                } else
+                    reader.skipValue();
 
-                        if(parser.getName().equals("item"))
-                            plans.tomorrow.special.add("&#8226;  " + parser.nextText());
-                    }
-                }
             }
 
         } catch(Exception e) {
@@ -275,7 +261,7 @@ public class GGProvider extends VPProvider {
         }
 
         if(plans.throwable != null) {
-            if (plans.load("ggvp")) {
+            if (plans.load()) {
                 final Throwable t = plans.throwable;
                 plans.throwable = null;
                 if(toast)
@@ -288,7 +274,7 @@ public class GGProvider extends VPProvider {
                     });
             }
         } else {
-            plans.save("ggvp");
+            plans.save();
         }
 
         return plans;
@@ -298,40 +284,43 @@ public class GGProvider extends VPProvider {
         return R.array.orangeColors;
     }
 
-    private void getPlan(XmlPullParser parser, GGPlan p) throws Exception {
+    private void getPlan(JsonReader reader, GGPlan p) throws Exception {
 
-        while(parser.next() != XmlPullParser.END_TAG) {
-            if(parser.getEventType() != XmlPullParser.START_TAG)
-                continue;
+        reader.beginArray();
 
-            if(parser.getName().equals("item"))  {
-                GGPlan.Entry e = new GGPlan.Entry();
-                p.entries.add(e);
-                while(parser.next() != XmlPullParser.END_TAG) {
-                    if(parser.getEventType() != XmlPullParser.START_TAG)
-                        continue;
-
-                    String name = parser.getName();
-                    if(name.equals("class")) {
-                        e.clazz = parser.nextText().trim();
-                    } else if(name.equals("hour")) {
-                        e.hour = parser.nextText().trim();
-                    } else if(name.equals("substitutor")) {
-                        e.subst = parser.nextText().trim();
-                    } else if(name.equals("subject")) {
-                        e.subject = parser.nextText().trim();
-                    } else if(name.equals("comment")) {
-                        e.comment = parser.nextText().trim();
-                    } else if(name.equals("date")) {
-                        parser.nextText();
-                    } else if(name.equals("room")) {
-                        e.room = parser.nextText().trim();
-                    }
-                }
-                e.unify();
+        while(reader.hasNext()) {
+            reader.beginObject();
+            GGPlan.Entry e = new GGPlan.Entry();
+            e.date = p.date;
+            p.entries.add(e);
+            while(reader.hasNext()) {
+                String name = reader.nextName();
+                if(name.equals("class"))
+                    e.clazz = reader.nextString();
+                else if(name.equals("lesson"))
+                    e.lesson = reader.nextString();
+                else if(name.equals("subsitutor"))
+                    e.subst = reader.nextString();
+                else if(name.equals("subject"))
+                    e.subject = reader.nextString();
+                else if(name.equals("subst_subject"))
+                    e.repsub = reader.nextString();
+                else if(name.equals("type"))
+                    e.type = reader.nextString();
+                else if(name.equals("comment"))
+                    e.comment = reader.nextString();
+                else if(name.equals("room"))
+                    e.room = reader.nextString();
+                else
+                    reader.skipValue();
 
             }
+            e.unify();
+
+            reader.endObject();
         }
+
+        reader.endArray();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         p.loadDate = GGApp.GG_APP.getResources().getString(R.string.as_of) + ": " + sdf.format(new Date());
@@ -346,78 +335,48 @@ public class GGProvider extends VPProvider {
                     throw new VPLoginException();
             }
 
-            HttpsURLConnection con = openConnection(BASE_URL + "infoapp/infoapp_provider_new.php?site=news&sessid=" + session.id, true);
+            HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=news&sessid=" + session.id, true);
             con.setRequestMethod("GET");
 
-            /*
-             * 0 - ID
-             * 1 - Date
-             * 2 - Topic
-             * 3 - Source
-             * 4 - Title
-             * 5 - Text
-             */
-
-            if(con.getResponseCode() == 401) {
+            /*if(con.getResponseCode() == 401) {
                 logout(true, true);
                 throw new VPLoginException();
-            } else if(con.getResponseCode() == 419) {
+            } else */if(con.getResponseCode() == 419) {
                 startNewSession(prefs.getString("token", null));
                 if(session == null) {
-                    //Should not happen
                     throw new VPLoginException();
                 } else {
                     return getNews();
                 }
             } else if (con.getResponseCode() == 200) {
-                XmlPullParser parser = Xml.newPullParser();
-                parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-                parser.setInput(new BufferedReader(new InputStreamReader(con.getInputStream())));
-                parser.nextTag();
-                parser.require(XmlPullParser.START_TAG, null, "news");
-
-                while (parser.next() != XmlPullParser.END_TAG) {
-                    if (parser.getEventType() != XmlPullParser.START_TAG)
-                        continue;
-
-                    String name = parser.getName();
-                    if (name.equals("item")) {
-
-                        String[] s = new String[6];
-                        n.add(s);
-
-                        while (parser.next() != XmlPullParser.END_TAG) {
-                            if (parser.getEventType() != XmlPullParser.START_TAG)
-                                continue;
-
-                            String text = parser.nextText();
-
-                            if (parser.getName().equals("id"))
-                                s[0] = text;
-
-                            else if (parser.getName().equals("date"))
-                                s[1] = text;
-
-                            else if (parser.getName().equals("topic"))
-                                s[2] = text;
-
-                            else if (parser.getName().equals("source"))
-                                s[3] = text;
-
-                            else if (parser.getName().equals("title"))
-                                s[4] = text;
-
-                            else if (parser.getName().equals("text"))
-                                s[5] = text;
-
-                        }
+                JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
+                reader.beginArray();
+                while(reader.hasNext()) {
+                    reader.beginObject();
+                    News.Entry e = new News.Entry();
+                    n.add(e);
+                    while(reader.hasNext()) {
+                        String name = reader.nextName();
+                        if(name.equals("id"))
+                            e.id = reader.nextString();
+                        else if(name.equals("source"))
+                            e.source = reader.nextString();
+                        else if(name.equals("topic"))
+                            e.topic = reader.nextString();
+                        else if(name.equals("title"))
+                            e.title = reader.nextString();
+                        else if(name.equals("text"))
+                            e.text = reader.nextString();
+                        else
+                            reader.skipValue();
                     }
                 }
-                n.save("ggnews");
+
+                n.save();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            if(!n.load("ggnews")) {
+            if(!n.load()) {
                 n.throwable = e;
                 return n;
             }
@@ -436,74 +395,50 @@ public class GGProvider extends VPProvider {
                     throw new VPLoginException();
             }
 
-            HttpsURLConnection con = openConnection(BASE_URL + "infoapp/infoapp_provider_new.php?site=mensa&sessid=" + session.id, true);
+            HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=mensa&sessid=" + session.id, true);
             con.setRequestMethod("GET");
 
-            /*
-             * 0 - ID
-             * 1 - Date
-             * 2 - Meal
-             * 3 - Garnish
-             * 4 - Vegi
-             */
-
-            if(con.getResponseCode() == 401) {
+            /*if(con.getResponseCode() == 401) {
                 logout(true, true);
                 throw new VPLoginException();
-            } else if(con.getResponseCode() == 419) {
+            } else */if(con.getResponseCode() == 419) {
                 startNewSession(prefs.getString("token", null));
                 if(session == null) {
-                    //Should not happen
                     throw new VPLoginException();
                 } else {
                     return getMensa();
                 }
             } else if (con.getResponseCode() == 200) {
-                XmlPullParser parser = Xml.newPullParser();
-                parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-                parser.setInput(new BufferedReader(new InputStreamReader(con.getInputStream())));
-                parser.nextTag();
-                parser.require(XmlPullParser.START_TAG, null, "mensa");
-
-                while (parser.next() != XmlPullParser.END_TAG) {
-                    if (parser.getEventType() != XmlPullParser.START_TAG)
-                        continue;
-
-                    String name = parser.getName();
-                    if (name.equals("item")) {
-
-                        Mensa.MensaItem item = new Mensa.MensaItem();
-                        m.add(item);
-
-                        while (parser.next() != XmlPullParser.END_TAG) {
-                            if (parser.getEventType() != XmlPullParser.START_TAG)
-                                continue;
-
-                            if (parser.getName().equals("id"))
-                                item.id = parser.nextText();
-
-                            else if (parser.getName().equals("date"))
-                                item.date = parser.nextText();
-
-                            else if (parser.getName().equals("meal"))
-                                item.meal = parser.nextText();
-
-                            else if (parser.getName().equals("garnish"))
-                                item.garnish = parser.nextText();
-
-                            else if (parser.getName().equals("vegi"))
-                                item.vegi = parser.nextText();
-
-                            else if (parser.getName().equals("image"))
-                                item.image = parser.nextText();
-                        }
+                JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
+                reader.beginArray();
+                while(reader.hasNext()) {
+                    Mensa.MensaItem i = new Mensa.MensaItem();
+                    m.add(i);
+                    reader.beginObject();
+                    while(reader.hasNext()) {
+                        String name = reader.nextName();
+                        if(name.equals("id"))
+                            i.id = reader.nextString();
+                        else if(name.equals("date"))
+                            i.date = reader.nextString();
+                        else if(name.equals("meal"))
+                            i.meal = reader.nextString();
+                        else if(name.equals("garnish"))
+                            i.garnish = reader.nextString();
+                        else if(name.equals("veg"))
+                            i.vegi = reader.nextString();
+                        else if(name.equals("image"))
+                            i.image = reader.nextString();
+                        else
+                            reader.skipValue();
                     }
                 }
-                m.save("ggmensa");
+
+                m.save();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            if(!m.load("ggmensa")) {
+            if(!m.load()) {
                 m.throwable = e;
                 return m;
             }
@@ -515,7 +450,7 @@ public class GGProvider extends VPProvider {
 
     public Bitmap getMensaImage(String filename) throws IOException {
 
-        HttpsURLConnection con = openConnection("https://gymnasium-glinde.logoip.de/infoapp/infoapp_provider_new.php?site=mensa_image&sessid=" + session.id + "&filename=" + filename, true);
+        HttpsURLConnection con = openConnection("/infoapp/infoapp_provider_new.php?site=mensa_image&sessid=" + session.id + "&filename=" + filename, true);
         con.setRequestMethod("GET");
 
         if(con.getResponseCode() == 200) {
@@ -525,9 +460,7 @@ public class GGProvider extends VPProvider {
         }
     }
 
-    @Override
     public Exams getExams() {
-        Log.w("ggvp", "get GG Exams " + session);
         Exams exams = new Exams();
         try {
             if (session == null) {
@@ -536,69 +469,49 @@ public class GGProvider extends VPProvider {
                     throw new VPLoginException();
             }
 
-            HttpsURLConnection con = openConnection("https://gymnasium-glinde.logoip.de/infoapp/infoapp_provider_new.php?site=examplan&sessid=" + session.id, true);
+            HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=examplan&sessid=" + session.id, true);
             con.setRequestMethod("GET");
 
-            if(con.getResponseCode() == 401) {
+            /*if(con.getResponseCode() == 401) {
                 logout(true, true);
                 throw new VPLoginException();
-            } else if(con.getResponseCode() == 419) {
+            } else */if(con.getResponseCode() == 419) {
                 startNewSession(prefs.getString("token", null));
                 if(session == null) {
-                    //Should not happen
                     throw new VPLoginException();
                 } else {
                     return getExams();
                 }
             } else if (con.getResponseCode() == 200) {
-                XmlPullParser parser = Xml.newPullParser();
-                parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-                parser.setInput(new BufferedReader(new InputStreamReader(con.getInputStream())));
-                parser.nextTag();
-                parser.require(XmlPullParser.START_TAG, null, "examplan");
-
-                while (parser.next() != XmlPullParser.END_TAG) {
-                    if (parser.getEventType() != XmlPullParser.START_TAG)
-                        continue;
-
-                    String name = parser.getName();
-                    if (name.equals("item")) {
-
-                        Exams.ExamItem s = new Exams.ExamItem();
-                        exams.add(s);
-
-                        while (parser.next() != XmlPullParser.END_TAG) {
-                            if (parser.getEventType() != XmlPullParser.START_TAG)
-                                continue;
-
-                            if (parser.getName().equals("id"))
-                                s.id = parser.nextText();
-
-                            else if (parser.getName().equals("date"))
-                                s.date = parser.nextText();
-
-                            else if (parser.getName().equals("schoolclass"))
-                                s.schoolclass = parser.nextText();
-
-                            else if (parser.getName().equals("lesson"))
-                                s.lesson = parser.nextText();
-
-                            else if (parser.getName().equals("length"))
-                                s.length = parser.nextText();
-
-                            else if (parser.getName().equals("subject"))
-                                s.subject = parser.nextText();
-
-                            else if (parser.getName().equals("teacher"))
-                                s.teacher = parser.nextText();
-                        }
+                JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
+                reader.beginArray();
+                while (reader.hasNext()) {
+                    reader.beginObject();
+                    Exams.ExamItem e = new Exams.ExamItem();
+                    exams.add(e);
+                    while (reader.hasNext()) {
+                        String name = reader.nextName();
+                        if (name.equals("id"))
+                            e.id = reader.nextString();
+                        else if (name.equals("class"))
+                            e.clazz = reader.nextString();
+                        else if (name.equals("lesson"))
+                            e.lesson = reader.nextString();
+                        else if (name.equals("subject"))
+                            e.subject = reader.nextString();
+                        else if (name.equals("length"))
+                            e.length = reader.nextString();
+                        else if (name.equals("teacher"))
+                            e.teacher = reader.nextString();
+                        else
+                            reader.skipValue();
                     }
                 }
             }
-            exams.save("ggexams");
+            exams.save();
         } catch (Exception e) {
             e.printStackTrace();
-            if(!exams.load("ggexams")) {
+            if(!exams.load()) {
                 exams.throwable = e;
                 return exams;
             }
@@ -606,95 +519,51 @@ public class GGProvider extends VPProvider {
         return exams;
     }
 
-    @Override
-    public int getColor() {
-        return GGApp.GG_APP.getResources().getColor(R.color.main_orange);
-    }
-
-    @Override
-    public int getDarkColor() {
-        return GGApp.GG_APP.getResources().getColor(R.color.main_orange_dark);
-    }
-
-    @Override
-    public int getTheme() {
-        return R.style.AppThemeOrange;
-    }
-
-    @Override
-    public int getImage() {
-        return R.drawable.gg_logo;
-    }
-
-    @Override
-    public String getWebsite() {
-        return "http://gymglinde.de/";
-    }
-
-    @Override
-    public boolean loginNeeded() {
-        return true;
-    }
-
-    @Override
     public int login(String user, String pass) {
         try {
 
-            HttpsURLConnection con = openConnection(BASE_URL + "infoapp/auth.php", true);
+            HttpsURLConnection con = openConnection("/infoapp/auth2.php", false);
             con.setRequestMethod("POST");
 
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes("username=" + URLEncoder.encode(user, "utf-8") + "&password=" + URLEncoder.encode(pass, "utf-8"));
+            wr.writeBytes("username=" + URLEncoder.encode(user, "utf-8") + "&password=" + URLEncoder.encode(pass, "utf-8") +
+                    "&sid=" + URLEncoder.encode(GGApp.GG_APP.school.sid, "utf-8") + "&uid=" + URLEncoder.encode(Settings.Secure.ANDROID_ID, "utf-8"));
             wr.flush();
             wr.close();
 
             if(con.getResponseCode() == 200) {
-                BufferedInputStream in = new BufferedInputStream(con.getInputStream());
-                Scanner scan = new Scanner(in);
-                String resp = "";
-                while(scan.hasNextLine())
-                    resp += scan.nextLine() + "\n";
-                scan.close();
-                if(resp.contains("<state>false</state>")) {
-                    return 1;
-                } else {
-                    XmlPullParser parser = Xml.newPullParser();
-                    parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-                    parser.setInput(new StringReader(resp));
-
-                    prefs.edit().apply();
-
-                    while(parser.next() != XmlPullParser.END_DOCUMENT) {
-                        if (parser.getEventType() != XmlPullParser.START_TAG)
-                            continue;
-
-                        String name = parser.getName();
-                        if (name.equals("sessid")) {
-                            session = new Session();
-                            session.id = parser.nextText();
-                        } else if(name.equals("username") || name.equals("token") || name.equals("firstname") || name.equals("lastname") || name.equals("group")) {
-                            prefs.edit().putString(name, parser.nextText()).apply();
-                        }
+                JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
+                reader.beginObject();
+                while(reader.hasNext()) {
+                    String name = reader.nextName();
+                    if(name.equals("state")) {
+                        if(!reader.nextString().equals("succeeded"))
+                            return 1;
+                    } else if(name.equals("session")) {
+                        session = new Session();
+                        session.id = reader.nextString();
+                    } else if(name.equals("username") || name.equals("token") || name.equals("firstname") || name.equals("lastname") || name.equals("group")) {
+                        prefs.edit().putString(name, reader.nextString()).apply();
                     }
-
-                    GGApp.GG_APP.startService(new Intent(GGApp.GG_APP, MQTTService.class));
-
-                    String group = prefs.getString("group", null);
-                    if(group != null && !group.equals("lehrer")) {
-                        gg.filters.mainFilter.type = Filter.FilterType.CLASS;
-                        gg.filters.mainFilter.filter = group;
-                    } else {
-                        gg.filters.mainFilter.type = Filter.FilterType.TEACHER;
-                        gg.filters.mainFilter.filter = user;
-                    }
-                    FilterActivity.saveFilter(GGApp.GG_APP.filters);
                 }
+                GGApp.GG_APP.startService(new Intent(GGApp.GG_APP, MQTTService.class));
 
-                gg.activity.runOnUiThread(new Runnable() {
+                String group = prefs.getString("group", null);
+                Filter.FilterList filters = GGApp.GG_APP.filters;
+                if(group != null && !group.equals("lehrer")) {
+                    filters.mainFilter.type = Filter.FilterType.CLASS;
+                    filters.mainFilter.filter = group;
+                } else {
+                    filters.mainFilter.type = Filter.FilterType.TEACHER;
+                    filters.mainFilter.filter = user;
+                }
+                FilterActivity.saveFilter(GGApp.GG_APP.filters);
+
+                GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        gg.activity.mContent.setFragmentLoading();
+                        GGApp.GG_APP.activity.mContent.setFragmentLoading();
                     }
                 });
                 GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());
@@ -715,10 +584,26 @@ public class GGProvider extends VPProvider {
         return 0;
     }
 
-    @Override
-    public String getFullName() {
-        return "Gymnasium Glinde";
+    public String getToken() {
+        return prefs.getString("token", null);
     }
+
+    public String getUsername() {
+        return prefs.getString("username", null);
+    }
+
+    public String getFirstName() {
+        return prefs.getString("firstname", null);
+    }
+
+    public String getLastName() {
+        return prefs.getString("lastname", null);
+    }
+
+    public boolean isLoggedIn() {
+        return getToken() != null;
+    }
+
 
     private static TrustManager[] ggTrustMgr = new TrustManager[]{ new X509TrustManager() {
 
@@ -784,12 +669,13 @@ public class GGProvider extends VPProvider {
         }
     }
 
-    HttpsURLConnection openConnection(String url, boolean checkSession) throws IOException {
+    public HttpsURLConnection openConnection(String url, boolean checkSession) throws IOException {
         if(checkSession && session != null && session.isExpired())
             startNewSession(prefs.getString("token", null));
         HttpsURLConnection con = (HttpsURLConnection) new URL(url).openConnection();
         con.setSSLSocketFactory(sslSocketFactory);
-        con.setRequestProperty("User-Agent", "SchulinfoAPP " + BuildConfig.VERSION_NAME + " " + BuildConfig.VERSION_CODE + " " + BuildConfig.BUILD_TYPE + " Android " + Build.VERSION.RELEASE + " " + Build.PRODUCT);
+        con.setRequestProperty("User-Agent", "SchulinfoAPP/" + BuildConfig.VERSION_NAME + " (" +
+                BuildConfig.VERSION_CODE + " " + BuildConfig.BUILD_TYPE + " Android " + Build.VERSION.RELEASE + " " + Build.PRODUCT + ")");
         con.setConnectTimeout(3000);
 
         Log.w("ggvp", "connection to " + con.getURL().getHost() + " established");

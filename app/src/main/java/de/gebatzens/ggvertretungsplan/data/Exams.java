@@ -38,9 +38,9 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
         return throwable;
     }
 
-    public void save(String file) {
+    public void save() {
         try {
-            OutputStream out = GGApp.GG_APP.openFileOutput(file, Context.MODE_PRIVATE);
+            OutputStream out = GGApp.GG_APP.openFileOutput("exams", Context.MODE_PRIVATE);
             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out));
 
             writer.setIndent("  ");
@@ -50,7 +50,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
 
                 writer.name("id").value(s.id);
                 writer.name("date").value(s.date);
-                writer.name("schoolclass").value(s.schoolclass);
+                writer.name("clazz").value(s.clazz);
                 writer.name("lesson").value(s.lesson);
                 writer.name("length").value(s.length);
                 writer.name("subject").value(s.subject);
@@ -82,10 +82,10 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
         return e;
     }
 
-    public boolean load(String file) {
+    public boolean load() {
         clear();
         try {
-            InputStream in = GGApp.GG_APP.openFileInput(file);
+            InputStream in = GGApp.GG_APP.openFileInput("exams");
             JsonReader reader = new JsonReader(new InputStreamReader(in));
             reader.beginArray();
             while(reader.hasNext()) {
@@ -98,8 +98,8 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
                         s.id = reader.nextString();
                     else if(name.equals("date"))
                         s.date = reader.nextString();
-                    else if(name.equals("schoolclass"))
-                        s.schoolclass = reader.nextString();
+                    else if(name.equals("clazz"))
+                        s.clazz = reader.nextString();
                     else if(name.equals("lesson"))
                         s.lesson = reader.nextString();
                     else if(name.equals("length"))
@@ -127,7 +127,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
     public static class ExamItem {
         public String id;
         public String date;
-        public String schoolclass;
+        public String clazz;
         public String lesson;
         public String length;
         public String subject;

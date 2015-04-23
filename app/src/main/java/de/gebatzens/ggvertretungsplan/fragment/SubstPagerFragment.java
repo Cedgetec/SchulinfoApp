@@ -93,13 +93,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     private CardView createCardItem(GGPlan.Entry entry, LayoutInflater i, boolean clas) {
         CardView cv = createCardView();
-        String[] colors = getActivity().getResources().getStringArray(GGApp.GG_APP.provider.getColorArray());
+        String[] colors = getActivity().getResources().getStringArray(R.array.orangeColors);
         cv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
         cardColorIndex++;
         if(cardColorIndex == colors.length)
             cardColorIndex = 0;
         i.inflate(R.layout.cardview_entry, cv, true);
-        ((TextView) cv.findViewById(R.id.cv_hour)).setText(entry.hour);
+        ((TextView) cv.findViewById(R.id.cv_hour)).setText(entry.lesson);
         ((TextView) cv.findViewById(R.id.cv_header)).setText(entry.type + (entry.subst.isEmpty() ? "" : " [" + entry.subst + "]"));
         TextView tv = (TextView) cv.findViewById(R.id.cv_detail);
         tv.setText(entry.comment + (entry.room.isEmpty() ? "" : (entry.comment.isEmpty() ? "" : "\n") + "Raum " + entry.room));
@@ -183,7 +183,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 FrameLayout f2 = new FrameLayout(getActivity());
                 f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
                 CardView cv = createCardView();
-                cv.setCardBackgroundColor(GGApp.GG_APP.provider.getColor());
+                cv.setCardBackgroundColor(GGApp.GG_APP.school.color);
                 f2.addView(cv);
                 l.addView(f2);
                 LinearLayout ls = new LinearLayout(getActivity());
@@ -206,7 +206,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 FrameLayout f2 = new FrameLayout(getActivity());
                 f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
                 CardView cv = createCardView();
-                cv.setCardBackgroundColor(GGApp.GG_APP.provider.getColor());
+                cv.setCardBackgroundColor(GGApp.GG_APP.school.color);
                 f2.addView(cv);
                 l.addView(f2);
                 LinearLayout ls = new LinearLayout(getActivity());
@@ -271,7 +271,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 FrameLayout f2 = new FrameLayout(getActivity());
                 f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
                 CardView cv = createCardView();
-                cv.setCardBackgroundColor(GGApp.GG_APP.provider.getColor());
+                cv.setCardBackgroundColor(GGApp.GG_APP.school.color);
                 f2.addView(cv);
                 l.addView(f2);
                 LinearLayout ls = new LinearLayout(getActivity());

@@ -107,7 +107,7 @@ public abstract class RemoteDataFragment extends Fragment {
         l.setGravity(Gravity.CENTER);
 
         ProgressBar pb = new ProgressBar(getActivity());
-        pb.getIndeterminateDrawable().setColorFilter(GGApp.GG_APP.provider.getColor(), PorterDuff.Mode.SRC_IN);
+        pb.getIndeterminateDrawable().setColorFilter(GGApp.GG_APP.school.color, PorterDuff.Mode.SRC_IN);
         pb.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         pb.setVisibility(ProgressBar.VISIBLE);
 
@@ -208,7 +208,7 @@ public abstract class RemoteDataFragment extends Fragment {
                                     protected Integer doInBackground(Integer... params) {
                                         String user = ((EditText) ((Dialog) dialog).findViewById(R.id.usernameInput)).getText().toString();
                                         String pass = ((EditText) ((Dialog) dialog).findViewById(R.id.passwordInput)).getText().toString();
-                                        return GGApp.GG_APP.provider.login(user, pass);
+                                        return GGApp.GG_APP.remote.login(user, pass);
 
                                     }
 
@@ -276,8 +276,8 @@ public abstract class RemoteDataFragment extends Fragment {
 
     public static interface RemoteData {
         public Throwable getThrowable();
-        public void save(String file);
-        public boolean load(String file);
+        public void save();
+        public boolean load();
 
     }
 

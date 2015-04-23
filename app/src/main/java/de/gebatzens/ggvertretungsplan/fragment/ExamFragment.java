@@ -138,7 +138,7 @@ public class ExamFragment extends RemoteDataFragment {
 
     private CardView createCardItem(Exams.ExamItem exam_item, LayoutInflater i) {
         CardView ecv = createCardView();
-        String[] colors = getActivity().getResources().getStringArray(GGApp.GG_APP.provider.getColorArray());
+        String[] colors = getActivity().getResources().getStringArray(R.array.orangeColors);
         ecv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
         cardColorIndex++;
         if(cardColorIndex == colors.length)
@@ -166,7 +166,7 @@ public class ExamFragment extends RemoteDataFragment {
         ((TextView) ecv.findViewById(R.id.ecv_date)).setText(getFormattedDate(exam_item.date));
         ((TextView) ecv.findViewById(R.id.ecv_lesson)).setText(getDay(exam_item.date));
         ((TextView) ecv.findViewById(R.id.ecv_subject_teacher)).setText(GGPlan.Entry.translateSubject(exam_item.subject) + " [" + exam_item.teacher + "]");
-        ((TextView) ecv.findViewById(R.id.ecv_schoolclass)).setText(exam_item.schoolclass + "\n" + getString(R.string.lessons) + " " + lesson);
+        ((TextView) ecv.findViewById(R.id.ecv_schoolclass)).setText(exam_item.clazz + "\n" + getString(R.string.lessons) + " " + lesson);
         return ecv;
     }
 

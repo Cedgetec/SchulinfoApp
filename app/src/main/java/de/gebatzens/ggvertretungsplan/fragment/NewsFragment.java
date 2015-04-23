@@ -18,12 +18,10 @@ package de.gebatzens.ggvertretungsplan.fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +34,6 @@ import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.NewsFragmentDatabaseHelper;
 import de.gebatzens.ggvertretungsplan.R;
 import de.gebatzens.ggvertretungsplan.data.News;
-import de.gebatzens.ggvertretungsplan.provider.GGProvider;
 
 public class NewsFragment extends RemoteDataFragment {
 
@@ -99,8 +96,8 @@ public class NewsFragment extends RemoteDataFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 News news = GGApp.GG_APP.news;
-                String title = news.get(position)[4];
-                String content = news.get(position)[5];
+                String title = news.get(position).title;
+                String content = news.get(position).text;
 
                 AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
                 ad.setView(inflater.inflate(R.layout.news_dialog, null));

@@ -34,7 +34,7 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import de.gebatzens.ggvertretungsplan.provider.GGProvider;
+import de.gebatzens.ggvertretungsplan.provider.GGRemote;
 
 public class UpdateActivity extends AsyncTask<String, String, String> {
 
@@ -62,7 +62,7 @@ public class UpdateActivity extends AsyncTask<String, String, String> {
         try {
             URL url = new URL("https://gymnasium-glinde.logoip.de/downloads/InfoApp-" + params[0] + ".apk");
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-            connection.setSSLSocketFactory(GGProvider.sslSocketFactory);
+            connection.setSSLSocketFactory(GGRemote.sslSocketFactory);
             connection.connect();
             int lenghtOfFile = connection.getContentLength();
             if(connection.getResponseCode() == 200) {

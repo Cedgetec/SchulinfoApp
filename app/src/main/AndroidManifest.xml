@@ -17,9 +17,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:name="de.gebatzens.ggvertretungsplan.GGApp"
-        android:theme="@style/AppThemeBlue" >
+        android:theme="@style/AppThemeOrange" >
+
         <activity
-            android:name=".MainActivity"
+            android:name=".FirstUseActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
@@ -27,6 +28,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustNothing">
         </activity>
 
         <activity android:name=".SettingsActivity"
@@ -41,10 +47,6 @@
 
         <activity android:name=".HelpdeskActivity"
             android:label="@string/helpdesk">
-        </activity>
-
-        <activity android:name=".FirstUseActivity"
-            android:label="@string/firstuse">
         </activity>
 
         <receiver android:enabled="true" android:name="de.gebatzens.ggvertretungsplan.GGBroadcast"

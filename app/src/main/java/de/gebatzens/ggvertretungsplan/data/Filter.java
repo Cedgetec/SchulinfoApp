@@ -42,7 +42,7 @@ public class Filter {
     public boolean matches(Exams.ExamItem item) {
         switch(type) {
             case CLASS:
-                String[] classes = item.schoolclass.split(",");
+                String[] classes = item.clazz.split(",");
                 for (String s : classes) {
                     if (s.toLowerCase().equals(filter.toLowerCase()))
                         return true;

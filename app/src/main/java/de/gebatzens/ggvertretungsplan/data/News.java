@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
 
-public class News extends ArrayList<String[]> implements RemoteDataFragment.RemoteData {
+public class News extends ArrayList<News.Entry> implements RemoteDataFragment.RemoteData {
 
     public Throwable throwable;
 
@@ -38,22 +38,23 @@ public class News extends ArrayList<String[]> implements RemoteDataFragment.Remo
         return throwable;
     }
 
-    public void save(String file) {
+    @Override
+    public void save() {
         try {
-            OutputStream out = GGApp.GG_APP.openFileOutput(file, Context.MODE_PRIVATE);
+            OutputStream out = GGApp.GG_APP.openFileOutput("news", Context.MODE_PRIVATE);
             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out));
 
             writer.setIndent("  ");
             writer.beginArray();
-            for(String[] s : this) {
+            for(Entry s : this) {
                 writer.beginObject();
 
-                writer.name("id").value(s[0]);
-                writer.name("date").value(s[1]);
-                writer.name("topic").value(s[2]);
-                writer.name("source").value(s[3]);
-                writer.name("title").value(s[4]);
-                writer.name("text").value(s[5]);
+                writer.name("id").value(s.id);
+                writer.name("date").value(s.date);
+                writer.name("topic").value(s.topic);
+                writer.name("source").value(s.source);
+                writer.name("title").value(s.title);
+                writer.name("text").value(s.text);
 
                 writer.endObject();
             }
@@ -64,30 +65,31 @@ public class News extends ArrayList<String[]> implements RemoteDataFragment.Remo
         }
     }
 
-    public boolean load(String file) {
+    @Override
+    public boolean load() {
         clear();
         try {
-            InputStream in = GGApp.GG_APP.openFileInput(file);
+            InputStream in = GGApp.GG_APP.openFileInput("news");
             JsonReader reader = new JsonReader(new InputStreamReader(in));
             reader.beginArray();
             while(reader.hasNext()) {
                 reader.beginObject();
-                String[] s = new String[6];
+                Entry s = new Entry();
 
                 while(reader.hasNext()) {
                     String name = reader.nextName();
                     if(name.equals("id"))
-                        s[0] = reader.nextString();
+                        s.id = reader.nextString();
                     else if(name.equals("date"))
-                        s[1] = reader.nextString();
+                        s.date = reader.nextString();
                     else if(name.equals("topic"))
-                        s[2] = reader.nextString();
+                        s.topic = reader.nextString();
                     else if(name.equals("source"))
-                        s[3] = reader.nextString();
+                        s.source = reader.nextString();
                     else if(name.equals("title"))
-                        s[4] = reader.nextString();
+                        s.title = reader.nextString();
                     else if(name.equals("text"))
-                        s[5] = reader.nextString();
+                        s.text = reader.nextString();
                     else
                         reader.skipValue();
                 }
@@ -102,5 +104,9 @@ public class News extends ArrayList<String[]> implements RemoteDataFragment.Remo
         }
 
         return true;
+    }
+
+    public static class Entry {
+        public String id, date, topic, source, title, text;
     }
 }

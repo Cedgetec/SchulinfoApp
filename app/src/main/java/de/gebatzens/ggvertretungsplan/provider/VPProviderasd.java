@@ -29,13 +29,13 @@ import de.gebatzens.ggvertretungsplan.data.GGPlan;
 import de.gebatzens.ggvertretungsplan.data.Mensa;
 import de.gebatzens.ggvertretungsplan.data.News;
 
-public abstract class VPProvider {
+public abstract class VPProviderasd {
 
     GGApp gg;
     public SharedPreferences prefs;
     public String id;
 
-    public VPProvider(GGApp app, String id) {
+    public VPProviderasd(GGApp app, String id) {
         this.gg = app;
         this.id = id;
         prefs = gg.getSharedPreferences(id + "user", Context.MODE_PRIVATE);
