@@ -17,6 +17,7 @@
 package de.gebatzens.ggvertretungsplan;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,8 @@ public class FirstUseActivity extends Activity {
             @Override
             public void onClick(View viewIn) {
                 //save and switch setup page
+
+                startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
             }
         });
 

@@ -560,13 +560,13 @@ public class GGRemote {
                 }
                 FilterActivity.saveFilter(GGApp.GG_APP.filters);
 
-                GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        GGApp.GG_APP.activity.mContent.setFragmentLoading();
-                    }
-                });
-                GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());
+                /*GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                GGApp.GG_APP.activity.mContent.setFragmentLoading();
+            }
+        });
+        GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());*/
 
             } else
                 return 3;

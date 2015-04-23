@@ -173,61 +173,7 @@ public abstract class RemoteDataFragment extends Fragment {
                 createButtonWithText(vg, getResources().getString(R.string.login_required), getResources().getString(R.string.do_login), new View.OnClickListener() {
                     @Override
                     public void onClick(View c) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        AlertDialog dialog;
-                        builder.setTitle(getResources().getString(R.string.login));
-                        builder.setView(inflater.inflate(R.layout.login_dialog, null));
 
-                        builder.setPositiveButton(getResources().getString(R.string.do_login_submit), new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(final DialogInterface dialog, int which) {
-                                GGApp.GG_APP.activity.mContent.setFragmentLoading();
-                                new AsyncTask<Integer, Integer, Integer>() {
-
-                                    @Override
-                                    public void onPostExecute(Integer v) {
-                                        switch(v) {
-                                            case 1:
-                                                GGApp.GG_APP.showToast(getResources().getString(R.string.username_or_password_wrong));
-                                                break;
-                                            case 2:
-                                                GGApp.GG_APP.showToast(getResources().getString(R.string.could_not_contact_logon_server));
-                                                break;
-                                            case 3:
-                                                GGApp.GG_APP.showToast(getResources().getString(R.string.unknown_error_at_logon));
-                                                break;
-                                        }
-
-                                        if(v != 0)
-                                            ((MainActivity) GGApp.GG_APP.activity).mContent.updateFragment();
-
-                                    }
-
-                                    @Override
-                                    protected Integer doInBackground(Integer... params) {
-                                        String user = ((EditText) ((Dialog) dialog).findViewById(R.id.usernameInput)).getText().toString();
-                                        String pass = ((EditText) ((Dialog) dialog).findViewById(R.id.passwordInput)).getText().toString();
-                                        return GGApp.GG_APP.remote.login(user, pass);
-
-                                    }
-
-                                }.execute();
-                                dialog.dismiss();
-                            }
-                        });
-
-
-                        builder.setNegativeButton(getResources().getString(R.string.abort), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        dialog = builder.create();
-                        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                        dialog.show();
 
                     }
                 });

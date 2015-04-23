@@ -34,6 +34,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.List;
 
 import de.gebatzens.ggvertretungsplan.data.Exams;
 import de.gebatzens.ggvertretungsplan.data.Filter;
@@ -62,6 +63,8 @@ public class GGApp extends Application {
     public Filter.FilterList filters = new Filter.FilterList();
     public HashMap<String, String> subjects = new HashMap<String, String>();
 
+    public List<School> schools;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -76,6 +79,7 @@ public class GGApp extends Application {
         GGBroadcast.createAlarm(this);
         filters = FilterActivity.loadFilter();
         loadSubjectMap();
+        schools = School.fetchList();
 
     }
 

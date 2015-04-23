@@ -128,6 +128,7 @@
     <string name="setup_description">Welcome to the SchoolinfoAPP!</string>
     <string name="lessons">Lessons</string>
     <string name="no_entries">No entries</string>
+    <string name="select_school">Select a school</string>
 
     <string-array name="subjects">
         <item>d|German</item>
