@@ -49,6 +49,10 @@
             android:label="@string/helpdesk">
         </activity>
 
+        <activity android:name=".SetupActivity"
+            android:label="Setup">
+        </activity>
+
         <receiver android:enabled="true" android:name="de.gebatzens.ggvertretungsplan.GGBroadcast"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>

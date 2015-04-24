@@ -28,7 +28,7 @@ import java.util.List;
 
 public class SchoolListAdapter extends BaseAdapter {
 
-    List<School> list = GGApp.GG_APP.schools;
+    List<School> list = School.LIST;
 
     @Override
     public int getCount() {
@@ -50,7 +50,7 @@ public class SchoolListAdapter extends BaseAdapter {
         View v = ((LayoutInflater) GGApp.GG_APP.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.school_item, parent, false);
 
         ((TextView) v.findViewById(R.id.school_name)).setText(list.get(position).name);
-        ((TextView) v.findViewById(R.id.school_city)).setText("TestStadt");
+        ((TextView) v.findViewById(R.id.school_city)).setText(list.get(position).city);
 
         return v;
     }

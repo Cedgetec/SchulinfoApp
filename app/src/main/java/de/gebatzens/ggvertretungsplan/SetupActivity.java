@@ -21,8 +21,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,20 +34,39 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.io.File;
+
+import de.gebatzens.ggvertretungsplan.provider.GGRemote;
+
 public class SetupActivity extends Activity {
 
     @Override
     public void onCreate(Bundle saved) {
+        //setTheme(GGApp.GG_APP.provider.getTheme());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            GGApp.GG_APP.setStatusBarColor(getWindow(), getResources().getColor(R.color.main_orange_dark));
+        }
+        if(new File(GGRemote.PREFS_NAME).exists()) {
+
+        }
         super.onCreate(saved);
 
         setContentView(R.layout.activity_setup);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.main_orange));
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setTitle(getString(R.string.app_name));
 
         ListView l = (ListView) findViewById(R.id.setup_list);
         l.setAdapter(new SchoolListAdapter());
         l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                School s = GGApp.GG_APP.schools.get(position);
+                School s = School.LIST.get(position);
+                GGApp.GG_APP.setSchool(s.sid);
 
                 if(s.loginNeeded) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
@@ -56,7 +78,6 @@ public class SetupActivity extends Activity {
 
                         @Override
                         public void onClick(final DialogInterface dialog, int which) {
-                            GGApp.GG_APP.activity.mContent.setFragmentLoading();
                             new AsyncTask<Integer, Integer, Integer>() {
 
                                 @Override
@@ -105,6 +126,7 @@ public class SetupActivity extends Activity {
                 }
             }
         });
+
     }
 
 }

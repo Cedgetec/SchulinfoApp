@@ -527,8 +527,11 @@ public class GGRemote {
 
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes("username=" + URLEncoder.encode(user, "utf-8") + "&password=" + URLEncoder.encode(pass, "utf-8") +
-                    "&sid=" + URLEncoder.encode(GGApp.GG_APP.school.sid, "utf-8") + "&uid=" + URLEncoder.encode(Settings.Secure.ANDROID_ID, "utf-8"));
+            String s = "username=" + URLEncoder.encode(user, "utf-8") + "&password=" + URLEncoder.encode(pass, "utf-8") +
+                    "&sid=" + URLEncoder.encode(GGApp.GG_APP.school.sid, "utf-8") + "&uid=" +
+                    URLEncoder.encode(Settings.Secure.getString(GGApp.GG_APP.getContentResolver(),Settings.Secure.ANDROID_ID), "utf-8");
+            Log.i("ggvp", s);
+            wr.writeBytes(s);
             wr.flush();
             wr.close();
 
@@ -545,7 +548,8 @@ public class GGRemote {
                         session.id = reader.nextString();
                     } else if(name.equals("username") || name.equals("token") || name.equals("firstname") || name.equals("lastname") || name.equals("group")) {
                         prefs.edit().putString(name, reader.nextString()).apply();
-                    }
+                    } else
+                        reader.skipValue();
                 }
                 GGApp.GG_APP.startService(new Intent(GGApp.GG_APP, MQTTService.class));
 
@@ -568,7 +572,9 @@ public class GGRemote {
         });
         GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());*/
 
-            } else
+            } else if(con.getResponseCode() == 401)
+                return 1;
+            else
                 return 3;
 
 
@@ -672,7 +678,7 @@ public class GGRemote {
     public HttpsURLConnection openConnection(String url, boolean checkSession) throws IOException {
         if(checkSession && session != null && session.isExpired())
             startNewSession(prefs.getString("token", null));
-        HttpsURLConnection con = (HttpsURLConnection) new URL(url).openConnection();
+        HttpsURLConnection con = (HttpsURLConnection) new URL(BASE_URL + url).openConnection();
         con.setSSLSocketFactory(sslSocketFactory);
         con.setRequestProperty("User-Agent", "SchulinfoAPP/" + BuildConfig.VERSION_NAME + " (" +
                 BuildConfig.VERSION_CODE + " " + BuildConfig.BUILD_TYPE + " Android " + Build.VERSION.RELEASE + " " + Build.PRODUCT + ")");

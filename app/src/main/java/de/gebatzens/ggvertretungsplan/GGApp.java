@@ -33,6 +33,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,24 +64,28 @@ public class GGApp extends Application {
     public Filter.FilterList filters = new Filter.FilterList();
     public HashMap<String, String> subjects = new HashMap<String, String>();
 
-    public List<School> schools;
-
     @Override
     public void onCreate() {
         super.onCreate();
         GG_APP = this;
         remote = new GGRemote();
-        school = new School();
-        school.sid = "gg";
-        school.name = "Gymnasium Glinde";
-        school.loginNeeded = true;
-        school.website = "http://gymglinde.de/";
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         GGBroadcast.createAlarm(this);
         filters = FilterActivity.loadFilter();
         loadSubjectMap();
-        schools = School.fetchList();
-
+        School.loadList();
+        //if (School.LIST.size() == 0) {
+            new Thread() {
+                @Override
+                public void run() {
+                    School.fetchList();
+                    School.saveList();
+                    school = School.getBySID(preferences.getString("sid", null));
+                }
+            }.start();
+        //} else {
+        //    school = School.getBySID(preferences.getString("sid", null));
+        //}
     }
 
     public RemoteDataFragment.RemoteData getDataForFragment(FragmentType type) {
@@ -191,6 +196,11 @@ public class GGApp extends Application {
         preferences.edit().putString("fragtype", type.toString()).apply();
     }
 
+    public void setSchool(String sid) {
+        preferences.edit().putString("sid", sid).apply();
+        school = School.getBySID(sid);
+    }
+
     public boolean appUpdatesEnabled() {
         return preferences.getBoolean("autoappupdates", true);
     }
@@ -233,10 +243,10 @@ public class GGApp extends Application {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void setStatusBarColor(Window w) {
+    public void setStatusBarColor(Window w, int color) {
         w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        w.setStatusBarColor(GGApp.GG_APP.school.darkColor);
+        w.setStatusBarColor(color);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

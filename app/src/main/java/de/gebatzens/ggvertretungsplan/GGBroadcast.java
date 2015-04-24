@@ -37,6 +37,7 @@ import de.gebatzens.ggvertretungsplan.provider.GGRemote;
 
 public class GGBroadcast extends BroadcastReceiver {
 
+    //TODO
     public void checkForUpdates(final GGApp gg, boolean notification) {
         if(!gg.notificationsEnabled() && notification)
             return;

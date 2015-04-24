@@ -128,6 +128,7 @@
     <string name="setup_description">Willkommen in der SchulinfoAPP!</string>
     <string name="lessons">Stunden</string>
     <string name="no_entries">Keine Einträge</string>
+    <string name="select_school">Wähle eine Schule</string>
 
     <string-array name="subjects">
         <item>d|Deutsch</item>

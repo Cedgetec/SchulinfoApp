@@ -64,7 +64,7 @@ public class FilterActivity extends Activity {
     public void onCreate(Bundle bundle) {
         //setTheme(GGApp.GG_APP.school.getTheme());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            GGApp.GG_APP.setStatusBarColor(getWindow());
+            GGApp.GG_APP.setStatusBarColor(getWindow(), GGApp.GG_APP.school.darkColor);
         }
         super.onCreate(bundle);
         setContentView(R.layout.activity_filter);
