@@ -47,7 +47,7 @@ public class SchoolListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = ((LayoutInflater) GGApp.GG_APP.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.school_item, parent, false);
+        View v = convertView == null ? ((LayoutInflater) GGApp.GG_APP.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.school_item, parent, false) : convertView;
 
         ((TextView) v.findViewById(R.id.school_name)).setText(list.get(position).name);
         ((TextView) v.findViewById(R.id.school_city)).setText(list.get(position).city);

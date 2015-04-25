@@ -21,6 +21,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,15 +40,15 @@ import de.gebatzens.ggvertretungsplan.data.News;
 
 public class NewsFragmentListAdapter extends BaseAdapter {
     private Context context;
-    private News mArrayList;
+    private News news;
     private LayoutInflater inflater;
     private String formattedDate;
     private NewsFragmentDatabaseHelper mDatabaseHelper;
 
     /*public NewsFragmentListAdapter(Context pContext, String[] pTitle, String[] pContent, int[] pIcon) {*/
-    public NewsFragmentListAdapter(Context pContext, News pArrayList) {
+    public NewsFragmentListAdapter(Context pContext, News news) {
         context = pContext;
-        mArrayList = pArrayList;
+        this.news = news;
         mDatabaseHelper = new NewsFragmentDatabaseHelper(context);
     }
  
@@ -60,30 +61,20 @@ public class NewsFragmentListAdapter extends BaseAdapter {
         TextView txtContent = (TextView) itemView.findViewById(R.id.newsContent);
         //ImageView imgIcon = (ImageView) itemView.findViewById(R.id.newsIcon);
 
-        DateFormat parser = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         DateFormat dateFormatter = new SimpleDateFormat("d. MMM yy");
-        try
-        {
-            String startDate = mArrayList.get(position).date;
-            Date parsedDate = parser.parse(startDate);
-            formattedDate = dateFormatter.format(parsedDate);
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-        }
+        formattedDate = dateFormatter.format(news.get(position).date);
 
         txtDate.setText(formattedDate);
         txtDate.setTextColor(GGApp.GG_APP.school.color);
-        txtTitle.setText(mArrayList.get(position).title);
-        txtContent.setText(Html.fromHtml(mArrayList.get(position).text));
+        txtTitle.setText(news.get(position).title);
+        txtContent.setText(Html.fromHtml(news.get(position).text));
         //imgIcon.setImageResource(R.drawable.news_icon_white);
        // imgIcon.setBackgroundResource(R.drawable.news_img_background);
         //GradientDrawable drawable = (GradientDrawable) imgIcon.getBackground();
         //drawable.setColor(GGApp.GG_APP.provider.getColor());
         //imgIcon.setImageResource(mIcnewson[position]);
 
-        if(mDatabaseHelper.checkNewsRead(mArrayList.get(position).title)) {
+        if(mDatabaseHelper.checkNewsRead(news.get(position).title)) {
             txtDate.setTextColor(Color.parseColor("#727272"));
             txtDate.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
             txtTitle.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
@@ -95,12 +86,12 @@ public class NewsFragmentListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mArrayList.size();
+        return news.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mArrayList.get(position).title;
+        return news.get(position).title;
     }
 
     @Override

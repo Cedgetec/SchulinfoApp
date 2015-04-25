@@ -74,7 +74,9 @@ public class GGApp extends Application {
         filters = FilterActivity.loadFilter();
         loadSubjectMap();
         School.loadList();
+        school = School.getBySID(preferences.getString("sid", null));
         //if (School.LIST.size() == 0) {
+        //TODO don't do this on every start
             new Thread() {
                 @Override
                 public void run() {

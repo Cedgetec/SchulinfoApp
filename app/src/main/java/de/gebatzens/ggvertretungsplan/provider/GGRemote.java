@@ -26,10 +26,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.util.JsonReader;
 import android.util.Log;
-import android.util.Xml;
 import android.widget.Toast;
-
-import org.xmlpull.v1.XmlPullParser;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -37,12 +34,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
@@ -70,7 +67,7 @@ import de.gebatzens.ggvertretungsplan.data.News;
 
 public class GGRemote {
 
-    public static final String BASE_URL = "https://gymnasium-glinde.logoip.de/";
+    public static final String SERVER = "https://gymnasium-glinde.logoip.de";
     public static final String PREFS_NAME = "remoteprefs";
     public static final GGImageGetter IMAGE_GETTER = new GGImageGetter();
 
@@ -98,45 +95,46 @@ public class GGRemote {
         if(token == null || token.isEmpty())
             return;
 
-        HttpsURLConnection con = openConnection("/infoapp/token.php?token=" + token, false);
+        HttpsURLConnection con = openConnection("/infoapp/token2.php?token=" + token, false);
 
         if(con.getResponseCode() == 401) {
+            Log.w("ggvp", "startSession: Received " + con.getResponseCode() + ": logging out");
             logout(true, true);
             session = null;
             return;
         }
 
-        Scanner scan = new Scanner(new BufferedInputStream(con.getInputStream()));
-        String resp = "";
-        while(scan.hasNextLine())
-            resp += scan.nextLine();
-        scan.close();
+        JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
+        reader.beginObject();
 
-        Pattern p = Pattern.compile("<sessid>(.*?)</sessid>");
-        Matcher m = p.matcher(resp);
-        if(m.find()) {
-            session = new Session();
-            session.id = m.group(1);
-            Log.w("ggvp", "new session created " + session.id);
-            //prefs.edit().putString("sessid", sessId).apply();
-        } else {
-            session = null;
-            Log.w("ggvp", "invalid response (token invalid?)");
-            //Token invalid
+        while(reader.hasNext()) {
+            String name = reader.nextName();
+            if(name.equals("state") && !reader.nextString().equals("succeeded")) {
+                //Token is invalid
+                Log.w("ggvp", "Token is invalid");
+                session = null;
+            } else if(name.equals("sessid")) {
+                session = new Session();
+                session.id = reader.nextString();
+                Log.i("ggvp", "New session " + session.id);
+            }
+
+
         }
+
+        reader.close();
 
     }
 
     public void logout(boolean logout_local_only, final boolean delete_token) {
-        GGApp.GG_APP.deleteFile(PREFS_NAME);
         GGApp.GG_APP.deleteFile("vptoday");
         GGApp.GG_APP.deleteFile("vptomorrow");
         GGApp.GG_APP.deleteFile("news");
         GGApp.GG_APP.deleteFile("mensa");
         GGApp.GG_APP.stopService(new Intent(GGApp.GG_APP, MQTTService.class));
 
-        prefs.edit().clear().commit();
-        if(!logout_local_only) {
+        prefs.edit().clear().apply();
+        /*if(!logout_local_only) {
             new AsyncTask<String, String, String>() {
                 @Override
                 public String doInBackground(String... s) {
@@ -145,9 +143,9 @@ public class GGRemote {
                         try {
                             String connect_string;
                             if (delete_token) {
-                                connect_string = BASE_URL + "infoapp/logout.php?deltoken=true&sessid=" + s[0];
+                                connect_string = SERVER + "/infoapp/logout.php?deltoken=true&sessid=" + s[0];
                             } else {
-                                connect_string = BASE_URL + "infoapp/logout.php?sessid=" + s[0];
+                                connect_string = SERVER + "/infoapp/logout.php?sessid=" + s[0];
                             }
                             HttpsURLConnection con = (HttpsURLConnection) new URL(connect_string).openConnection();
                             con.setRequestMethod("GET");
@@ -188,11 +186,12 @@ public class GGRemote {
                     return null;
                 }
             }.execute(session.id);
-        }
+        }*/
         session = null;
     }
 
     public GGPlan.GGPlans getPlans(boolean toast) {
+
         GGPlan.GGPlans plans = new GGPlan.GGPlans();
         plans.tomorrow = new GGPlan();
         plans.today = new GGPlan();
@@ -207,14 +206,15 @@ public class GGRemote {
                 if (session == null)
                     throw new VPLoginException();
             }
-
-            HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=substitutionplan&sessid=" + session.id, true);
+            Log.i("ggvp", "getPlans " + session.id);
+            HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=schedule&sessid=" + session.id, true);
             con.setRequestMethod("GET");
 
             /*if(con.getResponseCode() == 401) {
                 logout(true, true);
                 throw new VPLoginException();
-            } else */if(con.getResponseCode() == 419) {
+            } else */
+            if(con.getResponseCode() == 419) {
                 startNewSession(prefs.getString("token", null));
                 if(session == null) {
                     //Should happen when token expires
@@ -223,6 +223,9 @@ public class GGRemote {
                     return getPlans(toast);
                 }
             }
+
+            if(con.getResponseCode() != 200)
+                throw new Exception("response code " + con.getResponseCode());
 
             JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
             reader.beginObject();
@@ -335,6 +338,8 @@ public class GGRemote {
                     throw new VPLoginException();
             }
 
+            DateFormat parser = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
             HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=news&sessid=" + session.id, true);
             con.setRequestMethod("GET");
 
@@ -359,6 +364,8 @@ public class GGRemote {
                         String name = reader.nextName();
                         if(name.equals("id"))
                             e.id = reader.nextString();
+                        else if(name.equals("date"))
+                            e.date = parser.parse(reader.nextString());
                         else if(name.equals("source"))
                             e.source = reader.nextString();
                         else if(name.equals("topic"))
@@ -529,7 +536,7 @@ public class GGRemote {
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
             String s = "username=" + URLEncoder.encode(user, "utf-8") + "&password=" + URLEncoder.encode(pass, "utf-8") +
                     "&sid=" + URLEncoder.encode(GGApp.GG_APP.school.sid, "utf-8") + "&uid=" +
-                    URLEncoder.encode(Settings.Secure.getString(GGApp.GG_APP.getContentResolver(),Settings.Secure.ANDROID_ID), "utf-8");
+                    URLEncoder.encode(Settings.Secure.getString(GGApp.GG_APP.getContentResolver(), Settings.Secure.ANDROID_ID), "utf-8");
             Log.i("ggvp", s);
             wr.writeBytes(s);
             wr.flush();
@@ -547,10 +554,11 @@ public class GGRemote {
                         session = new Session();
                         session.id = reader.nextString();
                     } else if(name.equals("username") || name.equals("token") || name.equals("firstname") || name.equals("lastname") || name.equals("group")) {
-                        prefs.edit().putString(name, reader.nextString()).apply();
+                        prefs.edit().putString(name, reader.nextString()).commit();
                     } else
                         reader.skipValue();
                 }
+
                 GGApp.GG_APP.startService(new Intent(GGApp.GG_APP, MQTTService.class));
 
                 String group = prefs.getString("group", null);
@@ -678,13 +686,13 @@ public class GGRemote {
     public HttpsURLConnection openConnection(String url, boolean checkSession) throws IOException {
         if(checkSession && session != null && session.isExpired())
             startNewSession(prefs.getString("token", null));
-        HttpsURLConnection con = (HttpsURLConnection) new URL(BASE_URL + url).openConnection();
+        HttpsURLConnection con = (HttpsURLConnection) new URL(SERVER + url).openConnection();
         con.setSSLSocketFactory(sslSocketFactory);
         con.setRequestProperty("User-Agent", "SchulinfoAPP/" + BuildConfig.VERSION_NAME + " (" +
                 BuildConfig.VERSION_CODE + " " + BuildConfig.BUILD_TYPE + " Android " + Build.VERSION.RELEASE + " " + Build.PRODUCT + ")");
         con.setConnectTimeout(3000);
 
-        Log.w("ggvp", "connection to " + con.getURL().getHost() + " established");
+        Log.w("ggvp", "connection to " + con.getURL().getHost() + " established " + url);
 
         return con;
     }

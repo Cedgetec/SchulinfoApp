@@ -46,10 +46,12 @@ public class SetupActivity extends Activity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             GGApp.GG_APP.setStatusBarColor(getWindow(), getResources().getColor(R.color.main_orange_dark));
         }
-        if(new File(GGRemote.PREFS_NAME).exists()) {
-
-        }
         super.onCreate(saved);
+
+        if(GGApp.GG_APP.remote.isLoggedIn()) {
+            startActivity(new Intent(this, MainActivity.class));
+            return;
+        }
 
         setContentView(R.layout.activity_setup);
 
@@ -86,6 +88,7 @@ public class SetupActivity extends Activity {
                                         case 0:
                                             Intent intent = new Intent(SetupActivity.this, MainActivity.class);
                                             startActivity(intent);
+                                            finish();
                                             break;
                                         case 1:
                                             GGApp.GG_APP.showToast(getResources().getString(R.string.username_or_password_wrong));
@@ -123,6 +126,9 @@ public class SetupActivity extends Activity {
                     dialog = builder.create();
                     dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                     dialog.show();
+                } else {
+                    startActivity(new Intent(SetupActivity.this, MainActivity.class));
+                    finish();
                 }
             }
         });

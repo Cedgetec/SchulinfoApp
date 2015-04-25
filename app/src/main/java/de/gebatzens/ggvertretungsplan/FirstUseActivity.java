@@ -28,6 +28,7 @@ public class FirstUseActivity extends Activity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
+
         setContentView(R.layout.activity_firstuse);
 
         nextStep = (Button) findViewById(R.id.nextStep);

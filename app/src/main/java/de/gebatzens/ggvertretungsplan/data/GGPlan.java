@@ -282,7 +282,8 @@ public class GGPlan {
                 Matcher m = Pattern.compile("shift (\\S*) (\\S*)").matcher(comment);
 
                 if(m.find()) {
-                    Date sdate = parseDate(m.group(1));
+                    String sdates = m.group(1);
+                    Date sdate = sdates.contains("today") ? date : parseDate(sdates);
                     String lesson = m.group(2);
 
                     if(sdate.equals(date))
@@ -297,7 +298,8 @@ public class GGPlan {
                 Matcher m = Pattern.compile("instead (\\S*) (\\S*)").matcher(comment);
 
                 if(m.find()) {
-                    Date idate = parseDate(m.group(1));
+                    String idates = m.group(1);
+                    Date idate = idates.contains("today") ? date : parseDate(idates);
                     String lesson = m.group(2);
 
                     if(idate.equals(date))
@@ -336,6 +338,7 @@ public class GGPlan {
         try {
             return fmt.parse(date);
         } catch(Exception e) {
+            Log.w("ggvp", "WARNING: Invalid date " + date);
             return null;
         }
     }

@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
@@ -50,7 +51,7 @@ public class News extends ArrayList<News.Entry> implements RemoteDataFragment.Re
                 writer.beginObject();
 
                 writer.name("id").value(s.id);
-                writer.name("date").value(s.date);
+                writer.name("date").value(s.date.getTime());
                 writer.name("topic").value(s.topic);
                 writer.name("source").value(s.source);
                 writer.name("title").value(s.title);
@@ -81,7 +82,7 @@ public class News extends ArrayList<News.Entry> implements RemoteDataFragment.Re
                     if(name.equals("id"))
                         s.id = reader.nextString();
                     else if(name.equals("date"))
-                        s.date = reader.nextString();
+                        s.date = new Date(reader.nextLong());
                     else if(name.equals("topic"))
                         s.topic = reader.nextString();
                     else if(name.equals("source"))
@@ -107,6 +108,7 @@ public class News extends ArrayList<News.Entry> implements RemoteDataFragment.Re
     }
 
     public static class Entry {
-        public String id, date, topic, source, title, text;
+        public String id, topic, source, title, text;
+        public Date date;
     }
 }
