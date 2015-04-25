@@ -9,3 +9,4 @@
 - [ ] GEMS Wiesenfeld
 - [ ] Mehrere Klassen auswählbar (Hauptfilter)
   - [ ] Dann sollte bei den Fachfiltern auch die Klasse ausgewählt werden
+- [ ] Dynamische Anzahl von Plänen
