@@ -38,8 +38,6 @@ import java.net.URLEncoder;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import de.gebatzens.ggvertretungsplan.provider.GGRemote;
-
 public class HelpdeskActivity extends Activity {
 
     Toolbar mToolBar;

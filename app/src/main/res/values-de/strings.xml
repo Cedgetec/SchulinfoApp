@@ -129,6 +129,8 @@
     <string name="lessons">Stunden</string>
     <string name="no_entries">Keine Einträge</string>
     <string name="select_school">Wähle eine Schule</string>
+    <string name="anonymous">Anonymer Benutzer</string>
+    <string name="download_error">Während des Downloadens ist ein Fehler aufgetreten</string>
 
     <string-array name="subjects">
         <item>d|Deutsch</item>

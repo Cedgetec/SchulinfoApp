@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.gebatzens.ggvertretungsplan.provider;
+package de.gebatzens.ggvertretungsplan;
 
 import android.content.Context;
 import android.content.Intent;
@@ -127,11 +127,13 @@ public class GGRemote {
     }
 
     public void logout(boolean logout_local_only, final boolean delete_token) {
-        GGApp.GG_APP.deleteFile("vptoday");
-        GGApp.GG_APP.deleteFile("vptomorrow");
+        GGApp.GG_APP.deleteFile("stoday");
+        GGApp.GG_APP.deleteFile("stomorrow");
         GGApp.GG_APP.deleteFile("news");
         GGApp.GG_APP.deleteFile("mensa");
         GGApp.GG_APP.stopService(new Intent(GGApp.GG_APP, MQTTService.class));
+        GGApp.GG_APP.filters.clear();
+        GGApp.GG_APP.filters.mainFilter = new Filter();
 
         prefs.edit().clear().apply();
         /*if(!logout_local_only) {
@@ -377,6 +379,7 @@ public class GGRemote {
                         else
                             reader.skipValue();
                     }
+                    reader.endObject();
                 }
 
                 n.save();
@@ -439,6 +442,7 @@ public class GGRemote {
                         else
                             reader.skipValue();
                     }
+                    reader.endObject();
                 }
 
                 m.save();
@@ -476,7 +480,7 @@ public class GGRemote {
                     throw new VPLoginException();
             }
 
-            HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=examplan&sessid=" + session.id, true);
+            HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=exams&sessid=" + session.id, true);
             con.setRequestMethod("GET");
 
             /*if(con.getResponseCode() == 401) {
@@ -492,6 +496,9 @@ public class GGRemote {
             } else if (con.getResponseCode() == 200) {
                 JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
                 reader.beginArray();
+
+                DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
                 while (reader.hasNext()) {
                     reader.beginObject();
                     Exams.ExamItem e = new Exams.ExamItem();
@@ -500,6 +507,8 @@ public class GGRemote {
                         String name = reader.nextName();
                         if (name.equals("id"))
                             e.id = reader.nextString();
+                        else if(name.equals("date"))
+                            e.date = sdf.parse(reader.nextString());
                         else if (name.equals("class"))
                             e.clazz = reader.nextString();
                         else if (name.equals("lesson"))
@@ -513,6 +522,7 @@ public class GGRemote {
                         else
                             reader.skipValue();
                     }
+                    reader.endObject();
                 }
             }
             exams.save();
@@ -534,10 +544,10 @@ public class GGRemote {
 
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            String s = "username=" + URLEncoder.encode(user, "utf-8") + "&password=" + URLEncoder.encode(pass, "utf-8") +
-                    "&sid=" + URLEncoder.encode(GGApp.GG_APP.school.sid, "utf-8") + "&uid=" +
+            String s = "sid=" + URLEncoder.encode(GGApp.GG_APP.school.sid, "utf-8") + "&uid=" +
                     URLEncoder.encode(Settings.Secure.getString(GGApp.GG_APP.getContentResolver(), Settings.Secure.ANDROID_ID), "utf-8");
-            Log.i("ggvp", s);
+            if(user != null && pass != null)
+                s += "&username=" + URLEncoder.encode(user, "utf-8") + "&password=" + URLEncoder.encode(pass, "utf-8");
             wr.writeBytes(s);
             wr.flush();
             wr.close();
@@ -566,7 +576,7 @@ public class GGRemote {
                 if(group != null && !group.equals("lehrer")) {
                     filters.mainFilter.type = Filter.FilterType.CLASS;
                     filters.mainFilter.filter = group;
-                } else {
+                } else if (group != null) {
                     filters.mainFilter.type = Filter.FilterType.TEACHER;
                     filters.mainFilter.filter = user;
                 }
@@ -603,7 +613,7 @@ public class GGRemote {
     }
 
     public String getUsername() {
-        return prefs.getString("username", null);
+        return prefs.getString("username", isLoggedIn() ? GGApp.GG_APP.getString(R.string.anonymous) : null);
     }
 
     public String getFirstName() {

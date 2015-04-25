@@ -22,8 +22,9 @@ import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.R;
 
 public class Filter {
-    public FilterType type;
-    public String filter;
+
+    public FilterType type = FilterType.CLASS;
+    public String filter = "";
 
     public boolean matches(GGPlan.Entry e) {
         if(filter.isEmpty())

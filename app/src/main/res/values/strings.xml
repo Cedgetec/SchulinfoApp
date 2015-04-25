@@ -129,6 +129,8 @@
     <string name="lessons">Lessons</string>
     <string name="no_entries">No entries</string>
     <string name="select_school">Select a school</string>
+    <string name="anonymous">Anonymous user</string>
+    <string name="download_error">An error occurred while downloading</string>
 
     <string-array name="subjects">
         <item>d|German</item>

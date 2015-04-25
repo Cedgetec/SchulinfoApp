@@ -28,14 +28,11 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import de.gebatzens.ggvertretungsplan.data.Exams;
 import de.gebatzens.ggvertretungsplan.data.Filter;
@@ -43,7 +40,6 @@ import de.gebatzens.ggvertretungsplan.data.GGPlan;
 import de.gebatzens.ggvertretungsplan.data.Mensa;
 import de.gebatzens.ggvertretungsplan.data.News;
 import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
-import de.gebatzens.ggvertretungsplan.provider.GGRemote;
 
 public class GGApp extends Application {
 

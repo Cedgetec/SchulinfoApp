@@ -47,8 +47,6 @@ import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import de.gebatzens.ggvertretungsplan.provider.GGRemote;
-
 public class SettingsActivity extends Activity {
 
     Toolbar mToolBar;
@@ -88,7 +86,7 @@ public class SettingsActivity extends Activity {
 
                                 final String version = getVersion();
 
-                                if (!version.toString().equals(BuildConfig.VERSION_NAME)) {
+                                if (!version.equals(BuildConfig.VERSION_NAME)) {
                                     ((SettingsActivity) getActivity()).showUpdateDialog(version);
                                 } else {
                                     getActivity().runOnUiThread(new Runnable() {
@@ -150,8 +148,9 @@ public class SettingsActivity extends Activity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 GGApp.GG_APP.remote.logout(false, cb.isChecked());
-                                changed = true;
-                                pref_username.setSummary(getResources().getString(R.string.youre_not_logged_in));
+                                Intent i = new Intent();
+                                i.putExtra("setup", true);
+                                ((SettingsActivity) getActivity()).finish(RESULT_OK, i);
                                 dialog.dismiss();
                             }
                         });
@@ -305,6 +304,11 @@ public class SettingsActivity extends Activity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    public void finish(int r, Intent i) {
+        setResult(r, i);
+        super.finish();
     }
 
     @Override

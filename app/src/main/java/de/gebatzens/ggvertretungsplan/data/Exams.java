@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
@@ -49,7 +50,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
                 writer.beginObject();
 
                 writer.name("id").value(s.id);
-                writer.name("date").value(s.date);
+                writer.name("date").value(s.date.getTime());
                 writer.name("clazz").value(s.clazz);
                 writer.name("lesson").value(s.lesson);
                 writer.name("length").value(s.length);
@@ -97,7 +98,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
                     if(name.equals("id"))
                         s.id = reader.nextString();
                     else if(name.equals("date"))
-                        s.date = reader.nextString();
+                        s.date = new Date(reader.nextLong());
                     else if(name.equals("clazz"))
                         s.clazz = reader.nextString();
                     else if(name.equals("lesson"))
@@ -126,7 +127,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
 
     public static class ExamItem {
         public String id;
-        public String date;
+        public Date date;
         public String clazz;
         public String lesson;
         public String length;

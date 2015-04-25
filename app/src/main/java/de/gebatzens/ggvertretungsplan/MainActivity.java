@@ -310,6 +310,13 @@ public class MainActivity extends FragmentActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == 1 && resultCode == RESULT_OK) { //Settings changed
+
+            if(data.getBooleanExtra("setup", false)) {
+                startActivity(new Intent(this, SetupActivity.class));
+                finish();
+                return;
+            }
+
             //GGApp.GG_APP.recreateProvider();
             //setTheme(GGApp.GG_APP.provider.getTheme());
             mNacvigationImage = (ImageView) findViewById(R.id.navigation_schoolpicture);

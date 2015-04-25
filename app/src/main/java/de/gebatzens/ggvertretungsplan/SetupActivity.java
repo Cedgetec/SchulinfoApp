@@ -19,6 +19,7 @@ package de.gebatzens.ggvertretungsplan;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -30,13 +31,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-
-import java.io.File;
-
-import de.gebatzens.ggvertretungsplan.provider.GGRemote;
 
 public class SetupActivity extends Activity {
 
@@ -86,18 +82,16 @@ public class SetupActivity extends Activity {
                                 public void onPostExecute(Integer v) {
                                     switch(v) {
                                         case 0:
-                                            Intent intent = new Intent(SetupActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
+                                            startDownloading();
                                             break;
                                         case 1:
-                                            GGApp.GG_APP.showToast(getResources().getString(R.string.username_or_password_wrong));
+                                            GGApp.GG_APP.showToast(getString(R.string.username_or_password_wrong));
                                             break;
                                         case 2:
-                                            GGApp.GG_APP.showToast(getResources().getString(R.string.could_not_contact_logon_server));
+                                            GGApp.GG_APP.showToast(getString(R.string.could_not_contact_logon_server));
                                             break;
                                         case 3:
-                                            GGApp.GG_APP.showToast(getResources().getString(R.string.unknown_error_at_logon));
+                                            GGApp.GG_APP.showToast(getString(R.string.unknown_error_at_logon));
                                             break;
                                     }
                                 }
@@ -116,7 +110,7 @@ public class SetupActivity extends Activity {
                     });
 
 
-                    builder.setNegativeButton(getResources().getString(R.string.abort), new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(getString(R.string.abort), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -127,12 +121,61 @@ public class SetupActivity extends Activity {
                     dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                     dialog.show();
                 } else {
-                    startActivity(new Intent(SetupActivity.this, MainActivity.class));
-                    finish();
+                    new AsyncTask<Integer, Integer, Integer>() {
+
+                        @Override
+                        public void onPostExecute(Integer i) {
+                            switch(i) {
+                                case 0:
+                                    startDownloading();
+                                    break;
+                                case 1:
+                                    //Bug
+                                    break;
+                                case 2:
+                                    GGApp.GG_APP.showToast(getString(R.string.could_not_contact_logon_server));
+                                    break;
+                                case 3:
+                                    GGApp.GG_APP.showToast(getString(R.string.unknown_error_at_logon));
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        protected Integer doInBackground(Integer... params) {
+                            return GGApp.GG_APP.remote.login(null, null);
+                        }
+                    }.execute();
+
                 }
             }
         });
 
+    }
+
+    public void startDownloading() {
+        final ProgressDialog d = new ProgressDialog(this);
+        d.setTitle(GGApp.GG_APP.school.name);
+        d.setMessage("Downloading image...");
+        d.setCancelable(false);
+        d.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        d.show();
+
+        new Thread() {
+            @Override
+            public void run() {
+                if(!GGApp.GG_APP.school.downloadImage()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            GGApp.GG_APP.showToast(getString(R.string.download_error));
+                        }
+                    });
+                }
+                d.dismiss();
+                startActivity(new Intent(SetupActivity.this, MainActivity.class));
+            }
+        }.start();
     }
 
 }

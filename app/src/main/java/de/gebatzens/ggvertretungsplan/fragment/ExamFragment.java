@@ -152,13 +152,9 @@ public class ExamFragment extends RemoteDataFragment {
         c.setTime(d);
         c.add(Calendar.DAY_OF_YEAR, -1);
         Date dt = c.getTime();
-        try {
-            if(getDate(exam_item.date).before(dt)) {
-                //ecv.setAlpha(0.35f);
-                return null;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if(exam_item.date.before(dt)) {
+            //ecv.setAlpha(0.35f);
+            return null;
         }
         String lesson = exam_item.lesson;
         if(Integer.parseInt(exam_item.length) > 1)
@@ -170,9 +166,7 @@ public class ExamFragment extends RemoteDataFragment {
         return ecv;
     }
 
-    private String getFormattedDate(String date) {
-        String formattedDate;
-        DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+    private String getFormattedDate(Date date) {
         DateFormat dateFormatter;
         if(Locale.getDefault().getLanguage().equals("de")) {
             dateFormatter = new SimpleDateFormat("d. MMM");
@@ -181,27 +175,13 @@ public class ExamFragment extends RemoteDataFragment {
         } else {
             dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         }
-        try
-        {
-            Date parsedDate = parser.parse(date);
-            formattedDate = dateFormatter.format(parsedDate);
-            return formattedDate;
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-            return "";
-        }
+
+        return dateFormatter.format(date);
     }
 
-    private Date getDate(String date) throws ParseException {
-        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.parse(date);
-    }
-
-    private String getDay(String date) {
+    private String getDay(Date date) {
         try {
-            return new SimpleDateFormat("EE").format(getDate(date));
+            return new SimpleDateFormat("EE").format(date);
         } catch(Exception e) {
             e.printStackTrace();
         }

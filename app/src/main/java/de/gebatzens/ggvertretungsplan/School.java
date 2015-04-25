@@ -23,7 +23,7 @@ import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -171,6 +171,20 @@ public class School {
         } catch (Exception e) {
             e.printStackTrace();
             return BitmapFactory.decodeResource(GGApp.GG_APP.getResources(), R.drawable.no_content);
+        }
+    }
+
+    public boolean downloadImage() {
+        if(new File(image).exists())
+            return true;
+        try {
+            InputStream in = GGApp.GG_APP.remote.openConnection("/infoapp/images/" + image, false).getInputStream();
+            BitmapFactory.decodeStream(in).compress(Bitmap.CompressFormat.PNG, 90, GGApp.GG_APP.openFileOutput(image, Context.MODE_PRIVATE));
+            in.close();
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

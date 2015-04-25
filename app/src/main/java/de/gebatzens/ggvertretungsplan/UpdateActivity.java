@@ -34,8 +34,6 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import de.gebatzens.ggvertretungsplan.provider.GGRemote;
-
 public class UpdateActivity extends AsyncTask<String, String, String> {
 
     private ProgressDialog pDialog;

@@ -32,8 +32,6 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.nio.charset.Charset;
 
-import de.gebatzens.ggvertretungsplan.provider.GGRemote;
-
 public class MQTTService extends IntentService {
 
     int id = 1000;

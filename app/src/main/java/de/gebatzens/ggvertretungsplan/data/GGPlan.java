@@ -49,7 +49,7 @@ public class GGPlan {
     }
 
     public String getWeekday() {
-        return new SimpleDateFormat("EEE").format(date);
+        return new SimpleDateFormat("EEEE").format(date);
     }
 
     public static class GGPlans implements RemoteDataFragment.RemoteData {

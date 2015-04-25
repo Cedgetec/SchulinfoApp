@@ -33,7 +33,6 @@ import java.util.Properties;
 
 import de.gebatzens.ggvertretungsplan.data.GGPlan;
 import de.gebatzens.ggvertretungsplan.fragment.SubstFragment;
-import de.gebatzens.ggvertretungsplan.provider.GGRemote;
 
 public class GGBroadcast extends BroadcastReceiver {
 
