@@ -77,7 +77,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
             CardView cv = createCardView();
             f2.addView(cv);
-            createTextView(getResources().getString(R.string.no_entries_in_substitutionplan), 20, inflater, cv);
+            createTextView(getResources().getString(R.string.no_entries_schedule), 20, inflater, cv);
             group.addView(f2);
         }
 
@@ -173,7 +173,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             createTextView(planh.loadDate, 15, inflater, l2);
 
             TextView tv2 = createTextView(
-                    filters.mainFilter.type == Filter.FilterType.CLASS ? getActivity().getString(R.string.schoolclass) + " " + filters.mainFilter.filter :
+                    filters.mainFilter.type == Filter.FilterType.CLASS ? getActivity().getString(R.string.school_class) + " " + filters.mainFilter.filter :
                     getActivity().getString(R.string.teacher) + " " + filters.mainFilter.filter, 15, inflater, l2);
             tv2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             tv2.setGravity(Gravity.RIGHT | Gravity.CENTER);

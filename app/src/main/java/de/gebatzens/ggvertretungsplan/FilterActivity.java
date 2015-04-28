@@ -25,7 +25,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.widget.Toolbar;
 import android.util.JsonReader;
 import android.util.JsonWriter;
@@ -69,7 +68,7 @@ public class FilterActivity extends Activity {
         super.onCreate(bundle);
         setContentView(R.layout.activity_filter);
 
-        final String[] main_filterStrings = new String[] { getApplication().getString(R.string.schoolclass), getApplication().getString(R.string.teacher)};
+        final String[] main_filterStrings = new String[] { getApplication().getString(R.string.school_class), getApplication().getString(R.string.teacher)};
 
         listView = (ListView) findViewById(R.id.filter_list);
         adapter = new FilterListAdapter(this, GGApp.GG_APP.filters);
@@ -84,7 +83,7 @@ public class FilterActivity extends Activity {
 
         Filter.FilterList list = GGApp.GG_APP.filters;
         mainFilterCategory = (TextView) findViewById(R.id.filter_main_category);
-        mainFilterCategory.setText(list.mainFilter.filter.isEmpty() ? getString(R.string.not_selected) : list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.schoolclass) : getApplication().getString(R.string.teacher));
+        mainFilterCategory.setText(list.mainFilter.filter.isEmpty() ? getString(R.string.not_selected) : list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher));
         mainFilterContent = (TextView) findViewById(R.id.filter_main_content);
         mainFilterContent.setText(list.mainFilter.filter);
 
@@ -95,13 +94,13 @@ public class FilterActivity extends Activity {
                 Filter.FilterList list = GGApp.GG_APP.filters;
                 selected_mode = list.mainFilter.type == Filter.FilterType.CLASS ? 0 : list.mainFilter.type == Filter.FilterType.TEACHER ? 1 : 2;
                 AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
-                builder.setTitle(getApplication().getString(R.string.set_mainfilter_mode))
+                builder.setTitle(getApplication().getString(R.string.set_main_filter_mode))
                         .setSingleChoiceItems(main_filterStrings, selected_mode, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 main_mode_position = which == 0 ? 0 : 1;
                                 Filter.FilterList list = GGApp.GG_APP.filters;
                                 list.mainFilter.type = Filter.FilterType.values()[main_mode_position];
-                                mainFilterCategory.setText(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.schoolclass) : getApplication().getString(R.string.teacher));
+                                mainFilterCategory.setText(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher));
                                 FilterActivity.saveFilter(GGApp.GG_APP.filters);
                                 dialog.dismiss();
                             }
@@ -128,7 +127,7 @@ public class FilterActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         EditText text = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
-                        text.setHint(getApplication().getString(R.string.schoolclass));
+                        text.setHint(getApplication().getString(R.string.school_class));
                         String text2 = text.getText().toString().trim();
                         if (text2.isEmpty())
                             Toast.makeText(((Dialog) dialog).getContext(), getApplication().getString(R.string.invalid_filter), Toast.LENGTH_SHORT).show();
@@ -152,7 +151,7 @@ public class FilterActivity extends Activity {
                 d.show();
                 Filter.FilterList list = GGApp.GG_APP.filters;
                 EditText mainEdit = (EditText) d.findViewById(R.id.filter_text);
-                mainEdit.setHint(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.schoolclass) : getApplication().getString(R.string.teacher_shortcut));
+                mainEdit.setHint(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher_shortcut));
                 mainEdit.setText(list.mainFilter.filter);
             }
         });
@@ -176,7 +175,7 @@ public class FilterActivity extends Activity {
                 if(menuItem.getItemId() == R.id.action_help) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
                     builder.setTitle(getApplication().getString(R.string.help));
-                    builder.setMessage(getApplication().getString(R.string.helptext));
+                    builder.setMessage(getApplication().getString(R.string.filter_help));
                     builder.setPositiveButton(getApplication().getString(R.string.close), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

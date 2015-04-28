@@ -6,16 +6,16 @@
             android:summary="Kein Filter aktiv" />
         <Preference android:title="@string/username"
             android:key="authentication_username"
-            android:summary="@string/youre_not_logged_in">
+            android:summary="@string/not_logged_in">
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/general">
         <CheckBoxPreference android:title="@string/show_notifications"
-            android:summary="@string/notify_if_youre_class_is_affected"
+            android:summary="@string/notify_class"
             android:key="benachrichtigungen"
             android:defaultValue="true" />
-        <CheckBoxPreference android:title="@string/autoupdate"
-            android:summary="@string/autoupdate_summary"
+        <CheckBoxPreference android:title="@string/app_update"
+            android:summary="@string/app_update_notify"
             android:key="autoappupdates"
             android:defaultValue="true" />
         <ListPreference android:title="@string/automatic_updates"
@@ -28,9 +28,9 @@
     <PreferenceCategory android:title="@string/information">
         <de.gebatzens.ggvertretungsplan.GGDialogPreference
             android:title="@string/developer"
-            android:summary="@string/information_about_the_developers_of_this_app"
-            android:key="entwickler"
-            android:dialogMessage="Von Verplanten für Verplante, Ihr Vertretungsplan!\n\nHauke Oldsen\nLasse Rosenow\nLennart Schmidt\nFabian Schultis"
+            android:summary="@string/developer_info"
+            android:key="developers"
+            android:dialogMessage="@string/developer_dialog"
             android:negativeButtonText=""/>
         <Preference android:title="@string/github"
             android:summary="https://github.com/GGDevelopers/SchulinfoAPP"
@@ -42,7 +42,7 @@
             android:summary="Version: x.x.x"
             android:key="buildversion"/>
         <Preference android:title="@string/helpdesk"
-            android:summary="@string/contact_us_if_you_have_a_problem_with_this_app"
+            android:summary="@string/contact_us"
             android:key="helpdesk"
             android:icon="@drawable/ic_helpdesk"/>
     </PreferenceCategory>

@@ -88,10 +88,10 @@ public class SetupActivity extends Activity {
                                             GGApp.GG_APP.showToast(getString(R.string.username_or_password_wrong));
                                             break;
                                         case 2:
-                                            GGApp.GG_APP.showToast(getString(R.string.could_not_contact_logon_server));
+                                            GGApp.GG_APP.showToast(getString(R.string.could_not_connect));
                                             break;
                                         case 3:
-                                            GGApp.GG_APP.showToast(getString(R.string.unknown_error_at_logon));
+                                            GGApp.GG_APP.showToast(getString(R.string.unknown_error_login));
                                             break;
                                     }
                                 }
@@ -133,10 +133,10 @@ public class SetupActivity extends Activity {
                                     //Bug
                                     break;
                                 case 2:
-                                    GGApp.GG_APP.showToast(getString(R.string.could_not_contact_logon_server));
+                                    GGApp.GG_APP.showToast(getString(R.string.could_not_connect));
                                     break;
                                 case 3:
-                                    GGApp.GG_APP.showToast(getString(R.string.unknown_error_at_logon));
+                                    GGApp.GG_APP.showToast(getString(R.string.unknown_error_login));
                                     break;
                             }
                         }

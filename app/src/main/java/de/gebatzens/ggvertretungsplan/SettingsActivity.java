@@ -138,7 +138,7 @@ public class SettingsActivity extends Activity {
                         int padding_left = (int)(p * d);
                         ll.setPadding(padding_left,0,0,0);
                         TextView tv = new TextView(getActivity());
-                        tv.setText(getResources().getString(R.string.logout_realy));
+                        tv.setText(getResources().getString(R.string.logout_confirm));
                         ll.addView(tv);
                         final CheckBox cb = new CheckBox(getActivity());
                         cb.setText(getResources().getString(R.string.logout_on_all_devices));
@@ -162,7 +162,7 @@ public class SettingsActivity extends Activity {
                         });
                         builder.create().show();
                     } else {
-                        Toast.makeText(getActivity(),getResources().getString(R.string.youre_not_logged_in), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),getResources().getString(R.string.not_logged_in), Toast.LENGTH_SHORT).show();
                     }
 
                     return false;
@@ -187,7 +187,7 @@ public class SettingsActivity extends Activity {
             });
 
             Preference helpdesk = findPreference("helpdesk");
-            helpdesk.setSummary(getResources().getString(R.string.contact_us_if_you_have_a_problem_with_this_app));
+            helpdesk.setSummary(getResources().getString(R.string.contact_us));
             helpdesk.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {

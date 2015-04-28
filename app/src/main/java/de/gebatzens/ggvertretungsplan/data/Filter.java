@@ -61,7 +61,7 @@ public class Filter {
         String s;
         switch(type) {
             case CLASS:
-                s = GGApp.GG_APP.getString(R.string.schoolclass);
+                s = GGApp.GG_APP.getString(R.string.school_class);
                 break;
             case TEACHER:
                 s = GGApp.GG_APP.getString(R.string.teacher);
@@ -78,7 +78,7 @@ public class Filter {
     public static FilterType getTypeFromString(String s) {
         if(s.equals(GGApp.GG_APP.getString(R.string.teacher)))
             return FilterType.TEACHER;
-        else if(s.equals(GGApp.GG_APP.getString(R.string.schoolclass)))
+        else if(s.equals(GGApp.GG_APP.getString(R.string.school_class)))
             return FilterType.CLASS;
         else if(s.equals(GGApp.GG_APP.getString(R.string.subject_course)))
             return FilterType.SUBJECT;

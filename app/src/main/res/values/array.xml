@@ -2,9 +2,9 @@
 
 <resources>
     <string-array name="appupdatesArray" translatable="false">
-        <item>@string/deny_substitutionplan_updates</item>
+        <item>@string/update_never</item>
         <item>@string/only_update_over_wireless_lan</item>
-        <item>@string/update_everytime</item>
+        <item>@string/update_always</item>
     </string-array>
     <string-array name="appupdatesValues" translatable="false">
         <item>disable</item>

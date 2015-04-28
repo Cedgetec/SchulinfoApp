@@ -36,7 +36,7 @@
                 android:layout_marginLeft="16dp"
                 android:fontFamily="sans-serif-medium"
                 android:id="@+id/filter_sep_1"
-                android:text="@string/mainfilter"/>
+                android:text="@string/main_filter"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:fontFamily="sans-serif"
-                android:text="@string/mainfilter_mode"/>
+                android:text="@string/main_filter_mode"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:fontFamily="sans-serif"
-                android:text="@string/mainfilter_content"/>
+                android:text="@string/main_filter_content"/>
 
             <TextView
                 android:layout_width="match_parent"

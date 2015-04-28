@@ -16,13 +16,8 @@
 
 package de.gebatzens.ggvertretungsplan.fragment;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -30,11 +25,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -42,7 +35,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import de.gebatzens.ggvertretungsplan.GGApp;
-import de.gebatzens.ggvertretungsplan.MainActivity;
 import de.gebatzens.ggvertretungsplan.R;
 import de.gebatzens.ggvertretungsplan.VPLoginException;
 
@@ -178,7 +170,7 @@ public abstract class RemoteDataFragment extends Fragment {
                     }
                 });
             } else {
-                createButtonWithText(vg, getResources().getString(R.string.check_connection_and_repeat), getResources().getString(R.string.again), new View.OnClickListener() {
+                createButtonWithText(vg, getResources().getString(R.string.check_connection), getResources().getString(R.string.again), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         GGApp.GG_APP.refreshAsync(null, true, GGApp.FragmentType.PLAN);

@@ -258,7 +258,7 @@ public class GGPlan {
             Matcher task = Pattern.compile("task (.*)").matcher(comment);
 
             if(type.equals("entf")) {
-                type = GGApp.GG_APP.getString(R.string.elemination);
+                type = GGApp.GG_APP.getString(R.string.canceled);
 
                 if(task.find())
                     comment = GGApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
@@ -277,7 +277,7 @@ public class GGPlan {
             } else if(type.equals("lesson")) {
                 type = GGApp.GG_APP.getString(R.string.lesson);
             } else if(type.equals("shifted")) {
-                type = GGApp.GG_APP.getString(R.string.elemination) + " / " +  GGApp.GG_APP.getResources().getString(R.string.shift);
+                type = GGApp.GG_APP.getString(R.string.canceled) + " / " +  GGApp.GG_APP.getResources().getString(R.string.shift);
 
                 Matcher m = Pattern.compile("shift (\\S*) (\\S*)").matcher(comment);
 

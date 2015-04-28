@@ -21,15 +21,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.JsonReader;
 import android.util.Log;
-import android.widget.Toast;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,9 +38,6 @@ import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -52,13 +45,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import de.gebatzens.ggvertretungsplan.BuildConfig;
-import de.gebatzens.ggvertretungsplan.FilterActivity;
-import de.gebatzens.ggvertretungsplan.GGApp;
-import de.gebatzens.ggvertretungsplan.GGImageGetter;
-import de.gebatzens.ggvertretungsplan.MQTTService;
-import de.gebatzens.ggvertretungsplan.R;
-import de.gebatzens.ggvertretungsplan.VPLoginException;
 import de.gebatzens.ggvertretungsplan.data.Exams;
 import de.gebatzens.ggvertretungsplan.data.Filter;
 import de.gebatzens.ggvertretungsplan.data.GGPlan;
@@ -274,7 +260,7 @@ public class GGRemote {
                         @Override
                         public void run() {
                             GGApp.GG_APP.showToast(t instanceof IOException ? GGApp.GG_APP.getResources().getString(R.string.no_internet_connection) :
-                                    t instanceof VPLoginException ? GGApp.GG_APP.getString(R.string.youre_not_logged_in) : GGApp.GG_APP.getResources().getString(R.string.unknown_error));
+                                    t instanceof VPLoginException ? GGApp.GG_APP.getString(R.string.not_logged_in) : GGApp.GG_APP.getResources().getString(R.string.unknown_error));
                         }
                     });
             }

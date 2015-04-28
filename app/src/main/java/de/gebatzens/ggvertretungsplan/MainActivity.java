@@ -20,10 +20,8 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,7 +42,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -110,7 +107,7 @@ public class MainActivity extends FragmentActivity {
             GGApp.GG_APP.setFragmentType(type);
         }
 
-        mStrings = new String[] {getResources().getString(R.string.substitutionplan), getResources().getString(R.string.news), getResources().getString(R.string.cafeteria),
+        mStrings = new String[] {getResources().getString(R.string.substitute_schedule), getResources().getString(R.string.news), getResources().getString(R.string.cafeteria),
                 getResources().getString(R.string.exams)};
 
         NotificationManager nm =

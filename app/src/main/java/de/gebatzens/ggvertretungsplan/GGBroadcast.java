@@ -154,7 +154,7 @@ public class GGBroadcast extends BroadcastReceiver {
                 stdtm = gg.getString(R.string.nothing);
             Intent intent = new Intent(gg, MainActivity.class);
             intent.putExtra("fragment", "PLAN");
-            gg.createNotification(R.drawable.ic_gg_notification, gg.getString(R.string.substitutionplan_change), gg.getString(R.string.the_sp_has_changed),
+            gg.createNotification(R.drawable.ic_gg_notification, gg.getString(R.string.schedule_change), gg.getString(R.string.schedule_changed),
                     intent, 123, false, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
                     tomo.getWeekday() + ": " + stdtm);
         } else
@@ -182,7 +182,7 @@ public class GGBroadcast extends BroadcastReceiver {
                 Intent intent = new Intent(gg, SettingsActivity.class);
                 intent.putExtra("update", true);
                 intent.putExtra("version", version);
-                gg.createNotification(R.drawable.ic_notification_update, gg.getString(R.string.infoappupdate), gg.getString(R.string.appupdate_available),
+                gg.createNotification(R.drawable.ic_notification_update, gg.getString(R.string.app_update_title), gg.getString(R.string.app_update_message),
                         intent, 124, false);
             }
         } catch(Exception e) {
