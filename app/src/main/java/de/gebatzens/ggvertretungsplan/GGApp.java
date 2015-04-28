@@ -71,19 +71,6 @@ public class GGApp extends Application {
         loadSubjectMap();
         School.loadList();
         school = School.getBySID(preferences.getString("sid", null));
-        //if (School.LIST.size() == 0) {
-        //TODO don't do this on every start
-            new Thread() {
-                @Override
-                public void run() {
-                    School.fetchList();
-                    School.saveList();
-                    school = School.getBySID(preferences.getString("sid", null));
-                }
-            }.start();
-        //} else {
-        //    school = School.getBySID(preferences.getString("sid", null));
-        //}
     }
 
     public RemoteDataFragment.RemoteData getDataForFragment(FragmentType type) {
@@ -197,6 +184,10 @@ public class GGApp extends Application {
     public void setSchool(String sid) {
         preferences.edit().putString("sid", sid).apply();
         school = School.getBySID(sid);
+    }
+
+    public String getDefaultSID() {
+        return preferences.getString("sid", null);
     }
 
     public boolean appUpdatesEnabled() {

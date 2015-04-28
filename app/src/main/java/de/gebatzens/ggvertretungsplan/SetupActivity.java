@@ -27,7 +27,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -35,6 +37,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 public class SetupActivity extends Activity {
+
+    SchoolListAdapter adapter;
+    ListView list;
 
     @Override
     public void onCreate(Bundle saved) {
@@ -57,10 +62,12 @@ public class SetupActivity extends Activity {
         toolbar.setBackgroundColor(getResources().getColor(R.color.main_orange));
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle(getString(R.string.app_name));
+        toolbar.inflateMenu(R.menu.setup_menu);
 
-        ListView l = (ListView) findViewById(R.id.setup_list);
-        l.setAdapter(new SchoolListAdapter());
-        l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list = (ListView) findViewById(R.id.setup_list);
+        adapter = new SchoolListAdapter();
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 School s = School.LIST.get(position);
@@ -151,6 +158,66 @@ public class SetupActivity extends Activity {
             }
         });
 
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if(menuItem.getItemId() == R.id.setup_refresh) {
+                    showSchoolListDialog();
+                }
+                return true;
+            }
+        });
+
+        if(School.LIST.size() == 0) {
+            showSchoolListDialog();
+        } else {
+            new Thread() {
+                @Override
+                public void run() {
+                    final boolean b = School.fetchList();
+                    School.saveList();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                            if(!b)
+                                GGApp.GG_APP.showToast(getString(R.string.no_internet_connection));
+
+                        }
+                    });
+                    GGApp.GG_APP.setSchool(GGApp.GG_APP.getDefaultSID());
+
+                }
+            }.start();
+        }
+
+    }
+
+    public void showSchoolListDialog() {
+        final ProgressDialog d = new ProgressDialog(this);
+        d.setTitle(getString(R.string.app_name));
+        d.setMessage("Downloading school list...");
+        d.setCancelable(false);
+        d.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        d.show();
+
+        new Thread() {
+            @Override
+            public void run() {
+                final boolean b = School.fetchList();
+                School.saveList();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                        if(!b)
+                            GGApp.GG_APP.showToast(getString(R.string.no_internet_connection));
+                    }
+                });
+                GGApp.GG_APP.setSchool(GGApp.GG_APP.getDefaultSID());
+                d.dismiss();
+            }
+        }.start();
     }
 
     public void startDownloading() {

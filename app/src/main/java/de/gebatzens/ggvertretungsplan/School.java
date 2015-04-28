@@ -29,6 +29,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -43,11 +44,13 @@ public class School {
     public String city;
     public boolean loginNeeded;
 
-    public static List<School> LIST;
+    public static List<School> LIST = new ArrayList<School>();
 
-    public static void fetchList() {
+    public static boolean fetchList() {
         Log.i("ggvp", "Downloading school list");
-        LIST.clear();
+
+        List<School> newList = new ArrayList<School>();
+
         try {
             HttpsURLConnection con = GGApp.GG_APP.remote.openConnection("/infoapp/get_schools.php", false);
             if(con.getResponseCode() == 200) {
@@ -77,19 +80,28 @@ public class School {
                         else
                             reader.skipValue();
                     }
-                    LIST.add(s);
+                    newList.add(s);
                     reader.endObject();
                 }
                 reader.endArray();
                 reader.close();
 
+                LIST.clear();
+                LIST.addAll(newList);
+
                 Log.i("ggvp", "Downloaded school list");
+
+                return true;
             } else {
                 Log.e("ggvp", "server returned " + con.getResponseCode());
+
             }
         } catch(Exception e) {
             Log.w("ggvp", "Failed to download school list", e);
+
         }
+
+        return false;
     }
 
     public static void saveList() {
@@ -120,7 +132,7 @@ public class School {
     }
 
     public static void loadList() {
-        LIST = new ArrayList<School>();
+        LIST.clear();
         try {
             InputStream in = GGApp.GG_APP.openFileInput("schools");
             JsonReader reader = new JsonReader(new InputStreamReader(in));
