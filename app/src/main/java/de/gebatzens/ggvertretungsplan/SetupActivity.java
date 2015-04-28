@@ -27,7 +27,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -180,7 +179,7 @@ public class SetupActivity extends Activity {
                         @Override
                         public void run() {
                             adapter.notifyDataSetChanged();
-                            if(!b)
+                            if (!b)
                                 GGApp.GG_APP.showToast(getString(R.string.no_internet_connection));
 
                         }
