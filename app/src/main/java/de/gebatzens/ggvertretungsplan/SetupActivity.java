@@ -239,7 +239,9 @@ public class SetupActivity extends Activity {
                     });
                 }
                 d.dismiss();
-                startActivity(new Intent(SetupActivity.this, MainActivity.class));
+                Intent i = new Intent(SetupActivity.this, MainActivity.class);
+                i.putExtra("reload", true);
+                startActivity(i);
             }
         }.start();
     }
