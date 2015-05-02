@@ -21,6 +21,8 @@ import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -42,7 +44,6 @@ public class GGPlan {
     public ArrayList<Entry> entries = new ArrayList<Entry>();
     public Date date;
     public List<String> special = new ArrayList<String>();
-    public String loadDate = "";
 
     public GGPlan() {
 
@@ -52,10 +53,10 @@ public class GGPlan {
         return new SimpleDateFormat("EEEE").format(date);
     }
 
-    public static class GGPlans implements RemoteDataFragment.RemoteData {
+    public static class GGPlans extends ArrayList<GGPlan> implements RemoteDataFragment.RemoteData {
 
         public Throwable throwable;
-        public GGPlan today, tomorrow;
+        public String loadDate;
 
         @Override
         public Throwable getThrowable() {
@@ -64,96 +65,99 @@ public class GGPlan {
 
         @Override
         public void save() {
-            today.save("stoday");
-            tomorrow.save("stomorrow");
+            GGApp.GG_APP.preferences.edit().putString("loadDate", loadDate).apply();
+            for(int i = 0; i < size(); i++)
+                get(i).save("schedule" + i);
         }
 
         @Override
         public boolean load() {
-            return today.load("stoday") && tomorrow.load("stomorrow");
+            loadDate = GGApp.GG_APP.preferences.getString("loadDate", "");
+            try {
+                for(int i = 0; ; i++) {
+                    GGPlan plan = new GGPlan();
+                    plan.load("schedule" + i);
+                    add(plan);
+                }
+
+            } catch(FileNotFoundException e) {
+
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+            return size() > 0;
         }
     }
 
-    public boolean load(String file) {
+    public void load(String file) throws Exception {
         entries.clear();
         special.clear();
-        loadDate = "";
 
-        try {
-            InputStream in = GGApp.GG_APP.openFileInput(file);
-            JsonReader reader = new JsonReader(new InputStreamReader(in));
-            reader.beginObject();
-            while(reader.hasNext()) {
-                String name = reader.nextName();
-                if(name.equals("loadDate"))
-                    loadDate = reader.nextString();
-                else if(name.equals("date")) {
-                    date.setTime(reader.nextLong());
-                } else if(name.equals("messages")) {
-                    reader.beginArray();
+        InputStream in = GGApp.GG_APP.openFileInput(file);
+        JsonReader reader = new JsonReader(new InputStreamReader(in));
+        reader.beginObject();
+        while(reader.hasNext()) {
+            String name = reader.nextName();
+            if(name.equals("date")) {
+                date.setTime(reader.nextLong());
+            } else if(name.equals("messages")) {
+                reader.beginArray();
+                while(reader.hasNext()) {
+                    special.add(reader.nextString());
+                }
+                reader.endArray();
+            } else if(name.equals("entries")) {
+                reader.beginArray();
+                while(reader.hasNext()) {
+                    reader.beginObject();
+                    Entry e = new Entry();
+                    e.date = date;
                     while(reader.hasNext()) {
-                        special.add(reader.nextString());
-                    }
-                    reader.endArray();
-                } else if(name.equals("entries")) {
-                    reader.beginArray();
-                    while(reader.hasNext()) {
-                        reader.beginObject();
-                        Entry e = new Entry();
-                        e.date = date;
-                        while(reader.hasNext()) {
-                            String name2 = reader.nextName();
-                            if(name2.equals("class"))
-                                e.clazz = reader.nextString();
-                            else if(name2.equals("lesson"))
-                                e.lesson = reader.nextString();
-                            else if(name2.equals("subst"))
-                                e.subst = reader.nextString();
-                            else if(name2.equals("subject"))
-                                e.subject = reader.nextString();
-                            else if(name2.equals("comment"))
-                                e.comment = reader.nextString();
-                            else if(name2.equals("type"))
-                                e.type = reader.nextString();
-                            else if(name2.equals("room"))
-                                e.room = reader.nextString();
-                            else if(name2.equals("repsub"))
-                                e.repsub = reader.nextString();
-                            else
-                                reader.skipValue();
+                        String name2 = reader.nextName();
+                        if(name2.equals("class"))
+                            e.clazz = reader.nextString();
+                        else if(name2.equals("lesson"))
+                            e.lesson = reader.nextString();
+                        else if(name2.equals("subst"))
+                            e.subst = reader.nextString();
+                        else if(name2.equals("subject"))
+                            e.subject = reader.nextString();
+                        else if(name2.equals("comment"))
+                            e.comment = reader.nextString();
+                        else if(name2.equals("type"))
+                            e.type = reader.nextString();
+                        else if(name2.equals("room"))
+                            e.room = reader.nextString();
+                        else if(name2.equals("repsub"))
+                            e.repsub = reader.nextString();
+                        else
+                            reader.skipValue();
 
-                        }
-                        //if(!e.isValid()) {
-                        //    reader.close();
-                        //    return false;
-                        //}
-                        //Log.w("ggvp", "Loaded " + e);
-                        entries.add(e);
-                        reader.endObject();
                     }
-                    reader.endArray();
-                } else
-                    reader.skipValue();
-            }
-            reader.endObject();
-            reader.close();
-
-        } catch(Exception e) {
-            Log.w("ggvp", "Failed to load " + file);
-            return false;
+                    //if(!e.isValid()) {
+                    //    reader.close();
+                    //    return false;
+                    //}
+                    //Log.w("ggvp", "Loaded " + e);
+                    entries.add(e);
+                    reader.endObject();
+                }
+                reader.endArray();
+            } else
+                reader.skipValue();
         }
-        return true;
+        reader.endObject();
+        reader.close();
     }
 
     public void save(String file) {
-        Log.w("ggvp", "Speichere " + file);
+        Log.w("ggvp", "Saving " + file);
         try {
             OutputStream out = GGApp.GG_APP.openFileOutput(file, Context.MODE_PRIVATE);
             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
 
             writer.setIndent("  ");
             writer.beginObject();
-            writer.name("loadDate").value(loadDate);
             writer.name("date").value(date.getTime());
             writer.name("messages");
             writer.beginArray();

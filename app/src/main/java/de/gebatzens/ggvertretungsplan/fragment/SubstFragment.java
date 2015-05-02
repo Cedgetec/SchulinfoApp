@@ -65,8 +65,8 @@ public class SubstFragment extends RemoteDataFragment {
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         mGGFrag = new SubstAdapter(this, savedInstanceState, (MainActivity) getActivity());
         if(bundle != null) {
-            mGGFrag.heute.spinnerPos = bundle.getInt("ggvp_frag_today_spinner");
-            mGGFrag.morgen.spinnerPos = bundle.getInt("ggvp_frag_tomorrow_spinner");
+            for(int i = 0; i < mGGFrag.fragments.size(); i++)
+                mGGFrag.fragments.get(i).spinnerPos = bundle.getInt("ggvp_frag_spinner_" + i);
         }
         mViewPager.setAdapter(mGGFrag);
         mViewPager.setOffscreenPageLimit(3);
@@ -123,8 +123,8 @@ public class SubstFragment extends RemoteDataFragment {
     @Override
     public void saveInstanceState(Bundle b) {
 
-        b.putInt("ggvp_frag_today_spinner", mGGFrag.heute.spinnerPos);
-        b.putInt("ggvp_frag_tomorrow_spinner", mGGFrag.morgen.spinnerPos);
+        for(int i = 0; i < mGGFrag.fragments.size(); i++)
+            b.putInt("ggvp_frag_spinner_" + i, mGGFrag.fragments.get(i).spinnerPos);
         b.putInt("ggvp_tab", mViewPager.getCurrentItem());
     }
 
@@ -145,8 +145,8 @@ public class SubstFragment extends RemoteDataFragment {
 
     @Override
     public void updateFragment() {
-        mGGFrag.morgen.spinnerPos = 0;
-        mGGFrag.heute.spinnerPos = 0;
+        for(SubstPagerFragment frag : mGGFrag.fragments)
+            frag.spinnerPos = 0;
         mGGFrag.updateFragments();
     }
 }

@@ -181,10 +181,6 @@ public class GGRemote {
     public GGPlan.GGPlans getPlans(boolean toast) {
 
         GGPlan.GGPlans plans = new GGPlan.GGPlans();
-        plans.tomorrow = new GGPlan();
-        plans.today = new GGPlan();
-        plans.today.date = new Date();
-        plans.tomorrow.date = new Date();
 
         try {
             if (session == null) {
@@ -219,29 +215,26 @@ public class GGRemote {
             reader.beginObject();
 
             while(reader.hasNext()) {
-                String name = reader.nextName();
-                if(name.equals("today"))
-                    plans.today.date = GGPlan.parseDate(reader.nextString());
-                else if(name.equals("tomorrow"))
-                    plans.tomorrow.date = GGPlan.parseDate(reader.nextString());
-                else if(name.equals("entries_today"))
-                    getPlan(reader, plans.today);
-                else if(name.equals("entries_tomorrow"))
-                    getPlan(reader, plans.tomorrow);
-                else if(name.equals("messages_today")) {
-                    reader.beginArray();
-                    while(reader.hasNext()) {
-                        plans.today.special.add("&#8226;  " + reader.nextString());
-                    }
-                    reader.endArray();
-                } else if(name.equals("messages_tomorrow")) {
-                    reader.beginArray();
-                    while(reader.hasNext()) {
-                        plans.tomorrow.special.add("&#8226;  " + reader.nextString());
-                    }
-                    reader.endArray();
-                } else
-                    reader.skipValue();
+                String date = reader.nextName();
+                GGPlan plan = new GGPlan();
+                plan.date = GGPlan.parseDate(date);
+                plans.add(plan);
+                reader.beginObject();
+                while(reader.hasNext()) {
+                    String name = reader.nextName();
+                    if(name.equals("entries"))
+                        getPlan(reader, plan);
+                    else if(name.equals("messages")) {
+                        reader.beginArray();
+                        while(reader.hasNext()) {
+                            plan.special.add("&#8226;  " + reader.nextString());
+                        }
+                        reader.endArray();
+                    } else
+                        reader.skipValue();
+                }
+                reader.endObject();
+
 
             }
 
@@ -266,6 +259,8 @@ public class GGRemote {
             }
         } else {
             plans.save();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+            plans.loadDate = GGApp.GG_APP.getResources().getString(R.string.as_of) + ": " + sdf.format(new Date());
         }
 
         return plans;
@@ -312,9 +307,6 @@ public class GGRemote {
         }
 
         reader.endArray();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-        p.loadDate = GGApp.GG_APP.getResources().getString(R.string.as_of) + ": " + sdf.format(new Date());
     }
 
     public News getNews() {

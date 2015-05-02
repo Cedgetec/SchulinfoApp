@@ -37,7 +37,7 @@ import de.gebatzens.ggvertretungsplan.fragment.SubstFragment;
 public class GGBroadcast extends BroadcastReceiver {
 
     //TODO
-    public void checkForUpdates(final GGApp gg, boolean notification) {
+    /*public void checkForUpdates(final GGApp gg, boolean notification) {
         if(!gg.notificationsEnabled() && notification)
             return;
         if(gg.getUpdateType() == GGApp.UPDATE_DISABLE) {
@@ -169,7 +169,7 @@ public class GGBroadcast extends BroadcastReceiver {
             gg.showToast(e.getClass().getName() + " " + e.getMessage());
         }
 
-    }
+    }*/
 
     public void checkForAppUpdates(GGApp gg) {
         if(!gg.appUpdatesEnabled())
@@ -226,7 +226,7 @@ public class GGBroadcast extends BroadcastReceiver {
 
                 @Override
                 protected Void doInBackground(GGApp... params) {
-                    checkForUpdates(params[0], true);
+                    //checkForUpdates(params[0], true);
                     checkForAppUpdates(params[0]);
                     return null;
                 }
@@ -258,7 +258,7 @@ public class GGBroadcast extends BroadcastReceiver {
 
                             params[0].refreshAsync(null, true, params[0].getFragmentType());
                         } else {
-                            checkForUpdates(params[0], false);
+                            //checkForUpdates(params[0], false);
                         }
                         return null;
                     }

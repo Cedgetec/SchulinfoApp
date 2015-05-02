@@ -48,26 +48,22 @@ import de.gebatzens.ggvertretungsplan.data.GGPlan;
 
 public class SubstPagerFragment extends RemoteDataFragment {
 
-    public static final int TYPE_OVERVIEW = 0, TYPE_TODAY = 1, TYPE_TOMORROW = 2;
+    public static final int INDEX_OVERVIEW = -2, INDEX_INVALID = -1;
 
-    GGPlan plan, planh, planm;
-    int type = -1;
+    //GGPlan plan, planh, planm;
+    GGPlan plan;
+    int index = -2;
     int spinnerPos = 0;
 
     public SubstPagerFragment() {
         super.type = GGApp.FragmentType.PLAN;
     }
 
-    public void setParams(int type) {
-        this.type = type;
-        if(GGApp.GG_APP.plans != null) {
-            planh = GGApp.GG_APP.plans.today;
-            planm = GGApp.GG_APP.plans.tomorrow;
+    public void setParams(int index) {
+        this.index = index;
+        if(GGApp.GG_APP.plans != null && index >= 0) {
+            plan = GGApp.GG_APP.plans.get(index);
         }
-        if(type == TYPE_TODAY)
-            plan = planh;
-        else if(type == TYPE_TOMORROW)
-            plan = planm;
 
     }
 
@@ -149,16 +145,15 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l.setPadding(toPixels(4),toPixels(4),toPixels(4),toPixels(4));
         }
         group.addView(sv);
-        if(planh == null || planm == null) {
+        if(index == INDEX_INVALID) {
             TextView tv = new TextView(getActivity());
             tv.setText("Error: " + type);
             l.addView(tv);
             Log.w("ggvp", "setParams not called " + type + " " + this + " " + getParentFragment());
-        } else if(type == TYPE_OVERVIEW && !GGApp.GG_APP.filters.mainFilter.filter.equals("")) {
-            //normale Übersicht
-            Filter.FilterList filters = GGApp.GG_APP.filters;
+        } else if(index == INDEX_OVERVIEW && !GGApp.GG_APP.filters.mainFilter.filter.equals("")) {
+            // Overview, filter applied
 
-            List<GGPlan.Entry> list = planh.filter(filters);
+            Filter.FilterList filters = GGApp.GG_APP.filters;
 
             CardView cv2 = new CardView(getActivity());
             cv2.setContentPadding(toPixels(16),toPixels(16),toPixels(16),toPixels(16));
@@ -170,7 +165,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.addView(l2);
             l0.addView(cv2);
 
-            createTextView(planh.loadDate, 15, inflater, l2);
+            createTextView(GGApp.GG_APP.plans.loadDate, 15, inflater, l2);
 
             TextView tv2 = createTextView(
                     filters.mainFilter.type == Filter.FilterType.CLASS ? getActivity().getString(R.string.school_class) + " " + filters.mainFilter.filter :
@@ -178,53 +173,33 @@ public class SubstPagerFragment extends RemoteDataFragment {
             tv2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             tv2.setGravity(Gravity.RIGHT | Gravity.CENTER);
 
-            createTextView(translateDay(planh.date), 30, inflater, l).setPadding(0, toPixels(20), 0, 0);
-            if(!planh.special.isEmpty()) {
-                FrameLayout f2 = new FrameLayout(getActivity());
-                f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
-                CardView cv = createCardView();
-                cv.setCardBackgroundColor(GGApp.GG_APP.school.color);
-                f2.addView(cv);
-                l.addView(f2);
-                LinearLayout ls = new LinearLayout(getActivity());
-                ls.setOrientation(LinearLayout.VERTICAL);
-                TextView tv3 = createTextView(getResources().getString(R.string.special_messages), 19, inflater, ls);
-                tv3.setTextColor(Color.WHITE);
-                tv3.setPadding(0,0,0,toPixels(6));
-                cv.addView(ls);
+            for(GGPlan plan : GGApp.GG_APP.plans) {
+                List<GGPlan.Entry> list = plan.filter(filters);
+                createTextView(translateDay(plan.date), 30, inflater, l).setPadding(0, toPixels(20), 0, 0);
+                if (!plan.special.isEmpty()) {
+                    FrameLayout f2 = new FrameLayout(getActivity());
+                    f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
+                    CardView cv = createCardView();
+                    cv.setCardBackgroundColor(GGApp.GG_APP.school.color);
+                    f2.addView(cv);
+                    l.addView(f2);
+                    LinearLayout ls = new LinearLayout(getActivity());
+                    ls.setOrientation(LinearLayout.VERTICAL);
+                    TextView tv3 = createTextView(getResources().getString(R.string.special_messages), 19, inflater, ls);
+                    tv3.setTextColor(Color.WHITE);
+                    tv3.setPadding(0, 0, 0, toPixels(6));
+                    cv.addView(ls);
 
-                for(TextView tv : createSMViews(planh)) {
-                    ls.addView(tv);
+                    for (TextView tv : createSMViews(plan)) {
+                        ls.addView(tv);
+                    }
                 }
-            }
-            createCardItems(list, l, inflater, filters.mainFilter.type != Filter.FilterType.CLASS);
-
-            list = planm.filter(filters);
-            createTextView(translateDay(planm.date), 30, inflater, l).setPadding(0, toPixels(20), 0, 0);
-
-            if(!planm.special.isEmpty()) {
-                FrameLayout f2 = new FrameLayout(getActivity());
-                f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
-                CardView cv = createCardView();
-                cv.setCardBackgroundColor(GGApp.GG_APP.school.color);
-                f2.addView(cv);
-                l.addView(f2);
-                LinearLayout ls = new LinearLayout(getActivity());
-                ls.setOrientation(LinearLayout.VERTICAL);
-                TextView tv3 = createTextView(getResources().getString(R.string.special_messages), 19, inflater, ls);
-                tv3.setTextColor(Color.WHITE);
-                tv3.setPadding(0,0,0,toPixels(6));
-                cv.addView(ls);
-
-                for(TextView tv : createSMViews(planm)) {
-                    ls.addView(tv);
-                }
+                createCardItems(list, l, inflater, filters.mainFilter.type != Filter.FilterType.CLASS);
             }
 
-            createCardItems(list, l, inflater, filters.mainFilter.type != Filter.FilterType.CLASS);
+        } else if(index == INDEX_OVERVIEW) {
+            //Overview, no filter applied
 
-        } else if(type == TYPE_OVERVIEW) {
-            //Keine Klasse
             createButtonWithText( l, getResources().getString(R.string.no_filter_applied), getResources().getString(R.string.settings), new View.OnClickListener() {
 
                 @Override
@@ -246,7 +221,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.addView(l2);
             l0.addView(cv2);
 
-            createTextView(plan.loadDate, 15, inflater, l2);
+            createTextView(GGApp.GG_APP.plans.loadDate, 15, inflater, l2);
 
             LinearLayout l4 = new LinearLayout(getActivity());
             l4.setGravity(Gravity.RIGHT);

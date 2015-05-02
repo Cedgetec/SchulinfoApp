@@ -20,13 +20,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.MainActivity;
 import de.gebatzens.ggvertretungsplan.R;
+import de.gebatzens.ggvertretungsplan.data.GGPlan;
 
 public class SubstAdapter extends FragmentPagerAdapter {
 
-    SubstPagerFragment heute, morgen, overview;
+    SubstPagerFragment overview;
+    List<SubstPagerFragment> fragments = new ArrayList<SubstPagerFragment>();
     MainActivity mActivity;
 
     public SubstAdapter(Fragment m, Bundle savedState, MainActivity ma) {
@@ -37,29 +42,47 @@ public class SubstAdapter extends FragmentPagerAdapter {
     }
 
     private void createFragments() {
-        heute = new SubstPagerFragment();
-        heute.setParams(SubstPagerFragment.TYPE_TODAY);
-        morgen = new SubstPagerFragment();
-        morgen.setParams(SubstPagerFragment.TYPE_TOMORROW);
         overview = new SubstPagerFragment();
-        overview.setParams(SubstPagerFragment.TYPE_OVERVIEW);
+        overview.setParams(SubstPagerFragment.INDEX_OVERVIEW);
+
+        fragments.clear();
+        if(GGApp.GG_APP.plans != null) {
+            for (int i = 0; i < GGApp.GG_APP.plans.size(); i++) {
+                SubstPagerFragment frag = new SubstPagerFragment();
+                frag.setParams(i);
+                fragments.add(frag);
+            }
+            notifyDataSetChanged();
+        }
 
     }
 
     public void updateFragments() {
-        heute.setParams(SubstPagerFragment.TYPE_TODAY);
-        morgen.setParams(SubstPagerFragment.TYPE_TOMORROW);
-        overview.setParams(SubstPagerFragment.TYPE_OVERVIEW);
-        heute.updateFragment();
-        morgen.updateFragment();
+        overview.setParams(SubstPagerFragment.INDEX_OVERVIEW);
         overview.updateFragment();
+
+        if(GGApp.GG_APP.plans != null) {
+            if(fragments.size() != GGApp.GG_APP.plans.size()) {
+                for(int i = fragments.size(); i < GGApp.GG_APP.plans.size(); i++)
+                    fragments.add(new SubstPagerFragment());
+
+                notifyDataSetChanged();
+            }
+
+            for(int i = 0; i < fragments.size(); i++) {
+                SubstPagerFragment frag = fragments.get(i);
+                frag.setParams(i);
+                frag.updateFragment();
+
+            }
+        }
         ((SubstFragment)mActivity.mContent).mSlidingTabLayout.setViewPager(((SubstFragment)mActivity.mContent).mViewPager);
     }
 
     public void setFragmentsLoading() {
-        heute.setFragmentLoading();
-        morgen.setFragmentLoading();
         overview.setFragmentLoading();
+        for(SubstPagerFragment f : fragments)
+            f.setFragmentLoading();
         ((SubstFragment)mActivity.mContent).mSlidingTabLayout.setViewPager(((SubstFragment)mActivity.mContent).mViewPager);
     }
 
@@ -68,19 +91,15 @@ public class SubstAdapter extends FragmentPagerAdapter {
         switch(position) {
             case 0:
                 return overview;
-            case 1:
-                return heute;
-            case 2:
-                return morgen;
             default:
-                return null;
+                return fragments.get(position - 1);
         }
     }
 
     @Override
     public Object instantiateItem(ViewGroup view, int pos) {
         Object o = super.instantiateItem(view, pos);
-        ((SubstPagerFragment)o).setParams(pos == 0 ? SubstPagerFragment.TYPE_OVERVIEW : pos == 1 ? SubstPagerFragment.TYPE_TODAY : SubstPagerFragment.TYPE_TOMORROW);
+        ((SubstPagerFragment)o).setParams(pos == 0 ? SubstPagerFragment.INDEX_OVERVIEW : pos - 1);
         return o;
     }
 
@@ -89,18 +108,17 @@ public class SubstAdapter extends FragmentPagerAdapter {
         switch(p) {
             case 0:
                 return GGApp.GG_APP.getResources().getString(R.string.overview);
-            case 1:
-                return GGApp.GG_APP.plans == null ? GGApp.GG_APP.getResources().getString(R.string.today)  : GGApp.GG_APP.plans.today.getWeekday();
-            case 2:
-                return GGApp.GG_APP.plans == null ? GGApp.GG_APP.getResources().getString(R.string.tomorrow) : GGApp.GG_APP.plans.tomorrow.getWeekday();
             default:
-                return null;
+                return fragments.get(p - 1).plan.getWeekday();
         }
     }
 
     @Override
     public int getCount() {
-        return 3;
+        if(GGApp.GG_APP.plans == null)
+            return 1;
+        else
+            return GGApp.GG_APP.plans.size() + 1;
     }
 
 }

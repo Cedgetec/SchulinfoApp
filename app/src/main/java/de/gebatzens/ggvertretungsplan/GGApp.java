@@ -55,7 +55,7 @@ public class GGApp extends Application {
     public GGRemote remote;
     public School school;
 
-    private SharedPreferences preferences;
+    public SharedPreferences preferences;
 
     public Filter.FilterList filters = new Filter.FilterList();
     public HashMap<String, String> subjects = new HashMap<String, String>();
