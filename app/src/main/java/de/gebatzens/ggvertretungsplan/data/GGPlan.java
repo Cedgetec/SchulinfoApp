@@ -229,7 +229,7 @@ public class GGPlan {
 
     }
 
-    public static class Entry {
+    public static class Entry implements Comparable {
         public String type;
         public String clazz;
         //String missing;
@@ -334,6 +334,13 @@ public class GGPlan {
                 return s;
             else
                 return t;
+        }
+
+        @Override
+        public int compareTo(Object another) {
+            Entry e = (Entry) another;
+
+            return clazz.compareTo(e.clazz);
         }
     }
 
