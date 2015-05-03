@@ -26,12 +26,6 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Properties;
-
-import de.gebatzens.ggvertretungsplan.data.GGPlan;
 import de.gebatzens.ggvertretungsplan.fragment.SubstFragment;
 
 public class GGBroadcast extends BroadcastReceiver {
@@ -63,7 +57,7 @@ public class GGBroadcast extends BroadcastReceiver {
             gg.activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    ((SubstFragment)gg.activity.mContent).mGGFrag.updateFragments();
+                    ((SubstFragment)gg.activity.mContent).substAdapter.updateFragments();
                 }
             });
 
@@ -252,7 +246,7 @@ public class GGBroadcast extends BroadcastReceiver {
                             params[0].activity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ((SubstFragment)params[0].activity.mContent).mGGFrag.setFragmentsLoading();
+                                    ((SubstFragment)params[0].activity.mContent).substAdapter.setFragmentsLoading();
                                 }
                             });
 

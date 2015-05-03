@@ -26,6 +26,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.Window;
@@ -40,6 +42,7 @@ import de.gebatzens.ggvertretungsplan.data.GGPlan;
 import de.gebatzens.ggvertretungsplan.data.Mensa;
 import de.gebatzens.ggvertretungsplan.data.News;
 import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
+import de.gebatzens.ggvertretungsplan.fragment.SubstFragment;
 
 public class GGApp extends Application {
 
@@ -198,13 +201,28 @@ public class GGApp extends Application {
         new Thread() {
             @Override
             public void run() {
-                boolean update = updateFragments;
                 switch(type) {
                     case PLAN:
-                        GGPlan.GGPlans nplans = remote.getPlans(updateFragments);
-                        //if(plans != null)
-                        //    update = update && !(nplans[0].equals(plans[0]) && nplans[1].equals(plans[1]));
-                        plans = nplans;
+                        GGPlan.GGPlans oldPlans = plans;
+                        plans = remote.getPlans(updateFragments);
+                        if(activity != null && (oldPlans == null || plans.size() > oldPlans.size())) {
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    activity.removeAllFragments();
+                                    FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+                                    activity.mContent = activity.createFragment();
+                                    transaction.replace(R.id.content_fragment, activity.mContent, "gg_content_fragment");
+                                    transaction.commit();
+                                }
+                            });
+
+                        } else if(activity != null) {
+                            Fragment f = activity.getSupportFragmentManager().findFragmentByTag("gg_content_fragment");
+                            if(f != null)
+                                ((SubstFragment)f).substAdapter.update(plans);
+                        }
+
                         break;
                     case NEWS:
                         news = remote.getNews();
@@ -217,11 +235,11 @@ public class GGApp extends Application {
                         break;
                 }
 
-                if(update)
+                if(updateFragments)
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                        activity.mContent.updateFragment();
+                            activity.mContent.updateFragment();
                         }
                     });
 

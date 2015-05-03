@@ -29,6 +29,11 @@ public class FirstUseActivity extends Activity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
+        if(BuildConfig.DEBUG) {
+            startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
+            return;
+        }
+
         setContentView(R.layout.activity_firstuse);
 
         nextStep = (Button) findViewById(R.id.nextStep);
@@ -37,7 +42,7 @@ public class FirstUseActivity extends Activity {
             public void onClick(View viewIn) {
                 //save and switch setup page
 
-                startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
+                //startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
             }
         });
 

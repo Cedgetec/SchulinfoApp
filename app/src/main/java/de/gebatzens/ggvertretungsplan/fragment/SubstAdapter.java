@@ -18,89 +18,59 @@ package de.gebatzens.ggvertretungsplan.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.MainActivity;
 import de.gebatzens.ggvertretungsplan.R;
 import de.gebatzens.ggvertretungsplan.data.GGPlan;
 
-public class SubstAdapter extends FragmentPagerAdapter {
+public class SubstAdapter extends FragmentStatePagerAdapter {
 
-    SubstPagerFragment overview;
-    List<SubstPagerFragment> fragments = new ArrayList<SubstPagerFragment>();
-    MainActivity mActivity;
-
-    public SubstAdapter(Fragment m, Bundle savedState, MainActivity ma) {
+    ViewPager viewPager;
+    GGPlan.GGPlans plans;
+    
+    public SubstAdapter(Fragment m, Bundle savedState, ViewPager vp) {
         super(m.getChildFragmentManager());
-        createFragments();
-        mActivity = ma;
+        this.viewPager = vp;
+        plans = GGApp.GG_APP.plans;
 
     }
 
-    private void createFragments() {
-        overview = new SubstPagerFragment();
-        overview.setParams(SubstPagerFragment.INDEX_OVERVIEW);
-
-        fragments.clear();
-        if(GGApp.GG_APP.plans != null) {
-            for (int i = 0; i < GGApp.GG_APP.plans.size(); i++) {
-                SubstPagerFragment frag = new SubstPagerFragment();
-                frag.setParams(i);
-                fragments.add(frag);
-            }
-            notifyDataSetChanged();
-        }
-
-    }
-
-    public void updateFragments() {
-        overview.setParams(SubstPagerFragment.INDEX_OVERVIEW);
-        overview.updateFragment();
-
-        if(GGApp.GG_APP.plans != null) {
-            if(fragments.size() != GGApp.GG_APP.plans.size()) {
-                for(int i = fragments.size(); i < GGApp.GG_APP.plans.size(); i++)
-                    fragments.add(new SubstPagerFragment());
-
+    public void update(GGPlan.GGPlans pl) {
+        plans = pl;
+        GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
                 notifyDataSetChanged();
             }
+        });
 
-            for(int i = 0; i < fragments.size(); i++) {
-                SubstPagerFragment frag = fragments.get(i);
-                frag.setParams(i);
-                frag.updateFragment();
+    }
 
-            }
-        }
-        ((SubstFragment)mActivity.mContent).mSlidingTabLayout.setViewPager(((SubstFragment)mActivity.mContent).mViewPager);
+    public SubstPagerFragment getOverview() {
+        return (SubstPagerFragment) instantiateItem(viewPager, 0);
+    }
+
+    public SubstPagerFragment getFragment(GGPlan plan) {
+        return (SubstPagerFragment) instantiateItem(viewPager, plans.indexOf(plan));
     }
 
     public void setFragmentsLoading() {
-        overview.setFragmentLoading();
-        for(SubstPagerFragment f : fragments)
-            f.setFragmentLoading();
-        ((SubstFragment)mActivity.mContent).mSlidingTabLayout.setViewPager(((SubstFragment)mActivity.mContent).mViewPager);
+        getOverview().setFragmentLoading();
+        for(GGPlan p : plans)
+            getFragment(p).setFragmentLoading();
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch(position) {
-            case 0:
-                return overview;
-            default:
-                return fragments.get(position - 1);
-        }
-    }
-
-    @Override
-    public Object instantiateItem(ViewGroup view, int pos) {
-        Object o = super.instantiateItem(view, pos);
-        ((SubstPagerFragment)o).setParams(pos == 0 ? SubstPagerFragment.INDEX_OVERVIEW : pos - 1);
-        return o;
+        SubstPagerFragment fragment = new SubstPagerFragment();
+        if(position == 0)
+            fragment.setParams(SubstPagerFragment.INDEX_OVERVIEW);
+        else
+            fragment.setParams(position - 1);
+        return fragment;
     }
 
     @Override
@@ -109,16 +79,35 @@ public class SubstAdapter extends FragmentPagerAdapter {
             case 0:
                 return GGApp.GG_APP.getResources().getString(R.string.overview);
             default:
-                return fragments.get(p - 1).plan.getWeekday();
+                return plans.get(p - 1).getWeekday();
         }
     }
 
     @Override
+    public int getItemPosition(Object o) {
+        SubstPagerFragment frag = (SubstPagerFragment) o;
+        if(frag.index == SubstPagerFragment.INDEX_OVERVIEW) {
+            frag.updateFragment();
+            return 0;
+        } else if(frag.index == SubstPagerFragment.INDEX_INVALID)
+            return POSITION_NONE;
+        else {
+            int i = plans.indexOf(frag.plan);
+            if(i >= 0) {
+                frag.updateFragment();
+                return i + 1;
+            } else
+                return POSITION_NONE;
+        }
+
+    }
+
+    @Override
     public int getCount() {
-        if(GGApp.GG_APP.plans == null)
+        if(plans == null)
             return 1;
         else
-            return GGApp.GG_APP.plans.size() + 1;
+            return plans.size() + 1;
     }
 
 }

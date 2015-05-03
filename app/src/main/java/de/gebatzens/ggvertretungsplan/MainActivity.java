@@ -121,6 +121,8 @@ public class MainActivity extends FragmentActivity {
 
         removeAllFragments();
 
+
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         mContent = createFragment();
         transaction.replace(R.id.content_fragment, mContent, "gg_content_fragment");

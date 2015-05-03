@@ -18,6 +18,8 @@ package de.gebatzens.ggvertretungsplan.view;
 
 import android.content.Context;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -85,8 +87,8 @@ public class GGSwipeLayout extends SwipeRefreshLayout {
                         if (xd > touchSlop)
                             return false;
 
-                        i = ((SubstFragment) ((MainActivity) getContext()).mContent).mViewPager.getCurrentItem();
-                        SubstPagerFragment frag = (SubstPagerFragment) ((FragmentPagerAdapter) ((SubstFragment) ((MainActivity) getContext()).mContent).mViewPager.getAdapter()).getItem(i);
+                        ViewPager vp = ((SubstFragment) ((MainActivity) getContext()).mContent).mViewPager;
+                        SubstPagerFragment frag = (SubstPagerFragment) vp.getAdapter().instantiateItem(vp, vp.getCurrentItem());
                         sv = (ScrollView) frag.getView().findViewWithTag("gg_scroll");
 
                         if (sv != null && sv.getScrollY() != 0)
