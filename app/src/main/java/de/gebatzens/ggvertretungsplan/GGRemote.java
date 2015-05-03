@@ -37,8 +37,6 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -307,8 +305,6 @@ public class GGRemote {
 
             reader.endObject();
         }
-
-        Collections.sort(p.entries);
 
         reader.endArray();
     }
