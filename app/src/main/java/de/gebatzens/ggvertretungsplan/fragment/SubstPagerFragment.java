@@ -180,7 +180,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
                     FrameLayout f2 = new FrameLayout(getActivity());
                     f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
                     CardView cv = createCardView();
-                    cv.setCardBackgroundColor(GGApp.GG_APP.school.color);
+                    cv.setCardBackgroundColor(GGApp.GG_APP.school.getColor());
                     f2.addView(cv);
                     l.addView(f2);
                     LinearLayout ls = new LinearLayout(getActivity());
@@ -246,7 +246,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 FrameLayout f2 = new FrameLayout(getActivity());
                 f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
                 CardView cv = createCardView();
-                cv.setCardBackgroundColor(GGApp.GG_APP.school.color);
+                cv.setCardBackgroundColor(GGApp.GG_APP.school.getColor());
                 f2.addView(cv);
                 l.addView(f2);
                 LinearLayout ls = new LinearLayout(getActivity());

@@ -16,12 +16,16 @@
 package de.gebatzens.ggvertretungsplan;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
+import android.util.TypedValue;
 
 import java.io.File;
 import java.io.InputStream;
@@ -38,7 +42,9 @@ public class School {
 
     public String sid;
     public String name;
-    public int color = GGApp.GG_APP.getResources().getColor(R.color.main_orange), darkColor = GGApp.GG_APP.getResources().getColor(R.color.main_orange_dark);
+    private int color = GGApp.GG_APP.getResources().getColor(R.color.main_orange), darkColor = GGApp.GG_APP.getResources().getColor(R.color.main_orange_dark);
+    private int theme;
+    public String themeName;
     public String image;
     public String website;
     public String city;
@@ -46,8 +52,32 @@ public class School {
 
     public static List<School> LIST = new ArrayList<School>();
 
+    public int getTheme() {
+        return theme;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public int getDarkColor() {
+        return darkColor;
+    }
+
+    private void loadTheme(String name) {
+        theme = GGApp.GG_APP.getResources().getIdentifier(name, "style", GGApp.GG_APP.getPackageName());
+        TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int[]{R.attr.colorPrimary});
+        TypedArray tad = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimaryDark});
+        color = ta.getColor(0, Color.RED);
+        darkColor = tad.getColor(0, Color.RED);
+        ta.recycle();
+        tad.recycle();
+    }
+
     public static boolean fetchList() {
         Log.i("ggvp", "Downloading school list");
+
+        GGApp.GG_APP.getResources().getIdentifier("asd", "styles", GGApp.GG_APP.getPackageName());
 
         List<School> newList = new ArrayList<School>();
 
@@ -67,10 +97,8 @@ public class School {
                             s.name = reader.nextString();
                         else if(name.equals("login"))
                             s.loginNeeded = reader.nextBoolean();
-                        else if(name.equals("color"))
-                            s.color = Color.parseColor(reader.nextString());
-                        else if(name.equals("darkColor"))
-                            s.darkColor = Color.parseColor(reader.nextString());
+                        else if(name.equals("theme"))
+                            s.loadTheme(s.themeName = reader.nextString());
                         else if(name.equals("image"))
                             s.image = reader.nextString();
                         else if(name.equals("website"))
@@ -116,11 +144,10 @@ public class School {
 
                 writer.name("sid").value(s.sid);
                 writer.name("name").value(s.name);
-                writer.name("color").value(s.color);
-                writer.name("darkColor").value(s.darkColor);
                 writer.name("login").value(s.loginNeeded);
                 writer.name("website").value(s.website);
                 writer.name("image").value(s.image);
+                writer.name("theme").value(s.themeName);
 
                 writer.endObject();
             }
@@ -147,16 +174,16 @@ public class School {
                         s.sid = reader.nextString();
                     else if(name.equals("name"))
                         s.name = reader.nextString();
-                    else if(name.equals("color"))
-                        s.color = reader.nextInt();
-                    else if(name.equals("darkColor"))
-                        s.darkColor = reader.nextInt();
+                    else if(name.equals("theme"))
+                        s.loadTheme(s.themeName = reader.nextString());
                     else if(name.equals("website"))
                         s.website = reader.nextString();
                     else if(name.equals("image"))
                         s.image = reader.nextString();
                     else if(name.equals("login"))
                         s.loginNeeded = reader.nextBoolean();
+                    else if(name.equals("theme"))
+                        s.theme = reader.nextInt();
                     else
                         reader.skipValue();
                 }
@@ -166,7 +193,7 @@ public class School {
             reader.endArray();
             reader.close();
         } catch(Exception e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -174,6 +201,7 @@ public class School {
         for(School s : LIST)
             if(s.sid.equals(sid))
                 return s;
+        Log.w("ggvp", "School " + sid + " not found");
         return null;
     }
 

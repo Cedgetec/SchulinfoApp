@@ -42,7 +42,7 @@ public class SetupActivity extends Activity {
 
     @Override
     public void onCreate(Bundle saved) {
-        //setTheme(GGApp.GG_APP.provider.getTheme());
+        setTheme(R.style.AppThemeOrange);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             GGApp.GG_APP.setStatusBarColor(getWindow(), getResources().getColor(R.color.main_orange_dark));
         }
@@ -58,7 +58,6 @@ public class SetupActivity extends Activity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.main_orange));
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle(getString(R.string.app_name));
         toolbar.inflateMenu(R.menu.setup_menu);

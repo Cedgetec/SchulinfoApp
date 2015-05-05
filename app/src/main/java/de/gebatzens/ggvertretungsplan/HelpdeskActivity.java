@@ -46,13 +46,13 @@ public class HelpdeskActivity extends Activity {
     public void onCreate(Bundle bundle) {
         //setTheme(GGApp.GG_APP.provider.getTheme());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            GGApp.GG_APP.setStatusBarColor(getWindow(), GGApp.GG_APP.school.darkColor);
+            GGApp.GG_APP.setStatusBarColor(getWindow(), GGApp.GG_APP.school.getDarkColor());
         }
         super.onCreate(bundle);
         setContentView(R.layout.activity_helpdesk);
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.school.color);
+        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolBar.setTitleTextColor(Color.WHITE);
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {

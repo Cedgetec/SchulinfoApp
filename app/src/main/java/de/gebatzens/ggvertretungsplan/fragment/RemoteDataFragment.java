@@ -99,7 +99,7 @@ public abstract class RemoteDataFragment extends Fragment {
         l.setGravity(Gravity.CENTER);
 
         ProgressBar pb = new ProgressBar(getActivity());
-        pb.getIndeterminateDrawable().setColorFilter(GGApp.GG_APP.school.color, PorterDuff.Mode.SRC_IN);
+        pb.getIndeterminateDrawable().setColorFilter(GGApp.GG_APP.school.getColor(), PorterDuff.Mode.SRC_IN);
         pb.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         pb.setVisibility(ProgressBar.VISIBLE);
 

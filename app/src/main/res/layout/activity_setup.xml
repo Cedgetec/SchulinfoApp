@@ -11,7 +11,8 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:title="@string/app_name"
-        app:theme="@style/AppThemeOrange"/>
+        android:background="@color/main_orange"
+        app:theme="@style/ToolBarStyle"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -224,9 +224,9 @@ public class SettingsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //setTheme(GGApp.GG_APP.provider.getTheme());
+        setTheme(GGApp.GG_APP.school.getTheme());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            GGApp.GG_APP.setStatusBarColor(getWindow(), GGApp.GG_APP.school.darkColor);
+            GGApp.GG_APP.setStatusBarColor(getWindow(), GGApp.GG_APP.school.getDarkColor());
         }
 
         changed = false;
@@ -246,7 +246,7 @@ public class SettingsActivity extends Activity {
         }
 
         mToolBar = (Toolbar) contentView.findViewById(R.id.toolbar);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.school.color);
+        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolBar.setTitleTextColor(Color.WHITE);
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {

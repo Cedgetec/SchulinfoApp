@@ -62,7 +62,7 @@ public class NewsFragmentListAdapter extends BaseAdapter {
         formattedDate = dateFormatter.format(news.get(position).date);
 
         txtDate.setText(formattedDate);
-        txtDate.setTextColor(GGApp.GG_APP.school.color);
+        txtDate.setTextColor(GGApp.GG_APP.school.getColor());
         txtTitle.setText(news.get(position).title);
         txtContent.setText(Html.fromHtml(news.get(position).text));
         //imgIcon.setImageResource(R.drawable.news_icon_white);

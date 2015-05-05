@@ -30,6 +30,7 @@ import android.widget.ScrollView;
 
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.MainActivity;
+import de.gebatzens.ggvertretungsplan.R;
 import de.gebatzens.ggvertretungsplan.fragment.NewsFragment;
 import de.gebatzens.ggvertretungsplan.fragment.SubstFragment;
 import de.gebatzens.ggvertretungsplan.fragment.SubstPagerFragment;
@@ -43,6 +44,12 @@ public class GGSwipeLayout extends SwipeRefreshLayout {
         super(context, attrs);
 
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+
+        setColorSchemeColors(GGApp.GG_APP.school.getColor(),
+                            R.color.custom_material_green,
+                            R.color.custom_material_red,
+                            R.color.custom_material_blue,
+                            R.color.custom_material_orange);
 
     }
 

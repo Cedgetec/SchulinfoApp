@@ -107,11 +107,6 @@ public class SubstFragment extends RemoteDataFragment {
                 }, true, GGApp.FragmentType.PLAN);
             }
         });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(R.color.custom_material_green,
-                R.color.custom_material_red,
-                R.color.custom_material_blue,
-                R.color.custom_material_orange);
 
         FrameLayout contentFrame = (FrameLayout) getActivity().findViewById(R.id.content_fragment);
         contentFrame.setVisibility(View.VISIBLE);

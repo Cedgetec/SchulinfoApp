@@ -123,7 +123,7 @@ public class GGApp extends Application {
 
             mBuilder.setStyle(inboxStyle);
         }
-        mBuilder.setColor(GGApp.GG_APP.school.darkColor);
+        mBuilder.setColor(GGApp.GG_APP.school.getDarkColor());
         if(important) {
             mBuilder.setVibrate(new long[]{0, 1000});
             mBuilder.setLights(Color.argb(255, 0, 0, 255), 1000, 1000);
