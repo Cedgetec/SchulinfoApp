@@ -266,10 +266,6 @@ public class GGRemote {
         return plans;
     }
 
-    public int getColorArray() {
-        return R.array.orangeColors;
-    }
-
     private void getPlan(JsonReader reader, GGPlan p) throws Exception {
 
         reader.beginArray();

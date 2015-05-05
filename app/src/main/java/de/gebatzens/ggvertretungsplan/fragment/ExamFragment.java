@@ -137,7 +137,7 @@ public class ExamFragment extends RemoteDataFragment {
 
     private CardView createCardItem(Exams.ExamItem exam_item, LayoutInflater i) {
         CardView ecv = createCardView();
-        String[] colors = getActivity().getResources().getStringArray(R.array.orangeColors);
+        String[] colors = getActivity().getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
         ecv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
         cardColorIndex++;
         if(cardColorIndex == colors.length)

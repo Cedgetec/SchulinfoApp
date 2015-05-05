@@ -89,7 +89,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     private CardView createCardItem(GGPlan.Entry entry, LayoutInflater i, boolean clas) {
         CardView cv = createCardView();
-        String[] colors = getActivity().getResources().getStringArray(R.array.orangeColors);
+        String[] colors = getActivity().getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
         cv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
         cardColorIndex++;
         if(cardColorIndex == colors.length)
