@@ -42,7 +42,7 @@ public class SetupActivity extends Activity {
 
     @Override
     public void onCreate(Bundle saved) {
-        setTheme(R.style.AppThemeOrange);
+        setTheme(R.style.AppThemeRed);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             GGApp.GG_APP.setStatusBarColor(getWindow(), getResources().getColor(R.color.main_orange_dark));
         }
