@@ -44,7 +44,7 @@ public class SetupActivity extends Activity {
     public void onCreate(Bundle saved) {
         setTheme(R.style.AppThemeRed);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            GGApp.GG_APP.setStatusBarColor(getWindow(), getResources().getColor(R.color.main_orange_dark));
+            GGApp.GG_APP.setStatusBarColor(getWindow(), getResources().getColor(R.color.primary_red_dark));
         }
         super.onCreate(saved);
 

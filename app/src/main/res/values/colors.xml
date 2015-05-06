@@ -5,9 +5,7 @@
     <color name="custom_material_red">#db4437</color>
     <color name="custom_material_blue">#4285f4</color>
     <color name="custom_material_orange">#f4b400</color>
-    <color name="main_blue">#2196f3</color>
-    <color name="main_blue_dark">#1976D2</color>
-    <color name="main_orange">#FF9800</color>
-    <color name="main_orange_dark">#F57C00</color>
+    <color name="primary_red">#F44336</color>
+    <color name="primary_red_dark">#D32F2F</color>
     <color name="transparent">#00000000</color>
 </resources>
