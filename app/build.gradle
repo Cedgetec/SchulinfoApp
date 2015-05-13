@@ -10,12 +10,23 @@ android {
         targetSdkVersion 22
         versionCode 99999
         versionName "999.9.9"
+	
     }
+    
     buildTypes {
+	Properties properties = new Properties()
+	properties.load(project.rootProject.file('gradle.properties').newDataInputStream())
+	def server = properties.getProperty('infoapp.server')
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+            buildConfigField "String", "BACKEND_SERVER", server
+	}
+
+	debug {
+	   buildConfigField "String", "BACKEND_SERVER", server
+	}
     }
 
     lintOptions {

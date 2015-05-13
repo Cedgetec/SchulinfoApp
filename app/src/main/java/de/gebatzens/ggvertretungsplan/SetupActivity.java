@@ -50,6 +50,7 @@ public class SetupActivity extends Activity {
 
         if(GGApp.GG_APP.remote.isLoggedIn()) {
             startActivity(new Intent(this, MainActivity.class));
+            startDownloadThread();
             return;
         }
 
@@ -169,26 +170,30 @@ public class SetupActivity extends Activity {
         if(School.LIST.size() == 0) {
             showSchoolListDialog();
         } else {
-            new Thread() {
-                @Override
-                public void run() {
-                    final boolean b = School.fetchList();
-                    School.saveList();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                            if (!b)
-                                GGApp.GG_APP.showToast(getString(R.string.no_internet_connection));
-
-                        }
-                    });
-                    GGApp.GG_APP.setSchool(GGApp.GG_APP.getDefaultSID());
-
-                }
-            }.start();
+            startDownloadThread();
         }
 
+    }
+
+    public void startDownloadThread() {
+        new Thread() {
+            @Override
+            public void run() {
+                final boolean b = School.fetchList();
+                School.saveList();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                        if (!b)
+                            GGApp.GG_APP.showToast(getString(R.string.no_internet_connection));
+
+                    }
+                });
+                GGApp.GG_APP.setSchool(GGApp.GG_APP.getDefaultSID());
+
+            }
+        }.start();
     }
 
     public void showSchoolListDialog() {
