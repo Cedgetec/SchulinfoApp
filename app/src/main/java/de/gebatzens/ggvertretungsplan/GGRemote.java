@@ -39,8 +39,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -671,8 +673,14 @@ public class GGRemote {
     public HttpsURLConnection openConnection(String url, boolean checkSession) throws IOException {
         if(checkSession && session != null && session.isExpired())
             startNewSession(prefs.getString("token", null));
-        HttpsURLConnection con = (HttpsURLConnection) new URL(SERVER + url).openConnection();
+        HttpsURLConnection con = (HttpsURLConnection) new URL(BuildConfig.BACKEND_SERVER + url).openConnection();
         con.setSSLSocketFactory(sslSocketFactory);
+        con.setHostnameVerifier(new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        });
         con.setRequestProperty("User-Agent", "SchulinfoAPP/" + BuildConfig.VERSION_NAME + " (" +
                 BuildConfig.VERSION_CODE + " " + BuildConfig.BUILD_TYPE + " Android " + Build.VERSION.RELEASE + " " + Build.PRODUCT + ")");
         con.setConnectTimeout(3000);

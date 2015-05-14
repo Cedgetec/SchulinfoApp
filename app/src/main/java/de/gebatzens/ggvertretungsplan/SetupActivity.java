@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -39,28 +40,28 @@ public class SetupActivity extends Activity {
 
     SchoolListAdapter adapter;
     ListView list;
+    Button refresh;
 
     @Override
     public void onCreate(Bundle saved) {
-        setTheme(R.style.AppThemeRed);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            GGApp.GG_APP.setStatusBarColor(getWindow(), getResources().getColor(R.color.primary_red_dark));
-        }
+        setTheme(R.style.AppThemeBlueGrey);
         super.onCreate(saved);
 
         if(GGApp.GG_APP.remote.isLoggedIn()) {
             startActivity(new Intent(this, MainActivity.class));
+            startDownloadThread();
             return;
         }
 
         setContentView(R.layout.activity_setup);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setTitle(getString(R.string.app_name));
-        toolbar.inflateMenu(R.menu.setup_menu);
+        refresh = (Button) findViewById(R.id.refresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View viewIn) {
+                showSchoolListDialog();
+            }
+        });
 
         list = (ListView) findViewById(R.id.setup_list);
         adapter = new SchoolListAdapter();
@@ -71,7 +72,7 @@ public class SetupActivity extends Activity {
                 School s = School.LIST.get(position);
                 GGApp.GG_APP.setSchool(s.sid);
 
-                if(s.loginNeeded) {
+                if (s.loginNeeded) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
                     AlertDialog dialog;
                     builder.setTitle(getResources().getString(R.string.login));
@@ -85,7 +86,7 @@ public class SetupActivity extends Activity {
 
                                 @Override
                                 public void onPostExecute(Integer v) {
-                                    switch(v) {
+                                    switch (v) {
                                         case 0:
                                             startDownloading();
                                             break;
@@ -130,7 +131,7 @@ public class SetupActivity extends Activity {
 
                         @Override
                         public void onPostExecute(Integer i) {
-                            switch(i) {
+                            switch (i) {
                                 case 0:
                                     startDownloading();
                                     break;
@@ -156,44 +157,37 @@ public class SetupActivity extends Activity {
             }
         });
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                if(menuItem.getItemId() == R.id.setup_refresh) {
-                    showSchoolListDialog();
-                }
-                return true;
-            }
-        });
-
-        if(School.LIST.size() == 0) {
+        if (School.LIST.size() == 0) {
             showSchoolListDialog();
         } else {
-            new Thread() {
-                @Override
-                public void run() {
-                    final boolean b = School.fetchList();
-                    School.saveList();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                            if (!b)
-                                GGApp.GG_APP.showToast(getString(R.string.no_internet_connection));
-
-                        }
-                    });
-                    GGApp.GG_APP.setSchool(GGApp.GG_APP.getDefaultSID());
-
-                }
-            }.start();
+            startDownloadThread();
         }
 
     }
 
+    public void startDownloadThread() {
+        new Thread() {
+            @Override
+            public void run() {
+                final boolean b = School.fetchList();
+                School.saveList();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                        if (!b)
+                            GGApp.GG_APP.showToast(getString(R.string.no_internet_connection));
+
+                    }
+                });
+                GGApp.GG_APP.setSchool(GGApp.GG_APP.getDefaultSID());
+
+            }
+        }.start();
+    }
+
     public void showSchoolListDialog() {
         final ProgressDialog d = new ProgressDialog(this);
-        d.setTitle(getString(R.string.app_name));
         d.setMessage("Downloading school list...");
         d.setCancelable(false);
         d.setProgressStyle(ProgressDialog.STYLE_SPINNER);
