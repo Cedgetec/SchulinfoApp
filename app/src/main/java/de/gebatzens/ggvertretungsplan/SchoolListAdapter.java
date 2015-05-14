@@ -17,6 +17,7 @@
 package de.gebatzens.ggvertretungsplan;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,9 @@ public class SchoolListAdapter extends BaseAdapter {
         View v = convertView == null ? ((LayoutInflater) GGApp.GG_APP.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.school_item, parent, false) : convertView;
 
         ((TextView) v.findViewById(R.id.school_name)).setText(list.get(position).name);
+        ((TextView) v.findViewById(R.id.school_name)).setTextColor(Color.WHITE);
         ((TextView) v.findViewById(R.id.school_city)).setText(list.get(position).city);
+        ((TextView) v.findViewById(R.id.school_city)).setTextColor(Color.LTGRAY);
 
         return v;
     }
