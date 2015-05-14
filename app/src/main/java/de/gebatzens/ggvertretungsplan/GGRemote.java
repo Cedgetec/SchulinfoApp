@@ -53,7 +53,6 @@ import de.gebatzens.ggvertretungsplan.data.News;
 
 public class GGRemote {
 
-    public static final String SERVER = "https://gymnasium-glinde.logoip.de";
     public static final String PREFS_NAME = "remoteprefs";
     public static final GGImageGetter IMAGE_GETTER = new GGImageGetter();
 
@@ -281,8 +280,10 @@ public class GGRemote {
                     e.clazz = reader.nextString();
                 else if(name.equals("lesson"))
                     e.lesson = reader.nextString();
-                else if(name.equals("subsitutor"))
-                    e.subst = reader.nextString();
+                else if(name.equals("teacher"))
+                    e.teacher = reader.nextString();
+                else if(name.equals("missing"))
+                    e.missing = reader.nextString();
                 else if(name.equals("subject"))
                     e.subject = reader.nextString();
                 else if(name.equals("subst_subject"))

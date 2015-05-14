@@ -22,7 +22,6 @@ import android.util.JsonWriter;
 import android.util.Log;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -118,8 +117,8 @@ public class GGPlan {
                             e.clazz = reader.nextString();
                         else if(name2.equals("lesson"))
                             e.lesson = reader.nextString();
-                        else if(name2.equals("subst"))
-                            e.subst = reader.nextString();
+                        else if(name2.equals("teacher"))
+                            e.teacher = reader.nextString();
                         else if(name2.equals("subject"))
                             e.subject = reader.nextString();
                         else if(name2.equals("comment"))
@@ -171,7 +170,7 @@ public class GGPlan {
                 writer.beginObject();
                 writer.name("class").value(e.clazz);
                 writer.name("lesson").value(e.lesson);
-                writer.name("subst").value(e.subst);
+                writer.name("teacher").value(e.teacher);
                 writer.name("subject").value(e.subject);
                 writer.name("comment").value(e.comment);
                 writer.name("type").value(e.type);
@@ -232,8 +231,8 @@ public class GGPlan {
     public static class Entry {
         public String type;
         public String clazz;
-        //String missing;
-        public String subst = "";
+        public String missing = "";
+        public String teacher = "";
         public String subject = "";
         public String repsub = "";
         public String comment = "";
@@ -246,7 +245,7 @@ public class GGPlan {
             if(o instanceof Entry) {
                 Entry e = (Entry) o;
                 return e.type.equals(type) && e.clazz.equals(clazz) && e.subject.equals(subject)
-                        && e.subst.equals(subst) && e.comment.equals(comment)
+                        && e.teacher.equals(teacher) && e.comment.equals(comment)
                         && e.lesson.equals(lesson) && e.room.equals(room) && e.repsub.equals(repsub);
             } else
                 return false;
@@ -254,7 +253,7 @@ public class GGPlan {
 
         @Override
         public String toString() {
-            return "Entry[" + type + " " + clazz + " " + subject + " " + subst + " " + comment + " " + lesson + " " + room + " " + repsub + "]";
+            return "Entry[" + type + " " + clazz + " " + subject + " " + teacher + " " + comment + " " + lesson + " " + room + " " + repsub + "]";
         }
 
         public void unify() {
@@ -271,7 +270,7 @@ public class GGPlan {
 
                 if(task.find())
                     comment = GGApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
-            } else if(type.equals("subst")) {
+            } else if(type.equals("teacher")) {
                 type = GGApp.GG_APP.getString(R.string.substitute);
 
                 if(task.find())
