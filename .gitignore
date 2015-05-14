@@ -60,6 +60,7 @@ nb-configuration.xml
 gradle-app.setting
 build/
 settings.gradle
+gradle.properties
 
 ## OS Specific
 .DS_Store
