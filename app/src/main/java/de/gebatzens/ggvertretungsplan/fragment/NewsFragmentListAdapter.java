@@ -62,7 +62,6 @@ public class NewsFragmentListAdapter extends BaseAdapter {
         formattedDate = dateFormatter.format(news.get(position).date);
 
         txtDate.setText(formattedDate);
-        txtDate.setTextColor(GGApp.GG_APP.school.getColor());
         txtTitle.setText(news.get(position).title);
         txtContent.setText(Html.fromHtml(news.get(position).text));
         //imgIcon.setImageResource(R.drawable.news_icon_white);
@@ -72,7 +71,6 @@ public class NewsFragmentListAdapter extends BaseAdapter {
         //imgIcon.setImageResource(mIcnewson[position]);
 
         if(mDatabaseHelper.checkNewsRead(news.get(position).title)) {
-            txtDate.setTextColor(Color.parseColor("#727272"));
             txtDate.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
             txtTitle.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
             txtContent.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));

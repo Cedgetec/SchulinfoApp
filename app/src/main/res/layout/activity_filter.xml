@@ -69,7 +69,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.7dp"
-            android:background="#d1d1d1"/>
+            android:background="?android:attr/listDivider"/>
 
         <LinearLayout
             android:layout_width="match_parent"
