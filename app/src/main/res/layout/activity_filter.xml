@@ -51,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:fontFamily="sans-serif"
+                android:textColor="?android:textColorPrimary"
                 android:text="@string/main_filter_mode"/>
 
             <TextView
@@ -58,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:fontFamily="sans-serif"
-                android:textColor="#727272"
+                android:textColor="?android:textColorSecondary"
                 android:id="@+id/filter_main_category"
                 android:hint="@string/no_filter_applied"
                 android:text="@string/not_selected"/>
@@ -83,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:fontFamily="sans-serif"
+                android:textColor="?android:textColorPrimary"
                 android:text="@string/main_filter_content"/>
 
             <TextView
@@ -90,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:fontFamily="sans-serif"
-                android:textColor="#727272"
+                android:textColor="?android:textColorSecondary"
                 android:id="@+id/filter_main_content"
                 android:hint="@string/no_filter_applied"
                 android:text="@string/not_selected"/>
