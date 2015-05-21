@@ -80,6 +80,23 @@ public class School {
         tad.recycle();
     }
 
+    @Override
+    public String toString() {
+        return "School[" + sid + "; " + name + "; " + color + "; " + darkColor + "; " + theme + "; " + colorArray + "; " + image + "; " + city + "; " + website + "; " + loginNeeded + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof School))
+            return false;
+        Log.d("ggvp", "equals: " + toString());
+
+        School s = (School) o;
+
+        return sid.equals(s.sid) && name.equals(s.name) && color == s.color && darkColor == s.darkColor && theme == s.theme
+                   && colorArray == s.colorArray && image.equals(s.image) && city.equals(s.city) && website.equals(s.website) && loginNeeded == s.loginNeeded;
+    }
+
     public static boolean fetchList() {
         Log.i("ggvp", "Downloading school list");
 
@@ -154,6 +171,7 @@ public class School {
                 writer.name("website").value(s.website);
                 writer.name("image").value(s.image);
                 writer.name("theme").value(s.themeName);
+                writer.name("city").value(s.city);
 
                 writer.endObject();
             }
@@ -190,6 +208,8 @@ public class School {
                         s.loginNeeded = reader.nextBoolean();
                     else if(name.equals("theme"))
                         s.theme = reader.nextInt();
+                    else if(name.equals("city"))
+                        s.city = reader.nextString();
                     else
                         reader.skipValue();
                 }

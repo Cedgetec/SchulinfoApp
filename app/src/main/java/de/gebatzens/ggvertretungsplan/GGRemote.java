@@ -655,7 +655,7 @@ public class GGRemote {
         }
     }
     };
-    public static SSLContext sc;
+    /*public static SSLContext sc;
     public static SSLSocketFactory sslSocketFactory;
     static {
         try {
@@ -666,19 +666,19 @@ public class GGRemote {
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
     public HttpsURLConnection openConnection(String url, boolean checkSession) throws IOException {
         if(checkSession && session != null && session.isExpired())
             startNewSession(prefs.getString("token", null));
-        HttpsURLConnection con = (HttpsURLConnection) new URL(BuildConfig.BACKEND_SERVER + url).openConnection();
-        con.setSSLSocketFactory(sslSocketFactory);
+        HttpsURLConnection con = (HttpsURLConnection) new URL("https://" + BuildConfig.BACKEND_SERVER + url).openConnection();
+        /*con.setSSLSocketFactory(sslSocketFactory);
         con.setHostnameVerifier(new HostnameVerifier() {
             @Override
             public boolean verify(String hostname, SSLSession session) {
                 return true;
             }
-        });
+        });*/
         con.setRequestProperty("User-Agent", "SchulinfoAPP/" + BuildConfig.VERSION_NAME + " (" +
                 BuildConfig.VERSION_CODE + " " + BuildConfig.BUILD_TYPE + " Android " + Build.VERSION.RELEASE + " " + Build.PRODUCT + ")");
         con.setConnectTimeout(3000);

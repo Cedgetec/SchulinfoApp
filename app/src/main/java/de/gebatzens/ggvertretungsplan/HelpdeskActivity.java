@@ -89,10 +89,10 @@ public class HelpdeskActivity extends Activity {
                             protected Integer doInBackground(String... params) {
                                 try {
                                     if ((params[0] != null) && (params[1] != null) && (params[2] != null) && (params[3] != null) && !params[0].equals("") && !params[1].equals("") && !params[2].equals("") && !params[3].equals("")) {
-                                        HttpsURLConnection con = (HttpsURLConnection) new URL("https://gymnasium-glinde.logoip.de/infoapp/infoapp_helpdesk.php").openConnection();
+                                        HttpsURLConnection con = (HttpsURLConnection) new URL("https://" + BuildConfig.BACKEND_SERVER + "/infoapp/infoapp_helpdesk.php").openConnection();
 
                                         con.setRequestMethod("POST");
-                                        con.setSSLSocketFactory(GGRemote.sslSocketFactory);
+                                        //con.setSSLSocketFactory(GGRemote.sslSocketFactory);
 
                                         con.setDoOutput(true);
                                         DataOutputStream wr = new DataOutputStream(con.getOutputStream());

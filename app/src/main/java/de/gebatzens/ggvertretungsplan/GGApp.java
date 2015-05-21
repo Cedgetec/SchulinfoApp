@@ -186,7 +186,18 @@ public class GGApp extends Application {
 
     public void setSchool(String sid) {
         preferences.edit().putString("sid", sid).apply();
+        School b = school;
         school = School.getBySID(sid);
+        if(activity != null && b != null && !b.equals(school)) {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    activity.recreate();
+                }
+            });
+
+        }
+
     }
 
     public String getDefaultSID() {

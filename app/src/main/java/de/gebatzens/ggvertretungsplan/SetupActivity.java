@@ -50,7 +50,7 @@ public class SetupActivity extends Activity {
 
         if(GGApp.GG_APP.remote.isLoggedIn()) {
             startActivity(new Intent(this, MainActivity.class));
-            startDownloadThread();
+            startDownloadThread(false);
             return;
         }
 
@@ -161,42 +161,43 @@ public class SetupActivity extends Activity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if(menuItem.getItemId() == R.id.setup_refresh) {
-                    showSchoolListDialog();
+                    showDownloadDialog();
                 }
                 return true;
             }
         });
 
         if(School.LIST.size() == 0) {
-            showSchoolListDialog();
+            showDownloadDialog();
         } else {
-            startDownloadThread();
+            startDownloadThread(true);
         }
 
     }
 
-    public void startDownloadThread() {
+    public void startDownloadThread(final boolean update) {
         new Thread() {
             @Override
             public void run() {
                 final boolean b = School.fetchList();
                 School.saveList();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.notifyDataSetChanged();
-                        if (!b)
-                            GGApp.GG_APP.showToast(getString(R.string.no_internet_connection));
+                if(update)
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                            if (!b)
+                                GGApp.GG_APP.showToast(getString(R.string.no_internet_connection));
 
-                    }
-                });
+                        }
+                    });
                 GGApp.GG_APP.setSchool(GGApp.GG_APP.getDefaultSID());
 
             }
         }.start();
     }
 
-    public void showSchoolListDialog() {
+    public void showDownloadDialog() {
         final ProgressDialog d = new ProgressDialog(this);
         d.setTitle(getString(R.string.app_name));
         d.setMessage("Downloading school list...");

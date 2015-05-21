@@ -56,9 +56,8 @@ public class MQTTService extends IntentService {
 
 
         try {
-            MqttClient client = new MqttClient("ssl://gymnasium-glinde.logoip.de:1883", "SchulinfoApp/" + GGApp.GG_APP.remote.getUsername(), new MemoryPersistence());
+            MqttClient client = new MqttClient("ssl://" + BuildConfig.BACKEND_SERVER + ":1883", "SchulinfoApp/" + GGApp.GG_APP.remote.getUsername(), new MemoryPersistence());
             MqttConnectOptions options = new MqttConnectOptions();
-            options.setSocketFactory(GGRemote.sslSocketFactory);
             options.setCleanSession(true);
             client.connect(options);
             client.subscribe(GGApp.GG_APP.school.sid + "/schulinfoapp/" + token);

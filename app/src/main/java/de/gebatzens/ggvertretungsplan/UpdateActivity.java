@@ -58,9 +58,8 @@ public class UpdateActivity extends AsyncTask<String, String, String> {
     protected String doInBackground(String... params) {
         int count;
         try {
-            URL url = new URL("https://gymnasium-glinde.logoip.de/downloads/InfoApp-" + params[0] + ".apk");
+            URL url = new URL("https://" + BuildConfig.BACKEND_SERVER + "/downloads/InfoApp-" + params[0] + ".apk");
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-            connection.setSSLSocketFactory(GGRemote.sslSocketFactory);
             connection.connect();
             int lenghtOfFile = connection.getContentLength();
             if(connection.getResponseCode() == 200) {

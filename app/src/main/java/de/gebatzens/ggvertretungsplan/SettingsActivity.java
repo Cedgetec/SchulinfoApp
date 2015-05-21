@@ -319,9 +319,8 @@ public class SettingsActivity extends Activity {
     }
 
     public static String getVersion() throws Exception {
-        HttpsURLConnection con = (HttpsURLConnection) new URL("https://gymnasium-glinde.logoip.de/infoapp/update.php?version").openConnection();
+        HttpsURLConnection con = (HttpsURLConnection) new URL(BuildConfig.BACKEND_SERVER + "/infoapp/update.php?version").openConnection();
         con.setRequestMethod("POST");
-        con.setSSLSocketFactory(GGRemote.sslSocketFactory);
 
         if (con.getResponseCode() == 200) {
             BufferedInputStream in = new BufferedInputStream(con.getInputStream());
@@ -337,9 +336,8 @@ public class SettingsActivity extends Activity {
     }
 
     public void showUpdateDialog(final String version) throws Exception {
-        HttpsURLConnection con_changelog = (HttpsURLConnection) new URL("https://gymnasium-glinde.logoip.de/infoapp/update.php?changelog="+version).openConnection();
+        HttpsURLConnection con_changelog = (HttpsURLConnection) new URL("https://" + BuildConfig.BACKEND_SERVER + "/infoapp/update.php?changelog="+version).openConnection();
         con_changelog.setRequestMethod("GET");
-        con_changelog.setSSLSocketFactory(GGRemote.sslSocketFactory);
 
         if(con_changelog.getResponseCode() == 200) {
             BufferedInputStream in_changelog = new BufferedInputStream(con_changelog.getInputStream());
