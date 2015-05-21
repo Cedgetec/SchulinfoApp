@@ -282,8 +282,10 @@ public class GGRemote {
                     e.clazz = reader.nextString();
                 else if(name.equals("lesson"))
                     e.lesson = reader.nextString();
-                else if(name.equals("subsitutor"))
-                    e.subst = reader.nextString();
+                else if(name.equals("teacher"))
+                    e.teacher = reader.nextString();
+                else if(name.equals("missing"))
+                    e.missing = reader.nextString();
                 else if(name.equals("subject"))
                     e.subject = reader.nextString();
                 else if(name.equals("subst_subject"))

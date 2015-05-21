@@ -96,7 +96,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cardColorIndex = 0;
         i.inflate(R.layout.cardview_entry, cv, true);
         ((TextView) cv.findViewById(R.id.cv_hour)).setText(entry.lesson);
-        ((TextView) cv.findViewById(R.id.cv_header)).setText(entry.type + (entry.subst.isEmpty() ? "" : " [" + entry.subst + "]"));
+        ((TextView) cv.findViewById(R.id.cv_header)).setText(entry.type + (entry.teacher.isEmpty() ? "" : " [" + entry.teacher + "]"));
         TextView tv = (TextView) cv.findViewById(R.id.cv_detail);
         tv.setText(entry.comment + (entry.room.isEmpty() ? "" : (entry.comment.isEmpty() ? "" : "\n") + "Raum " + entry.room));
         if(tv.getText().toString().trim().isEmpty())

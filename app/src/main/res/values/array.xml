@@ -12,326 +12,212 @@
         <item>all</item>
     </string-array>
     <string-array name="CardviewColorRed" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#F44336</item>
+        <item>#D32F2F</item>
+        <item>#B71C1C</item>
+        <item>#E53935</item>
+        <item>#C62828</item>
+        <item>#F44336</item>
+        <item>#E53935</item>
+        <item>#B71C1C</item>
+        <item>#C62828</item>
     </string-array>
     <string-array name="CardviewColorPink" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#E91E63</item>
+        <item>#C2185B</item>
+        <item>#880E4F</item>
+        <item>#D81B60</item>
+        <item>#AD1457</item>
+        <item>#E91E63</item>
+        <item>#D81B60</item>
+        <item>#880E4F</item>
+        <item>#AD1457</item>
     </string-array>
     <string-array name="CardviewColorPurple" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#9C27B0</item>
+        <item>#7B1FA2</item>
+        <item>#4A148C</item>
+        <item>#8E24AA</item>
+        <item>#6A1B9A</item>
+        <item>#9C27B0</item>
+        <item>#8E24AA</item>
+        <item>#4A148C</item>
+        <item>#6A1B9A</item>
     </string-array>
     <string-array name="CardviewColorDeepPurple" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#673AB7</item>
+        <item>#512DA8</item>
+        <item>#311B92</item>
+        <item>#5E35B1</item>
+        <item>#4527A0</item>
+        <item>#673AB7</item>
+        <item>#5E35B1</item>
+        <item>#311B92</item>
+        <item>#4527A0</item>
     </string-array>
     <string-array name="CardviewColorIndigo" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#3F51B5</item>
+        <item>#303F9F</item>
+        <item>#1A237E</item>
+        <item>#3949AB</item>
+        <item>#283593</item>
+        <item>#3F51B5</item>
+        <item>#3949AB</item>
+        <item>#1A237E</item>
+        <item>#283593</item>
     </string-array>
     <string-array name="CardviewColorBlue" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#2196F3</item>
+        <item>#1976D2</item>
+        <item>#0D47A1</item>
+        <item>#1E88E5</item>
+        <item>#1565C0</item>
+        <item>#2196F3</item>
+        <item>#1E88E5</item>
+        <item>#0D47A1</item>
+        <item>#1565C0</item>
     </string-array>
     <string-array name="CardviewColorLightBlue" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#03A9F4</item>
+        <item>#0288D1</item>
+        <item>#01579B</item>
+        <item>#039BE5</item>
+        <item>#0277BD</item>
+        <item>#03A9F4</item>
+        <item>#039BE5</item>
+        <item>#01579B</item>
+        <item>#0277BD</item>
     </string-array>
     <string-array name="CardviewColorCyan" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#00BCD4</item>
+        <item>#0097A7</item>
+        <item>#006064</item>
+        <item>#00ACC1</item>
+        <item>#00838F</item>
+        <item>#00BCD4</item>
+        <item>#00ACC1</item>
+        <item>#006064</item>
+        <item>#00838F</item>
     </string-array>
     <string-array name="CardviewColorTeal" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#009688</item>
+        <item>#00796B</item>
+        <item>#004D40</item>
+        <item>#00897B</item>
+        <item>#00695C</item>
+        <item>#009688</item>
+        <item>#00897B</item>
+        <item>#004D40</item>
+        <item>#00695C</item>
     </string-array>
     <string-array name="CardviewColorGreen" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#4CAF50</item>
+        <item>#388E3C</item>
+        <item>#1B5E20</item>
+        <item>#43A047</item>
+        <item>#2E7D32</item>
+        <item>#4CAF50</item>
+        <item>#43A047</item>
+        <item>#1B5E20</item>
+        <item>#2E7D32</item>
     </string-array>
     <string-array name="CardviewColorLightGreen" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#8BC34A</item>
+        <item>#689F38</item>
+        <item>#33691E</item>
+        <item>#7CB342</item>
+        <item>#558B2F</item>
+        <item>#8BC34A</item>
+        <item>#7CB342</item>
+        <item>#33691E</item>
+        <item>#558B2F</item>
     </string-array>
     <string-array name="CardviewColorLime" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#CDDC39</item>
+        <item>#AFB42B</item>
+        <item>#827717</item>
+        <item>#C0CA33</item>
+        <item>#9E9D24</item>
+        <item>#CDDC39</item>
+        <item>#C0CA33</item>
+        <item>#827717</item>
+        <item>#9E9D24</item>
     </string-array>
     <string-array name="CardviewColorYellow" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#FFEB3B</item>
+        <item>#FBC02D</item>
+        <item>#F57F17</item>
+        <item>#FDD835</item>
+        <item>#F9A825</item>
+        <item>#FFEB3B</item>
+        <item>#FDD835</item>
+        <item>#F57F17</item>
+        <item>#F9A825</item>
     </string-array>
     <string-array name="CardviewColorAmber" translatable="false">
         <item>#FFC107</item>
+        <item>#FFA000</item>
+        <item>#FF6F00</item>
+        <item>#FFB300</item>
+        <item>#FF8F00</item>
+        <item>#FFC107</item>
         <item>#FFB300</item>
         <item>#FF6F00</item>
         <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
     </string-array>
     <string-array name="CardviewColorOrange" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
         <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
         <item>#F57C00</item>
         <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#FB8C00</item>
+        <item>#EF6C00</item>
+        <item>#FF9800</item>
+        <item>#FB8C00</item>
+        <item>#E65100</item>
+        <item>#EF6C00</item>
     </string-array>
     <string-array name="CardviewColorDeepOrange" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
         <item>#FF5722</item>
+        <item>#E64A19</item>
+        <item>#BF360C</item>
+        <item>#F4511E</item>
+        <item>#D84315</item>
+        <item>#FF5722</item>
+        <item>#F4511E</item>
+        <item>#BF360C</item>
+        <item>#D84315</item>
     </string-array>
     <string-array name="CardviewColorBrown" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#795548</item>
+        <item>#5D4037</item>
+        <item>#3E2723</item>
+        <item>#6D4C41</item>
+        <item>#4E342E</item>
+        <item>#795548</item>
+        <item>#6D4C41</item>
+        <item>#3E2723</item>
+        <item>#4E342E</item>
     </string-array>
     <string-array name="CardviewColorGrey" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#9E9E9E</item>
+        <item>#616161</item>
+        <item>#212121</item>
+        <item>#757575</item>
+        <item>#424242</item>
+        <item>#9E9E9E</item>
+        <item>#757575</item>
+        <item>#212121</item>
+        <item>#424242</item>
     </string-array>
     <string-array name="CardviewColorBlueGrey" translatable="false">
-        <item>#FFC107</item>
-        <item>#FFB300</item>
-        <item>#FF6F00</item>
-        <item>#FF8F00</item>
-        <item>#FF9800</item>
-        <item>#EF6C00</item>
-        <item>#FB8C00</item>
-        <item>#FB8C00</item>
-        <item>#F57C00</item>
-        <item>#E65100</item>
-        <item>#FF9100</item>
-        <item>#F4511E</item>
-        <item>#FF8F00</item>
-        <item>#FF6D00</item>
-        <item>#FF5722</item>
+        <item>#607D8B</item>
+        <item>#455A64</item>
+        <item>#263238</item>
+        <item>#546E7A</item>
+        <item>#37474F</item>
+        <item>#607D8B</item>
+        <item>#546E7A</item>
+        <item>#263238</item>
+        <item>#37474F</item>
     </string-array>
 </resources>

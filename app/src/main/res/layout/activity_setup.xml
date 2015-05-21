@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+android:orientation="vertical" android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="false">
+    android:background="#607D8B"
+    android:fitsSystemWindows="true">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar"
-        android:layout_height="?attr/actionBarSize"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/select_school"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:layout_margin="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/setup_title" />
+
+    <ListView
+        android:id="@+id/setup_list"
         android:layout_width="match_parent"
-        android:title="@string/app_name"
-        android:background="@color/primary_red"
-        app:theme="@style/ToolBarStyle"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/setup_title"
+        android:layout_above="@+id/refresh"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/refresh"
+        android:id="@+id/refresh"
+        android:background="@drawable/custom_white_button"
+        android:textColor="#455A64"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="47dp"
+        android:paddingRight="47dp"
+        android:layout_margin="18dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:textSize="30sp"
-                android:text="@string/select_school"/>
-
-            <ListView
-                android:id="@+id/setup_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="10dp"
-            android:id="@+id/ShaderTabLayout"
-            android:background="@drawable/tablayoutbackground"/>
-
-    </RelativeLayout>
+</RelativeLayout>
 
 </LinearLayout>
