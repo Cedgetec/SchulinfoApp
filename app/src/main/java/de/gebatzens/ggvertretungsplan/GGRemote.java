@@ -82,7 +82,7 @@ public class GGRemote {
         if(token == null || token.isEmpty())
             return;
 
-        HttpsURLConnection con = openConnection("/infoapp/token2.php?token=" + token, false);
+        HttpsURLConnection con = openConnection("/backend/token.php?token=" + token, false);
 
         if(con.getResponseCode() == 401) {
             Log.w("ggvp", "startSession: Received " + con.getResponseCode() + ": logging out");
@@ -192,7 +192,7 @@ public class GGRemote {
                     throw new VPLoginException();
             }
             Log.i("ggvp", "getPlans " + session.id);
-            HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=schedule&sessid=" + session.id, true);
+            HttpsURLConnection con = openConnection("/backend/provider.php?site=schedule&sessid=" + session.id, true);
             con.setRequestMethod("GET");
 
             /*if(con.getResponseCode() == 401) {
@@ -319,7 +319,7 @@ public class GGRemote {
 
             DateFormat parser = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-            HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=news&sessid=" + session.id, true);
+            HttpsURLConnection con = openConnection("/backend/provider.php?site=news&sessid=" + session.id, true);
             con.setRequestMethod("GET");
 
             /*if(con.getResponseCode() == 401) {
@@ -382,7 +382,7 @@ public class GGRemote {
                     throw new VPLoginException();
             }
 
-            HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=mensa&sessid=" + session.id, true);
+            HttpsURLConnection con = openConnection("/backend/provider.php?site=mensa&sessid=" + session.id, true);
             con.setRequestMethod("GET");
 
             /*if(con.getResponseCode() == 401) {
@@ -457,7 +457,7 @@ public class GGRemote {
                     throw new VPLoginException();
             }
 
-            HttpsURLConnection con = openConnection("/infoapp/provider2.php?site=exams&sessid=" + session.id, true);
+            HttpsURLConnection con = openConnection("/backend/provider.php?site=exams&sessid=" + session.id, true);
             con.setRequestMethod("GET");
 
             /*if(con.getResponseCode() == 401) {
@@ -516,7 +516,7 @@ public class GGRemote {
     public int login(String user, String pass) {
         try {
 
-            HttpsURLConnection con = openConnection("/infoapp/auth2.php", false);
+            HttpsURLConnection con = openConnection("/backend/auth.php", false);
             con.setRequestMethod("POST");
 
             con.setDoOutput(true);
