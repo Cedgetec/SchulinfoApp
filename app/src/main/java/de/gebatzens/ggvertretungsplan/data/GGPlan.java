@@ -316,6 +316,11 @@ public class GGPlan {
                 type = GGApp.GG_APP.getString(R.string.supervision);
             } else if(type.equals("lunch")) {
                 type = GGApp.GG_APP.getString(R.string.lunch);
+            } else if(type.equals("subst")) {
+                type = GGApp.GG_APP.getString(R.string.substitute);
+
+                if(task.find())
+                    comment = GGApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
             }
 
             if(subject.isEmpty() && !repsub.isEmpty())
