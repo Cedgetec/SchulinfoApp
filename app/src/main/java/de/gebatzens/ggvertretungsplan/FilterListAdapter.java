@@ -59,6 +59,7 @@ public class FilterListAdapter extends BaseAdapter {
                 builder.setPositiveButton(c.getString(R.string.refresh), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        c.changed = true;
                         EditText text = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
                         Filter f = list.get(position);
                         f.type = Filter.FilterType.SUBJECT;
@@ -89,6 +90,7 @@ public class FilterListAdapter extends BaseAdapter {
         ((FrameLayout)vg.findViewById(R.id.filter_delete)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                c.changed = true;
                 list.remove(getItem(position));
                 notifyDataSetChanged();
                 FilterActivity.saveFilter(GGApp.GG_APP.filters);

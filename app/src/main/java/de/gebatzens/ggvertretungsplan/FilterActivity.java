@@ -56,8 +56,9 @@ public class FilterActivity extends Activity {
     TextView mainFilterCategory;
     TextView mainFilterContent;
     ImageButton mAddFilterButton;
-    int selected_mode;
-    int main_mode_position;
+    int selectedMode;
+    int mainModePosition;
+    boolean changed = false;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -76,6 +77,8 @@ public class FilterActivity extends Activity {
         listView.setDrawSelectorOnTop(true);
         setListViewHeightBasedOnChildren(listView);
 
+        changed = bundle.getBoolean("changed", false);
+
         TextView tv = (TextView) findViewById(R.id.filter_sep_1);
         tv.setTextColor(GGApp.GG_APP.school.getColor());
         TextView tv2 = (TextView) findViewById(R.id.filter_sep_2);
@@ -92,14 +95,15 @@ public class FilterActivity extends Activity {
             @Override
             public void onClick(View viewIn) {
                 Filter.FilterList list = GGApp.GG_APP.filters;
-                selected_mode = list.mainFilter.type == Filter.FilterType.CLASS ? 0 : list.mainFilter.type == Filter.FilterType.TEACHER ? 1 : 2;
+                selectedMode = list.mainFilter.type == Filter.FilterType.CLASS ? 0 : list.mainFilter.type == Filter.FilterType.TEACHER ? 1 : 2;
                 AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
                 builder.setTitle(getApplication().getString(R.string.set_main_filter_mode))
-                        .setSingleChoiceItems(main_filterStrings, selected_mode, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(main_filterStrings, selectedMode, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                main_mode_position = which == 0 ? 0 : 1;
+                                changed = true;
+                                mainModePosition = which == 0 ? 0 : 1;
                                 Filter.FilterList list = GGApp.GG_APP.filters;
-                                list.mainFilter.type = Filter.FilterType.values()[main_mode_position];
+                                list.mainFilter.type = Filter.FilterType.values()[mainModePosition];
                                 mainFilterCategory.setText(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher));
                                 FilterActivity.saveFilter(GGApp.GG_APP.filters);
                                 dialog.dismiss();
@@ -126,6 +130,7 @@ public class FilterActivity extends Activity {
                 builder.setPositiveButton(getApplication().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        changed = true;
                         EditText text = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
                         text.setHint(getApplication().getString(R.string.school_class));
                         String text2 = text.getText().toString().trim();
@@ -203,6 +208,7 @@ public class FilterActivity extends Activity {
                 builder.setPositiveButton(getApplication().getString(R.string.add), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        changed = true;
                         EditText text = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
                         text.setHint(getApplication().getString(R.string.subject_course));
                         Filter f = new Filter();
@@ -285,7 +291,7 @@ public class FilterActivity extends Activity {
 
     @Override
     public void finish() {
-        setResult(RESULT_OK);
+        setResult(changed ? RESULT_OK : RESULT_CANCELED);
         saveFilter(GGApp.GG_APP.filters);
         super.finish();
     }
@@ -311,6 +317,12 @@ public class FilterActivity extends Activity {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle b) {
+        super.onSaveInstanceState(b);
+        b.putBoolean("changed", changed);
     }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {

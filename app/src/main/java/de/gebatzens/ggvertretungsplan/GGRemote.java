@@ -27,6 +27,7 @@ import android.util.JsonReader;
 import android.util.Log;
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -114,8 +115,9 @@ public class GGRemote {
     }
 
     public void logout(boolean logout_local_only, final boolean delete_token) {
-        GGApp.GG_APP.deleteFile("stoday");
-        GGApp.GG_APP.deleteFile("stomorrow");
+        for(File f : new File(".").listFiles())
+            if(f.getName().startsWith("schedule"))
+                f.delete();
         GGApp.GG_APP.deleteFile("news");
         GGApp.GG_APP.deleteFile("mensa");
         GGApp.GG_APP.stopService(new Intent(GGApp.GG_APP, MQTTService.class));

@@ -86,6 +86,13 @@ public class GGPlan {
             }
             return size() > 0;
         }
+
+        public GGPlan getPlanByDate(Date d) {
+            for(GGPlan plan : this)
+                if(plan.date.equals(d))
+                    return plan;
+            return null;
+        }
     }
 
     public void load(String file) throws Exception {
@@ -98,7 +105,7 @@ public class GGPlan {
         while(reader.hasNext()) {
             String name = reader.nextName();
             if(name.equals("date")) {
-                date.setTime(reader.nextLong());
+                date = new Date(reader.nextLong());
             } else if(name.equals("messages")) {
                 reader.beginArray();
                 while(reader.hasNext()) {
@@ -342,6 +349,8 @@ public class GGPlan {
     }
 
     public static Date parseDate(String date) {
+        if(date.length() < 8)
+            date += new SimpleDateFormat("yyyy").format(new Date());
         SimpleDateFormat fmt = new SimpleDateFormat("d.M.yyyy");
         try {
             return fmt.parse(date);

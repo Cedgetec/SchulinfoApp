@@ -26,12 +26,14 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.List;
+
+import de.gebatzens.ggvertretungsplan.data.GGPlan;
 import de.gebatzens.ggvertretungsplan.fragment.SubstFragment;
 
 public class GGBroadcast extends BroadcastReceiver {
 
-    //TODO
-    /*public void checkForUpdates(final GGApp gg, boolean notification) {
+    public void checkForUpdates(final GGApp gg, boolean notification) {
         if(!gg.notificationsEnabled() && notification)
             return;
         if(gg.getUpdateType() == GGApp.UPDATE_DISABLE) {
@@ -45,125 +47,40 @@ public class GGBroadcast extends BroadcastReceiver {
         }
         GGRemote r = GGApp.GG_APP.remote;
 
-        GGPlan.GGPlans plans = r.getPlans(false);
-        gg.plans = plans;
-        GGPlan today = plans.today;
-        GGPlan tomo = plans.tomorrow;
+        GGPlan.GGPlans newPlans = r.getPlans(false);
+        GGPlan.GGPlans oldPlans = gg.plans;
 
-        if(plans.throwable != null)
+        if(newPlans.throwable != null || oldPlans == null || oldPlans.throwable != null)
             return;
 
+        boolean n = false;
+        for(int i = 0; i < newPlans.size() && !n; i++) {
+            List<GGPlan.Entry> newList = newPlans.get(i).filter(gg.filters);
+            GGPlan old = oldPlans.getPlanByDate(newPlans.get(i).date);
+            if(old == null || !old.filter(gg.filters).equals(newList)) {
+                n = true;
+            }
+
+        }
+
+        gg.plans = newPlans;
         if(gg.activity != null && gg.getFragmentType() == GGApp.FragmentType.PLAN)
             gg.activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    ((SubstFragment)gg.activity.mContent).substAdapter.updateFragments();
+                    gg.activity.mContent.updateFragment();
                 }
             });
 
-        Properties p = new Properties();
-        try {
-            InputStream in;
-            p.load(in = gg.openFileInput("ggsavedstate"));
-            in.close();
-        } catch(Exception e) {
-            p.setProperty("todaydate", ""+today.date.getTime());
-            p.setProperty("tomdate", ""+tomo.date.getTime());
-            p.setProperty("todayles", "");
-            p.setProperty("tomoles", "");
-        }
-
-        boolean b = false;
-
-        String[] td = p.getProperty("todayles").split(";");
-        List<GGPlan.Entry> listtd = today.filter(GGApp.GG_APP.filters);
-        String[] tdn = new String[listtd.size()];
-        int i = 0;
-        for(GGPlan.Entry e : listtd) {
-            tdn[i] = e.lesson;
-            i++;
-        }
-        if(td[0].isEmpty())
-            td = new String[0];
-        if(tdn.length != td.length) { //Heute fällt mehr/(weniger) aus
-            b = true;
-            Log.d("ggvp", "Heutestd nicht gleich " + tdn.length + " " + td.length);
-
-        }
-
-        String[] tm = p.getProperty("tomoles").split(";");
-        List<GGPlan.Entry> listtm = tomo.filter(GGApp.GG_APP.filters);
-        String[] tmn = new String[listtm.size()];
-        i = 0;
-        for(GGPlan.Entry e : listtm) {
-            tmn[i] = e.lesson;
-            i++;
-        }
-        if(tm[0].isEmpty())
-            tm = new String[0];
-        if(tmn.length != tm.length) { //Morgen fällt mehr/(weniger) aus
-            b = true;
-            Log.d("ggvp", "Morgenstd nicht gleich " + tmn.length + " " + tm.length);
-        }
-
-        if(today.date.getTime() != Long.parseLong(p.getProperty("todaydate"))) {
-            b = true;
-            Log.d("ggvp", "Datum anders: " + today.date + " " + p.getProperty("todaydate"));
-        }
-
-        //Nichts neues, morgen fällt nichts aus
-        if(today.date.getTime() == Long.parseLong(p.getProperty("tomdate")) && tmn.length == 0 && tdn.length == tm.length) {
-            b = false;
-        }
-
-        p.setProperty("todaydate", ""+today.date.getTime());
-        p.setProperty("tomdate", ""+tomo.date.getTime());
-        String tdnstr = "";
-        for(String s : tdn)
-            tdnstr += s + ";";
-        if(!tdnstr.isEmpty())
-            tdnstr = tdnstr.substring(0, tdnstr.length() - 1);
-        p.setProperty("todayles", tdnstr);
-        String tmnstr = "";
-        for(String s : tmn)
-            tmnstr += s + ";";
-        if(!tmnstr.isEmpty())
-            tmnstr = tmnstr.substring(0, tmnstr.length() - 1);
-        p.setProperty("tomoles", tmnstr);
-
-        if(b) {
-            String stdt = "";
-            for(String s : tdn)
-                stdt += s + ", ";
-            if(!stdt.isEmpty())
-                stdt = stdt.substring(0, stdt.length() - 2);
-            else
-                stdt = gg.getString(R.string.nothing);
-            String stdtm = "";
-            for(String s : tmn)
-                stdtm += s + ", ";
-            if(!stdtm.isEmpty())
-                stdtm = stdtm.substring(0, stdtm.length() - 2);
-            else
-                stdtm = gg.getString(R.string.nothing);
+        if(n) {
             Intent intent = new Intent(gg, MainActivity.class);
             intent.putExtra("fragment", "PLAN");
             gg.createNotification(R.drawable.ic_gg_notification, gg.getString(R.string.schedule_change), gg.getString(R.string.schedule_changed),
-                    intent, 123, false, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
-                    tomo.getWeekday() + ": " + stdtm);
-        } else
-            Log.d("ggvp", "Up to date!");
-
-        try {
-            OutputStream out;
-            p.store(out = gg.openFileOutput("ggsavedstate", Context.MODE_PRIVATE), "GGSavedState");
-            out.close();
-        } catch(Exception e) {
-            e.printStackTrace();
-            gg.showToast(e.getClass().getName() + " " + e.getMessage());
+                    intent, 123, false/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
+                    tomo.getWeekday() + ": " + stdtm*/);
         }
 
-    }*/
+    }
 
     public void checkForAppUpdates(GGApp gg) {
         if(!gg.appUpdatesEnabled())
@@ -192,7 +109,7 @@ public class GGBroadcast extends BroadcastReceiver {
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pi);
-        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, AlarmManager.INTERVAL_HALF_HOUR, pi);
+        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
     }
 
     public static boolean isWlanConnected(Context c) {
@@ -220,7 +137,7 @@ public class GGBroadcast extends BroadcastReceiver {
 
                 @Override
                 protected Void doInBackground(GGApp... params) {
-                    //checkForUpdates(params[0], true);
+                    checkForUpdates(params[0], true);
                     checkForAppUpdates(params[0]);
                     return null;
                 }
@@ -252,7 +169,7 @@ public class GGBroadcast extends BroadcastReceiver {
 
                             params[0].refreshAsync(null, true, params[0].getFragmentType());
                         } else {
-                            //checkForUpdates(params[0], false);
+                            checkForUpdates(params[0], false);
                         }
                         return null;
                     }
