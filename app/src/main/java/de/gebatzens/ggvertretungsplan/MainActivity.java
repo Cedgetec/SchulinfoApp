@@ -121,8 +121,6 @@ public class MainActivity extends FragmentActivity {
 
         removeAllFragments();
 
-
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         mContent = createFragment();
         transaction.replace(R.id.content_fragment, mContent, "gg_content_fragment");
@@ -133,7 +131,6 @@ public class MainActivity extends FragmentActivity {
         
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

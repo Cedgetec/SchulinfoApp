@@ -191,7 +191,7 @@ public abstract class RemoteDataFragment extends Fragment {
                 createButtonWithText(vg, getResources().getString(R.string.login_required), getResources().getString(R.string.do_login), new View.OnClickListener() {
                     @Override
                     public void onClick(View c) {
-
+                    //TODO: Login dialog (token expired)
 
                     }
                 });

@@ -30,6 +30,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -73,7 +74,19 @@ public class GGApp extends Application {
         filters = FilterActivity.loadFilter();
         loadSubjectMap();
         School.loadList();
+        loadSavedData();
         school = School.getBySID(preferences.getString("sid", null));
+    }
+
+    private void loadSavedData() {
+        if(!(plans = new GGPlan.GGPlans()).load())
+            plans = null;
+        if(!(exams = new Exams()).load())
+            exams = null;
+        if(!(news = new News()).load())
+            news = null;
+        if(!(mensa = new Mensa()).load())
+            mensa = null;
     }
 
     public RemoteDataFragment.RemoteData getDataForFragment(FragmentType type) {

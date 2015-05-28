@@ -90,7 +90,7 @@ public class MQTTService extends IntentService {
                 Thread.sleep(5000);
             }
         } catch (Exception e) {
-            Log.e("ggmqtt", "Failed to connect to server", e);
+            Log.e("ggmqtt", "Failed to connect to server");
 
             Intent localIntent = new Intent(getApplicationContext(), getClass());
             localIntent.setPackage(getPackageName());
