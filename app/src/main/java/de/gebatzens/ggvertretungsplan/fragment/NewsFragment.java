@@ -20,12 +20,14 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -87,39 +89,47 @@ public class NewsFragment extends RemoteDataFragment {
 
     @Override
     public void createView(final LayoutInflater inflater, ViewGroup view) {
-        lv = new ListView(getActivity());
-        lv.setDrawSelectorOnTop(true);
-        ((LinearLayout) view.findViewById(R.id.news_content)).addView(lv);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                News news = GGApp.GG_APP.news;
-                String title = news.get(position).title;
-                String content = news.get(position).text;
+        LinearLayout lroot = (LinearLayout) view.findViewById(R.id.news_content);
+        if(GGApp.GG_APP.news.isEmpty()) {
+            LinearLayout l = new LinearLayout(getActivity());
+            createRootLayout(l);
+            lroot.addView(l);
+            createNoEntriesCard(l, inflater);
+        } else {
+            lv = new ListView(getActivity());
+            lv.setDrawSelectorOnTop(true);
+            lroot.addView(lv);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    News news = GGApp.GG_APP.news;
+                    String title = news.get(position).title;
+                    String content = news.get(position).text;
 
-                AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
-                ad.setView(inflater.inflate(R.layout.news_dialog, null));
-                ad.setTitle(title);
-                ad.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                    AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
+                    ad.setView(inflater.inflate(R.layout.news_dialog, null));
+                    ad.setTitle(title);
+                    ad.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    Dialog d = ad.create();
+                    d.show();
+                    TextView tv = (TextView) d.findViewById(R.id.newsd_text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(Html.fromHtml(content, null, null));
+
+                    if (!mDatabaseHelper.checkNewsRead(title)) {
+                        mDatabaseHelper.addReadNews(title);
+                        nfla.notifyDataSetChanged();
                     }
-                });
-                Dialog d = ad.create();
-                d.show();
-                TextView tv = (TextView) d.findViewById(R.id.newsd_text);
-                tv.setMovementMethod(LinkMovementMethod.getInstance());
-                tv.setText(Html.fromHtml(content, null, null));
-
-                if(!mDatabaseHelper.checkNewsRead(title)) {
-                    mDatabaseHelper.addReadNews(title);
-                    nfla.notifyDataSetChanged();
                 }
-            }
-        });
-        nfla = new NewsFragmentListAdapter(getActivity(), GGApp.GG_APP.news);
-        lv.setAdapter(nfla);
+            });
+            nfla = new NewsFragmentListAdapter(getActivity(), GGApp.GG_APP.news);
+            lv.setAdapter(nfla);
+        }
     }
 
     @Override

@@ -93,14 +93,7 @@ public class ExamFragment extends RemoteDataFragment {
         sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         sv.setTag("gg_scroll");
         LinearLayout l = new LinearLayout(getActivity());
-        l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        l.setOrientation(LinearLayout.VERTICAL);
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            l.setPadding(toPixels(55),toPixels(4),toPixels(55),toPixels(4));
-        }
-        else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            l.setPadding(toPixels(4),toPixels(4),toPixels(4),toPixels(4));
-        }
+        createRootLayout(l);
         sv.addView(l);
         Exams filtered = GGApp.GG_APP.exams.filter(GGApp.GG_APP.filters);
         if(!filtered.isEmpty()) {
@@ -125,7 +118,10 @@ public class ExamFragment extends RemoteDataFragment {
             }
             ((LinearLayout) view.findViewById(R.id.exam_content)).addView(sv);
         } else {
-            createText(view, getString(R.string.no_entries));
+            l = new LinearLayout(getActivity());
+            ((LinearLayout) view.findViewById(R.id.exam_content)).addView(l);
+            createRootLayout(l);
+            createNoEntriesCard(l, inflater);
         }
         cardColorIndex = 0;
     }
