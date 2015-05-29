@@ -64,7 +64,8 @@ public class GGPlan {
 
         @Override
         public void save() {
-            GGApp.GG_APP.preferences.edit().putString("loadDate", loadDate).apply();
+            GGApp.GG_APP.preferences.edit().putString("loadDate", loadDate).commit();
+
             for(int i = 0; i < size(); i++)
                 get(i).save("schedule" + i);
         }

@@ -262,9 +262,10 @@ public class GGRemote {
                     });
             }
         } else {
-            plans.save();
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             plans.loadDate = GGApp.GG_APP.getResources().getString(R.string.as_of) + ": " + sdf.format(new Date());
+            plans.save();
+
         }
 
         return plans;
