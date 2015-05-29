@@ -40,6 +40,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import de.gebatzens.ggvertretungsplan.FilterActivity;
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.R;
 import de.gebatzens.ggvertretungsplan.SettingsActivity;
@@ -204,7 +205,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), SettingsActivity.class);
+                    Intent i = new Intent(getActivity(), FilterActivity.class);
                     getActivity().startActivityForResult(i, 1);
                 }
             });

@@ -77,7 +77,8 @@ public class FilterActivity extends Activity {
         listView.setDrawSelectorOnTop(true);
         setListViewHeightBasedOnChildren(listView);
 
-        changed = bundle.getBoolean("changed", false);
+        if(bundle != null)
+            changed = bundle.getBoolean("changed", false);
 
         TextView tv = (TextView) findViewById(R.id.filter_sep_1);
         tv.setTextColor(GGApp.GG_APP.school.getColor());

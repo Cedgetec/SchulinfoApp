@@ -115,11 +115,12 @@ public class GGRemote {
     }
 
     public void logout(boolean logout_local_only, final boolean delete_token) {
-        for(File f : new File(".").listFiles())
-            if(f.getName().startsWith("schedule"))
-                f.delete();
+        for(String name : GGApp.GG_APP.fileList())
+            if(name.startsWith("schedule"))
+                GGApp.GG_APP.deleteFile(name);
         GGApp.GG_APP.deleteFile("news");
         GGApp.GG_APP.deleteFile("mensa");
+        GGApp.GG_APP.deleteFile("exams");
         GGApp.GG_APP.stopService(new Intent(GGApp.GG_APP, MQTTService.class));
         GGApp.GG_APP.filters.clear();
         GGApp.GG_APP.filters.mainFilter = new Filter();

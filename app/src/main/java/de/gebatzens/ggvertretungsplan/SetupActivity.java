@@ -22,9 +22,13 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -36,11 +40,10 @@ public class SetupActivity extends Activity {
 
     SchoolListAdapter adapter;
     ListView list;
-    Button refresh;
 
     @Override
     public void onCreate(Bundle saved) {
-        setTheme(R.style.AppThemeBlueGrey);
+        setTheme(R.style.AppThemeIndigo);
         super.onCreate(saved);
 
         if(GGApp.GG_APP.remote.isLoggedIn()) {
@@ -51,11 +54,22 @@ public class SetupActivity extends Activity {
 
         setContentView(R.layout.activity_setup);
 
-        refresh = (Button) findViewById(R.id.refresh);
-        refresh.setOnClickListener(new View.OnClickListener() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setTitle(getString(R.string.app_name));
+        toolbar.inflateMenu(R.menu.setup_menu);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            GGApp.GG_APP.setStatusBarColor(getWindow(), getResources().getColor(R.color.setupText));
+        }
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public void onClick(View viewIn) {
-                showDownloadDialog();
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if(menuItem.getItemId() == R.id.setup_refresh) {
+                    showDownloadDialog();
+                }
+                return true;
             }
         });
 

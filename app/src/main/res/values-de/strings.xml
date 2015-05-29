@@ -126,7 +126,7 @@
     <string name="setup_description">Willkommen in der SchulinfoAPP!</string>
     <string name="lessons">Stunden</string>
     <string name="no_entries">Keine Einträge</string>
-    <string name="select_school">Wähle eine Schule</string>
+    <string name="supported_schools">Unterstützte Schulen</string>
     <string name="anonymous">Anonymer Benutzer</string>
     <string name="download_error">Während des Downloadens ist ein Fehler aufgetreten</string>
     <string name="developer_dialog">Von Verplanten für Verplante, Ihr Vertretungsplan!\n\nHauke Oldsen\nLasse Rosenow\nLennart Schmidt\nFabian Schultis</string>

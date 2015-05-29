@@ -310,7 +310,7 @@ public class MainActivity extends FragmentActivity {
 
         if(requestCode == 1 && resultCode == RESULT_OK) { //Settings changed
 
-            if(data.getBooleanExtra("setup", false)) {
+            if(data != null && data.getBooleanExtra("setup", false)) {
                 startActivity(new Intent(this, SetupActivity.class));
                 finish();
                 return;

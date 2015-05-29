@@ -126,7 +126,7 @@
     <string name="setup_description">Welcome to the SchoolinfoAPP!</string>
     <string name="lessons">Lessons</string>
     <string name="no_entries">No entries</string>
-    <string name="select_school">Select a school</string>
+    <string name="supported_schools">Supported schools</string>
     <string name="anonymous">Anonymous user</string>
     <string name="download_error">An error occurred while downloading</string>
     <string name="developer_dialog">Build by bemused for the confused, your substitute schedule!\n\nHauke Oldsen\nLasse Rosenow\nLennart Schmidt\nFabian Schultis</string>
