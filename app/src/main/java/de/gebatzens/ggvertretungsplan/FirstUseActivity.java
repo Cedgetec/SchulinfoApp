@@ -29,7 +29,8 @@ public class FirstUseActivity extends Activity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        if(BuildConfig.DEBUG) {
+        //TODO
+        if(/*BuildConfig.DEBUG*/ true) {
             startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
             return;
         }
