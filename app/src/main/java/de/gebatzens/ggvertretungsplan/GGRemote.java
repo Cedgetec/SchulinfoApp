@@ -312,7 +312,7 @@ public class GGRemote {
         reader.endArray();
     }
 
-    public News getNews() {
+    public News getNews(boolean toast) {
         News n = new News();
         try {
             if (session == null) {
@@ -334,7 +334,7 @@ public class GGRemote {
                 if(session == null) {
                     throw new VPLoginException();
                 } else {
-                    return getNews();
+                    return getNews(toast);
                 }
             } else if (con.getResponseCode() == 200) {
                 JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
@@ -365,8 +365,16 @@ public class GGRemote {
 
                 n.save();
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
+            if(toast)
+                GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        GGApp.GG_APP.showToast(e instanceof IOException ? GGApp.GG_APP.getResources().getString(R.string.no_internet_connection) :
+                                e instanceof VPLoginException ? GGApp.GG_APP.getString(R.string.not_logged_in) : GGApp.GG_APP.getResources().getString(R.string.unknown_error));
+                    }
+                });
             if(!n.load()) {
                 n.throwable = e;
                 return n;
@@ -377,7 +385,7 @@ public class GGRemote {
         }
     }
 
-    public Mensa getMensa() {
+    public Mensa getMensa(boolean toast) {
         Mensa m = new Mensa();
         try {
             if (session == null) {
@@ -397,7 +405,7 @@ public class GGRemote {
                 if(session == null) {
                     throw new VPLoginException();
                 } else {
-                    return getMensa();
+                    return getMensa(toast);
                 }
             } else if (con.getResponseCode() == 200) {
                 JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
@@ -428,8 +436,16 @@ public class GGRemote {
 
                 m.save();
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
+            if(toast)
+                GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        GGApp.GG_APP.showToast(e instanceof IOException ? GGApp.GG_APP.getResources().getString(R.string.no_internet_connection) :
+                                e instanceof VPLoginException ? GGApp.GG_APP.getString(R.string.not_logged_in) : GGApp.GG_APP.getResources().getString(R.string.unknown_error));
+                    }
+                });
             if(!m.load()) {
                 m.throwable = e;
                 return m;
@@ -452,7 +468,7 @@ public class GGRemote {
         }
     }
 
-    public Exams getExams() {
+    public Exams getExams(boolean toast) {
         Exams exams = new Exams();
         try {
             if (session == null) {
@@ -472,7 +488,7 @@ public class GGRemote {
                 if(session == null) {
                     throw new VPLoginException();
                 } else {
-                    return getExams();
+                    return getExams(toast);
                 }
             } else if (con.getResponseCode() == 200) {
                 JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
@@ -507,8 +523,17 @@ public class GGRemote {
                 }
             }
             exams.save();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
+            GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    GGApp.GG_APP.showToast(e instanceof IOException ? GGApp.GG_APP.getResources().getString(R.string.no_internet_connection) :
+                            e instanceof VPLoginException ? GGApp.GG_APP.getString(R.string.not_logged_in) : GGApp.GG_APP.getResources().getString(R.string.unknown_error));
+                }
+            });
+
+
             if(!exams.load()) {
                 exams.throwable = e;
                 return exams;

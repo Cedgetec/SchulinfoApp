@@ -249,13 +249,13 @@ public class GGApp extends Application {
 
                         break;
                     case NEWS:
-                        news = remote.getNews();
+                        news = remote.getNews(updateFragments);
                         break;
                     case MENSA:
-                        mensa = remote.getMensa();
+                        mensa = remote.getMensa(updateFragments);
                         break;
                     case EXAMS:
-                        exams = remote.getExams();
+                        exams = remote.getExams(updateFragments);
                         break;
                 }
 

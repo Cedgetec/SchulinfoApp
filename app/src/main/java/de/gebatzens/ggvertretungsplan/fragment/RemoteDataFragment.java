@@ -199,7 +199,7 @@ public abstract class RemoteDataFragment extends Fragment {
                 createButtonWithText(vg, getResources().getString(R.string.check_connection), getResources().getString(R.string.again), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GGApp.GG_APP.refreshAsync(null, true, GGApp.FragmentType.PLAN);
+                        GGApp.GG_APP.refreshAsync(null, true, type);
                     }
                 });
             }
