@@ -70,7 +70,7 @@ public class School {
     }
 
     private void loadTheme(String name) {
-        theme = GGApp.GG_APP.getResources().getIdentifier("AppTheme" + name, "style", GGApp.GG_APP.getPackageName());
+        theme = GGApp.GG_APP.getResources().getIdentifier("AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
         colorArray = GGApp.GG_APP.getResources().getIdentifier("CardviewColor" + name, "array", GGApp.GG_APP.getPackageName());
         TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int[]{R.attr.colorPrimary});
         TypedArray tad = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimaryDark});

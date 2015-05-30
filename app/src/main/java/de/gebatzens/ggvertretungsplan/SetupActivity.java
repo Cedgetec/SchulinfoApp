@@ -43,7 +43,7 @@ public class SetupActivity extends Activity {
 
     @Override
     public void onCreate(Bundle saved) {
-        setTheme(R.style.AppThemeIndigo);
+        setTheme(R.style.AppThemeIndigoLight);
         super.onCreate(saved);
 
         if(GGApp.GG_APP.remote.isLoggedIn()) {
