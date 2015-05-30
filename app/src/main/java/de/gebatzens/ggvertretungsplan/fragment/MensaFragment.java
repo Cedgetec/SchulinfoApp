@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -69,6 +70,11 @@ public class MensaFragment extends RemoteDataFragment {
         super.onViewCreated(v, b);
 
         swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
+        if (themeIsLight()) {
+            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
+        } else{
+            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#424242"));
+        }
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -124,6 +130,11 @@ public class MensaFragment extends RemoteDataFragment {
 
     private CardView createCardItem(Mensa.MensaItem mensa_item, LayoutInflater i) {
         CardView mcv = createCardView();
+        if (themeIsLight()) {
+            mcv.setCardBackgroundColor(Color.WHITE);
+        } else{
+            mcv.setCardBackgroundColor(Color.DKGRAY);
+        }
         mcv.setContentPadding(0, 0, 0, 0);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(0, 0, 0, toPixels(6));

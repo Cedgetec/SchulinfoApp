@@ -19,12 +19,14 @@ package de.gebatzens.ggvertretungsplan.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import de.gebatzens.ggvertretungsplan.R;
@@ -42,6 +44,17 @@ public class NavigationListAdapter extends BaseAdapter {
         mTitle = pTitle;
         mIcon = pIcon;
     }
+
+    public boolean themeIsLight() {
+        TypedValue a = new TypedValue();
+        context.getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
+        int color = a.data;
+        if (color == context.getResources().getColor(R.color.background_material_light)) {
+            return true;
+        } else{
+            return false;
+        }
+    }
  
     @SuppressLint("ViewHolder")
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -50,9 +63,22 @@ public class NavigationListAdapter extends BaseAdapter {
         TextView txtTitle = (TextView) itemView.findViewById(R.id.menuTitle);
         ArrayAdapter a;
         ImageView imgIcon = (ImageView) itemView.findViewById(R.id.menuIcon);
+        LinearLayout navigationitem = (LinearLayout) itemView.findViewById(R.id.navigationButton);
         txtTitle.setText(mTitle[position]);
         imgIcon.setImageResource(mIcon[position]);
+        if (themeIsLight()) {
+            txtTitle.setTextColor(Color.parseColor("#212121"));
+            imgIcon.setColorFilter(Color.parseColor("#727272"));
+        } else{
+            imgIcon.setColorFilter(Color.parseColor("#aeaeae"));
+            txtTitle.setTextColor(Color.parseColor("#e7e7e7"));
+        }
         if(mSelected==position) {
+            if (themeIsLight()) {
+                navigationitem.setBackgroundColor(Color.parseColor("#eeeeee"));
+            } else{
+                navigationitem.setBackgroundColor(Color.parseColor("#5a5a5a"));
+            }
             txtTitle.setTextColor(mColor);
             imgIcon.setColorFilter(mColor);
         }

@@ -17,6 +17,7 @@
 package de.gebatzens.ggvertretungsplan.fragment;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -81,7 +82,7 @@ public class SubstFragment extends RemoteDataFragment {
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setBackgroundColor(mToolbarColorId);
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            mSlidingTabLayout.setPadding(toPixels(48),0,toPixels(48),0);
+            mSlidingTabLayout.setPadding(toPixels(48), 0, toPixels(48), 0);
         }
         else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             mSlidingTabLayout.setPadding(toPixels(8),0,toPixels(8),0);
@@ -89,6 +90,11 @@ public class SubstFragment extends RemoteDataFragment {
         mSlidingTabLayout.setViewPager(mViewPager);
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        if (themeIsLight()) {
+            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
+        } else{
+            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#424242"));
+        }
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -107,6 +113,11 @@ public class SubstFragment extends RemoteDataFragment {
                 }, true, GGApp.FragmentType.PLAN);
             }
         });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(R.color.custom_material_green,
+                R.color.custom_material_red,
+                R.color.custom_material_blue,
+                R.color.custom_material_orange);
 
         FrameLayout contentFrame = (FrameLayout) getActivity().findViewById(R.id.content_fragment);
         contentFrame.setVisibility(View.VISIBLE);

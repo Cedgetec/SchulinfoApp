@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navigationButton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@drawable/drawer_list_button"
     android:weightSum="1">
 
     <ImageView
@@ -26,7 +26,6 @@
         android:ellipsize="end"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:singleLine="true"
-        android:textColor="@color/drawer_list_button_text"
         android:text="@string/app_name"
         android:layout_gravity="center_vertical"/>
 

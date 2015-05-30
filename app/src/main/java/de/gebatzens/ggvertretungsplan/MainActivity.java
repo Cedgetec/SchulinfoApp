@@ -32,6 +32,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -135,7 +136,7 @@ public class MainActivity extends FragmentActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
 
-                if(menuItem.getItemId() == R.id.action_refresh) {
+                if (menuItem.getItemId() == R.id.action_refresh) {
                     ((SwipeRefreshLayout) mContent.getView().findViewById(R.id.refresh)).setRefreshing(true);
                     GGApp.GG_APP.refreshAsync(new Runnable() {
                         @Override
@@ -143,7 +144,7 @@ public class MainActivity extends FragmentActivity {
                             ((SwipeRefreshLayout) mContent.getView().findViewById(R.id.refresh)).setRefreshing(false);
                         }
                     }, true, GGApp.GG_APP.getFragmentType());
-                } else if(menuItem.getItemId() == R.id.action_settings) {
+                } else if (menuItem.getItemId() == R.id.action_settings) {
                     Intent i = new Intent(MainActivity.this, SettingsActivity.class);
                     startActivityForResult(i, 1);
                 }
@@ -161,6 +162,12 @@ public class MainActivity extends FragmentActivity {
 
         ((TextView) findViewById(R.id.drawer_image_text)).setText(GGApp.GG_APP.school.name);
 
+        View navigationDrawer = (View) findViewById(R.id.navigation_drawer);
+        if (themeIsLight()) {
+            navigationDrawer.setBackgroundColor(Color.parseColor("#ffffff"));
+        } else{
+            navigationDrawer.setBackgroundColor(Color.parseColor("#424242"));
+        }
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
@@ -251,17 +258,12 @@ public class MainActivity extends FragmentActivity {
         });
         ListviewHelper.getListViewSize(mDrawerList);
 
-        /*mDrawerFirstUse = (TextView) findViewById(R.id.left_drawer_firstuse);
-        mDrawerFirstUse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View viewIn) {
-                mDrawerLayout.closeDrawers();
-                Intent i = new Intent(MainActivity.this, FirstUseActivity.class);
-                startActivityForResult(i, 1);
-            }
-        });*/
-
         mDrawerSettings = (TextView) findViewById(R.id.left_drawer_settings);
+        if (themeIsLight()) {
+            mDrawerSettings.setTextColor(Color.parseColor("#212121"));
+        } else{
+            mDrawerSettings.setTextColor(Color.parseColor("#e7e7e7"));
+        }
         mDrawerSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
@@ -335,6 +337,17 @@ public class MainActivity extends FragmentActivity {
             GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());
         }
 
+    }
+
+    public boolean themeIsLight() {
+        TypedValue a = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
+        int color = a.data;
+        if (color == getResources().getColor(R.color.background_material_light)) {
+            return true;
+        } else{
+            return false;
+        }
     }
 
 }

@@ -28,6 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -61,6 +63,11 @@ public class ExamFragment extends RemoteDataFragment {
         super.onViewCreated(v, b);
 
         swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
+        if (themeIsLight()) {
+            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
+        } else{
+            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#424242"));
+        }
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -96,8 +103,15 @@ public class ExamFragment extends RemoteDataFragment {
         createRootLayout(l);
         sv.addView(l);
         Exams filtered = GGApp.GG_APP.exams.filter(GGApp.GG_APP.filters);
+
         if(!filtered.isEmpty()) {
-            createTextView(getResources().getString(R.string.my_exams), 30, inflater, l);
+            TextView tv = createTextView(getResources().getString(R.string.my_exams), 27, inflater, l);
+            tv.setPadding(toPixels(2.8f), 0, 0, 0);
+            if (themeIsLight()) {
+                tv.setTextColor(Color.parseColor("#6e6e6e"));
+            } else{
+                tv.setTextColor(Color.parseColor("#a0a0a0"));
+            }
             for (Exams.ExamItem item : filtered) {
                 CardView cv = createCardItem(item, inflater);
                 if (cv != null) {
@@ -109,7 +123,13 @@ public class ExamFragment extends RemoteDataFragment {
         cardColorIndex = 0;
 
         if(GGApp.GG_APP.exams.size() != 0) {
-            createTextView(getResources().getString(R.string.all_exams), 30, inflater, l);
+            TextView tv = createTextView(getResources().getString(R.string.all_exams), 27, inflater, l);
+            tv.setPadding(toPixels(2.8f), 0, 0, 0);
+            if (themeIsLight()) {
+                tv.setTextColor(Color.parseColor("#6e6e6e"));
+            } else{
+                tv.setTextColor(Color.parseColor("#a0a0a0"));
+            }
             for (Exams.ExamItem item : GGApp.GG_APP.exams) {
                 CardView cv = createCardItem(item, inflater);
                 if (cv != null) {

@@ -43,7 +43,6 @@ import java.util.Locale;
 import de.gebatzens.ggvertretungsplan.FilterActivity;
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.R;
-import de.gebatzens.ggvertretungsplan.SettingsActivity;
 import de.gebatzens.ggvertretungsplan.data.Filter;
 import de.gebatzens.ggvertretungsplan.data.GGPlan;
 
@@ -71,8 +70,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
     private void createCardItems(List<GGPlan.Entry> list, ViewGroup group, LayoutInflater inflater, boolean clas) {
         if(list.size() == 0) {
             FrameLayout f2 = new FrameLayout(getActivity());
-            f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
+            f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
             CardView cv = createCardView();
+            if (themeIsLight()) {
+                cv.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            } else{
+                cv.setCardBackgroundColor(Color.parseColor("#424242"));
+            }
             f2.addView(cv);
             createTextView(getResources().getString(R.string.no_entries_schedule), 20, inflater, cv);
             group.addView(f2);
@@ -157,9 +161,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
             Filter.FilterList filters = GGApp.GG_APP.filters;
 
             CardView cv2 = new CardView(getActivity());
-            cv2.setContentPadding(toPixels(16),toPixels(16),toPixels(16),toPixels(16));
-            cv2.setCardBackgroundColor(Color.WHITE);
+            cv2.setContentPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
             cv2.setRadius(0);
+            if (themeIsLight()) {
+                cv2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            } else{
+                cv2.setCardBackgroundColor(Color.parseColor("#424242"));
+            }
 
             LinearLayout l2 = new LinearLayout(getActivity());
 
@@ -176,7 +184,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
             for(GGPlan plan : GGApp.GG_APP.plans) {
                 List<GGPlan.Entry> list = plan.filter(filters);
-                createTextView(translateDay(plan.date), 30, inflater, l).setPadding(0, toPixels(20), 0, 0);
+                TextView tv = createTextView(translateDay(plan.date), 27, inflater, l);
+                tv.setPadding(toPixels(2.8f), toPixels(20), 0, 0);
+                if (themeIsLight()) {
+                    tv.setTextColor(Color.parseColor("#6e6e6e"));
+                } else{
+                    tv.setTextColor(Color.parseColor("#a0a0a0"));
+                }
                 if (!plan.special.isEmpty()) {
                     FrameLayout f2 = new FrameLayout(getActivity());
                     f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
@@ -191,8 +205,8 @@ public class SubstPagerFragment extends RemoteDataFragment {
                     tv3.setPadding(0, 0, 0, toPixels(6));
                     cv.addView(ls);
 
-                    for (TextView tv : createSMViews(plan)) {
-                        ls.addView(tv);
+                    for (TextView tv1 : createSMViews(plan)) {
+                        ls.addView(tv1);
                     }
                 }
                 createCardItems(list, l, inflater, filters.mainFilter.type != Filter.FilterType.CLASS);
@@ -213,9 +227,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
         } else {
             CardView cv2 = new CardView(getActivity());
-            cv2.setContentPadding(toPixels(16),toPixels(16),toPixels(16),toPixels(16));
-            cv2.setCardBackgroundColor(Color.WHITE);
+            cv2.setContentPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
             cv2.setRadius(0);
+            if (themeIsLight()) {
+                cv2.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            } else{
+                cv2.setCardBackgroundColor(Color.parseColor("#424242"));
+            }
 
             LinearLayout l2 = new LinearLayout(getActivity());
 
@@ -273,6 +291,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
                     spinnerPos = position;
 
+                    if (themeIsLight()) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.parseColor("#212121"));
+                    } else{
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.parseColor("#e7e7e7"));
+                    }
+
                     if (!item.equals(getActivity().getString(R.string.all))) {
                         l3.removeAllViews();
                         cardColorIndex = 0;
@@ -289,7 +313,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
                         List<String> classes = plan.getAllClasses();
                         for(String s : classes) {
-                            createTextView(s, 30, inflater, l3).setPadding(0, toPixels(20), 0, 0);
+                            TextView tv = createTextView(s, 27, inflater, l3);
+                            tv.setPadding(toPixels(2.8f), toPixels(20), 0, 0);
+                            if (themeIsLight()) {
+                                tv.setTextColor(Color.parseColor("#6e6e6e"));
+                            } else{
+                                tv.setTextColor(Color.parseColor("#a0a0a0"));
+                            }
                             Filter.FilterList fl = new Filter.FilterList();
                             Filter main = new Filter();
                             fl.mainFilter = main;

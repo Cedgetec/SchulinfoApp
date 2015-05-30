@@ -17,11 +17,13 @@
 package de.gebatzens.ggvertretungsplan.fragment;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +92,11 @@ public abstract class RemoteDataFragment extends Fragment {
         t.setText(text);
         t.setPadding(0, 0, toPixels(20), 0);
         t.setTextSize(size);
+        if (themeIsLight()) {
+            t.setTextColor(Color.parseColor("#212121"));
+        } else{
+            t.setTextColor(Color.parseColor("#e7e7e7"));
+        }
         group.addView(t);
         return t;
     }
@@ -160,6 +167,11 @@ public abstract class RemoteDataFragment extends Fragment {
         FrameLayout f2 = new FrameLayout(getActivity());
         f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
         CardView cv = createCardView();
+        if (themeIsLight()) {
+            cv.setCardBackgroundColor(Color.parseColor("#fafafa"));
+        } else{
+            cv.setCardBackgroundColor(Color.parseColor("#424242"));
+        }
         f2.addView(cv);
         createTextView(getResources().getString(R.string.no_entries), 20, inflater, cv);
         vg.addView(f2);
@@ -243,6 +255,17 @@ public abstract class RemoteDataFragment extends Fragment {
         public void save();
         public boolean load();
 
+    }
+
+    public boolean themeIsLight() {
+        TypedValue a = new TypedValue();
+        getActivity().getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
+        int color = a.data;
+        if (color == getResources().getColor(R.color.background_material_light)) {
+            return true;
+        } else{
+            return false;
+        }
     }
 
 }

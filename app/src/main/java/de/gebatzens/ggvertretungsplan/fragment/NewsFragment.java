@@ -18,6 +18,7 @@ package de.gebatzens.ggvertretungsplan.fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
@@ -61,6 +62,11 @@ public class NewsFragment extends RemoteDataFragment {
         super.onViewCreated(v, b);
 
         final SwipeRefreshLayout swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
+        if (themeIsLight()) {
+            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
+        } else{
+            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#424242"));
+        }
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

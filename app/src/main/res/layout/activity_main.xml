@@ -30,10 +30,10 @@
 
     <de.gebatzens.ggvertretungsplan.view.ScrimInsetsFrameLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/navigation_drawer"
         android:layout_width="270dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#ffffff"
         app:insetForeground="#4000"
         android:fitsSystemWindows="true">
         <ScrollView
@@ -59,7 +59,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="172dp"
-                        android:background="#47000000"/>
+                        android:background="#50000000"/>
 
                     <View
                         android:id="@+id/navigation_schoolpicture_link"
@@ -89,32 +89,14 @@
                     android:drawSelectorOnTop="true"
                     android:choiceMode="singleChoice"
                     android:divider="@android:color/transparent"
-                    android:dividerHeight="0dp"
-                    android:background="#fff"/>
+                    android:dividerHeight="0dp"/>
 
                 <View
-                    android:layout_width="270dp"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="6.6dp"
                     android:layout_marginBottom="6.6dp"
-                    android:background="#f0f0f0"/>
-
-                <!--<TextView
-                    android:id="@+id/left_drawer_firstuse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="14sp"
-                    android:text="@string/firstuse"
-                    android:gravity="center_vertical"
-                    android:fontFamily="sans-serif-medium"
-                    android:drawSelectorOnTop="true"
-                    android:clickable="true"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:textColor="#3e3e3e"
-                    android:background="?android:selectableItemBackground"
-                    android:minHeight="?android:attr/listPreferredItemHeightSmall" />-->
+                    android:background="?android:attr/listDivider"/>
 
                 <TextView
                     android:id="@+id/left_drawer_settings"
@@ -129,7 +111,7 @@
                     android:clickable="true"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:textColor="#3e3e3e"
+                    android:textColor="?android:textColorPrimary"
                     android:background="?android:selectableItemBackground"
                     android:minHeight="?android:attr/listPreferredItemHeightSmall" />
 
