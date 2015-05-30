@@ -12,12 +12,11 @@
             android:layout_height="match_parent"
             android:id="@+id/refresh">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:id="@+id/mensa_content"/>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/mensa_content"/>
 
         </de.gebatzens.ggvertretungsplan.view.GGSwipeLayout>
 
