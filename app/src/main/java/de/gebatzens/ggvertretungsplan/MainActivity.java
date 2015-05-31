@@ -212,7 +212,7 @@ public class MainActivity extends FragmentActivity {
         nla = new NavigationListAdapter(this, mStrings, mIcons);
         mDrawerList.setAdapter(nla);
         nla.mSelected = Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType());
-        nla.mColor = GGApp.GG_APP.school.getColor();
+        nla.mColor = GGApp.GG_APP.school.getAccentColor();
         mDrawerList.setItemChecked(nla.mSelected, true);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -42,7 +42,7 @@ public class School {
 
     public String sid;
     public String name;
-    private int color, darkColor;
+    private int color, darkColor, accentColor;
     private int theme;
     private int colorArray;
     public String themeName;
@@ -65,17 +65,23 @@ public class School {
         return darkColor;
     }
 
+    public int getAccentColor() {
+        return accentColor;
+    }
+
     public int getColorArray() {
         return colorArray;
     }
 
     private void loadTheme(String name) {
         theme = GGApp.GG_APP.getResources().getIdentifier("AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
-        colorArray = GGApp.GG_APP.getResources().getIdentifier("CardviewColor" + name, "array", GGApp.GG_APP.getPackageName());
+        colorArray = GGApp.GG_APP.getResources().getIdentifier("CardviewColor" + name + "Light", "array", GGApp.GG_APP.getPackageName());
         TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int[]{R.attr.colorPrimary});
         TypedArray tad = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimaryDark});
+        TypedArray taa = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorAccent});
         color = ta.getColor(0, Color.RED);
         darkColor = tad.getColor(0, Color.RED);
+        accentColor = taa.getColor(0, Color.RED);
         ta.recycle();
         tad.recycle();
     }

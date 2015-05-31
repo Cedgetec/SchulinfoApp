@@ -81,9 +81,9 @@ public class FilterActivity extends Activity {
             changed = bundle.getBoolean("changed", false);
 
         TextView tv = (TextView) findViewById(R.id.filter_sep_1);
-        tv.setTextColor(GGApp.GG_APP.school.getColor());
+        tv.setTextColor(GGApp.GG_APP.school.getAccentColor());
         TextView tv2 = (TextView) findViewById(R.id.filter_sep_2);
-        tv2.setTextColor(GGApp.GG_APP.school.getColor());
+        tv2.setTextColor(GGApp.GG_APP.school.getAccentColor());
 
         Filter.FilterList list = GGApp.GG_APP.filters;
         mainFilterCategory = (TextView) findViewById(R.id.filter_main_category);

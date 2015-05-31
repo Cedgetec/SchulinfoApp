@@ -67,7 +67,7 @@ public class NewsFragmentListAdapter extends BaseAdapter {
         //imgIcon.setImageResource(R.drawable.news_icon_white);
        // imgIcon.setBackgroundResource(R.drawable.news_img_background);
         //GradientDrawable drawable = (GradientDrawable) imgIcon.getBackground();
-        //drawable.setColor(GGApp.GG_APP.provider.getColor());
+        //drawable.setColor(GGApp.GG_APP.provider.getAccentColor());
         //imgIcon.setImageResource(mIcnewson[position]);
 
         if(mDatabaseHelper.checkNewsRead(news.get(position).title)) {
