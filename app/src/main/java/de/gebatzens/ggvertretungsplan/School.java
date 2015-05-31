@@ -251,7 +251,7 @@ public class School {
             return true;
         try {
             //InputStream in = GGApp.GG_APP.remote.openConnection("/infoapp/images/" + image, false).getInputStream();
-            InputStream in = new URL("https://gebatzens.de/infoapp/" + image).openStream();
+            InputStream in = new URL("https://" + BuildConfig.BACKEND_SERVER + "/images/" + image).openStream();
             BitmapFactory.decodeStream(in).compress(Bitmap.CompressFormat.PNG, 90, GGApp.GG_APP.openFileOutput(image, Context.MODE_PRIVATE));
             in.close();
             return true;
