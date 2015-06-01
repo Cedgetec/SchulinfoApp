@@ -66,7 +66,8 @@ public class Mensa extends ArrayList<Mensa.MensaItem> implements RemoteDataFragm
                 writer.name("date").value(s.date);
                 writer.name("meal").value(s.meal);
                 writer.name("garnish").value(s.garnish);
-                writer.name("vegi").value(s.vegi);
+                writer.name("dessert").value(s.dessert);
+                writer.name("vegetarian").value(s.vegetarian);
                 writer.name("image").value(s.image);
 
                 writer.endObject();
@@ -98,8 +99,10 @@ public class Mensa extends ArrayList<Mensa.MensaItem> implements RemoteDataFragm
                         item.meal = reader.nextString();
                     else if(name.equals("garnish"))
                         item.garnish = reader.nextString();
-                    else if(name.equals("vegi"))
-                        item.vegi = reader.nextString();
+                    else if(name.equals("dessert"))
+                        item.dessert = reader.nextString();
+                    else if(name.equals("vegetarian"))
+                        item.vegetarian = reader.nextString();
                     else if(name.equals("image"))
                         item.image = reader.nextString();
                     else
@@ -128,7 +131,8 @@ public class Mensa extends ArrayList<Mensa.MensaItem> implements RemoteDataFragm
         public String date;
         public String meal;
         public String garnish;
-        public String vegi;
+        public String dessert;
+        public String vegetarian;
         public String image;
 
         public boolean isPast() {
