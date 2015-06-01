@@ -424,8 +424,10 @@ public class GGRemote {
                             i.meal = reader.nextString();
                         else if(name.equals("garnish"))
                             i.garnish = reader.nextString();
-                        else if(name.equals("veg"))
-                            i.vegi = reader.nextString();
+                        else if(name.equals("dessert"))
+                            i.dessert = reader.nextString();
+                        else if(name.equals("vegetarian"))
+                            i.vegetarian = reader.nextString();
                         else if(name.equals("image"))
                             i.image = reader.nextString();
                         else
