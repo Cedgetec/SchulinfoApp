@@ -116,9 +116,13 @@ public class MensaFragment extends RemoteDataFragment {
         } else {
             ((LinearLayout) view.findViewById(R.id.mensa_content)).addView(sv);
             for (Mensa.MensaItem item : GGApp.GG_APP.mensa) {
-                if (!item.isPast())
-                    l.addView(createCardItem(item, inflater));
-
+                if (!item.isPast()) {
+                    try {
+                        l.addView(createCardItem(item, inflater));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -146,8 +150,9 @@ public class MensaFragment extends RemoteDataFragment {
         ((TextView) mcv.findViewById(R.id.mcv_date)).setText(getFormatedDate(mensa_item.date));
         ((TextView) mcv.findViewById(R.id.mcv_meal)).setText(mensa_item.meal);
         ((TextView) mcv.findViewById(R.id.mcv_garnish)).setText(getResources().getString(R.string.garnish) + ": " + mensa_item.garnish.replace("mit ","").replace("mit",""));
+        ((TextView) mcv.findViewById(R.id.mcv_dessert)).setText(getResources().getString(R.string.dessert) + ": " + mensa_item.dessert);
         ((TextView) mcv.findViewById(R.id.mcv_day)).setText(getDayByDate(mensa_item.date));
-        ((ImageView) mcv.findViewById(R.id.mcv_imgvegi)).setImageBitmap((Integer.valueOf(mensa_item.vegi) == 1) ? BitmapFactory.decodeResource(getResources(), R.drawable.vegi) : BitmapFactory.decodeResource(getResources(), R.drawable.meat));
+        ((ImageView) mcv.findViewById(R.id.mcv_imgvegi)).setImageBitmap((Integer.valueOf(mensa_item.vegetarian) == 1) ? BitmapFactory.decodeResource(getResources(), R.drawable.vegetarian) : BitmapFactory.decodeResource(getResources(), R.drawable.meat));
         if(screen_orientation_horizotal) {
             LinearLayout mcvImageContainer = (LinearLayout) mcv.findViewById(R.id.mcv_image_container);
             ViewGroup.LayoutParams mcvImageContainerLayoutParams = mcvImageContainer.getLayoutParams();
