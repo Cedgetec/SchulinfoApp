@@ -130,7 +130,7 @@
     <string name="anonymous">Anonymous user</string>
     <string name="download_error">An error occurred while downloading</string>
     <string name="developer_dialog">Built by bemused for the confused, your substitute schedule!\n\nHauke Oldsen\nLasse Rosenow\nLennart Schmidt\nFabian Schultis</string>
-    <string name="dessert">Dessert</string>
+    <string name="dessert" translatable="false">Dessert</string>
 
     <string-array name="subjects">
         <item>d|German</item>
