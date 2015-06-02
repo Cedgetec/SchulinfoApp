@@ -35,6 +35,12 @@ public class SubstAdapter extends FragmentStatePagerAdapter {
         super(m.getChildFragmentManager());
         this.viewPager = vp;
         plans = GGApp.GG_APP.plans;
+        GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
 
     }
 
