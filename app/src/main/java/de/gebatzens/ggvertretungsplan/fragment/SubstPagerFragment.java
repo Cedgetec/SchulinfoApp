@@ -33,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -85,7 +86,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
         for(GGPlan.Entry e : list) {
             FrameLayout f2 = new FrameLayout(getActivity());
             f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
-            f2.addView(createCardItem(e, inflater, clas));
+            try {
+                f2.addView(createCardItem(e, inflater, clas));
+            } catch (Exception err) {
+                err.printStackTrace();
+                Toast.makeText(getActivity().getApplicationContext() ,getResources().getString(R.string.unknown_error),Toast.LENGTH_SHORT).show();
+            }
             group.addView(f2);
         }
     }
