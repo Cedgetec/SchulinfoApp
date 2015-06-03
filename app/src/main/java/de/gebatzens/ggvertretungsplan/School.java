@@ -76,7 +76,7 @@ public class School {
     private void loadTheme(String name) {
         theme = GGApp.GG_APP.getResources().getIdentifier("AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
         colorArray = GGApp.GG_APP.getResources().getIdentifier("CardviewColor" + name + "Light", "array", GGApp.GG_APP.getPackageName());
-        TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int[]{R.attr.colorPrimary});
+        TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary});
         TypedArray tad = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimaryDark});
         TypedArray taa = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorAccent});
         color = ta.getColor(0, Color.RED);
@@ -84,6 +84,7 @@ public class School {
         accentColor = taa.getColor(0, Color.RED);
         ta.recycle();
         tad.recycle();
+        taa.recycle();
     }
 
     @Override
