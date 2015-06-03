@@ -63,7 +63,8 @@
                         android:id="@+id/personalisation_darkThemeSwitchButton"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="0"/>
+                        android:layout_weight="0"
+                        android:clickable="false"/>
 
                 </LinearLayout>
 

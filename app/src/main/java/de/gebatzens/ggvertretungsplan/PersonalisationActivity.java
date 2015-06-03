@@ -28,11 +28,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 public class PersonalisationActivity extends Activity {
 
     Toolbar mToolBar;
     ImageView imgColorCircle;
+    TextView tv_toggleSubheader;
+    SwitchCompat s_darkThemeSwitchButton;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -55,15 +58,18 @@ public class PersonalisationActivity extends Activity {
         });
         mToolBar.setTitle(getTitle());
 
+        s_darkThemeSwitchButton = (SwitchCompat) findViewById(R.id.personalisation_darkThemeSwitchButton);
+        tv_toggleSubheader = (TextView) findViewById(R.id.personalisation_toggleSubheader);
         LinearLayout l_toggleDarkTheme = (LinearLayout) findViewById(R.id.personalisation_toggleDarkTheme);
         l_toggleDarkTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
-                SwitchCompat s_darkThemeSwitchButton = (SwitchCompat) findViewById(R.id.personalisation_darkThemeSwitchButton);
                 if (s_darkThemeSwitchButton.isChecked()) {
                     s_darkThemeSwitchButton.setChecked(false);
+                    tv_toggleSubheader.setText(R.string.dark_theme_is_not_activated);
                 } else {
                     s_darkThemeSwitchButton.setChecked(true);
+                    tv_toggleSubheader.setText(R.string.dark_theme_is_activated);
                 }
             }
         });
