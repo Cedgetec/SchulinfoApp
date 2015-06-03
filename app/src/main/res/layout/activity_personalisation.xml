@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:title="@string/personalisation"
+        app:theme="@style/ToolBarStyle"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:background="?android:selectableItemBackground"
+                    android:id="@+id/personalisation_toggleDarkTheme"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif"
+                            android:textColor="?android:textColorPrimary"
+                            android:text="@string/dark_theme"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:fontFamily="sans-serif"
+                            android:textColor="?android:textColorSecondary"
+                            android:id="@+id/personalisation_toggleSubheader"
+                            android:text="@string/dark_theme_is_not_activated"/>
+                    </LinearLayout>
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/personalisation_darkThemeSwitchButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.7dp"
+                    android:background="?android:attr/listDivider"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:background="?android:selectableItemBackground"
+                    android:id="@+id/personalisation_changeColor">
+                    <FrameLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp">
+                         <ImageView
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent"
+                             android:layout_gravity="center"
+                             android:src="@drawable/colored_circle"
+                             android:adjustViewBounds="true"
+                             android:scaleType="fitCenter"
+                             android:id="@+id/personalisation_themeColorCircle"
+                             android:contentDescription="@string/app_name" />
+                    </FrameLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textSize="16sp"
+                        android:paddingLeft="16dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center_vertical"
+                        android:textColor="?android:textColorPrimary"
+                        android:text="@string/personalisation_changeColor"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="10dp"
+            android:id="@+id/ShaderTabLayout"
+            android:background="@drawable/tablayoutbackground"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

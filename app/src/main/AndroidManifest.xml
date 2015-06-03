@@ -55,6 +55,11 @@
             android:noHistory="true">
         </activity>
 
+        <activity android:name=".PersonalisationActivity"
+            android:label="@string/personalisation"
+            android:windowSoftInputMode="adjustNothing">
+        </activity>
+
         <receiver android:enabled="true" android:name="de.gebatzens.ggvertretungsplan.GGBroadcast"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>

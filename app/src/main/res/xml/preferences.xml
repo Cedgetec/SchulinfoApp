@@ -10,6 +10,9 @@
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/general">
+        <Preference android:title="@string/personalisation"
+            android:summary="@string/personalize_your_theme"
+            android:key="personalisation"/>
         <CheckBoxPreference android:title="@string/show_notifications"
             android:summary="@string/notify_class"
             android:key="benachrichtigungen"

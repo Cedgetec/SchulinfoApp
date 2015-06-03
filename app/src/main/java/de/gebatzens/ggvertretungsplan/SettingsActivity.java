@@ -74,7 +74,7 @@ public class SettingsActivity extends Activity {
             pref_buildversion.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    if(BuildConfig.DEBUG) {
+                    if (BuildConfig.DEBUG) {
                         Toast.makeText(GGApp.GG_APP, getResources().getString(R.string.not_available_in_debug_mode), Toast.LENGTH_SHORT).show();
                         return false;
                     }
@@ -187,11 +187,19 @@ public class SettingsActivity extends Activity {
             });
 
             Preference helpdesk = findPreference("helpdesk");
-            helpdesk.setSummary(getResources().getString(R.string.contact_us));
             helpdesk.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent i = new Intent(getActivity(), HelpdeskActivity.class);
+                    getActivity().startActivityForResult(i, 1);
+                    return false;
+                }
+            });
+            Preference personalisation = findPreference("personalisation");
+            personalisation.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent i = new Intent(getActivity(), PersonalisationActivity.class);
                     getActivity().startActivityForResult(i, 1);
                     return false;
                 }
