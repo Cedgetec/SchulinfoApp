@@ -22,6 +22,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -121,6 +122,7 @@ public abstract class RemoteDataFragment extends Fragment {
         sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         sv.setTag("gg_scroll");
         sv.setFillViewport(true);
+        sv.setBackgroundColor(Color.RED);
 
         RelativeLayout r = new RelativeLayout(getActivity());
         r.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -218,7 +220,13 @@ public abstract class RemoteDataFragment extends Fragment {
                 createButtonWithText(vg, getResources().getString(R.string.check_connection), getResources().getString(R.string.again), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GGApp.GG_APP.refreshAsync(null, true, type);
+                        ((SwipeRefreshLayout) getView().findViewById(R.id.refresh)).setRefreshing(true);
+                        GGApp.GG_APP.refreshAsync(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((SwipeRefreshLayout) getView().findViewById(R.id.refresh)).setRefreshing(false);
+                            }
+                        }, true, GGApp.GG_APP.getFragmentType());
                     }
                 });
             }

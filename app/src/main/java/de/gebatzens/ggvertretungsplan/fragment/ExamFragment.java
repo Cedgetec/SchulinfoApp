@@ -48,7 +48,7 @@ public class ExamFragment extends RemoteDataFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle b) {
-        ViewGroup v =  (ViewGroup) inflater.inflate(R.layout.fragment_exam, vg, false);
+        ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_exam, vg, false);
         if(GGApp.GG_APP.exams != null)
             createRootView(inflater, v);
         return v;
