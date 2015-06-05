@@ -35,6 +35,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import de.gebatzens.ggvertretungsplan.GGApp;
@@ -116,6 +117,11 @@ public abstract class RemoteDataFragment extends Fragment {
     }
 
     public void createButtonWithText(ViewGroup l, String text, String button, View.OnClickListener onclick) {
+        ScrollView sv = new ScrollView(getActivity());
+        sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        sv.setTag("gg_scroll");
+        sv.setFillViewport(true);
+
         RelativeLayout r = new RelativeLayout(getActivity());
         r.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -142,8 +148,9 @@ public abstract class RemoteDataFragment extends Fragment {
         b.setTypeface(null, Typeface.NORMAL);
         b.setOnClickListener(onclick);
         r.addView(b);
+        sv.addView(r);
 
-        l.addView(r);
+        l.addView(sv);
     }
 
     public void createText(ViewGroup l, String text) {
