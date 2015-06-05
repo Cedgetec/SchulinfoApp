@@ -27,12 +27,16 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -40,6 +44,8 @@ public class SetupActivity extends Activity {
 
     SchoolListAdapter adapter;
     ListView list;
+    CheckBox mcbPasswordToggle;
+    EditText mEtPasswordInput;
 
     @Override
     public void onCreate(Bundle saved) {
@@ -66,7 +72,7 @@ public class SetupActivity extends Activity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                if(menuItem.getItemId() == R.id.setup_refresh) {
+                if (menuItem.getItemId() == R.id.setup_refresh) {
                     showDownloadDialog();
                 }
                 return true;
@@ -77,6 +83,7 @@ public class SetupActivity extends Activity {
         adapter = new SchoolListAdapter();
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 School s = School.LIST.get(position);
@@ -87,7 +94,6 @@ public class SetupActivity extends Activity {
                     AlertDialog dialog;
                     builder.setTitle(getResources().getString(R.string.login));
                     builder.setView(((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.login_dialog, null));
-
                     builder.setPositiveButton(getResources().getString(R.string.do_login_submit), new DialogInterface.OnClickListener() {
 
                         @Override
@@ -136,6 +142,20 @@ public class SetupActivity extends Activity {
                     dialog = builder.create();
                     dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                     dialog.show();
+                    mEtPasswordInput = (EditText) dialog.findViewById(R.id.passwordInput);
+                    mcbPasswordToggle = (CheckBox) dialog.findViewById(R.id.passwordToggle);
+                    mcbPasswordToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if (!isChecked) {
+                                mEtPasswordInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                mEtPasswordInput.setSelection(mEtPasswordInput.getText().length());
+                            } else {
+                                mEtPasswordInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                mEtPasswordInput.setSelection(mEtPasswordInput.getText().length());
+                            }
+                        }
+                    });
                 } else {
                     new AsyncTask<Integer, Integer, Integer>() {
 

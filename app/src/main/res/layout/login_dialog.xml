@@ -21,4 +21,11 @@
         android:hint="@string/password"
         android:layout_width="match_parent"/>
 
+    <CheckBox
+        android:id="@+id/passwordToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="@string/show_pwd" />
+
 </LinearLayout>

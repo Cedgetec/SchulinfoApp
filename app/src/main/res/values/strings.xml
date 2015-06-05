@@ -137,6 +137,7 @@
     <string name="dark_theme_is_activated">Dark theme is activated</string>
     <string name="dark_theme">Dark theme</string>
     <string name="personalisation_changeColor">Change color</string>
+    <string name="show_pwd">Show password</string>
 
     <string-array name="subjects">
         <item>d|German</item>
