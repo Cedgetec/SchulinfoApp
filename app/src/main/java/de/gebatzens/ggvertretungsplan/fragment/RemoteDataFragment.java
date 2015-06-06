@@ -122,7 +122,6 @@ public abstract class RemoteDataFragment extends Fragment {
         sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         sv.setTag("gg_scroll");
         sv.setFillViewport(true);
-        sv.setBackgroundColor(Color.RED);
 
         RelativeLayout r = new RelativeLayout(getActivity());
         r.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
