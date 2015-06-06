@@ -20,10 +20,10 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,16 +35,15 @@ import android.widget.LinearLayout;
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.MainActivity;
 import de.gebatzens.ggvertretungsplan.R;
-import de.gebatzens.ggvertretungsplan.view.SlidingTabLayout;
 
 public class SubstFragment extends RemoteDataFragment {
 
     public Toolbar mToolbar;
     public ViewPager mViewPager;
-    public SlidingTabLayout mSlidingTabLayout;
     public SubstAdapter substAdapter;
     public SwipeRefreshLayout swipeContainer;
     public Bundle bundle;
+    public TabLayout mTabLayout;
 
     public SubstFragment() {
 
@@ -79,15 +78,16 @@ public class SubstFragment extends RemoteDataFragment {
         ColorDrawable mToolbarColor = (ColorDrawable) mToolbar.getBackground();
         int mToolbarColorId = mToolbarColor.getColor();
 
-        mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
-        mSlidingTabLayout.setBackgroundColor(mToolbarColorId);
+        mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
+        mTabLayout.setBackgroundColor(mToolbarColorId);
+        mTabLayout.setupWithViewPager(mViewPager);
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            mSlidingTabLayout.setPadding(toPixels(48), 0, toPixels(48), 0);
+            mTabLayout.setPadding(toPixels(48), 0, toPixels(48), 0);
+            mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         }
         else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            mSlidingTabLayout.setPadding(toPixels(8),0,toPixels(8),0);
+            mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         }
-        mSlidingTabLayout.setViewPager(mViewPager);
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         if (themeIsLight()) {

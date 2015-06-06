@@ -7,7 +7,17 @@
     <de.gebatzens.ggvertretungsplan.view.SlidingTabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+    <android.support.design.widget.TabLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorHeight="2dp"
+        app:tabIndicatorColor="#ffffffff"
+        app:tabTextColor="#b3ffffff"
+        app:tabSelectedTextColor="#ffffff"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

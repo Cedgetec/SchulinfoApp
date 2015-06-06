@@ -324,7 +324,7 @@ public class MainActivity extends FragmentActivity {
             ((TextView) findViewById(R.id.drawer_image_text)).setText(GGApp.GG_APP.school.name);
 
             if(GGApp.GG_APP.getFragmentType() == GGApp.FragmentType.PLAN) {
-                ((SubstFragment)mContent).mSlidingTabLayout.setBackgroundColor(GGApp.GG_APP.school.getColor());
+                ((SubstFragment)mContent).mTabLayout.setBackgroundColor(GGApp.GG_APP.school.getColor());
                 mContent.setFragmentLoading();
             }
             GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());
