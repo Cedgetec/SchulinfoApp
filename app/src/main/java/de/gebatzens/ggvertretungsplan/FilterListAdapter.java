@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,6 @@ import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import de.gebatzens.ggvertretungsplan.data.Filter;
 
@@ -65,7 +65,7 @@ public class FilterListAdapter extends BaseAdapter {
                         f.type = Filter.FilterType.SUBJECT;
                         f.filter = text.getText().toString().trim();
                         if (f.filter.isEmpty())
-                            Toast.makeText(((Dialog) dialog).getContext(), c.getString(R.string.invalid_filter), Toast.LENGTH_SHORT).show();
+                            Snackbar.make(c.getWindow().getDecorView().findViewById(android.R.id.content), c.getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                         else {
                             TextView tv = (TextView) vg.findViewById(R.id.filter_main_text);
                             tv.setText(f.toString(false));

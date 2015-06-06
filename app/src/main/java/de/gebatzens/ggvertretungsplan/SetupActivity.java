@@ -26,6 +26,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -107,13 +108,13 @@ public class SetupActivity extends Activity {
                                             startDownloading();
                                             break;
                                         case 1:
-                                            GGApp.GG_APP.showToast(getString(R.string.username_or_password_wrong));
+                                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.username_or_password_wrong), Snackbar.LENGTH_LONG).show();
                                             break;
                                         case 2:
-                                            GGApp.GG_APP.showToast(getString(R.string.could_not_connect));
+                                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
                                             break;
                                         case 3:
-                                            GGApp.GG_APP.showToast(getString(R.string.unknown_error_login));
+                                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
                                             break;
                                     }
                                 }
@@ -169,10 +170,10 @@ public class SetupActivity extends Activity {
                                     //Bug
                                     break;
                                 case 2:
-                                    GGApp.GG_APP.showToast(getString(R.string.could_not_connect));
+                                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
                                     break;
                                 case 3:
-                                    GGApp.GG_APP.showToast(getString(R.string.unknown_error_login));
+                                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
                                     break;
                             }
                         }
@@ -207,7 +208,14 @@ public class SetupActivity extends Activity {
                         public void run() {
                             adapter.notifyDataSetChanged();
                             if (!b)
-                                GGApp.GG_APP.showToast(getString(R.string.no_internet_connection));
+                                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)
+                                        .setAction(getString(R.string.again), new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                startDownloadThread(true);
+                                            }
+                                        })
+                                        .show();
 
                         }
                     });
@@ -234,7 +242,14 @@ public class SetupActivity extends Activity {
                     public void run() {
                         adapter.notifyDataSetChanged();
                         if(!b)
-                            GGApp.GG_APP.showToast(getString(R.string.no_internet_connection));
+                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)
+                                    .setAction(getString(R.string.again), new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            showDownloadDialog();
+                                        }
+                                    })
+                                    .show();
                     }
                 });
                 GGApp.GG_APP.setSchool(GGApp.GG_APP.getDefaultSID());
@@ -258,7 +273,7 @@ public class SetupActivity extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            GGApp.GG_APP.showToast(getString(R.string.download_error));
+                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.download_error), Snackbar.LENGTH_LONG).show();
                         }
                     });
                 }

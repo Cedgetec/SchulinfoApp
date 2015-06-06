@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.util.Log;
@@ -33,7 +34,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -90,7 +90,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 f2.addView(createCardItem(e, inflater, clas));
             } catch (Exception err) {
                 err.printStackTrace();
-                Toast.makeText(getActivity().getApplicationContext() ,getResources().getString(R.string.unknown_error),Toast.LENGTH_SHORT).show();
+                Snackbar.make(getActivity().getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.unknown_error), Snackbar.LENGTH_LONG).show();
             }
             group.addView(f2);
         }

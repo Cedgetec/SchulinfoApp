@@ -25,6 +25,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.JsonReader;
 import android.util.JsonWriter;
@@ -38,7 +39,6 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -136,7 +136,7 @@ public class FilterActivity extends Activity {
                         text.setHint(getApplication().getString(R.string.school_class));
                         String text2 = text.getText().toString().trim();
                         if (text2.isEmpty())
-                            Toast.makeText(((Dialog) dialog).getContext(), getApplication().getString(R.string.invalid_filter), Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                         else {
                             Filter.FilterList list = GGApp.GG_APP.filters;
                             list.mainFilter.filter = text2;
@@ -216,7 +216,7 @@ public class FilterActivity extends Activity {
                         f.type = Filter.FilterType.SUBJECT;
                         f.filter = text.getText().toString().trim();
                         if (f.filter.isEmpty())
-                            Toast.makeText(((Dialog) dialog).getContext(), getApplication().getString(R.string.invalid_filter), Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                         else {
                             GGApp.GG_APP.filters.add(f);
                             adapter.notifyDataSetChanged();

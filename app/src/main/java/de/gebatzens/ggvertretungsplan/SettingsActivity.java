@@ -31,6 +31,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -39,7 +40,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.net.URL;
@@ -75,7 +75,7 @@ public class SettingsActivity extends Activity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     if (BuildConfig.DEBUG) {
-                        Toast.makeText(GGApp.GG_APP, getResources().getString(R.string.not_available_in_debug_mode), Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.not_available_in_debug_mode), Snackbar.LENGTH_LONG).show();
                         return false;
                     }
                     new AsyncTask<Object, Void, Void>() {
@@ -92,7 +92,7 @@ public class SettingsActivity extends Activity {
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(getActivity().getApplication(), getResources().getString(R.string.no_new_version_available), Toast.LENGTH_SHORT).show();
+                                            Snackbar.make(getActivity().getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.no_new_version_available), Snackbar.LENGTH_LONG).show();
                                         }
                                     });
                                 }
@@ -102,7 +102,7 @@ public class SettingsActivity extends Activity {
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Toast.makeText(getActivity().getApplication(), getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
+                                        Snackbar.make(getActivity().getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG).show();
                                     }
                                 });
                             }
@@ -162,7 +162,7 @@ public class SettingsActivity extends Activity {
                         });
                         builder.create().show();
                     } else {
-                        Toast.makeText(getActivity(),getResources().getString(R.string.not_logged_in), Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.not_logged_in), Snackbar.LENGTH_LONG).show();
                     }
 
                     return false;
@@ -283,7 +283,7 @@ public class SettingsActivity extends Activity {
                         SettingsActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getApplication(), getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
+                                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG).show();
                             }
                         });
                     }

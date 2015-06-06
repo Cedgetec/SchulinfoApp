@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.util.JsonReader;
 import android.util.Log;
 

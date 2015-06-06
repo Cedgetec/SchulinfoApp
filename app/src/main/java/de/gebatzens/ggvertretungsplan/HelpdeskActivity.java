@@ -21,12 +21,12 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -139,12 +139,12 @@ public class HelpdeskActivity extends Activity {
                             @Override
                             protected void onPostExecute(Integer result) {
                                 if (result == 0) {
-                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.message_sent_successfully), Toast.LENGTH_LONG).show();
+                                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.message_sent_successfully), Snackbar.LENGTH_LONG).show();
                                     finish();
                                 } else if (result == 1) {
-                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.please_fill_out_all_inputs), Toast.LENGTH_LONG).show();
+                                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.please_fill_out_all_inputs), Snackbar.LENGTH_LONG).show();
                                 } else if (result == 2) {
-                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_while_sending_message), Toast.LENGTH_LONG).show();
+                                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.error_while_sending_message), Snackbar.LENGTH_LONG).show();
                                 }
                             }
                         }.execute(name, email, subject, message);
