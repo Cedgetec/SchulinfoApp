@@ -11,3 +11,4 @@
   - [ ] Dann sollte bei den Fachfiltern auch die Klasse ausgewählt werden
 - [ ] Dynamische Anzahl von Plänen
 - [ ] Funktionierende Personalisierungsseite
+- [ ] Ersetzen der Toasts in "GGRemote.java" mit Snackbars
