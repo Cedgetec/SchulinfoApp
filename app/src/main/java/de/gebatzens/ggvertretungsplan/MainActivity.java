@@ -21,28 +21,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,24 +54,22 @@ import de.gebatzens.ggvertretungsplan.fragment.MensaFragment;
 import de.gebatzens.ggvertretungsplan.fragment.NewsFragment;
 import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
 import de.gebatzens.ggvertretungsplan.fragment.SubstFragment;
-import de.gebatzens.ggvertretungsplan.view.NavigationListAdapter;
 
 
 public class MainActivity extends FragmentActivity {
 
     public RemoteDataFragment mContent;
     public Toolbar mToolbar;
-    ListView mDrawerList;
-    TextView mDrawerSettings;
+    Context context;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mToggle;
     String[] mStrings;
-    int[] mIcons = new int[] {R.drawable.vertretungsplan_icon, R.drawable.news_icon, R.drawable.mensa_icon,
-                                R.drawable.exam_icon};
     ImageView mNacvigationImage;
     View mNavigationSchoolpictureLink;
     public Bundle savedState;
-    NavigationListAdapter nla;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    int selectedItem;
 
     public RemoteDataFragment createFragment() {
         switch(GGApp.GG_APP.getFragmentType()) {
@@ -161,15 +162,7 @@ public class MainActivity extends FragmentActivity {
         mToolbar.setSubtitleTextColor(Color.WHITE);
 
         ((TextView) findViewById(R.id.drawer_image_text)).setText(GGApp.GG_APP.school.name);
-
-        View navigationDrawer = (View) findViewById(R.id.navigation_drawer);
-        if (themeIsLight()) {
-            navigationDrawer.setBackgroundColor(Color.parseColor("#ffffff"));
-        } else{
-            navigationDrawer.setBackgroundColor(Color.parseColor("#424242"));
-        }
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             GGApp.GG_APP.setStatusBarColorTransparent(getWindow());
@@ -192,6 +185,8 @@ public class MainActivity extends FragmentActivity {
             }
         };
 
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNacvigationImage = (ImageView) findViewById(R.id.navigation_schoolpicture);
         mNacvigationImage.setImageBitmap(GGApp.GG_APP.school.loadImage());
         mNavigationSchoolpictureLink = (View) findViewById(R.id.navigation_schoolpicture_link);
@@ -204,72 +199,70 @@ public class MainActivity extends FragmentActivity {
                 startActivity(linkIntent);
             }
         });
-
-        mDrawerLayout.setDrawerListener(mToggle);
-
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        //ArrayAdapter<String> aa = new ArrayAdapter<String>(this, R.layout.drawer_list_item, mStrings);
-        nla = new NavigationListAdapter(this, mStrings, mIcons);
-        mDrawerList.setAdapter(nla);
-        nla.mSelected = Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType());
-        nla.mColor = GGApp.GG_APP.school.getAccentColor();
-        mDrawerList.setItemChecked(nla.mSelected, true);
-
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final int MENU_ITEMS = 5;
+        final ArrayList<View> mMenuItems = new ArrayList<>(MENU_ITEMS);
+        final Menu navMenu = navigationView.getMenu();
+        navigationView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(GGApp.GG_APP.getFragmentType() != GGApp.FragmentType.values()[position]) {
-                    GGApp.GG_APP.setFragmentType(GGApp.FragmentType.values()[position]);
-                    nla.mSelected = position;
-                    nla.notifyDataSetChanged();
-                    mDrawerLayout.closeDrawers();
-                    mToolbar.setSubtitle(mStrings[position]);
-                    mContent = createFragment();
-                    Animation fadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
-                    fadeOut.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                            // Called when the Animation starts
-                        }
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_fragment);
-                            contentFrame.setVisibility(View.INVISIBLE);
-                            if(GGApp.GG_APP.getDataForFragment(GGApp.GG_APP.getFragmentType()) == null)
-                                GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());
-
-                            removeAllFragments();
-
-                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.content_fragment, mContent, "gg_content_fragment");
-                            transaction.commit();
-                        }
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-                            // This is called each time the Animation repeats
-                        }
-                    });
-                    FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_fragment);
-                    contentFrame.startAnimation(fadeOut);
-                } else{
-                    mDrawerLayout.closeDrawers();
+            public void onGlobalLayout() {
+                for (int i = 0, length = navMenu.size(); i < length; i++) {
+                    final MenuItem item = navMenu.getItem(i);
+                    navigationView.findViewsWithText(mMenuItems, item.getTitle(), View.FIND_VIEWS_WITH_TEXT);
+                }
+                for (final View menuItem : mMenuItems) {
+                    ((TextView) menuItem).setTextSize(14);
+                    ((TextView) menuItem).setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
                 }
             }
         });
-        ListviewHelper.getListViewSize(mDrawerList);
+        selectedItem = Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType());
+        navigationView.getMenu().getItem(selectedItem).setChecked(true);
 
-        mDrawerSettings = (TextView) findViewById(R.id.left_drawer_settings);
-        if (themeIsLight()) {
-            mDrawerSettings.setTextColor(Color.parseColor("#212121"));
-        } else{
-            mDrawerSettings.setTextColor(Color.parseColor("#e7e7e7"));
-        }
-        mDrawerSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View viewIn) {
-                mDrawerLayout.closeDrawers();
-                Intent i = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivityForResult(i, 1);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
+                if(menuItem.getOrder() == 4){
+                    mDrawerLayout.closeDrawers();
+                    Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+                    startActivityForResult(i, 1);
+                }else{
+                    if(GGApp.GG_APP.getFragmentType() != GGApp.FragmentType.values()[menuItem.getOrder()]) {
+                        GGApp.GG_APP.setFragmentType(GGApp.FragmentType.values()[menuItem.getOrder()]);
+                        menuItem.setChecked(true);
+                        mToolbar.setSubtitle(menuItem.getTitle());
+                        mContent = createFragment();
+                        Animation fadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
+                        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+                                // Called when the Animation starts
+                            }
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_fragment);
+                                contentFrame.setVisibility(View.INVISIBLE);
+                                if(GGApp.GG_APP.getDataForFragment(GGApp.GG_APP.getFragmentType()) == null)
+                                    GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());
+
+                                removeAllFragments();
+
+                                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                transaction.replace(R.id.content_fragment, mContent, "gg_content_fragment");
+                                transaction.commit();
+                            }
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+                                // This is called each time the Animation repeats
+                            }
+                        });
+                        FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_fragment);
+                        contentFrame.startAnimation(fadeOut);
+                        drawerLayout.closeDrawers();
+                    } else{
+                        drawerLayout.closeDrawers();
+                    }
+                }
+                return true;
             }
         });
     }
@@ -337,17 +330,6 @@ public class MainActivity extends FragmentActivity {
             GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());
         }
 
-    }
-
-    public boolean themeIsLight() {
-        TypedValue a = new TypedValue();
-        getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
-        int color = a.data;
-        if (color == getResources().getColor(R.color.background_material_light)) {
-            return true;
-        } else{
-            return false;
-        }
     }
 
 }

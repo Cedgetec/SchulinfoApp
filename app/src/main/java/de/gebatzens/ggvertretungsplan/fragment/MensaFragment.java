@@ -103,18 +103,18 @@ public class MensaFragment extends RemoteDataFragment {
 
     @Override
     public void createView(LayoutInflater inflater, ViewGroup view) {
+        LinearLayout lroot = (LinearLayout) view.findViewById(R.id.mensa_content);
         ScrollView sv = new ScrollView(getActivity());
         sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         sv.setTag("gg_scroll");
         LinearLayout l = new LinearLayout(getActivity());
-        screen_orientation_horizotal = createRootLayout(l);
+        createRootLayout(l);
+        lroot.addView(sv);
         sv.addView(l);
 
         if(GGApp.GG_APP.mensa.isEmpty()) {
-            ((LinearLayout) view.findViewById(R.id.mensa_content)).addView(sv);
             createNoEntriesCard(l, inflater);
         } else {
-            ((LinearLayout) view.findViewById(R.id.mensa_content)).addView(sv);
             for (Mensa.MensaItem item : GGApp.GG_APP.mensa) {
                 if (!item.isPast()) {
                     try {

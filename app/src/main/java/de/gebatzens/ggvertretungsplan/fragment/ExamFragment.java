@@ -92,12 +92,14 @@ public class ExamFragment extends RemoteDataFragment {
 
     @Override
     public void createView(LayoutInflater inflater, ViewGroup view) {
+        LinearLayout lroot = (LinearLayout) view.findViewById(R.id.exam_content);
         ScrollView sv = new ScrollView(getActivity());
         sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         sv.setTag("gg_scroll");
         LinearLayout l = new LinearLayout(getActivity());
         createRootLayout(l);
         sv.addView(l);
+        lroot.addView(sv);
         Exams filtered = GGApp.GG_APP.exams.filter(GGApp.GG_APP.filters);
 
         if(!filtered.isEmpty()) {
@@ -132,11 +134,7 @@ public class ExamFragment extends RemoteDataFragment {
                     l.addView(cv);
                 }
             }
-            ((LinearLayout) view.findViewById(R.id.exam_content)).addView(sv);
         } else {
-            l = new LinearLayout(getActivity());
-            ((LinearLayout) view.findViewById(R.id.exam_content)).addView(l);
-            createRootLayout(l);
             createNoEntriesCard(l, inflater);
         }
         cardColorIndex = 0;

@@ -31,6 +31,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import de.gebatzens.ggvertretungsplan.GGApp;
@@ -97,10 +98,11 @@ public class NewsFragment extends RemoteDataFragment {
     public void createView(final LayoutInflater inflater, ViewGroup view) {
         LinearLayout lroot = (LinearLayout) view.findViewById(R.id.news_content);
         if(GGApp.GG_APP.news.isEmpty()) {
-            LinearLayout l = new LinearLayout(getActivity());
-            createRootLayout(l);
-            lroot.addView(l);
-            createNoEntriesCard(l, inflater);
+            ScrollView sv = new ScrollView(getActivity());
+            sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            sv.setTag("gg_scroll");
+            lroot.addView(sv);
+            createNoEntriesCard(sv, inflater);
         } else {
             lv = new ListView(getActivity());
             lv.setDrawSelectorOnTop(true);
