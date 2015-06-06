@@ -90,7 +90,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 f2.addView(createCardItem(e, inflater, clas));
             } catch (Exception err) {
                 err.printStackTrace();
-                Snackbar.make(getActivity().getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.unknown_error), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getActivity().getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.unknown_error), Snackbar.LENGTH_LONG).show();
             }
             group.addView(f2);
         }

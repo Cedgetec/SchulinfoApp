@@ -35,7 +35,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -108,13 +107,13 @@ public class SetupActivity extends Activity {
                                             startDownloading();
                                             break;
                                         case 1:
-                                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.username_or_password_wrong), Snackbar.LENGTH_LONG).show();
+                                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.username_or_password_wrong), Snackbar.LENGTH_LONG).show();
                                             break;
                                         case 2:
-                                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
+                                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
                                             break;
                                         case 3:
-                                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
+                                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
                                             break;
                                     }
                                 }
@@ -170,10 +169,10 @@ public class SetupActivity extends Activity {
                                     //Bug
                                     break;
                                 case 2:
-                                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
                                     break;
                                 case 3:
-                                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
                                     break;
                             }
                         }
@@ -208,7 +207,7 @@ public class SetupActivity extends Activity {
                         public void run() {
                             adapter.notifyDataSetChanged();
                             if (!b)
-                                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)
+                                Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)
                                         .setAction(getString(R.string.again), new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -242,7 +241,7 @@ public class SetupActivity extends Activity {
                     public void run() {
                         adapter.notifyDataSetChanged();
                         if(!b)
-                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)
+                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)
                                     .setAction(getString(R.string.again), new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -273,7 +272,7 @@ public class SetupActivity extends Activity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.download_error), Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.download_error), Snackbar.LENGTH_LONG).show();
                         }
                     });
                 }

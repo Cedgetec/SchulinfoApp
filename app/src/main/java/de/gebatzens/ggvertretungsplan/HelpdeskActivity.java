@@ -139,12 +139,12 @@ public class HelpdeskActivity extends Activity {
                             @Override
                             protected void onPostExecute(Integer result) {
                                 if (result == 0) {
-                                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.message_sent_successfully), Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.message_sent_successfully), Snackbar.LENGTH_LONG).show();
                                     finish();
                                 } else if (result == 1) {
-                                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.please_fill_out_all_inputs), Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.please_fill_out_all_inputs), Snackbar.LENGTH_LONG).show();
                                 } else if (result == 2) {
-                                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.error_while_sending_message), Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.error_while_sending_message), Snackbar.LENGTH_LONG).show();
                                 }
                             }
                         }.execute(name, email, subject, message);

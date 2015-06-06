@@ -65,7 +65,7 @@ public class FilterListAdapter extends BaseAdapter {
                         f.type = Filter.FilterType.SUBJECT;
                         f.filter = text.getText().toString().trim();
                         if (f.filter.isEmpty())
-                            Snackbar.make(c.getWindow().getDecorView().findViewById(android.R.id.content), c.getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(c.getWindow().getDecorView().findViewById(R.id.coordinator_layout), c.getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                         else {
                             TextView tv = (TextView) vg.findViewById(R.id.filter_main_text);
                             tv.setText(f.toString(false));

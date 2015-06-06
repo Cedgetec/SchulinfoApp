@@ -21,10 +21,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.JsonReader;
@@ -34,7 +33,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -55,10 +53,10 @@ public class FilterActivity extends Activity {
 
     TextView mainFilterCategory;
     TextView mainFilterContent;
-    ImageButton mAddFilterButton;
     int selectedMode;
     int mainModePosition;
     boolean changed = false;
+    FloatingActionButton mAddFilterButton;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -136,7 +134,7 @@ public class FilterActivity extends Activity {
                         text.setHint(getApplication().getString(R.string.school_class));
                         String text2 = text.getText().toString().trim();
                         if (text2.isEmpty())
-                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                         else {
                             Filter.FilterList list = GGApp.GG_APP.filters;
                             list.mainFilter.filter = text2;
@@ -178,7 +176,7 @@ public class FilterActivity extends Activity {
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                if(menuItem.getItemId() == R.id.action_help) {
+                if (menuItem.getItemId() == R.id.action_help) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
                     builder.setTitle(getApplication().getString(R.string.help));
                     builder.setMessage(getApplication().getString(R.string.filter_help));
@@ -194,12 +192,7 @@ public class FilterActivity extends Activity {
             }
         });
 
-        mAddFilterButton = (ImageButton) findViewById(R.id.addfilter_button);
-        mAddFilterButton.setBackgroundResource(R.drawable.floating_action_circle);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            StateListDrawable drawable = (StateListDrawable) mAddFilterButton.getBackground();
-            drawable.setColorFilter(GGApp.GG_APP.school.getColor(), PorterDuff.Mode.SRC_ATOP);
-        }
+        mAddFilterButton = (FloatingActionButton) findViewById(R.id.addfilter_button);
         mAddFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
@@ -216,7 +209,7 @@ public class FilterActivity extends Activity {
                         f.type = Filter.FilterType.SUBJECT;
                         f.filter = text.getText().toString().trim();
                         if (f.filter.isEmpty())
-                            Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                         else {
                             GGApp.GG_APP.filters.add(f);
                             adapter.notifyDataSetChanged();

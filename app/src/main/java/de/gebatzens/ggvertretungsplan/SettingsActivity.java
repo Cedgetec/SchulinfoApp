@@ -75,7 +75,7 @@ public class SettingsActivity extends Activity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     if (BuildConfig.DEBUG) {
-                        Snackbar.make(getActivity().getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.not_available_in_debug_mode), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getActivity().getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.not_available_in_debug_mode), Snackbar.LENGTH_LONG).show();
                         return false;
                     }
                     new AsyncTask<Object, Void, Void>() {
@@ -92,7 +92,7 @@ public class SettingsActivity extends Activity {
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Snackbar.make(getActivity().getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.no_new_version_available), Snackbar.LENGTH_LONG).show();
+                                            Snackbar.make(getActivity().getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_new_version_available), Snackbar.LENGTH_LONG).show();
                                         }
                                     });
                                 }
@@ -102,7 +102,7 @@ public class SettingsActivity extends Activity {
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Snackbar.make(getActivity().getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG).show();
+                                        Snackbar.make(getActivity().getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG).show();
                                     }
                                 });
                             }
@@ -162,7 +162,7 @@ public class SettingsActivity extends Activity {
                         });
                         builder.create().show();
                     } else {
-                        Snackbar.make(getActivity().getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.not_logged_in), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getActivity().getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.not_logged_in), Snackbar.LENGTH_LONG).show();
                     }
 
                     return false;
@@ -283,7 +283,7 @@ public class SettingsActivity extends Activity {
                         SettingsActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG).show();
                             }
                         });
                     }
