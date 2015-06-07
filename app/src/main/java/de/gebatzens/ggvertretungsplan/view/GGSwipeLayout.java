@@ -17,8 +17,6 @@
 package de.gebatzens.ggvertretungsplan.view;
 
 import android.content.Context;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;

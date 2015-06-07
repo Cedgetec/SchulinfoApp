@@ -17,12 +17,10 @@ package de.gebatzens.ggvertretungsplan.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import de.gebatzens.ggvertretungsplan.GGApp;
-import de.gebatzens.ggvertretungsplan.MainActivity;
 import de.gebatzens.ggvertretungsplan.R;
 import de.gebatzens.ggvertretungsplan.data.GGPlan;
 

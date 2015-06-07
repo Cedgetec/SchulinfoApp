@@ -17,7 +17,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:name="de.gebatzens.ggvertretungsplan.GGApp"
-        android:theme="@style/AppThemeRedLight">
+        android:theme="@style/AppThemeDefaultLight">
 
         <activity
             android:name=".FirstUseActivity"

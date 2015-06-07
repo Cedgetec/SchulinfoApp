@@ -16,8 +16,6 @@
 package de.gebatzens.ggvertretungsplan;
 
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,7 +23,6 @@ import android.graphics.Color;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
-import android.util.TypedValue;
 
 import java.io.File;
 import java.io.InputStream;
