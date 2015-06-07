@@ -104,6 +104,10 @@ public abstract class RemoteDataFragment extends Fragment {
     }
 
     public View createLoadingView() {
+        ScrollView sv = new ScrollView(getActivity());
+        sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        sv.setTag("gg_scroll");
+        sv.setFillViewport(true);
         LinearLayout l = new LinearLayout(getActivity());
         l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         l.setGravity(Gravity.CENTER);
@@ -114,7 +118,8 @@ public abstract class RemoteDataFragment extends Fragment {
         pb.setVisibility(ProgressBar.VISIBLE);
 
         l.addView(pb);
-        return l;
+        sv.addView(l);
+        return sv;
     }
 
     public void createButtonWithText(ViewGroup l, String text, String button, View.OnClickListener onclick) {
