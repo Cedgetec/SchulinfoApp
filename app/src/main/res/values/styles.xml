@@ -136,117 +136,117 @@
     </style>
     <!-- Dark application themes -->
     <style name="AppThemeRedDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#F44336</item>
-        <item name="colorPrimaryDark">#D32F2F</item>
-        <item name="colorAccent">#F44336</item>
+        <item name="colorPrimary">#D32F2F</item>
+        <item name="colorPrimaryDark">#B71C1C</item>
+        <item name="colorAccent">#D32F2F</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Red.Dark</item>
     </style>
     <style name="AppThemePinkDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#E91E63</item>
-        <item name="colorPrimaryDark">#C2185B</item>
-        <item name="colorAccent">#E91E63</item>
+        <item name="colorPrimary">#C2185B</item>
+        <item name="colorPrimaryDark">#880E4F</item>
+        <item name="colorAccent">#C2185B</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Pink.Dark</item>
     </style>
     <style name="AppThemePurpleDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#9C27B0</item>
-        <item name="colorPrimaryDark">#7B1FA2</item>
-        <item name="colorAccent">#9C27B0</item>
+        <item name="colorPrimary">#7B1FA2</item>
+        <item name="colorPrimaryDark">#4A148C</item>
+        <item name="colorAccent">#7B1FA2</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Purple.Dark</item>
     </style>
     <style name="AppThemeDeepPurpleDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#673AB7</item>
-        <item name="colorPrimaryDark">#512DA8</item>
-        <item name="colorAccent">#673AB7</item>
+        <item name="colorPrimary">#512DA8</item>
+        <item name="colorPrimaryDark">#311B92</item>
+        <item name="colorAccent">#512DA8</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.DeepPurple.Dark</item>
     </style>
     <style name="AppThemeIndigoDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#3F51B5</item>
-        <item name="colorPrimaryDark">#303F9F</item>
-        <item name="colorAccent">#3F51B5</item>
+        <item name="colorPrimary">#303F9F</item>
+        <item name="colorPrimaryDark">#1A237E</item>
+        <item name="colorAccent">#303F9F</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Indigo.Dark</item>
     </style>
     <style name="AppThemeBlueDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#2196F3</item>
-        <item name="colorPrimaryDark">#1976D2</item>
-        <item name="colorAccent">#2196F3</item>
+        <item name="colorPrimary">#1976D2</item>
+        <item name="colorPrimaryDark">#0D47A1</item>
+        <item name="colorAccent">#1976D2</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Blue.Dark</item>
     </style>
     <style name="AppThemeLightBlueDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#03A9F4</item>
-        <item name="colorPrimaryDark">#0288D1</item>
-        <item name="colorAccent">#03A9F4</item>
+        <item name="colorPrimary">#0288D1</item>
+        <item name="colorPrimaryDark">#01579B</item>
+        <item name="colorAccent">#0288D1</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.LightBlue.Dark</item>
     </style>
     <style name="AppThemeCyanDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#00BCD4</item>
-        <item name="colorPrimaryDark">#0097A7</item>
-        <item name="colorAccent">#00BCD4</item>
+        <item name="colorPrimary">#0097A7</item>
+        <item name="colorPrimaryDark">#006064</item>
+        <item name="colorAccent">#0097A7</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Cyan.Dark</item>
     </style>
     <style name="AppThemeTealDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#009688</item>
-        <item name="colorPrimaryDark">#00796B</item>
-        <item name="colorAccent">#009688</item>
+        <item name="colorPrimary">#00796B</item>
+        <item name="colorPrimaryDark">#004D40</item>
+        <item name="colorAccent">#00796B</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Teal.Dark</item>
     </style>
     <style name="AppThemeGreenDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#4CAF50</item>
-        <item name="colorPrimaryDark">#388E3C</item>
-        <item name="colorAccent">#4CAF50</item>
+        <item name="colorPrimary">#388E3C</item>
+        <item name="colorPrimaryDark">#1B5E20</item>
+        <item name="colorAccent">#388E3C</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Green.Dark</item>
     </style>
     <style name="AppThemeLightGreenDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#8BC34A</item>
-        <item name="colorPrimaryDark">#689F38</item>
-        <item name="colorAccent">#8BC34A</item>
+        <item name="colorPrimary">#689F38</item>
+        <item name="colorPrimaryDark">#33691E</item>
+        <item name="colorAccent">#689F38</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.LightGreen.Dark</item>
     </style>
     <style name="AppThemeLimeDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#CDDC39</item>
-        <item name="colorPrimaryDark">#AFB42B</item>
-        <item name="colorAccent">#CDDC39</item>
+        <item name="colorPrimary">#AFB42B</item>
+        <item name="colorPrimaryDark">#827717</item>
+        <item name="colorAccent">#AFB42B</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Lime.Dark</item>
     </style>
     <style name="AppThemeYellowDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#FFEB3B</item>
-        <item name="colorPrimaryDark">#FBC02D</item>
-        <item name="colorAccent">#FFEB3B</item>
+        <item name="colorPrimary">#FBC02D</item>
+        <item name="colorPrimaryDark">#F57F17</item>
+        <item name="colorAccent">#FBC02D</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Yellow.Dark</item>
     </style>
     <style name="AppThemeAmberDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#FFC107</item>
-        <item name="colorPrimaryDark">#FFA000</item>
-        <item name="colorAccent">#FFC107</item>
+        <item name="colorPrimary">#FFA000</item>
+        <item name="colorPrimaryDark">#FF6F00</item>
+        <item name="colorAccent">#FFA000</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Amber.Dark</item>
     </style>
     <style name="AppThemeOrangeDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#FF9800</item>
-        <item name="colorPrimaryDark">#F57C00</item>
-        <item name="colorAccent">#FF9800</item>
+        <item name="colorPrimary">#F57C00</item>
+        <item name="colorPrimaryDark">#E65100</item>
+        <item name="colorAccent">#F57C00</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Orange.Dark</item>
     </style>
     <style name="AppThemeDeepOrangeDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#FF5722</item>
-        <item name="colorPrimaryDark">#E64A19</item>
-        <item name="colorAccent">#FF5722</item>
+        <item name="colorPrimary">#E64A19</item>
+        <item name="colorPrimaryDark">#BF360C</item>
+        <item name="colorAccent">#E64A19</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.DeepOrange.Dark</item>
     </style>
     <style name="AppThemeBrownDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#795548</item>
-        <item name="colorPrimaryDark">#5D4037</item>
-        <item name="colorAccent">#795548</item>
+        <item name="colorPrimary">#5D4037</item>
+        <item name="colorPrimaryDark">#3E2723</item>
+        <item name="colorAccent">#5D4037</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Brown.Dark</item>
     </style>
     <style name="AppThemeGreyDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#9E9E9E</item>
-        <item name="colorPrimaryDark">#616161</item>
-        <item name="colorAccent">#9E9E9E</item>
+        <item name="colorPrimary">#616161</item>
+        <item name="colorPrimaryDark">#212121</item>
+        <item name="colorAccent">#616161</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Grey.Dark</item>
     </style>
     <style name="AppThemeBlueGreyDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#607D8B</item>
-        <item name="colorPrimaryDark">#455A64</item>
-        <item name="colorAccent">#607D8B</item>
+        <item name="colorPrimary">#455A64</item>
+        <item name="colorPrimaryDark">#263238</item>
+        <item name="colorAccent">#455A64</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.BlueGrey.Dark</item>
     </style>
     <style name="AppThemeDefaultDark" parent="AppTheme.Base.Dark">
