@@ -138,6 +138,8 @@
     <string name="dark_theme">Dark theme</string>
     <string name="personalisation_changeColor">Change color</string>
     <string name="show_pwd">Show password</string>
+    <string name="change_to_dark_theme">Switch to dark theme</string>
+    <string name="change_to_light_theme">Switch to light theme</string>
 
     <string-array name="subjects">
         <item>d|German</item>

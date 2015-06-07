@@ -70,9 +70,23 @@ public class School {
         return colorArray;
     }
 
+    public void changeThemeOnLoad(String name){
+        theme = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "AppTheme" + name + "Dark" : "AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
+        colorArray = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "CardviewColor" + name + "Dark" : "CardviewColor" + name + "Light", "array", GGApp.GG_APP.getPackageName());
+        TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary});
+        TypedArray tad = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimaryDark});
+        TypedArray taa = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorAccent});
+        color = ta.getColor(0, Color.RED);
+        darkColor = tad.getColor(0, Color.RED);
+        accentColor = taa.getColor(0, Color.RED);
+        ta.recycle();
+        tad.recycle();
+        taa.recycle();
+    }
+
     private void loadTheme(String name) {
-        theme = GGApp.GG_APP.getResources().getIdentifier("AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
-        colorArray = GGApp.GG_APP.getResources().getIdentifier("CardviewColor" + name + "Light", "array", GGApp.GG_APP.getPackageName());
+        theme = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "AppTheme" + name + "Dark" : "AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
+        colorArray = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "CardviewColor" + name + "Dark" : "CardviewColor" + name + "Light", "array", GGApp.GG_APP.getPackageName());
         TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary});
         TypedArray tad = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimaryDark});
         TypedArray taa = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorAccent});

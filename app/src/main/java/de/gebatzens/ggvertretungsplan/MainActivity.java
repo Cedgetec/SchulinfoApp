@@ -54,7 +54,7 @@ import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
 import de.gebatzens.ggvertretungsplan.fragment.SubstFragment;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity{
 
     public RemoteDataFragment mContent;
     public Toolbar mToolbar;
@@ -131,21 +131,41 @@ public class MainActivity extends FragmentActivity {
         
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.inflateMenu(R.menu.toolbar_menu);
+        if(GGApp.GG_APP.isDarkThemeEnabled()){
+            mToolbar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources().getString(R.string.change_to_light_theme));
+        } else{
+            mToolbar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources().getString(R.string.change_to_dark_theme));
+        }
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
 
-                if (menuItem.getItemId() == R.id.action_refresh) {
-                    ((SwipeRefreshLayout) mContent.getView().findViewById(R.id.refresh)).setRefreshing(true);
-                    GGApp.GG_APP.refreshAsync(new Runnable() {
-                        @Override
-                        public void run() {
-                            ((SwipeRefreshLayout) mContent.getView().findViewById(R.id.refresh)).setRefreshing(false);
+                switch (menuItem.getItemId()) {
+                    case R.id.action_refresh:
+                        ((SwipeRefreshLayout) mContent.getView().findViewById(R.id.refresh)).setRefreshing(true);
+                        GGApp.GG_APP.refreshAsync(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((SwipeRefreshLayout) mContent.getView().findViewById(R.id.refresh)).setRefreshing(false);
+                            }
+                        }, true, GGApp.GG_APP.getFragmentType());
+                        return true;
+                    case R.id.action_settings:
+                        Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivityForResult(i, 1);
+                        return true;
+                    case R.id.action_changeThemeMode:
+                        if(GGApp.GG_APP.isDarkThemeEnabled()) {
+                            GGApp.GG_APP.setDarkThemeEnabled(false);
+                        }else{
+                            GGApp.GG_APP.setDarkThemeEnabled(true);
                         }
-                    }, true, GGApp.GG_APP.getFragmentType());
-                } else if (menuItem.getItemId() == R.id.action_settings) {
-                    Intent i = new Intent(MainActivity.this, SettingsActivity.class);
-                    startActivityForResult(i, 1);
+                        GGApp.GG_APP.school.changeThemeOnLoad(GGApp.GG_APP.school.themeName);
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                        return true;
                 }
 
                 return false;
@@ -155,7 +175,6 @@ public class MainActivity extends FragmentActivity {
         mToolbar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolbar.setTitle(GGApp.GG_APP.school.name);
         mToolbar.setSubtitle(mStrings[Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType())]);
-        mToolbar.inflateMenu(R.menu.toolbar_menu);
         mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setSubtitleTextColor(Color.WHITE);
 

@@ -218,6 +218,11 @@ public class SettingsActivity extends Activity {
                 ListPreference listPreference = (ListPreference) pref;
                 listPreference.setSummary(listPreference.getEntry());
             }
+            if(key.equals("darkTheme")){
+                Intent intent2 = getActivity().getIntent();
+                getActivity().finish();
+                startActivity(intent2);
+            }
 
 
         }

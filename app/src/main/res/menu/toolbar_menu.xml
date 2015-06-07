@@ -17,4 +17,10 @@
         android:orderInCategory="100"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/action_changeThemeMode"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:title="@string/change_to_dark_theme"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
 </menu>
