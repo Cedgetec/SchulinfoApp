@@ -6,9 +6,9 @@
 - [ ] Klausurenplan für SWS
 - [ ] MQTT-Messages speichern
 - [ ] HiddenActivity
-- [ ] GEMS Wiesenfeld
+- [x] GEMS Wiesenfeld
 - [ ] Mehrere Klassen auswählbar (Hauptfilter)
   - [ ] Dann sollte bei den Fachfiltern auch die Klasse ausgewählt werden
-- [ ] Dynamische Anzahl von Plänen
+- [x] Dynamische Anzahl von Plänen
 - [ ] Funktionierende Personalisierungsseite
-- [ ] Ersetzen der Toasts in "GGRemote.java" mit Snackbars
+- [x] Ersetzen der Toasts in "GGRemote.java" mit Snackbars
