@@ -93,13 +93,13 @@ public class PersonalisationActivity extends Activity {
                     s_darkThemeSwitchButton.setChecked(false);
                     GGApp.GG_APP.setDarkThemeEnabled(false);
                     tv_toggleSubheader.setText(R.string.dark_theme_is_not_activated);
-                    GGApp.GG_APP.school.loadTheme(GGApp.GG_APP.school.themeName);
+                    GGApp.GG_APP.school.loadTheme(GGApp.GG_APP.getCustomThemeName());
                     recreate();
                 } else {
                     s_darkThemeSwitchButton.setChecked(true);
                     GGApp.GG_APP.setDarkThemeEnabled(true);
                     tv_toggleSubheader.setText(R.string.dark_theme_is_activated);
-                    GGApp.GG_APP.school.loadTheme(GGApp.GG_APP.school.themeName);
+                    GGApp.GG_APP.school.loadTheme(GGApp.GG_APP.getCustomThemeName());
                     recreate();
                 }
             }
