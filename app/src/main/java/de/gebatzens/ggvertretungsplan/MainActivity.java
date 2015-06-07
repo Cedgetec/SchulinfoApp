@@ -133,9 +133,9 @@ public class MainActivity extends FragmentActivity{
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.inflateMenu(R.menu.toolbar_menu);
         if(GGApp.GG_APP.isDarkThemeEnabled()){
-            mToolbar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources().getString(R.string.change_to_light_theme));
+            mToolbar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources().getString(R.string.day_mode));
         } else{
-            mToolbar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources().getString(R.string.change_to_dark_theme));
+            mToolbar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources().getString(R.string.night_mode));
         }
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

@@ -137,8 +137,8 @@
     <string name="dark_theme">Dunkles Thema</string>
     <string name="personalisation_changeColor">Farbe ändern</string>
     <string name="show_pwd">Passwort anzeigen</string>
-    <string name="change_to_dark_theme">Zum dunklen Design wechseln</string>
-    <string name="change_to_light_theme">Zum hellen Design wechseln</string>
+    <string name="night_mode">Nachtmodus</string>
+    <string name="day_mode">Tagmodus</string>
     <string name="personalisation_pickColor">Farbe auswählen</string>
 
     <string-array name="subjects">

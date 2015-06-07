@@ -19,7 +19,7 @@
 
     <item android:id="@+id/action_changeThemeMode"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:title="@string/change_to_dark_theme"
+        android:title="@string/night_mode"
         android:orderInCategory="100"
         app:showAsAction="never"/>
 
