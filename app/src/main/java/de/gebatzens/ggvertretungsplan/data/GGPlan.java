@@ -350,8 +350,6 @@ public class GGPlan {
     }
 
     public static Date parseDate(String date) {
-        if(date.length() < 8)
-            date += new SimpleDateFormat("yyyy").format(new Date());
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
         try {
             return fmt.parse(date);

@@ -196,6 +196,14 @@ public class GGApp extends Application {
         preferences.edit().putString("fragtype", type.toString()).apply();
     }
 
+    public void setDarkThemeEnabled(boolean e) {
+        preferences.edit().putBoolean("darkTheme", e).apply();
+    }
+
+    public boolean isDarkThemeEnabled() {
+        return preferences.getBoolean("darkTheme", false);
+    }
+
     public void setSchool(String sid) {
         preferences.edit().putString("sid", sid).apply();
         School b = school;

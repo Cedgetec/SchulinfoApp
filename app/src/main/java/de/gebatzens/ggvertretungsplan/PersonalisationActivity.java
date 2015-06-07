@@ -65,8 +65,10 @@ public class PersonalisationActivity extends Activity {
                 if (s_darkThemeSwitchButton.isChecked()) {
                     s_darkThemeSwitchButton.setChecked(false);
                     tv_toggleSubheader.setText(R.string.dark_theme_is_not_activated);
+                    GGApp.GG_APP.setDarkThemeEnabled(false);
                 } else {
                     s_darkThemeSwitchButton.setChecked(true);
+                    GGApp.GG_APP.setDarkThemeEnabled(true);
                     tv_toggleSubheader.setText(R.string.dark_theme_is_activated);
                 }
             }

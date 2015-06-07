@@ -112,11 +112,11 @@ public class MensaFragment extends RemoteDataFragment {
         } else {
             for (Mensa.MensaItem item : GGApp.GG_APP.mensa) {
                 if (!item.isPast()) {
-                    try {
+                    //try {
                         l.addView(createCardItem(item, inflater));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    //} catch (Exception e) {
+                    //    e.printStackTrace();
+                    //}
                 }
             }
         }

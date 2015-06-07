@@ -86,12 +86,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
         for(GGPlan.Entry e : list) {
             FrameLayout f2 = new FrameLayout(getActivity());
             f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
-            try {
+            //try {
                 f2.addView(createCardItem(e, inflater, clas));
-            } catch (Exception err) {
+            /*} catch (Exception err) {
                 err.printStackTrace();
                 Snackbar.make(getActivity().getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.unknown_error), Snackbar.LENGTH_LONG).show();
-            }
+            }*/
             group.addView(f2);
         }
     }
