@@ -12,3 +12,4 @@
 - [x] Dynamische Anzahl von Plänen
 - [ ] Funktionierende Personalisierungsseite
 - [x] Ersetzen der Toasts in "GGRemote.java" mit Snackbars
+- [ ] Aufleuchten der LED bei Benachrichtigungen
