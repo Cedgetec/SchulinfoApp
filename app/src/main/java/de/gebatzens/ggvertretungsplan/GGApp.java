@@ -197,7 +197,7 @@ public class GGApp extends Application {
     }
 
     public String getCustomThemeName() {
-        return preferences.getString("customTheme", null);
+        return preferences.getString("customTheme", GGApp.GG_APP.school.themeName);
     }
 
     public void setCustomThemeName(String customTheme) {

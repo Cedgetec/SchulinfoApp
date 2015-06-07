@@ -99,8 +99,11 @@ public class NewsFragment extends RemoteDataFragment {
             ScrollView sv = new ScrollView(getActivity());
             sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             sv.setTag("gg_scroll");
+            LinearLayout l = new LinearLayout(getActivity());
+            createRootLayout(l);
             lroot.addView(sv);
-            createNoEntriesCard(sv, inflater);
+            sv.addView(l);
+            createNoEntriesCard(l, inflater);
         } else {
             lv = new ListView(getActivity());
             lv.setDrawSelectorOnTop(true);
