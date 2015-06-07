@@ -23,8 +23,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.JsonReader;
 import android.util.Log;
+import android.view.View;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -106,6 +109,32 @@ public class GGRemote {
         }
 
         reader.close();
+
+    }
+
+    public void showReloadSnackbar() {
+        if(GGApp.GG_APP.activity == null)
+            return;
+
+        GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar.make(GGApp.GG_APP.activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), R.string.no_internet_connection, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.again, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final View rv = GGApp.GG_APP.activity.getWindow().getDecorView();
+                                ((SwipeRefreshLayout) rv.findViewById(R.id.refresh)).setRefreshing(true);
+                                GGApp.GG_APP.refreshAsync(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ((SwipeRefreshLayout) rv.findViewById(R.id.refresh)).setRefreshing(false);
+                                    }
+                                },  true, GGApp.GG_APP.getFragmentType());
+                            }
+                        }).show();
+            }
+        });
 
     }
 
@@ -248,13 +277,7 @@ public class GGRemote {
                 final Throwable t = plans.throwable;
                 plans.throwable = null;
                 if(toast)
-                    GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            GGApp.GG_APP.showToast(t instanceof IOException ? GGApp.GG_APP.getResources().getString(R.string.no_internet_connection) :
-                                    t instanceof VPLoginException ? GGApp.GG_APP.getString(R.string.not_logged_in) : GGApp.GG_APP.getResources().getString(R.string.unknown_error));
-                        }
-                    });
+                    showReloadSnackbar();
             }
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
@@ -363,13 +386,7 @@ public class GGRemote {
         } catch (final Exception e) {
             e.printStackTrace();
             if(toast)
-                GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        GGApp.GG_APP.showToast(e instanceof IOException ? GGApp.GG_APP.getResources().getString(R.string.no_internet_connection) :
-                                e instanceof VPLoginException ? GGApp.GG_APP.getString(R.string.not_logged_in) : GGApp.GG_APP.getResources().getString(R.string.unknown_error));
-                    }
-                });
+                showReloadSnackbar();
             if(!n.load()) {
                 n.throwable = e;
                 return n;
@@ -436,13 +453,7 @@ public class GGRemote {
         } catch (final Exception e) {
             e.printStackTrace();
             if(toast)
-                GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        GGApp.GG_APP.showToast(e instanceof IOException ? GGApp.GG_APP.getResources().getString(R.string.no_internet_connection) :
-                                e instanceof VPLoginException ? GGApp.GG_APP.getString(R.string.not_logged_in) : GGApp.GG_APP.getResources().getString(R.string.unknown_error));
-                    }
-                });
+                showReloadSnackbar();
             if(!m.load()) {
                 m.throwable = e;
                 return m;
@@ -522,13 +533,7 @@ public class GGRemote {
             exams.save();
         } catch (final Exception e) {
             e.printStackTrace();
-            GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    GGApp.GG_APP.showToast(e instanceof IOException ? GGApp.GG_APP.getResources().getString(R.string.no_internet_connection) :
-                            e instanceof VPLoginException ? GGApp.GG_APP.getString(R.string.not_logged_in) : GGApp.GG_APP.getResources().getString(R.string.unknown_error));
-                }
-            });
+            showReloadSnackbar();
 
 
             if(!exams.load()) {

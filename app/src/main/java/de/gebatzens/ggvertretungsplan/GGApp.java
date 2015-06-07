@@ -165,10 +165,6 @@ public class GGApp extends Application {
         return preferences.getBoolean("benachrichtigungen", true);
     }
 
-    public void showToast(String s) {
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-    }
-
     public int translateUpdateType(String s) {
         if(s.equals("disable"))
             return UPDATE_DISABLE;

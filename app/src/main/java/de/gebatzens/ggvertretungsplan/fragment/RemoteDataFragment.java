@@ -221,18 +221,7 @@ public abstract class RemoteDataFragment extends Fragment {
                     }
                 });
             } else {
-                createButtonWithText(vg, getResources().getString(R.string.check_connection), getResources().getString(R.string.again), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((SwipeRefreshLayout) getView().findViewById(R.id.refresh)).setRefreshing(true);
-                        GGApp.GG_APP.refreshAsync(new Runnable() {
-                            @Override
-                            public void run() {
-                                ((SwipeRefreshLayout) getView().findViewById(R.id.refresh)).setRefreshing(false);
-                            }
-                        }, true, GGApp.GG_APP.getFragmentType());
-                    }
-                });
+                //TODO: Error view?
             }
         } else {
             createView(inflater, vg);
