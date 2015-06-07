@@ -16,18 +16,30 @@
 package de.gebatzens.ggvertretungsplan;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PersonalisationActivity extends Activity {
 
@@ -35,6 +47,7 @@ public class PersonalisationActivity extends Activity {
     ImageView imgColorCircle;
     TextView tv_toggleSubheader;
     SwitchCompat s_darkThemeSwitchButton;
+    Context context;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -101,7 +114,108 @@ public class PersonalisationActivity extends Activity {
         l_changeColor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
-                //Change theme color
+                final String[] themeNames = {
+                        "Red",
+                        "Pink",
+                        "Purple",
+                        "DeepPurple",
+                        "Indigo",
+                        "Blue",
+                        "LightBlue",
+                        "Cyan",
+                        "Teal",
+                        "Green",
+                        "LightGreen",
+                        "Lime",
+                        "Yellow",
+                        "Amber",
+                        "Orange",
+                        "DeepOrange",
+                        "Brown",
+                        "Grey",
+                        "BlueGrey",
+                        "Default"
+                };
+                final int[] themeColors = {
+                        Color.parseColor("#F44336"),
+                        Color.parseColor("#E91E63"),
+                        Color.parseColor("#9C27B0"),
+                        Color.parseColor("#673AB7"),
+                        Color.parseColor("#3F51B5"),
+                        Color.parseColor("#2196F3"),
+                        Color.parseColor("#03A9F4"),
+                        Color.parseColor("#00BCD4"),
+                        Color.parseColor("#009688"),
+                        Color.parseColor("#4CAF50"),
+                        Color.parseColor("#8BC34A"),
+                        Color.parseColor("#CDDC39"),
+                        Color.parseColor("#FFEB3B"),
+                        Color.parseColor("#FFC107"),
+                        Color.parseColor("#FF9800"),
+                        Color.parseColor("#FF5722"),
+                        Color.parseColor("#795548"),
+                        Color.parseColor("#9E9E9E"),
+                        Color.parseColor("#607D8B"),
+                        Color.parseColor("#FFFFFF")
+                };
+
+                ListAdapter adapter = new ArrayAdapter<String>(
+                        getApplicationContext(), R.layout.custom_theme_choose_list, themeNames) {
+
+                    ViewHolder holder;
+
+                    class ViewHolder {
+                        ImageView icon;
+                        TextView title;
+                    }
+
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        final LayoutInflater inflater = (LayoutInflater) getApplicationContext()
+                                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                        if (convertView == null) {
+                            convertView = inflater.inflate(
+                                    R.layout.custom_theme_choose_list, null);
+
+                            holder = new ViewHolder();
+                            holder.icon = (ImageView) convertView.findViewById(R.id.ThemeIcon);
+                            holder.title = (TextView) convertView.findViewById(R.id.ThemeName);
+                            convertView.setTag(holder);
+                        } else {
+                            holder = (ViewHolder) convertView.getTag();
+                        }
+                        holder.icon.setBackgroundResource(R.drawable.colored_circle);
+                        holder.icon.getBackground().setColorFilter(themeColors[position], PorterDuff.Mode.SRC_ATOP);
+                        holder.title.setText(themeNames[position]);
+                        if (GGApp.GG_APP.isDarkThemeEnabled()) {
+                            holder.title.setTextColor(Color.parseColor("#fafafa"));
+                        } else{
+                            holder.title.setTextColor(Color.parseColor("#424242"));
+                        }
+                        return convertView;
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(PersonalisationActivity.this);
+                builder.setTitle(getResources().getString(R.string.personalisation_pickColor));
+
+                builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Hier das neue Thema speichern
+                        GGApp.GG_APP.school.changeThemeOnLoad(themeNames[which]);
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+
+                });
+                builder.setPositiveButton(getResources().getString(R.string.abort), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //nothing
+                    }
+                });
+                builder.create();
+                builder.show();
             }
         });
     }

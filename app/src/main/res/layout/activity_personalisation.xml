@@ -88,7 +88,6 @@
                              android:layout_width="match_parent"
                              android:layout_height="match_parent"
                              android:layout_gravity="center"
-                             android:src="@drawable/colored_circle"
                              android:adjustViewBounds="true"
                              android:scaleType="fitCenter"
                              android:id="@+id/personalisation_themeColorCircle"
