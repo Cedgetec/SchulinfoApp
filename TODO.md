@@ -10,6 +10,6 @@
 - [ ] Mehrere Klassen auswählbar (Hauptfilter)
   - [ ] Dann sollte bei den Fachfiltern auch die Klasse ausgewählt werden
 - [x] Dynamische Anzahl von Plänen
-- [ ] Funktionierende Personalisierungsseite
+- [x] Funktionierende Personalisierungsseite
 - [x] Ersetzen der Toasts in "GGRemote.java" mit Snackbars
 - [ ] Aufleuchten der LED bei Benachrichtigungen
