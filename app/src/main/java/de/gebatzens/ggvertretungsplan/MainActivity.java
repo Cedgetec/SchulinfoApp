@@ -157,7 +157,7 @@ public class MainActivity extends FragmentActivity{
                         return true;
                     case R.id.action_changeThemeMode:
                         GGApp.GG_APP.setDarkThemeEnabled(!GGApp.GG_APP.isDarkThemeEnabled());
-                        GGApp.GG_APP.school.loadTheme(GGApp.GG_APP.school.themeName);
+                        GGApp.GG_APP.school.loadTheme(GGApp.GG_APP.getCustomThemeName());
                         recreate();
                         return true;
                 }
