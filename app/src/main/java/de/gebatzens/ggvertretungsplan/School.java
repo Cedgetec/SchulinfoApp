@@ -70,21 +70,7 @@ public class School {
         return colorArray;
     }
 
-    public void changeThemeOnLoad(String name){
-        theme = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "AppTheme" + name + "Dark" : "AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
-        colorArray = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "CardviewColor" + name + "Dark" : "CardviewColor" + name + "Light", "array", GGApp.GG_APP.getPackageName());
-        TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary});
-        TypedArray tad = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimaryDark});
-        TypedArray taa = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorAccent});
-        color = ta.getColor(0, Color.RED);
-        darkColor = tad.getColor(0, Color.RED);
-        accentColor = taa.getColor(0, Color.RED);
-        ta.recycle();
-        tad.recycle();
-        taa.recycle();
-    }
-
-    private void loadTheme(String name) {
+    public void loadTheme(String name) {
         theme = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "AppTheme" + name + "Dark" : "AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
         colorArray = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "CardviewColor" + name + "Dark" : "CardviewColor" + name + "Light", "array", GGApp.GG_APP.getPackageName());
         TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary});
@@ -138,9 +124,11 @@ public class School {
                             s.name = reader.nextString();
                         else if(name.equals("login"))
                             s.loginNeeded = reader.nextBoolean();
-                        else if(name.equals("theme"))
-                            s.loadTheme(s.themeName = reader.nextString());
-                        else if(name.equals("image"))
+                        else if(name.equals("theme")) {
+                            String ctn = GGApp.GG_APP.getCustomThemeName();
+                            String tn = reader.nextString();
+                            s.loadTheme(ctn == null ? (s.themeName = tn) : (s.themeName = ctn));
+                        } else if(name.equals("image"))
                             s.image = reader.nextString();
                         else if(name.equals("website"))
                             s.website = reader.nextString();

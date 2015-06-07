@@ -50,7 +50,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class SettingsActivity extends Activity {
 
     Toolbar mToolBar;
-    private static boolean changed;
+    private static boolean changed, recreate;
     static String version;
     GGPFragment frag;
 
@@ -200,7 +200,7 @@ public class SettingsActivity extends Activity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent i = new Intent(getActivity(), PersonalisationActivity.class);
-                    getActivity().startActivityForResult(i, 1);
+                    getActivity().startActivityForResult(i, 2);
                     return false;
                 }
             });
@@ -218,11 +218,11 @@ public class SettingsActivity extends Activity {
                 ListPreference listPreference = (ListPreference) pref;
                 listPreference.setSummary(listPreference.getEntry());
             }
-            if(key.equals("darkTheme")){
+            /*if(key.equals("darkTheme")){
                 Intent intent2 = getActivity().getIntent();
                 getActivity().finish();
                 startActivity(intent2);
-            }
+            }*/
 
 
         }
@@ -243,6 +243,8 @@ public class SettingsActivity extends Activity {
         }
 
         changed = false;
+        recreate = false;
+
         Fragment f = getFragmentManager().findFragmentByTag("gg_settings_frag");
         if(f != null) {
             getFragmentManager().beginTransaction().remove(f).commit();
@@ -255,7 +257,7 @@ public class SettingsActivity extends Activity {
 
         if(savedInstanceState != null) {
             changed = savedInstanceState.getBoolean("ggs_changed");
-
+            recreate = savedInstanceState.getBoolean("ggs_recreate");
         }
 
         mToolBar = (Toolbar) contentView.findViewById(R.id.toolbar);
@@ -303,6 +305,7 @@ public class SettingsActivity extends Activity {
     public void onSaveInstanceState(Bundle b) {
         super.onSaveInstanceState(b);
         b.putBoolean("ggs_changed", changed);
+        b.putBoolean("ggs_recreate", recreate);
     }
 
     @Override
@@ -311,6 +314,9 @@ public class SettingsActivity extends Activity {
             changed = true;
             Preference filter = frag.findPreference("filter");
             filter.setSummary(GGApp.GG_APP.filters.mainFilter.filter.isEmpty() ? "Kein Filter aktiv" : (GGApp.GG_APP.filters.size() + 1) + " Filter aktiv");
+        } else if(req == 2 && resp == RESULT_OK) {
+            recreate = true;
+            recreate();
         }
     }
 
@@ -327,6 +333,7 @@ public class SettingsActivity extends Activity {
     @Override
     public void finish() {
         Intent i = new Intent();
+        i.putExtra("recreate", recreate);
         setResult(changed ? RESULT_OK : RESULT_CANCELED, i);
         super.finish();
     }

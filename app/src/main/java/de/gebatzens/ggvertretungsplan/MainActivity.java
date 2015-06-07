@@ -156,15 +156,9 @@ public class MainActivity extends FragmentActivity{
                         startActivityForResult(i, 1);
                         return true;
                     case R.id.action_changeThemeMode:
-                        if(GGApp.GG_APP.isDarkThemeEnabled()) {
-                            GGApp.GG_APP.setDarkThemeEnabled(false);
-                        }else{
-                            GGApp.GG_APP.setDarkThemeEnabled(true);
-                        }
-                        GGApp.GG_APP.school.changeThemeOnLoad(GGApp.GG_APP.school.themeName);
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
+                        GGApp.GG_APP.setDarkThemeEnabled(!GGApp.GG_APP.isDarkThemeEnabled());
+                        GGApp.GG_APP.school.loadTheme(GGApp.GG_APP.school.themeName);
+                        recreate();
                         return true;
                 }
 
@@ -321,6 +315,11 @@ public class MainActivity extends FragmentActivity{
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == 1 && resultCode == RESULT_OK) { //Settings changed
+
+            if(data != null && data.getBooleanExtra("recreate", false)) {
+                recreate();
+                return;
+            }
 
             if(data != null && data.getBooleanExtra("setup", false)) {
                 startActivity(new Intent(this, SetupActivity.class));

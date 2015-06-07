@@ -196,6 +196,14 @@ public class GGApp extends Application {
         preferences.edit().putBoolean("darkTheme", e).apply();
     }
 
+    public String getCustomThemeName() {
+        return preferences.getString("customTheme", null);
+    }
+
+    public void setCustomThemeName(String customTheme) {
+        preferences.edit().putString("customTheme", customTheme).apply();
+    }
+
     public boolean isDarkThemeEnabled() {
         return preferences.getBoolean("darkTheme", false);
     }

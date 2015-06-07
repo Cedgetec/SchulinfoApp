@@ -48,6 +48,7 @@ public class PersonalisationActivity extends Activity {
     TextView tv_toggleSubheader;
     SwitchCompat s_darkThemeSwitchButton;
     Context context;
+    boolean recreate;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -57,6 +58,10 @@ public class PersonalisationActivity extends Activity {
         }
         super.onCreate(bundle);
         setContentView(R.layout.activity_personalisation);
+        recreate = false;
+
+        if(bundle != null)
+            recreate = bundle.getBoolean("recreate");
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
@@ -83,22 +88,19 @@ public class PersonalisationActivity extends Activity {
         l_toggleDarkTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
+                recreate = true;
                 if (s_darkThemeSwitchButton.isChecked()) {
                     s_darkThemeSwitchButton.setChecked(false);
                     GGApp.GG_APP.setDarkThemeEnabled(false);
                     tv_toggleSubheader.setText(R.string.dark_theme_is_not_activated);
-                    GGApp.GG_APP.school.changeThemeOnLoad(GGApp.GG_APP.school.themeName);
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
+                    GGApp.GG_APP.school.loadTheme(GGApp.GG_APP.school.themeName);
+                    recreate();
                 } else {
                     s_darkThemeSwitchButton.setChecked(true);
                     GGApp.GG_APP.setDarkThemeEnabled(true);
                     tv_toggleSubheader.setText(R.string.dark_theme_is_activated);
-                    GGApp.GG_APP.school.changeThemeOnLoad(GGApp.GG_APP.school.themeName);
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
+                    GGApp.GG_APP.school.loadTheme(GGApp.GG_APP.school.themeName);
+                    recreate();
                 }
             }
         });
@@ -201,11 +203,10 @@ public class PersonalisationActivity extends Activity {
 
                 builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //Hier das neue Thema speichern
-                        GGApp.GG_APP.school.changeThemeOnLoad(themeNames[which]);
-                        Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
+                        GGApp.GG_APP.setCustomThemeName(themeNames[which]);
+                        GGApp.GG_APP.school.loadTheme(themeNames[which]);
+                        recreate = true;
+                        recreate();
                     }
 
                 });
@@ -218,6 +219,19 @@ public class PersonalisationActivity extends Activity {
                 builder.show();
             }
         });
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putBoolean("recreate", recreate);
+    }
+
+    @Override
+    public void finish() {
+        setResult(recreate ? RESULT_OK : RESULT_CANCELED);
+        super.finish();
     }
 
     @Override
