@@ -32,7 +32,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -176,7 +175,7 @@ public class GGApp extends Application {
     }
 
     public String translateUpdateType(int i) {
-        String[] s = getResources().getStringArray(R.array.appupdatesArray);
+        String[] s = getResources().getStringArray(R.array.data_updates_keys);
         return s[i];
     }
 
@@ -197,7 +196,7 @@ public class GGApp extends Application {
     }
 
     public String getCustomThemeName() {
-        return preferences.getString("customTheme", GGApp.GG_APP.school.themeName);
+        return preferences.getString("customTheme", null);
     }
 
     public void setCustomThemeName(String customTheme) {

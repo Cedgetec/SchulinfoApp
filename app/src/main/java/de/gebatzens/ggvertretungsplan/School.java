@@ -70,7 +70,10 @@ public class School {
         return colorArray;
     }
 
-    public void loadTheme(String name) {
+    public void loadTheme() {
+        String name = GGApp.GG_APP.getCustomThemeName();
+        if(name == null)
+            name = themeName;
         theme = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "AppTheme" + name + "Dark" : "AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
         colorArray = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "CardviewColor" + name + "Dark" : "CardviewColor" + name + "Light", "array", GGApp.GG_APP.getPackageName());
         TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary});
@@ -125,9 +128,8 @@ public class School {
                         else if(name.equals("login"))
                             s.loginNeeded = reader.nextBoolean();
                         else if(name.equals("theme")) {
-                            String ctn = GGApp.GG_APP.getCustomThemeName();
-                            String tn = reader.nextString();
-                            s.loadTheme(ctn == null ? (s.themeName = tn) : (s.themeName = ctn));
+                            s.themeName = reader.nextString();
+                            s.loadTheme();
                         } else if(name.equals("image"))
                             s.image = reader.nextString();
                         else if(name.equals("website"))
@@ -204,9 +206,10 @@ public class School {
                         s.sid = reader.nextString();
                     else if(name.equals("name"))
                         s.name = reader.nextString();
-                    else if(name.equals("theme"))
-                        s.loadTheme(s.themeName = reader.nextString());
-                    else if(name.equals("website"))
+                    else if(name.equals("theme")) {
+                        s.themeName = reader.nextString();
+                        s.loadTheme();
+                    } else if(name.equals("website"))
                         s.website = reader.nextString();
                     else if(name.equals("image"))
                         s.image = reader.nextString();

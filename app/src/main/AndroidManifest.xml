@@ -55,7 +55,7 @@
             android:noHistory="true">
         </activity>
 
-        <activity android:name=".PersonalisationActivity"
+        <activity android:name=".PersonalizationActivity"
             android:label="@string/personalisation"
             android:windowSoftInputMode="adjustNothing">
         </activity>

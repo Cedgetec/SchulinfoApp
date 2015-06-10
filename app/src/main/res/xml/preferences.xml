@@ -3,7 +3,7 @@
     <PreferenceCategory android:title="@string/school_settings">
         <Preference android:title="Filter"
             android:key="filter"
-            android:summary="Kein Filter aktiv" />
+            android:summary="@string/no_filter_active" />
         <Preference android:title="@string/username"
             android:key="authentication_username"
             android:summary="@string/not_logged_in">
@@ -12,20 +12,20 @@
     <PreferenceCategory android:title="@string/general">
         <Preference android:title="@string/personalisation"
             android:summary="@string/personalize_your_theme"
-            android:key="personalisation"/>
+            android:key="personalization" />
         <CheckBoxPreference android:title="@string/show_notifications"
             android:summary="@string/notify_class"
-            android:key="benachrichtigungen"
+            android:key="notifications"
             android:defaultValue="true" />
         <CheckBoxPreference android:title="@string/app_update"
             android:summary="@string/app_update_notify"
-            android:key="autoappupdates"
+            android:key="notify_updates"
             android:defaultValue="true" />
         <ListPreference android:title="@string/automatic_updates"
             android:summary="@string/only_update_over_wireless_lan"
-            android:key="appupdates"
-            android:entries="@array/appupdatesArray"
-            android:entryValues="@array/appupdatesValues"
+            android:key="auto_data_updates"
+            android:entries="@array/data_updates_keys"
+            android:entryValues="@array/data_updates_values"
             android:defaultValue="wifi" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/information">

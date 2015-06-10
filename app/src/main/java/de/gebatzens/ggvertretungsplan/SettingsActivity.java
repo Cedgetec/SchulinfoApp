@@ -65,7 +65,7 @@ public class SettingsActivity extends Activity {
             SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
             sp.registerOnSharedPreferenceChangeListener(this);
 
-            Preference update = findPreference("appupdates");
+            Preference update = findPreference("auto_data_updates");
             update.setSummary(gg.translateUpdateType(gg.getUpdateType()));
 
             Preference pref_buildversion = findPreference("buildversion");
@@ -195,11 +195,11 @@ public class SettingsActivity extends Activity {
                     return false;
                 }
             });
-            Preference personalisation = findPreference("personalisation");
+            Preference personalisation = findPreference("personalization");
             personalisation.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Intent i = new Intent(getActivity(), PersonalisationActivity.class);
+                    Intent i = new Intent(getActivity(), PersonalizationActivity.class);
                     getActivity().startActivityForResult(i, 2);
                     return false;
                 }
@@ -214,7 +214,7 @@ public class SettingsActivity extends Activity {
             changed = true;
 
 
-            if(key.equals("appupdates")) {
+            if(key.equals("auto_data_updates")) {
                 ListPreference listPreference = (ListPreference) pref;
                 listPreference.setSummary(listPreference.getEntry());
             }
