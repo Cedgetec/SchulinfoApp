@@ -53,13 +53,18 @@ public class GGBroadcast extends BroadcastReceiver {
         if(newPlans.throwable != null || oldPlans == null || oldPlans.throwable != null)
             return;
 
-        boolean n = false;
-        for(int i = 0; i < newPlans.size() && !n; i++) {
-            List<GGPlan.Entry> newList = newPlans.get(i).filter(gg.filters);
+        List<GGPlan.Entry> newList = null;
+        for(int i = 0; i < newPlans.size() && newList == null; i++) {
             GGPlan old = oldPlans.getPlanByDate(newPlans.get(i).date);
-            if(old == null || !old.filter(gg.filters).equals(newList)) {
-                n = true;
-            }
+            if(old != null) {
+                newList = newPlans.get(i).filter(gg.filters);
+                List<GGPlan.Entry> oldList = old.filter(gg.filters);
+                if(!oldList.equals(newList))
+                    newList.removeAll(oldList);
+                else
+                    newList = null;
+            } else
+                newList = null;
 
         }
 
@@ -72,12 +77,20 @@ public class GGBroadcast extends BroadcastReceiver {
                 }
             });
 
-        if(n) {
+        if(newList != null) {
             Intent intent = new Intent(gg, MainActivity.class);
             intent.putExtra("fragment", "PLAN");
-            gg.createNotification(R.drawable.ic_gg_notification, gg.getString(R.string.schedule_change), gg.getString(R.string.schedule_changed),
-                    intent, 123, true/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
-                    tomo.getWeekday() + ": " + stdtm*/);
+            if (newList.size() == 1) {
+                GGPlan.Entry entry = newList.get(0);
+                gg.createNotification(R.drawable.ic_gg_notification, entry.lesson + ". " + gg.getString(R.string.lesson_time) + ": " + entry.type, entry.subject.replace("&#x2192;", ""),
+                        intent, 123, true/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
+                        tomo.getWeekday() + ": " + stdtm*/);
+
+            } else {
+                gg.createNotification(R.drawable.ic_gg_notification, gg.getString(R.string.schedule_change), newList.size() + " " + gg.getString(R.string.new_entries),
+                        intent, 123, true/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
+                        tomo.getWeekday() + ": " + stdtm*/);
+            }
         }
 
     }

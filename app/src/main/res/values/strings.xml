@@ -5,7 +5,7 @@
     <string name="drawer_open">Open navigation</string>
     <string name="drawer_close">Close navigation</string>
     <string name="schedule_change">Substitute schedule change</string>
-    <string name="schedule_changed">The substitute schedule did change</string>
+    <string name="new_entries">new entries</string>
     <string name="affected_lessons">Affected lessons:</string>
     <string name="no_entries_schedule">No entries in schedule</string>
     <string name="special_messages">Special messages</string>
@@ -141,6 +141,7 @@
     <string name="night_mode">Night mode</string>
     <string name="day_mode">Day mode</string>
     <string name="personalisation_pickColor">Pick color</string>
+    <string name="lesson_time">Lesson</string>
 
     <string-array name="subjects">
         <item>d|German</item>
