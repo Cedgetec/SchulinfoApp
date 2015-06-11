@@ -155,6 +155,6 @@ public class SubstFragment extends RemoteDataFragment {
         //for(SubstPagerFragment frag : substAdapter.fragments)
          //   frag.spinnerPos = 0;
         if(substAdapter != null)
-            substAdapter.notifyDataSetChanged();
+            substAdapter.update(GGApp.GG_APP.plans);
     }
 }

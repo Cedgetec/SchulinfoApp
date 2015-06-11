@@ -76,7 +76,7 @@ public class GGBroadcast extends BroadcastReceiver {
             Intent intent = new Intent(gg, MainActivity.class);
             intent.putExtra("fragment", "PLAN");
             gg.createNotification(R.drawable.ic_gg_notification, gg.getString(R.string.schedule_change), gg.getString(R.string.schedule_changed),
-                    intent, 123, false/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
+                    intent, 123, true/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
                     tomo.getWeekday() + ": " + stdtm*/);
         }
 

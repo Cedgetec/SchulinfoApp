@@ -74,6 +74,7 @@ public class GGApp extends Application {
         School.loadList();
         loadSavedData();
         school = School.getBySID(preferences.getString("sid", null));
+
     }
 
     private void loadSavedData() {
@@ -114,7 +115,7 @@ public class GGApp extends Application {
         }
     }
 
-    public void createNotification(int icon, String title, String message, Intent intent, int id, boolean important, String... strings) {
+    public void createNotification(int icon, String title, String message, Intent intent, int id, boolean light, String... strings) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(icon)
@@ -135,14 +136,12 @@ public class GGApp extends Application {
             mBuilder.setStyle(inboxStyle);
         }
         mBuilder.setColor(GGApp.GG_APP.school.getDarkColor());
-        if(important) {
-            mBuilder.setVibrate(new long[]{0, 1000});
-            mBuilder.setLights(Color.argb(255, 0, 0, 255), 1000, 1000);
+        if(light) {
+            //mBuilder.setVibrate(new long[]{0, 1000});
+            mBuilder.setLights(school.getColor(), 1000, 1000);
         }
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        // Adds the back stack for the Intent (but not the Intent itself)
         stackBuilder.addParentStack(MainActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(intent);
         PendingIntent resultPendingIntent =
                 stackBuilder.getPendingIntent(
@@ -152,7 +151,6 @@ public class GGApp extends Application {
         mBuilder.setContentIntent(resultPendingIntent);
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
         mNotificationManager.notify(id, mBuilder.build());
     }
 
@@ -251,11 +249,11 @@ public class GGApp extends Application {
                                 }
                             });
 
-                        } else if(activity != null) {
+                        } /*else if(activity != null) {
                             Fragment f = activity.getSupportFragmentManager().findFragmentByTag("gg_content_fragment");
                             if(f != null)
                                 ((SubstFragment)f).substAdapter.update(plans);
-                        }
+                        }*/
 
                         break;
                     case NEWS:
