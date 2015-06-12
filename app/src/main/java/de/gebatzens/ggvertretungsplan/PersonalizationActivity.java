@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -102,7 +103,7 @@ public class PersonalizationActivity extends Activity {
         imgColorCircle = (ImageView) findViewById(R.id.personalisation_themeColorCircle);
         imgColorCircle.setBackgroundResource(R.drawable.colored_circle);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            StateListDrawable drawable = (StateListDrawable) imgColorCircle.getBackground();
+            GradientDrawable drawable = (GradientDrawable) imgColorCircle.getBackground();
             drawable.setColorFilter(GGApp.GG_APP.school.getColor(), PorterDuff.Mode.SRC_ATOP);
         }
 
