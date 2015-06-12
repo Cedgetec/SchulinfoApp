@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/first_image">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+            <solid android:color="@color/primary_red"/>
+        </shape>
+    </item>
+    <item android:id="@+id/second_image"
+        android:top="16dp"
+        android:bottom="16dp"
+        android:left="16dp"
+        android:right="16dp">
+        <bitmap android:src="@drawable/ic_helpdesk"
+            android:gravity="center"/>
+    </item>
+</layer-list>

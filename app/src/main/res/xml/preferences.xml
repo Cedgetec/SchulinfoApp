@@ -47,7 +47,7 @@
         <Preference android:title="@string/helpdesk"
             android:summary="@string/contact_us"
             android:key="helpdesk"
-            android:icon="@drawable/ic_helpdesk"/>
+            android:icon="@drawable/helpdesk_icon"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

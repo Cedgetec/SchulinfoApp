@@ -23,6 +23,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -187,6 +191,10 @@ public class SettingsActivity extends Activity {
             });
 
             Preference helpdesk = findPreference("helpdesk");
+            LayerDrawable ld = (LayerDrawable) this.getActivity().getResources().getDrawable(R.drawable.helpdesk_icon);
+            GradientDrawable gd = (GradientDrawable) ld.findDrawableByLayerId(R.id.first_image);
+            gd.setColor(GGApp.GG_APP.school.getColor());
+            helpdesk.setIcon(ld);
             helpdesk.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
