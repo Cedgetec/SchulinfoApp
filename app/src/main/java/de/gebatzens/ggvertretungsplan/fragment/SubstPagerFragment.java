@@ -167,7 +167,6 @@ public class SubstPagerFragment extends RemoteDataFragment {
             Filter.FilterList filters = GGApp.GG_APP.filters;
 
             CardView cv2 = new CardView(getActivity());
-            cv2.setContentPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
             cv2.setRadius(0);
             if (GGApp.GG_APP.isDarkThemeEnabled()) {
                 cv2.setCardBackgroundColor(Color.parseColor("#424242"));
@@ -180,13 +179,15 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.addView(l2);
             l0.addView(cv2);
 
-            createTextView(GGApp.GG_APP.plans.loadDate, 15, inflater, l2);
+            TextView tv4 = createTextView(GGApp.GG_APP.plans.loadDate, 15, inflater, l2);
+            tv4.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
             TextView tv2 = createTextView(
                     filters.mainFilter.type == Filter.FilterType.CLASS ? getActivity().getString(R.string.school_class) + " " + filters.mainFilter.filter :
                     getActivity().getString(R.string.teacher) + " " + filters.mainFilter.filter, 15, inflater, l2);
             tv2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            tv2.setGravity(Gravity.RIGHT | Gravity.CENTER);
+            tv2.setGravity(Gravity.END | Gravity.CENTER);
+            tv2.setPadding(0,0,toPixels(16),0);
 
             for(GGPlan plan : GGApp.GG_APP.plans) {
                 List<GGPlan.Entry> list = plan.filter(filters);
@@ -233,7 +234,6 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
         } else {
             CardView cv2 = new CardView(getActivity());
-            cv2.setContentPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
             cv2.setRadius(0);
             if (GGApp.GG_APP.isDarkThemeEnabled()) {
                 cv2.setCardBackgroundColor(Color.parseColor("#424242"));
@@ -246,10 +246,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.addView(l2);
             l0.addView(cv2);
 
-            createTextView(GGApp.GG_APP.plans.loadDate, 15, inflater, l2);
+            TextView tv5 = createTextView(GGApp.GG_APP.plans.loadDate, 15, inflater, l2);
+            tv5.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
             LinearLayout l4 = new LinearLayout(getActivity());
-            l4.setGravity(Gravity.RIGHT);
+            l4.setGravity(Gravity.END | Gravity.CENTER);
+            l4.setPadding(0,0,toPixels(16),0);
             
             l4.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -260,8 +262,6 @@ public class SubstPagerFragment extends RemoteDataFragment {
             final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, items);
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
             spin.setAdapter(adapter);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            spin.setLayoutParams(lp);
             l4.addView(spin);
             l2.addView(l4);
 
