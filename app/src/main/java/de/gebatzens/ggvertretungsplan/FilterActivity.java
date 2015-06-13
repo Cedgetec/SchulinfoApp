@@ -15,16 +15,15 @@
  */
 package de.gebatzens.ggvertretungsplan;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.JsonReader;
 import android.util.JsonWriter;
@@ -45,7 +44,7 @@ import java.io.OutputStreamWriter;
 
 import de.gebatzens.ggvertretungsplan.data.Filter;
 
-public class FilterActivity extends Activity {
+public class FilterActivity extends AppCompatActivity {
 
     Toolbar mToolBar;
     FilterListAdapter adapter;
@@ -158,8 +157,8 @@ public class FilterActivity extends Activity {
         });
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolBar.setTitleTextColor(Color.WHITE);
+        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

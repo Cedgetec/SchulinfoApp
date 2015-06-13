@@ -27,11 +27,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,7 +54,7 @@ import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
 import de.gebatzens.ggvertretungsplan.fragment.SubstFragment;
 
 
-public class MainActivity extends FragmentActivity{
+public class MainActivity extends AppCompatActivity {
 
     public RemoteDataFragment mContent;
     public Toolbar mToolbar;
@@ -166,11 +166,10 @@ public class MainActivity extends FragmentActivity{
             }
         });
 
+        mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolbar.setTitle(GGApp.GG_APP.school.name);
         mToolbar.setSubtitle(mStrings[Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType())]);
-        mToolbar.setTitleTextColor(Color.WHITE);
-        mToolbar.setSubtitleTextColor(Color.WHITE);
 
         ((TextView) findViewById(R.id.drawer_image_text)).setText(GGApp.GG_APP.school.name);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

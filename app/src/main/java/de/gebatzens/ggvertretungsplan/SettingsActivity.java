@@ -16,7 +16,6 @@
 
 package de.gebatzens.ggvertretungsplan;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
@@ -33,6 +32,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -48,7 +48,7 @@ import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends AppCompatActivity {
 
     Toolbar mToolBar;
     private static boolean changed, recreate;
@@ -263,8 +263,8 @@ public class SettingsActivity extends Activity {
         }
 
         mToolBar = (Toolbar) contentView.findViewById(R.id.toolbar);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolBar.setTitleTextColor(Color.WHITE);
+        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

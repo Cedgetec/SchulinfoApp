@@ -15,16 +15,15 @@
  */
 package de.gebatzens.ggvertretungsplan;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -36,7 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-public class PersonalizationActivity extends Activity {
+public class PersonalizationActivity extends AppCompatActivity {
 
     Toolbar mToolBar;
     ImageView imgColorCircle;
@@ -56,8 +55,8 @@ public class PersonalizationActivity extends Activity {
             recreate = bundle.getBoolean("recreate");
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolBar.setTitleTextColor(Color.WHITE);
+        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
