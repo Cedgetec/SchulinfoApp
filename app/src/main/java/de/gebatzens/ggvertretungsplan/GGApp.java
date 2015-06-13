@@ -282,13 +282,6 @@ public class GGApp extends Application {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void setStatusBarColor(Window w, int color) {
-        w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        w.setStatusBarColor(color);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void setStatusBarColorTransparent(Window w) {
         w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

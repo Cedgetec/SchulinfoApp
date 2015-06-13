@@ -65,10 +65,10 @@ public class MensaFragment extends RemoteDataFragment {
         super.onViewCreated(v, b);
 
         swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
-        if (themeIsLight()) {
-            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
-        } else{
+        if (GGApp.GG_APP.isDarkThemeEnabled()) {
             swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#424242"));
+        } else{
+            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
         }
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -129,10 +129,10 @@ public class MensaFragment extends RemoteDataFragment {
 
     private CardView createCardItem(Mensa.MensaItem mensa_item, LayoutInflater i) {
         CardView mcv = createCardView();
-        if (themeIsLight()) {
-            mcv.setCardBackgroundColor(Color.WHITE);
-        } else{
+        if (GGApp.GG_APP.isDarkThemeEnabled()) {
             mcv.setCardBackgroundColor(Color.DKGRAY);
+        } else{
+            mcv.setCardBackgroundColor(Color.WHITE);
         }
         mcv.setContentPadding(0, 0, 0, 0);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

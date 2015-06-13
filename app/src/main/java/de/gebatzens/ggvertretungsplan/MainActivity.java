@@ -177,7 +177,6 @@ public class MainActivity extends FragmentActivity{
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             GGApp.GG_APP.setStatusBarColorTransparent(getWindow());
-            mDrawerLayout.setStatusBarBackgroundColor(GGApp.GG_APP.school.getDarkColor());
         }
 
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
@@ -333,7 +332,6 @@ public class MainActivity extends FragmentActivity{
             mNacvigationImage.setImageBitmap(GGApp.GG_APP.school.loadImage());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 GGApp.GG_APP.setStatusBarColorTransparent(getWindow());
-                mDrawerLayout.setStatusBarBackgroundColor(GGApp.GG_APP.school.getDarkColor());
             }
             mToolbar.setBackgroundColor(GGApp.GG_APP.school.getColor());
             mToolbar.setTitle(GGApp.GG_APP.school.name);

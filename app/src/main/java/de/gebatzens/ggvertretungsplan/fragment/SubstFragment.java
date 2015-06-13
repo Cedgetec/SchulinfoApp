@@ -90,10 +90,10 @@ public class SubstFragment extends RemoteDataFragment {
         }
 
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
-        if (themeIsLight()) {
-            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
-        } else{
+        if (GGApp.GG_APP.isDarkThemeEnabled()) {
             swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#424242"));
+        } else{
+            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
         }
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

@@ -65,10 +65,6 @@ public class SetupActivity extends Activity {
         toolbar.setTitle(getString(R.string.app_name));
         toolbar.inflateMenu(R.menu.setup_menu);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            GGApp.GG_APP.setStatusBarColor(getWindow(), getResources().getColor(R.color.setupText));
-        }
-
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

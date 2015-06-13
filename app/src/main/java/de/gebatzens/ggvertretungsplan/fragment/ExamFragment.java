@@ -59,10 +59,10 @@ public class ExamFragment extends RemoteDataFragment {
         super.onViewCreated(v, b);
 
         swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
-        if (themeIsLight()) {
-            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
-        } else{
+        if (GGApp.GG_APP.isDarkThemeEnabled()) {
             swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#424242"));
+        } else{
+            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
         }
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -105,10 +105,10 @@ public class ExamFragment extends RemoteDataFragment {
         if(!filtered.isEmpty()) {
             TextView tv = createTextView(getResources().getString(R.string.my_exams), 27, inflater, l);
             tv.setPadding(toPixels(2.8f), 0, 0, 0);
-            if (themeIsLight()) {
-                tv.setTextColor(Color.parseColor("#6e6e6e"));
-            } else{
+            if (GGApp.GG_APP.isDarkThemeEnabled()) {
                 tv.setTextColor(Color.parseColor("#a0a0a0"));
+            } else{
+                tv.setTextColor(Color.parseColor("#6e6e6e"));
             }
             for (Exams.ExamItem item : filtered) {
                 CardView cv = createCardItem(item, inflater);
@@ -123,10 +123,10 @@ public class ExamFragment extends RemoteDataFragment {
         if(GGApp.GG_APP.exams.size() != 0) {
             TextView tv = createTextView(getResources().getString(R.string.all_exams), 27, inflater, l);
             tv.setPadding(toPixels(2.8f), 0, 0, 0);
-            if (themeIsLight()) {
-                tv.setTextColor(Color.parseColor("#6e6e6e"));
-            } else{
+            if (GGApp.GG_APP.isDarkThemeEnabled()) {
                 tv.setTextColor(Color.parseColor("#a0a0a0"));
+            } else{
+                tv.setTextColor(Color.parseColor("#6e6e6e"));
             }
             for (Exams.ExamItem item : GGApp.GG_APP.exams) {
                 CardView cv = createCardItem(item, inflater);

@@ -94,10 +94,10 @@ public abstract class RemoteDataFragment extends Fragment {
         t.setText(text);
         t.setPadding(0, 0, toPixels(20), 0);
         t.setTextSize(size);
-        if (themeIsLight()) {
-            t.setTextColor(Color.parseColor("#212121"));
-        } else{
+        if (GGApp.GG_APP.isDarkThemeEnabled()) {
             t.setTextColor(Color.parseColor("#e7e7e7"));
+        } else{
+            t.setTextColor(Color.parseColor("#212121"));
         }
         group.addView(t);
         return t;
@@ -170,7 +170,7 @@ public abstract class RemoteDataFragment extends Fragment {
         tv.setText(text);
         tv.setTextSize(30);
         tv.setTextColor(getResources().getColor(R.color.primary_text_default_material_dark));
-        tv.setPadding( 0, 0, 0, toPixels(15));
+        tv.setPadding(0, 0, 0, toPixels(15));
         r.addView(tv);
 
         l.addView(r);
@@ -180,10 +180,10 @@ public abstract class RemoteDataFragment extends Fragment {
         FrameLayout f2 = new FrameLayout(getActivity());
         f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
         CardView cv = createCardView();
-        if (themeIsLight()) {
-            cv.setCardBackgroundColor(Color.parseColor("#fafafa"));
-        } else{
+        if (GGApp.GG_APP.isDarkThemeEnabled()) {
             cv.setCardBackgroundColor(Color.parseColor("#424242"));
+        } else{
+            cv.setCardBackgroundColor(Color.parseColor("#fafafa"));
         }
         f2.addView(cv);
         createTextView(getResources().getString(R.string.no_entries), 20, inflater, cv);
@@ -198,10 +198,10 @@ public abstract class RemoteDataFragment extends Fragment {
         l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         l.setOrientation(LinearLayout.VERTICAL);
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            l.setPadding(toPixels(55),toPixels(4),toPixels(55),toPixels(4));
+            l.setPadding(toPixels(55), toPixels(4), toPixels(55), toPixels(4));
             return true;
         } else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            l.setPadding(toPixels(4),toPixels(4),toPixels(4),toPixels(4));
+            l.setPadding(toPixels(4), toPixels(4), toPixels(4), toPixels(4));
         }
         return false;
     }
@@ -263,17 +263,6 @@ public abstract class RemoteDataFragment extends Fragment {
         public void save();
         public boolean load();
 
-    }
-
-    public boolean themeIsLight() {
-        TypedValue a = new TypedValue();
-        getActivity().getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
-        int color = a.data;
-        if (color == getResources().getColor(R.color.background_material_light)) {
-            return true;
-        } else{
-            return false;
-        }
     }
 
 }
