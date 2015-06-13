@@ -23,13 +23,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -258,7 +255,7 @@ public class SettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         ViewGroup contentView = (ViewGroup) LayoutInflater.from(this).inflate(
-                R.layout.settings_activity, new LinearLayout(this), false);
+                R.layout.activity_settings, new LinearLayout(this), false);
 
         if(savedInstanceState != null) {
             changed = savedInstanceState.getBoolean("ggs_changed");
