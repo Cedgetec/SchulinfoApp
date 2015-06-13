@@ -167,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mToolbar.setTitleTextColor(Color.WHITE);
+        mToolbar.setSubtitleTextColor(Color.WHITE);
         mToolbar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolbar.setTitle(GGApp.GG_APP.school.name);
         mToolbar.setSubtitle(mStrings[Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType())]);

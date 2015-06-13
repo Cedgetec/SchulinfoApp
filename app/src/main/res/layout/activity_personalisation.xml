@@ -9,8 +9,7 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:title="@string/personalisation"
-        app:theme="@style/ToolBarStyle"
-        android:theme="@style/ToolBarStyle"/>
+        app:theme="@style/ToolBarStyle"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
