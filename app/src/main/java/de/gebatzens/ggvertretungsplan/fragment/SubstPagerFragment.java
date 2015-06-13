@@ -259,7 +259,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             ArrayList<String> items = new ArrayList<String>();
             items.add(getActivity().getString(R.string.all));
             items.addAll(plan.getAllClasses());
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, items);
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
             spin.setAdapter(adapter);
             l4.addView(spin);
