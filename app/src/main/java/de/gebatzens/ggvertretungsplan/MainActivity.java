@@ -60,12 +60,11 @@ public class MainActivity extends AppCompatActivity {
     public Toolbar mToolbar;
     Context context;
     DrawerLayout mDrawerLayout;
-    ActionBarDrawerToggle mToggle;
+    ActionBarDrawerToggle mDrawerToggle;
     String[] mStrings;
     ImageView mNacvigationImage;
     View mNavigationSchoolpictureLink;
     public Bundle savedState;
-    DrawerLayout drawerLayout;
     NavigationView navigationView;
     int selectedItem;
 
@@ -179,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             GGApp.GG_APP.setStatusBarColorTransparent(getWindow());
         }
 
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 mToolbar, R.string.drawer_open, R.string.drawer_close) {
 
             /** Called when a drawer has settled in a completely closed state. */
@@ -194,8 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNacvigationImage = (ImageView) findViewById(R.id.navigation_schoolpicture);
         mNacvigationImage.setImageBitmap(GGApp.GG_APP.school.loadImage());
@@ -267,9 +265,9 @@ public class MainActivity extends AppCompatActivity {
                         });
                         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_fragment);
                         contentFrame.startAnimation(fadeOut);
-                        drawerLayout.closeDrawers();
+                        mDrawerLayout.closeDrawers();
                     } else{
-                        drawerLayout.closeDrawers();
+                        mDrawerLayout.closeDrawers();
                     }
                 }
                 return true;
@@ -280,14 +278,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mToggle.syncState();
+        mDrawerToggle.syncState();
 
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mToggle.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
