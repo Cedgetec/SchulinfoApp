@@ -18,6 +18,7 @@ package de.gebatzens.ggvertretungsplan;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
@@ -129,28 +130,6 @@ public class PersonalizationActivity extends AppCompatActivity {
                         "BlueGrey",
                         "Default"
                 };
-                final int[] themeColors = {
-                        Color.parseColor("#F44336"),
-                        Color.parseColor("#E91E63"),
-                        Color.parseColor("#9C27B0"),
-                        Color.parseColor("#673AB7"),
-                        Color.parseColor("#3F51B5"),
-                        Color.parseColor("#2196F3"),
-                        Color.parseColor("#03A9F4"),
-                        Color.parseColor("#00BCD4"),
-                        Color.parseColor("#009688"),
-                        Color.parseColor("#4CAF50"),
-                        Color.parseColor("#8BC34A"),
-                        Color.parseColor("#CDDC39"),
-                        Color.parseColor("#FFEB3B"),
-                        Color.parseColor("#FFC107"),
-                        Color.parseColor("#FF9800"),
-                        Color.parseColor("#FF5722"),
-                        Color.parseColor("#795548"),
-                        Color.parseColor("#9E9E9E"),
-                        Color.parseColor("#607D8B"),
-                        Color.parseColor("#FFFFFF")
-                };
 
                 ListAdapter adapter = new ArrayAdapter<String>(
                         getApplicationContext(), R.layout.custom_theme_choose_list, themeNames) {
@@ -178,7 +157,7 @@ public class PersonalizationActivity extends AppCompatActivity {
                             holder = (ViewHolder) convertView.getTag();
                         }
                         holder.icon.setBackgroundResource(R.drawable.colored_circle);
-                        holder.icon.getBackground().setColorFilter(themeColors[position], PorterDuff.Mode.SRC_ATOP);
+                        holder.icon.getBackground().setColorFilter(loadThemeColor(themeNames[position]), PorterDuff.Mode.SRC_ATOP);
                         holder.title.setText(themeNames[position]);
                         if (GGApp.GG_APP.isDarkThemeEnabled()) {
                             holder.title.setTextColor(Color.parseColor("#fafafa"));
@@ -211,6 +190,11 @@ public class PersonalizationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public int loadThemeColor(String name) {
+        int theme = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "AppTheme" + name + "Dark" : "AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
+        return GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary}).getColor(0, Color.RED);
     }
 
     @Override
