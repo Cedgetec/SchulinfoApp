@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +113,7 @@ public class School {
         List<School> newList = new ArrayList<School>();
 
         try {
-            HttpsURLConnection con = GGApp.GG_APP.remote.openConnection("/infoapp/get_schools.php", false);
+            HttpURLConnection con = GGApp.GG_APP.remote.openConnection("/getSchools", false);
             if(con.getResponseCode() == 200) {
                 JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
                 reader.beginArray();

@@ -33,6 +33,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.cert.CertificateException;
@@ -58,57 +59,9 @@ public class GGRemote {
     public static final GGImageGetter IMAGE_GETTER = new GGImageGetter();
 
     SharedPreferences prefs;
-    Session session;
 
     public GGRemote() {
-
         prefs = GGApp.GG_APP.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    startNewSession(prefs.getString("token", null));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-
-    }
-
-    private void startNewSession(String token) throws IOException {
-        if(token == null || token.isEmpty())
-            return;
-
-        HttpsURLConnection con = openConnection("/backend/token.php?token=" + token, false);
-
-        if(con.getResponseCode() == 401) {
-            Log.w("ggvp", "startSession: Received " + con.getResponseCode() + ": logging out");
-            logout(true, true);
-            session = null;
-            return;
-        }
-
-        JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
-        reader.beginObject();
-
-        while(reader.hasNext()) {
-            String name = reader.nextName();
-            if(name.equals("state") && !reader.nextString().equals("succeeded")) {
-                //Token is invalid
-                Log.w("ggvp", "Token is invalid");
-                session = null;
-            } else if(name.equals("sessid")) {
-                session = new Session();
-                session.id = reader.nextString();
-                Log.i("ggvp", "New session " + session.id);
-            }
-
-
-        }
-
-        reader.close();
 
     }
 
@@ -203,7 +156,6 @@ public class GGRemote {
                 }
             }.execute(session.id);
         }*/
-        session = null;
     }
 
     public GGPlan.GGPlans getPlans(boolean toast) {
@@ -211,29 +163,13 @@ public class GGRemote {
         GGPlan.GGPlans plans = new GGPlan.GGPlans();
 
         try {
-            if (session == null) {
-                startNewSession(prefs.getString("token", null));
-
-                // token expired
-                if (session == null)
-                    throw new VPLoginException();
-            }
-            Log.i("ggvp", "getPlans " + session.id);
-            HttpsURLConnection con = openConnection("/backend/provider.php?site=schedule&sessid=" + session.id, true);
+            Log.i("ggvp", "getPlans " + getToken());
+            HttpURLConnection con = openConnection("/data?site=subst&token=" + getToken(), true);
             con.setRequestMethod("GET");
 
-            /*if(con.getResponseCode() == 401) {
-                logout(true, true);
+            if(con.getResponseCode() == 403) {
+                //Should happen when token expires
                 throw new VPLoginException();
-            } else */
-            if(con.getResponseCode() == 419) {
-                startNewSession(prefs.getString("token", null));
-                if(session == null) {
-                    //Should happen when token expires
-                    throw new VPLoginException();
-                } else {
-                    return getPlans(toast);
-                }
             }
 
             if(con.getResponseCode() != 200)
@@ -243,28 +179,39 @@ public class GGRemote {
             reader.beginObject();
 
             while(reader.hasNext()) {
-                String date = reader.nextName();
-                GGPlan plan = new GGPlan();
-                plan.date = GGPlan.parseDate(date);
-                plans.add(plan);
-                reader.beginObject();
-                while(reader.hasNext()) {
-                    String name = reader.nextName();
-                    if(name.equals("entries"))
-                        getPlan(reader, plan);
-                    else if(name.equals("messages")) {
-                        reader.beginArray();
-                        while(reader.hasNext()) {
-                            plan.special.add("&#8226;  " + reader.nextString());
+                String name = reader.nextName();
+                if (name.equals("state")) {
+                    //TODO real error handling
+                    reader.skipValue();
+                } else if (name.equals("data")) {
+                    reader.beginObject();
+                    while (reader.hasNext()) {
+                        String date = reader.nextName();
+                        GGPlan plan = new GGPlan();
+                        plan.date = GGPlan.parseDate(date);
+                        plans.add(plan);
+                        reader.beginObject();
+                        while (reader.hasNext()) {
+                            name = reader.nextName();
+                            if (name.equals("entries"))
+                                getPlan(reader, plan);
+                            else if (name.equals("messages")) {
+                                reader.beginArray();
+                                while (reader.hasNext()) {
+                                    plan.special.add("&#8226;  " + reader.nextString());
+                                }
+                                reader.endArray();
+                            } else
+                                reader.skipValue();
                         }
-                        reader.endArray();
-                    } else
-                        reader.skipValue();
-                }
-                reader.endObject();
-
-
+                        reader.endObject();
+                    }
+                    reader.endObject();
+                } else
+                    reader.skipValue();
             }
+
+            reader.endObject();
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -290,6 +237,7 @@ public class GGRemote {
     }
 
     private void getPlan(JsonReader reader, GGPlan p) throws Exception {
+        Log.d("ggvp", "getPlan DEBUG");
 
         reader.beginArray();
 
@@ -303,14 +251,14 @@ public class GGRemote {
                 if(name.equals("class"))
                     e.clazz = reader.nextString();
                 else if(name.equals("lesson"))
-                    e.lesson = reader.nextString();
-                else if(name.equals("teacher"))
+                    e.lesson = ""+reader.nextInt();
+                else if(name.equals("substitutor"))
                     e.teacher = reader.nextString();
                 else if(name.equals("missing"))
                     e.missing = reader.nextString();
                 else if(name.equals("subject"))
                     e.subject = reader.nextString();
-                else if(name.equals("subst_subject"))
+                else if(name.equals("newSubject"))
                     e.repsub = reader.nextString();
                 else if(name.equals("type"))
                     e.type = reader.nextString();
@@ -333,53 +281,52 @@ public class GGRemote {
     public News getNews(boolean toast) {
         News n = new News();
         try {
-            if (session == null) {
-                startNewSession(prefs.getString("token", null));
-                if (session == null)
-                    throw new VPLoginException();
-            }
 
             DateFormat parser = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-            HttpsURLConnection con = openConnection("/backend/provider.php?site=news&sessid=" + session.id, true);
+            HttpURLConnection con = openConnection("/data?site=news&token=" + getToken(), true);
             con.setRequestMethod("GET");
 
-            /*if(con.getResponseCode() == 401) {
-                logout(true, true);
+            if(con.getResponseCode() == 403) {
                 throw new VPLoginException();
-            } else */if(con.getResponseCode() == 419) {
-                startNewSession(prefs.getString("token", null));
-                if(session == null) {
-                    throw new VPLoginException();
-                } else {
-                    return getNews(toast);
-                }
             } else if (con.getResponseCode() == 200) {
                 JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
-                reader.beginArray();
+                reader.beginObject();
                 while(reader.hasNext()) {
-                    reader.beginObject();
-                    News.Entry e = new News.Entry();
-                    n.add(e);
-                    while(reader.hasNext()) {
-                        String name = reader.nextName();
-                        if(name.equals("id"))
-                            e.id = reader.nextString();
-                        else if(name.equals("date"))
-                            e.date = parser.parse(reader.nextString());
-                        else if(name.equals("source"))
-                            e.source = reader.nextString();
-                        else if(name.equals("topic"))
-                            e.topic = reader.nextString();
-                        else if(name.equals("title"))
-                            e.title = reader.nextString();
-                        else if(name.equals("text"))
-                            e.text = reader.nextString();
-                        else
-                            reader.skipValue();
-                    }
-                    reader.endObject();
+                    String name = reader.nextName();
+                    if(name.equals("state")) {
+                        //TODO
+                        reader.skipValue();
+                    } else if(name.equals("data")) {
+                        reader.beginArray();
+                        while(reader.hasNext()) {
+                            reader.beginObject();
+                            News.Entry e = new News.Entry();
+                            n.add(e);
+                            while (reader.hasNext()) {
+                                name = reader.nextName();
+                                if (name.equals("id"))
+                                    e.id = reader.nextString();
+                                else if (name.equals("date"))
+                                    e.date = parser.parse(reader.nextString());
+                                else if (name.equals("source"))
+                                    e.source = reader.nextString();
+                                else if (name.equals("topic"))
+                                    e.topic = reader.nextString();
+                                else if (name.equals("title"))
+                                    e.title = reader.nextString();
+                                else if (name.equals("text"))
+                                    e.text = reader.nextString();
+                                else
+                                    reader.skipValue();
+                            }
+                            reader.endObject();
+                        }
+                    } else
+                        reader.skipValue();
+
                 }
+                reader.endObject();
 
                 n.save();
             }
@@ -400,53 +347,51 @@ public class GGRemote {
     public Mensa getMensa(boolean toast) {
         Mensa m = new Mensa();
         try {
-            if (session == null) {
-                startNewSession(prefs.getString("token", null));
-                if (session == null)
-                    throw new VPLoginException();
-            }
 
-            HttpsURLConnection con = openConnection("/backend/provider.php?site=mensa&sessid=" + session.id, true);
+            HttpURLConnection con = openConnection("/backend/provider.php?site=mensa&token=" + getToken(), true);
             con.setRequestMethod("GET");
 
-            /*if(con.getResponseCode() == 401) {
-                logout(true, true);
+            if(con.getResponseCode() == 403) {
                 throw new VPLoginException();
-            } else */if(con.getResponseCode() == 419) {
-                startNewSession(prefs.getString("token", null));
-                if(session == null) {
-                    throw new VPLoginException();
-                } else {
-                    return getMensa(toast);
-                }
             } else if (con.getResponseCode() == 200) {
                 JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
-                reader.beginArray();
+                reader.beginObject();
                 while(reader.hasNext()) {
-                    Mensa.MensaItem i = new Mensa.MensaItem();
-                    m.add(i);
-                    reader.beginObject();
-                    while(reader.hasNext()) {
-                        String name = reader.nextName();
-                        if(name.equals("id"))
-                            i.id = reader.nextString();
-                        else if(name.equals("date"))
-                            i.date = reader.nextString();
-                        else if(name.equals("meal"))
-                            i.meal = reader.nextString();
-                        else if(name.equals("garnish"))
-                            i.garnish = reader.nextString();
-                        else if(name.equals("dessert"))
-                            i.dessert = reader.nextString();
-                        else if(name.equals("vegetarian"))
-                            i.vegetarian = reader.nextString();
-                        else if(name.equals("image"))
-                            i.image = reader.nextString();
-                        else
-                            reader.skipValue();
-                    }
-                    reader.endObject();
+                    String name = reader.nextName();
+                    if(name.equals("state")) {
+                        reader.skipValue();
+                    } else if(name.equals("data")) {
+                        reader.beginArray();
+                        while(reader.hasNext()) {
+                            Mensa.MensaItem i = new Mensa.MensaItem();
+                            m.add(i);
+                            reader.beginObject();
+                            while(reader.hasNext()) {
+                                name = reader.nextName();
+                                if(name.equals("id"))
+                                    i.id = reader.nextString();
+                                else if(name.equals("date"))
+                                    i.date = reader.nextString();
+                                else if(name.equals("meal"))
+                                    i.meal = reader.nextString();
+                                else if(name.equals("garnish"))
+                                    i.garnish = reader.nextString();
+                                else if(name.equals("dessert"))
+                                    i.dessert = reader.nextString();
+                                else if(name.equals("vegetarian"))
+                                    i.vegetarian = reader.nextString();
+                                else if(name.equals("image"))
+                                    i.image = reader.nextString();
+                                else
+                                    reader.skipValue();
+                            }
+                            reader.endObject();
+                        }
+                        reader.endArray();
+                    } else
+                        reader.skipValue();
                 }
+                reader.endObject();
 
                 m.save();
             }
@@ -466,69 +411,72 @@ public class GGRemote {
 
     public Bitmap getMensaImage(String filename) throws IOException {
 
-        HttpsURLConnection con = openConnection("/infoapp/infoapp_provider_new.php?site=mensa_image&sessid=" + session.id + "&filename=" + filename, true);
+        //TODO not implemented yet
+
+        /*HttpsURLConnection con = openConnection("/infoapp/infoapp_provider_new.php?site=mensa_image&sessid=" + session.id + "&filename=" + filename, true);
         con.setRequestMethod("GET");
 
         if(con.getResponseCode() == 200) {
             return BitmapFactory.decodeStream(con.getInputStream());
         } else {
             throw new IOException();
-        }
+        }*/
+
+        throw new IOException();
     }
 
     public Exams getExams(boolean toast) {
         Exams exams = new Exams();
         try {
-            if (session == null) {
-                startNewSession(prefs.getString("token", null));
-                if (session == null)
-                    throw new VPLoginException();
-            }
-
-            HttpsURLConnection con = openConnection("/backend/provider.php?site=exams&sessid=" + session.id, true);
+            HttpURLConnection con = openConnection("/backend/provider.php?site=exams&token=" + getToken(), true);
             con.setRequestMethod("GET");
 
-            /*if(con.getResponseCode() == 401) {
-                logout(true, true);
+            if(con.getResponseCode() == 403) {
                 throw new VPLoginException();
-            } else */if(con.getResponseCode() == 419) {
-                startNewSession(prefs.getString("token", null));
-                if(session == null) {
-                    throw new VPLoginException();
-                } else {
-                    return getExams(toast);
-                }
             } else if (con.getResponseCode() == 200) {
                 JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
-                reader.beginArray();
 
                 DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-                while (reader.hasNext()) {
-                    reader.beginObject();
-                    Exams.ExamItem e = new Exams.ExamItem();
-                    exams.add(e);
-                    while (reader.hasNext()) {
-                        String name = reader.nextName();
-                        if (name.equals("id"))
-                            e.id = reader.nextString();
-                        else if(name.equals("date"))
-                            e.date = sdf.parse(reader.nextString());
-                        else if (name.equals("class"))
-                            e.clazz = reader.nextString();
-                        else if (name.equals("lesson"))
-                            e.lesson = reader.nextString();
-                        else if (name.equals("subject"))
-                            e.subject = reader.nextString();
-                        else if (name.equals("length"))
-                            e.length = reader.nextString();
-                        else if (name.equals("teacher"))
-                            e.teacher = reader.nextString();
-                        else
-                            reader.skipValue();
-                    }
-                    reader.endObject();
+                reader.beginObject();
+                while(reader.hasNext()) {
+                    String name = reader.nextName();
+                    if(name.equals("state")) {
+                        //TODO
+                        reader.skipValue();
+                    } else if(name.equals("data")) {
+                        reader.beginArray();
+                        while (reader.hasNext()) {
+                            reader.beginObject();
+                            Exams.ExamItem e = new Exams.ExamItem();
+                            exams.add(e);
+                            while (reader.hasNext()) {
+                                name = reader.nextName();
+                                if (name.equals("id"))
+                                    e.id = reader.nextString();
+                                else if(name.equals("date"))
+                                    e.date = sdf.parse(reader.nextString());
+                                else if (name.equals("class"))
+                                    e.clazz = reader.nextString();
+                                else if (name.equals("lesson"))
+                                    e.lesson = reader.nextString();
+                                else if (name.equals("subject"))
+                                    e.subject = reader.nextString();
+                                else if (name.equals("length"))
+                                    e.length = reader.nextString();
+                                else if (name.equals("teacher"))
+                                    e.teacher = reader.nextString();
+                                else
+                                    reader.skipValue();
+                            }
+                            reader.endObject();
+                        }
+                        reader.endArray();
+                    } else
+                        reader.skipValue();
                 }
+                reader.endObject();
+
             }
             exams.save();
         } catch (final Exception e) {
@@ -546,14 +494,12 @@ public class GGRemote {
 
     public int login(String user, String pass) {
         try {
-
-            HttpsURLConnection con = openConnection("/backend/auth.php", false);
+            HttpURLConnection con = openConnection("/auth", false);
             con.setRequestMethod("POST");
 
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            String s = "sid=" + URLEncoder.encode(GGApp.GG_APP.school.sid, "utf-8") + "&uid=" +
-                    URLEncoder.encode(Settings.Secure.getString(GGApp.GG_APP.getContentResolver(), Settings.Secure.ANDROID_ID), "utf-8");
+            String s = "sid=" + URLEncoder.encode(GGApp.GG_APP.school.sid, "utf-8");
             if(user != null && pass != null)
                 s += "&username=" + URLEncoder.encode(user, "utf-8") + "&password=" + URLEncoder.encode(pass, "utf-8");
             wr.writeBytes(s);
@@ -567,15 +513,23 @@ public class GGRemote {
                     String name = reader.nextName();
                     if(name.equals("state")) {
                         if(!reader.nextString().equals("succeeded"))
-                            return 1;
-                    } else if(name.equals("session")) {
-                        session = new Session();
-                        session.id = reader.nextString();
-                    } else if(name.equals("username") || name.equals("token") || name.equals("firstname") || name.equals("lastname") || name.equals("group")) {
-                        prefs.edit().putString(name, reader.nextString()).commit();
+                                return 1;
+                    } else if(name.equals("data")) {
+                        reader.beginObject();
+                        while(reader.hasNext()) {
+                            name = reader.nextName();
+
+                            if(name.equals("username") || name.equals("token") || name.equals("firstname") || name.equals("lastname") || name.equals("group")) {
+                                prefs.edit().putString(name, reader.nextString()).commit();
+                            } else
+                                reader.skipValue();
+                        }
+                        reader.endObject();
                     } else
                         reader.skipValue();
                 }
+                reader.endObject();
+
 
                 GGApp.GG_APP.startService(new Intent(GGApp.GG_APP, MQTTService.class));
 
@@ -701,10 +655,8 @@ public class GGRemote {
         }
     }*/
 
-    public HttpsURLConnection openConnection(String url, boolean checkSession) throws IOException {
-        if(checkSession && session != null && session.isExpired())
-            startNewSession(prefs.getString("token", null));
-        HttpsURLConnection con = (HttpsURLConnection) new URL("https://" + BuildConfig.BACKEND_SERVER + url).openConnection();
+    public HttpURLConnection openConnection(String url, boolean checkSession) throws IOException {
+        HttpURLConnection con = (HttpURLConnection) new URL("http://" + BuildConfig.BACKEND_SERVER + url).openConnection();
         /*con.setSSLSocketFactory(sslSocketFactory);
         con.setHostnameVerifier(new HostnameVerifier() {
             @Override
