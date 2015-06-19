@@ -57,7 +57,10 @@ public class GGBroadcast extends BroadcastReceiver {
         for(int i = 0; i < newPlans.size() && newList == null; i++) {
             GGPlan old = oldPlans.getPlanByDate(newPlans.get(i).date);
             if(old != null) {
-                newList = newPlans.get(i).filter(gg.filters);
+                //if(newList == null)
+                    newList = newPlans.get(i).filter(gg.filters);
+                //else
+                 //   newList.addAll(newPlans.get(i).filter(gg.filters));
                 List<GGPlan.Entry> oldList = old.filter(gg.filters);
                 if(!oldList.equals(newList))
                     newList.removeAll(oldList);

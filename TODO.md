@@ -12,6 +12,6 @@
 - [x] Dynamische Anzahl von Plänen
 - [x] Funktionierende Personalisierungsseite
 - [x] Ersetzen der Toasts in "GGRemote.java" mit Snackbars
-- [ ] Aufleuchten der LED bei Benachrichtigungen
+- [x] Aufleuchten der LED bei Benachrichtigungen
 - [ ] Performance im SubstFragment verbessern (Beim Drehen)
 - [ ] Dunkle Theme-Farben
