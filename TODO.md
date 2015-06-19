@@ -15,3 +15,4 @@
 - [ ] Aufleuchten der LED bei Benachrichtigungen
 - [ ] Performance im SubstFragment verbessern (Beim Drehen)
 - [ ] Dunkle Theme-Farben
+- [ ] Fragment für eigene HTML-Dateien
