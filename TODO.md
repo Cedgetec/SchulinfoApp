@@ -14,5 +14,5 @@
 - [x] Ersetzen der Toasts in "GGRemote.java" mit Snackbars
 - [x] Aufleuchten der LED bei Benachrichtigungen
 - [ ] Performance im SubstFragment verbessern (Beim Drehen)
-- [ ] Dunkle Theme-Farben
+- [x] Dunkle Theme-Farben
 - [ ] Fragment für eigene HTML-Dateien
