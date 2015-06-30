@@ -25,6 +25,7 @@ import android.util.JsonWriter;
 import android.util.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -48,6 +49,7 @@ public class School {
     public String website;
     public String city;
     public boolean loginNeeded;
+    public List<GGApp.FragmentType> fragments = new ArrayList<>();
 
     public static List<School> LIST = new ArrayList<School>();
 
@@ -105,6 +107,47 @@ public class School {
                    && colorArray == s.colorArray && image.equals(s.image) && city.equals(s.city) && website.equals(s.website) && loginNeeded == s.loginNeeded;
     }
 
+    private static void readJSON(JsonReader reader, School s) throws IOException {
+        while(reader.hasNext()) {
+            String name = reader.nextName();
+            if(name.equals("sid"))
+                s.sid = reader.nextString();
+            else if(name.equals("name"))
+                s.name = reader.nextString();
+            else if(name.equals("login"))
+                s.loginNeeded = reader.nextBoolean();
+            else if(name.equals("theme")) {
+                s.themeName = reader.nextString();
+                s.loadTheme();
+            } else if(name.equals("image"))
+                s.image = reader.nextString();
+            else if(name.equals("website"))
+                s.website = reader.nextString();
+            else if(name.equals("city"))
+                s.city = reader.nextString();
+            else if(name.equals("fragments")) {
+                reader.beginArray();
+                while(reader.hasNext()) {
+                    //TODO: Data
+                    GGApp.FragmentType type = null;
+                    s.fragments.add(type);
+                    reader.beginObject();
+                    while(reader.hasNext()) {
+                        String name2 = reader.nextName();
+                        if(name2.equals("type")) {
+                            type = GGApp.FragmentType.valueOf(reader.nextString());
+                        } else {
+                            reader.skipValue();
+                        }
+                    }
+                    reader.endObject();
+                }
+                reader.endArray();
+            } else
+                reader.skipValue();
+        }
+    }
+
     public static boolean fetchList() {
         Log.i("ggvp", "Downloading school list");
 
@@ -120,26 +163,7 @@ public class School {
                 while(reader.hasNext()) {
                     reader.beginObject();
                     School s = new School();
-                    while(reader.hasNext()) {
-                        String name = reader.nextName();
-                        if(name.equals("sid"))
-                            s.sid = reader.nextString();
-                        else if(name.equals("name"))
-                            s.name = reader.nextString();
-                        else if(name.equals("login"))
-                            s.loginNeeded = reader.nextBoolean();
-                        else if(name.equals("theme")) {
-                            s.themeName = reader.nextString();
-                            s.loadTheme();
-                        } else if(name.equals("image"))
-                            s.image = reader.nextString();
-                        else if(name.equals("website"))
-                            s.website = reader.nextString();
-                        else if(name.equals("city"))
-                            s.city = reader.nextString();
-                        else
-                            reader.skipValue();
-                    }
+                    readJSON(reader, s);
                     newList.add(s);
                     reader.endObject();
                 }
@@ -181,6 +205,11 @@ public class School {
                 writer.name("image").value(s.image);
                 writer.name("theme").value(s.themeName);
                 writer.name("city").value(s.city);
+                writer.name("fragment").beginArray();
+                for(GGApp.FragmentType type : s.fragments) {
+                    writer.beginObject().name("type").value(type.toString()).endObject();
+                }
+                writer.endArray();
 
                 writer.endObject();
             }
@@ -200,29 +229,7 @@ public class School {
             while(reader.hasNext()) {
                 reader.beginObject();
                 School s = new School();
-
-                while(reader.hasNext()) {
-                    String name = reader.nextName();
-                    if(name.equals("sid"))
-                        s.sid = reader.nextString();
-                    else if(name.equals("name"))
-                        s.name = reader.nextString();
-                    else if(name.equals("theme")) {
-                        s.themeName = reader.nextString();
-                        s.loadTheme();
-                    } else if(name.equals("website"))
-                        s.website = reader.nextString();
-                    else if(name.equals("image"))
-                        s.image = reader.nextString();
-                    else if(name.equals("login"))
-                        s.loginNeeded = reader.nextBoolean();
-                    else if(name.equals("theme"))
-                        s.theme = reader.nextInt();
-                    else if(name.equals("city"))
-                        s.city = reader.nextString();
-                    else
-                        reader.skipValue();
-                }
+                readJSON(reader, s);
                 reader.endObject();
                 LIST.add(s);
             }
