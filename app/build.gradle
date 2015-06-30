@@ -8,8 +8,8 @@ android {
         applicationId "de.gebatzens.ggvertretungsplan"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 99999
-        versionName "999.9.9"
+        versionCode 100
+        versionName "1.0.0-rc1"
 	
     }
     
