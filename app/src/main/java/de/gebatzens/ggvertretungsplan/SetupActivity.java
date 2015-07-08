@@ -221,7 +221,7 @@ public class SetupActivity extends AppCompatActivity {
 
     public void showDownloadDialog() {
         final ProgressDialog d = new ProgressDialog(this);
-        d.setMessage("Downloading school list...");
+        d.setMessage(GGApp.GG_APP.getString(R.string.download_schools));
         d.setCancelable(false);
         d.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         d.show();
