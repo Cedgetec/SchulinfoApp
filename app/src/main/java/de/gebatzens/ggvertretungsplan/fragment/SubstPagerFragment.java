@@ -105,7 +105,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
         ((TextView) cv.findViewById(R.id.cv_hour)).setText(entry.lesson);
         ((TextView) cv.findViewById(R.id.cv_header)).setText(entry.type + (entry.teacher.isEmpty() ? "" : " [" + entry.teacher + "]"));
         TextView tv = (TextView) cv.findViewById(R.id.cv_detail);
-        tv.setText(entry.comment + (entry.room.isEmpty() ? "" : (entry.comment.isEmpty() ? "" : "\n") + "Raum " + entry.room));
+        tv.setText(entry.comment + (entry.room.isEmpty() ? "" : (entry.comment.isEmpty() ? "" : "\n") + getResources().getString(R.string.room) + " " + entry.room));
         if(tv.getText().toString().trim().isEmpty())
             ((ViewGroup) tv.getParent()).removeView(tv);
         ((TextView) cv.findViewById(R.id.cv_subject)).setText(Html.fromHtml((clas ? entry.clazz + " " : "") + entry.subject));
