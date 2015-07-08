@@ -140,7 +140,6 @@
     <string name="night_mode">Nachtmodus</string>
     <string name="day_mode">Tagmodus</string>
     <string name="personalisation_pickColor">Farbe auswählen</string>
-    <string name="lesson_time">Stunde</string>
     <string name="download_schools">Lade Schulen</string>
     <string name="room">Raum</string>
 
@@ -163,5 +162,6 @@
         <item>fr|Französisch</item>
         <item>chi|Chinesisch</item>
     </string-array>
+    <string name="classes">Klassen</string>
 
 </resources>

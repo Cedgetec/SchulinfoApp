@@ -110,5 +110,14 @@ public class News extends ArrayList<News.Entry> implements RemoteDataFragment.Re
     public static class Entry {
         public String id, topic, source, title, text;
         public Date date;
+
+        @Override
+        public boolean equals(Object o) {
+            if(!(o instanceof Entry))
+                return false;
+            Entry e = (Entry) o;
+            return e.date.equals(date) && e.id.equals(id) && e.topic.equals(topic) &&
+                    e.source.equals(source) && e.title.equals(title) && e.text.equals(text);
+        }
     }
 }

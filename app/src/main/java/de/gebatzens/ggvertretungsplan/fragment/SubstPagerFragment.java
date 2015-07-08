@@ -51,9 +51,14 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     public static final int INDEX_OVERVIEW = -2, INDEX_INVALID = -1;
 
+    public static final int CARD_CLASS = 1, CARD_LESSON = 2;
+
     GGPlan plan;
     int index = INDEX_INVALID;
-    int spinnerPos = 0;
+    int spinnerPos = 0, modeSpinnerPos = 0;
+
+    // current list for non-overview fragments
+    List<GGPlan.Entry> currentList;
 
     public SubstPagerFragment() {
         super.type = GGApp.FragmentType.PLAN;
@@ -67,7 +72,16 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     }
 
-    private void createCardItems(List<GGPlan.Entry> list, ViewGroup group, LayoutInflater inflater, boolean clas) {
+    /**
+     * Creates cards for the given list of entries
+     *
+     * @param list
+     * @param group The cards are added to this view group
+     * @param inflater
+     * @param type bitwise CARD_CLASS CARD_LESSON
+     * @see #createCardItem(de.gebatzens.ggvertretungsplan.data.GGPlan.Entry, android.view.LayoutInflater, int)
+     */
+    private void createCardItems(List<GGPlan.Entry> list, ViewGroup group, LayoutInflater inflater, int type) {
         if(list.size() == 0) {
             FrameLayout f2 = new FrameLayout(getActivity());
             f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
@@ -82,19 +96,23 @@ public class SubstPagerFragment extends RemoteDataFragment {
         for(GGPlan.Entry e : list) {
             FrameLayout f2 = new FrameLayout(getActivity());
             f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
-            //try {
-                f2.addView(createCardItem(e, inflater, clas));
-            /*} catch (Exception err) {
-                err.printStackTrace();
-                Snackbar.make(getActivity().getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.unknown_error), Snackbar.LENGTH_LONG).show();
-            }*/
+            f2.addView(createCardItem(e, inflater, type));
             group.addView(f2);
         }
     }
 
     int cardColorIndex = 0;
 
-    private CardView createCardItem(GGPlan.Entry entry, LayoutInflater i, boolean clas) {
+
+    /**
+     * Creates a card for the given entry
+     *
+     * @param entry
+     * @param i
+     * @param type
+     * @return the view
+     */
+    private CardView createCardItem(GGPlan.Entry entry, LayoutInflater i, int type) {
         CardView cv = createCardView();
         String[] colors = getActivity().getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
         cv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
@@ -102,18 +120,23 @@ public class SubstPagerFragment extends RemoteDataFragment {
         if(cardColorIndex == colors.length)
             cardColorIndex = 0;
         i.inflate(R.layout.cardview_entry, cv, true);
-        ((TextView) cv.findViewById(R.id.cv_hour)).setText(entry.lesson);
+        ((TextView) cv.findViewById(R.id.cv_hour)).setText((type & CARD_LESSON) != 0 ? entry.lesson : entry.clazz);
         ((TextView) cv.findViewById(R.id.cv_header)).setText(entry.type + (entry.teacher.isEmpty() ? "" : " [" + entry.teacher + "]"));
         TextView tv = (TextView) cv.findViewById(R.id.cv_detail);
         tv.setText(entry.comment + (entry.room.isEmpty() ? "" : (entry.comment.isEmpty() ? "" : "\n") + getResources().getString(R.string.room) + " " + entry.room));
         if(tv.getText().toString().trim().isEmpty())
             ((ViewGroup) tv.getParent()).removeView(tv);
-        ((TextView) cv.findViewById(R.id.cv_subject)).setText(Html.fromHtml((clas ? entry.clazz + " " : "") + entry.subject));
+
+        ((TextView) cv.findViewById(R.id.cv_subject)).setText(Html.fromHtml(((type & (CARD_LESSON | CARD_CLASS)) == (CARD_LESSON | CARD_CLASS) ? entry.clazz + " " : "") + entry.subject));
         return cv;
     }
 
-
-
+    /**
+     * Creates TextViews containing the special messages of the given plan
+     *
+     * @param plan
+     * @return
+     */
     private ArrayList<TextView> createSMViews(GGPlan plan) {
         ArrayList<TextView> tvl = new ArrayList<TextView>();
 
@@ -152,6 +175,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l.setPadding(toPixels(4),toPixels(4),toPixels(4),toPixels(4));
         }
         group.addView(sv);
+
         if(index == INDEX_INVALID) {
             TextView tv = new TextView(getActivity());
             tv.setText("Error: " + type);
@@ -205,7 +229,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
                         ls.addView(tv1);
                     }
                 }
-                createCardItems(list, l, inflater, filters.mainFilter.type != Filter.FilterType.CLASS);
+                createCardItems(list, l, inflater, filters.mainFilter.type != Filter.FilterType.CLASS ? CARD_LESSON | CARD_CLASS : CARD_LESSON);
             }
 
         } else if(index == INDEX_OVERVIEW) {
@@ -240,7 +264,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
             
             l4.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-            Spinner spin = new Spinner(getActivity());
+            final Spinner spinMode = new Spinner(getActivity());
+            ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, new String[] {getString(R.string.classes), getString(R.string.lessons)});
+            modeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+            spinMode.setAdapter(modeAdapter);
+            l4.addView(spinMode);
+
+            final Spinner spin = new Spinner(getActivity());
             ArrayList<String> items = new ArrayList<String>();
             items.add(getActivity().getString(R.string.all));
             items.addAll(plan.getAllClasses());
@@ -248,8 +278,10 @@ public class SubstPagerFragment extends RemoteDataFragment {
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
             spin.setAdapter(adapter);
             l4.addView(spin);
+
             l2.addView(l4);
 
+            spinMode.setSelection(modeSpinnerPos);
             spin.setSelection(spinnerPos);
 
             if(!plan.special.isEmpty()) {
@@ -275,6 +307,22 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l3.setOrientation(LinearLayout.VERTICAL);
             l.addView(l3);
 
+            spinMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    modeSpinnerPos = position;
+
+                    //ignore first call
+                    if(currentList != null)
+                        spin.getOnItemSelectedListener().onItemSelected(spin, spin, spinnerPos, 0);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
             spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -293,15 +341,16 @@ public class SubstPagerFragment extends RemoteDataFragment {
                         fl.mainFilter = main;
                         main.type = Filter.FilterType.CLASS;
                         main.filter = item;
-                        createCardItems(plan.filter(fl), l3, inflater, false);
+                        createCardItems((currentList = plan.filter(fl)), l3, inflater, CARD_LESSON);
 
                     } else {
                         l3.removeAllViews();
                         cardColorIndex = 0;
 
-                        List<String> classes = plan.getAllClasses();
-                        for(String s : classes) {
-                            TextView tv = createTextView(s, 27, inflater, l3);
+                        boolean sortByLesson = spinMode.getSelectedItemPosition() == 1;
+                        List<String> list = sortByLesson ? plan.getAllLessons() : plan.getAllClasses();
+                        for(String s : list) {
+                            TextView tv = createTextView(sortByLesson ? (s + ". " + getResources().getString(R.string.lhour)) : s, 27, inflater, l3);
                             tv.setPadding(toPixels(2.8f), toPixels(20), 0, 0);
                             tv.setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#a0a0a0" : "#6e6e6e"));
 
@@ -309,11 +358,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
                             Filter main = new Filter();
                             fl.mainFilter = main;
                             main.filter = s;
-                            main.type = Filter.FilterType.CLASS;
-                            createCardItems(plan.filter(fl), l3, inflater, false);
+                            main.type = sortByLesson ? Filter.FilterType.LESSON : Filter.FilterType.CLASS;
+                            createCardItems((currentList = plan.filter(fl)), l3, inflater, sortByLesson ? CARD_CLASS : CARD_LESSON);
                         }
                     }
                 }
+
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
                     l3.removeAllViews();
@@ -339,6 +389,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
         return l;
     }
 
+    /**
+     * Converts a date to a better readable string
+     * e.g. "Mittwoch, 08. Juli"
+     *
+     * @param date
+     * @return
+     */
     private String translateDay(Date date) {
         StringBuilder sb = new StringBuilder();
         SimpleDateFormat convertedDateFormat;

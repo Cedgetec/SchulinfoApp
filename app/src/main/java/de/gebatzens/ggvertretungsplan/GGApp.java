@@ -30,6 +30,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -233,10 +234,13 @@ public class GGApp extends Application {
         new Thread() {
             @Override
             public void run() {
+                boolean update = false;
                 switch(type) {
                     case PLAN:
                         GGPlan.GGPlans oldPlans = plans;
                         plans = remote.getPlans(updateFragments);
+
+                        // recreate whole fragment if number of plans changed
                         if(activity != null && (oldPlans == null || plans.size() > oldPlans.size())) {
                             activity.runOnUiThread(new Runnable() {
                                 @Override
@@ -249,25 +253,29 @@ public class GGApp extends Application {
                                 }
                             });
 
-                        } /*else if(activity != null) {
-                            Fragment f = activity.getSupportFragmentManager().findFragmentByTag("gg_content_fragment");
-                            if(f != null)
-                                ((SubstFragment)f).substAdapter.update(plans);
-                        }*/
+                        } else {
+                            update = oldPlans == null || !oldPlans.equals(plans);
+                        }
 
                         break;
                     case NEWS:
+                        News on = news;
                         news = remote.getNews(updateFragments);
+                        update = on == null || !on.equals(news);
                         break;
                     case MENSA:
+                        Mensa om = mensa;
                         mensa = remote.getMensa(updateFragments);
+                        update = om == null || !om.equals(mensa);
                         break;
                     case EXAMS:
+                        Exams oe = exams;
                         exams = remote.getExams(updateFragments);
+                        update = oe == null || !oe.equals(exams);
                         break;
                 }
 
-                if(updateFragments)
+                if(updateFragments && update)
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

@@ -200,13 +200,26 @@ public class GGPlan {
     public List<String> getAllClasses() {
         ArrayList<String> list = new ArrayList<String>();
 
-        String last = "";
         for(Entry e : entries) {
-            if(!last.equals(e.clazz)) {
+            if(!list.contains(e.clazz)) {
                 list.add(e.clazz);
-                last = e.clazz;
             }
         }
+        return list;
+    }
+
+    public List<String> getAllLessons() {
+        ArrayList<String> list = new ArrayList<String>();
+
+        for(Entry e : entries) {
+            if(!list.contains(e.lesson)) {
+                list.add(e.lesson);
+
+            }
+        }
+
+        Collections.sort(list);
+
         return list;
     }
 

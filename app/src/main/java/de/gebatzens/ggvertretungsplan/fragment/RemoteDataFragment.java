@@ -60,6 +60,9 @@ public abstract class RemoteDataFragment extends Fragment {
         vg.addView(createLoadingView());
     }
 
+    /**
+     * Recreates the content
+     */
     public void updateFragment() {
         if(getView() == null)
             return;
@@ -71,6 +74,10 @@ public abstract class RemoteDataFragment extends Fragment {
         createRootView(getActivity().getLayoutInflater(), vg);
     }
 
+    /**
+     * Creates an empty card view for app-wide use
+     * @return
+     */
     public CardView createCardView() {
         CardView c2 = new CardView(getActivity());
         CardView.LayoutParams c2params = new CardView.LayoutParams(
@@ -89,16 +96,12 @@ public abstract class RemoteDataFragment extends Fragment {
     }
 
     public TextView createTextView(String text, int size, LayoutInflater inflater, ViewGroup group) {
-        // TextView t = (TextView) inflater.inflate(R.layout.plan_text, group, true).findViewById(R.id.plan_entry);
         TextView t = new TextView(getActivity());
         t.setText(text);
         t.setPadding(0, 0, toPixels(20), 0);
         t.setTextSize(size);
-        if (GGApp.GG_APP.isDarkThemeEnabled()) {
-            t.setTextColor(Color.parseColor("#e7e7e7"));
-        } else{
-            t.setTextColor(Color.parseColor("#212121"));
-        }
+        t.setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#e7e7e7" : "#212121"));
+
         group.addView(t);
         return t;
     }

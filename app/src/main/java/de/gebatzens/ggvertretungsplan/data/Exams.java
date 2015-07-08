@@ -133,5 +133,14 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
         public String length;
         public String subject;
         public String teacher;
+
+        @Override
+        public boolean equals(Object o) {
+            if(!(o instanceof ExamItem))
+                return false;
+            ExamItem e = (ExamItem) o;
+            return e.date.equals(date) && e.id.equals(id) && e.clazz.equals(clazz) && e.lesson.equals(lesson) &&
+                    e.length.equals(length) && e.subject.equals(subject) && e.teacher.equals(teacher);
+        }
     }
 }

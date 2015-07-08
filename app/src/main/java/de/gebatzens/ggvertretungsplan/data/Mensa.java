@@ -151,5 +151,14 @@ public class Mensa extends ArrayList<Mensa.MensaItem> implements RemoteDataFragm
             return false;
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if(!(o instanceof MensaItem))
+                return false;
+            MensaItem m = (MensaItem) o;
+            return m.id.equals(id) && m.date.equals(date) && m.meal.equals(meal) && m.garnish.equals(garnish) &&
+                    m.dessert.equals(dessert) && m.vegetarian.equals(vegetarian) && m.image.equals(image);
+        }
+
     }
 }

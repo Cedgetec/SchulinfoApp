@@ -72,20 +72,22 @@ public class GGBroadcast extends BroadcastReceiver {
         }
 
         gg.plans = newPlans;
-        if(gg.activity != null && gg.getFragmentType() == GGApp.FragmentType.PLAN)
+
+        //This will happen very rarely and can probably be ignored since it causes some problems
+        /*if(gg.activity != null && gg.getFragmentType() == GGApp.FragmentType.PLAN)
             gg.activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     gg.activity.mContent.updateFragment();
                 }
-            });
+            });*/
 
         if(newList != null) {
             Intent intent = new Intent(gg, MainActivity.class);
             intent.putExtra("fragment", "PLAN");
             if (newList.size() == 1) {
                 GGPlan.Entry entry = newList.get(0);
-                gg.createNotification(R.drawable.ic_gg_notification, entry.lesson + ". " + gg.getString(R.string.lesson_time) + ": " + entry.type, entry.subject.replace("&#x2192;", ""),
+                gg.createNotification(R.drawable.ic_gg_notification, entry.lesson + ". " + gg.getString(R.string.lhour) + ": " + entry.type, entry.subject.replace("&#x2192;", ""),
                         intent, 123, true/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
                         tomo.getWeekday() + ": " + stdtm*/);
 

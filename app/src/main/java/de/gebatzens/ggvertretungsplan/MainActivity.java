@@ -339,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
                 ((SubstFragment)mContent).mTabLayout.setBackgroundColor(GGApp.GG_APP.school.getColor());
                 mContent.setFragmentLoading();
             }
-            GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());
+            mContent.updateFragment();
         }
 
     }

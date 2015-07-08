@@ -36,6 +36,8 @@ public class Filter {
                 return e.teacher.toLowerCase().equals(filter.toLowerCase()) || e.comment.toLowerCase().endsWith(filter.toLowerCase());
             case SUBJECT:
                 return e.subject.toLowerCase().replace(" ", "").equals(filter.toLowerCase().replace(" ", ""));
+            case LESSON:
+                return e.lesson.toLowerCase().equals(filter.toLowerCase());
         }
         return false;
     }
@@ -53,6 +55,8 @@ public class Filter {
                 return item.teacher.toLowerCase().equals(filter.toLowerCase());
             case SUBJECT:
                 return item.subject.toLowerCase().equals(filter.toLowerCase());
+            case LESSON:
+                return item.lesson.toLowerCase().equals(filter.toLowerCase());
         }
         return false;
     }
@@ -69,21 +73,13 @@ public class Filter {
             case SUBJECT:
                 s = GGApp.GG_APP.getString(R.string.subject_course);
                 break;
+            case LESSON:
+                s = GGApp.GG_APP.getString(R.string.lhour);
+                break;
             default:
                 s = "";
         }
         return s;
-    }
-
-    public static FilterType getTypeFromString(String s) {
-        if(s.equals(GGApp.GG_APP.getString(R.string.teacher)))
-            return FilterType.TEACHER;
-        else if(s.equals(GGApp.GG_APP.getString(R.string.school_class)))
-            return FilterType.CLASS;
-        else if(s.equals(GGApp.GG_APP.getString(R.string.subject_course)))
-            return FilterType.SUBJECT;
-        else
-            return null;
     }
 
     @Override
@@ -96,7 +92,7 @@ public class Filter {
     }
 
     public static enum FilterType {
-        CLASS, TEACHER, SUBJECT
+        CLASS, TEACHER, SUBJECT, LESSON
     }
 
     public static class FilterList extends ArrayList<Filter> {
