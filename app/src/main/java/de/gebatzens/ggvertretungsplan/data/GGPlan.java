@@ -29,6 +29,8 @@ import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -232,6 +234,14 @@ public class GGPlan {
             for(Entry e : rlist)
                 list.remove(e);
         }
+
+        Collections.sort(list, new Comparator<Entry>() {
+            @Override
+            public int compare(Entry lhs, Entry rhs) {
+                return lhs.lesson.compareTo(rhs.lesson);
+            }
+        });
+
         return list;
 
     }
