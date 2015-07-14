@@ -276,7 +276,7 @@ public class GGApp extends Application {
                         break;
                 }
 
-                if(updateFragments && update)
+                if(activity != null && updateFragments && update)
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
