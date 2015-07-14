@@ -307,7 +307,7 @@ public class SetupActivity extends AppCompatActivity {
     public void startDownloading() {
         final ProgressDialog d = new ProgressDialog(this);
         d.setTitle(GGApp.GG_APP.school.name);
-        d.setMessage("Downloading image...");
+        d.setMessage(getString(R.string.downloading_image));
         d.setCancelable(false);
         d.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         d.show();
