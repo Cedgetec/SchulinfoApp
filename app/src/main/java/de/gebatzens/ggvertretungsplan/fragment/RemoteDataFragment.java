@@ -90,7 +90,7 @@ public abstract class RemoteDataFragment extends Fragment {
         return c2;
     }
 
-    public int toPixels(float dp) {
+    public static int toPixels(float dp) {
         float scale = GGApp.GG_APP.getResources().getDisplayMetrics().density;
         return (int) (dp * scale);
     }

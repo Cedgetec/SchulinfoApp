@@ -35,6 +35,10 @@
             android:key="developers"
             android:dialogMessage="@string/developer_dialog"
             android:negativeButtonText=""/>
+        <Preference android:title="@string/terms_title"
+            android:summary=""
+            android:key="terms">
+        </Preference>
         <Preference android:title="@string/github"
             android:summary="https://github.com/GGDevelopers/SchulinfoAPP"
             android:key="githublink"/>

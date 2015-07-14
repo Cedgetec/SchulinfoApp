@@ -114,12 +114,23 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-            Preference pref_githublink = findPreference("githublink");
-            pref_githublink.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            Preference prefGithub = findPreference("githublink");
+            prefGithub.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     Intent linkIntent = new Intent(Intent.ACTION_VIEW);
                     linkIntent.setData(Uri.parse("https://github.com/GGDevelopers/SchulinfoAPP"));
                     startActivity(linkIntent);
+                    return true;
+                }
+            });
+
+            Preference prefTerms = findPreference("terms");
+            prefTerms.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent intent = new Intent(getActivity(), TextActivity.class);
+                    intent.putExtra("title", R.string.terms_title);
+                    intent.putExtra("text", R.string.terms);
+                    startActivity(intent);
                     return true;
                 }
             });

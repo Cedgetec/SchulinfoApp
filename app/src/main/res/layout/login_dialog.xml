@@ -28,4 +28,10 @@
         android:layout_marginTop="6dp"
         android:text="@string/show_pwd" />
 
+    <CheckBox
+        android:id="@+id/acceptTerms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"/>
+
 </LinearLayout>

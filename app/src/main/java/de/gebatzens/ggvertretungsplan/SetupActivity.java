@@ -27,8 +27,13 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.Spanned;
 import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,14 +42,18 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.regex.Pattern;
+
+import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
 
 public class SetupActivity extends AppCompatActivity {
 
     SchoolListAdapter adapter;
     ListView list;
-    CheckBox mcbPasswordToggle;
-    EditText mEtPasswordInput;
 
     @Override
     public void onCreate(Bundle saved) {
@@ -84,9 +93,11 @@ public class SetupActivity extends AppCompatActivity {
                 School s = School.LIST.get(position);
                 GGApp.GG_APP.setSchool(s.sid);
 
+                Spanned link = Html.fromHtml(getResources().getString(R.string.i_accept) +
+                        " <a href='ggactivity://text?title=" + R.string.terms_title + "&text=" + R.string.terms + "'>" + getResources().getString(R.string.terms_title) + "</a>");
+
                 if (s.loginNeeded) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
-                    AlertDialog dialog;
                     builder.setTitle(getResources().getString(R.string.login));
                     builder.setView(((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.login_dialog, null));
                     builder.setPositiveButton(getResources().getString(R.string.do_login_submit), new DialogInterface.OnClickListener() {
@@ -134,49 +145,90 @@ public class SetupActivity extends AppCompatActivity {
                         }
                     });
 
-                    dialog = builder.create();
+                    final AlertDialog dialog = builder.create();
                     dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                     dialog.show();
-                    mEtPasswordInput = (EditText) dialog.findViewById(R.id.passwordInput);
-                    mcbPasswordToggle = (CheckBox) dialog.findViewById(R.id.passwordToggle);
-                    mcbPasswordToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    final EditText passwordInput = (EditText) dialog.findViewById(R.id.passwordInput);
+                    final CheckBox passwordToggle = (CheckBox) dialog.findViewById(R.id.passwordToggle);
+                    passwordToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if (!isChecked) {
-                                mEtPasswordInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                                mEtPasswordInput.setSelection(mEtPasswordInput.getText().length());
+                                passwordInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                passwordInput.setSelection(passwordInput.getText().length());
                             } else {
-                                mEtPasswordInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                                mEtPasswordInput.setSelection(mEtPasswordInput.getText().length());
+                                passwordInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                passwordInput.setSelection(passwordInput.getText().length());
                             }
                         }
                     });
+
+                    CheckBox acceptTerms = (CheckBox) dialog.findViewById(R.id.acceptTerms);
+                    acceptTerms.setMovementMethod(new LinkMovementMethod());
+                    acceptTerms.setClickable(true);
+                    acceptTerms.setText(link);
+
+                    acceptTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(isChecked);
+                        }
+                    });
+
+                    dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+
+
                 } else {
-                    new AsyncTask<Integer, Integer, Integer>() {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
+                    builder.setTitle(getResources().getString(R.string.login));
 
-                        @Override
-                        public void onPostExecute(Integer i) {
-                            switch (i) {
-                                case 0:
-                                    startDownloading();
-                                    break;
-                                case 1:
-                                    //Bug
-                                    break;
-                                case 2:
-                                    Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
-                                    break;
-                                case 3:
-                                    Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
-                                    break;
-                            }
-                        }
+                    TextView text = new TextView(SetupActivity.this);
+                    text.setTextSize(15);
+                    int p = RemoteDataFragment.toPixels(20);
+                    text.setPadding(p, p, p, p);
+                    text.setMovementMethod(new LinkMovementMethod());
+                    text.setText(link);
+                    builder.setView(text);
 
+                    builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
-                        protected Integer doInBackground(Integer... params) {
-                            return GGApp.GG_APP.remote.login(null, null);
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                            new AsyncTask<Integer, Integer, Integer>() {
+
+                                @Override
+                                public void onPostExecute(Integer i) {
+                                    switch (i) {
+                                        case 0:
+                                            startDownloading();
+                                            break;
+                                        case 1:
+                                            //Bug
+                                            break;
+                                        case 2:
+                                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
+                                            break;
+                                        case 3:
+                                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
+                                            break;
+                                    }
+                                }
+
+                                @Override
+                                protected Integer doInBackground(Integer... params) {
+                                    return GGApp.GG_APP.remote.login(null, null);
+                                }
+                            }.execute();
                         }
-                    }.execute();
+                    });
+                    builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
 
                 }
             }
@@ -274,7 +326,9 @@ public class SetupActivity extends AppCompatActivity {
                 d.dismiss();
                 Intent i = new Intent(SetupActivity.this, MainActivity.class);
                 i.putExtra("reload", true);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
+
             }
         }.start();
     }

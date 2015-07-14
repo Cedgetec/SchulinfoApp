@@ -144,7 +144,12 @@
     <string name="download_schools">Downloading school list</string>
     <string name="room">Room</string>
     <string name="classes">Classes</string>
+    <string name="i_accept">I accept the</string>
 
+    <string name="terms_title">Terms of use</string>
+    <string name="terms">1. The data showed in the app is preliminary. We cannot guarantee accuracy and currency.\n\n
+    2. In general only the schedules in school are valid.\n\n
+    3. If you have questions or suggestions, please send us an e-mail: info@ggdevelopers.de</string>
 
     <string-array name="subjects">
         <item>d|German</item>
