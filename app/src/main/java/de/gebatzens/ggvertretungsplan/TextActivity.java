@@ -16,32 +16,26 @@
 
 package de.gebatzens.ggvertretungsplan;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-public class TextActivity extends Activity {
+public class TextActivity extends AppCompatActivity {
 
 
     @Override
     public void onCreate(Bundle bundle) {
-        if(GGApp.GG_APP.school == null)
-            setTheme(R.style.AppThemeIndigoLight);
-        else
-            setTheme(GGApp.GG_APP.school.getTheme());
+        setTheme(R.style.AppThemeIndigoLight);
         super.onCreate(bundle);
         setContentView(R.layout.activity_text);
 
         Toolbar mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mToolBar.setTitleTextColor(Color.WHITE);
-        if(GGApp.GG_APP.school == null)
-            mToolBar.setBackgroundColor(getResources().getColor(R.color.setupColor));
-        else
-            mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
+        mToolBar.setBackgroundColor(getResources().getColor(R.color.setupColor));
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

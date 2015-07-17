@@ -71,6 +71,7 @@ public class SetupActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle(getString(R.string.app_name));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.setupColor));
         toolbar.inflateMenu(R.menu.setup_menu);
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
