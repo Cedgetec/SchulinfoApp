@@ -14,18 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/supported_schools"
-            android:gravity="center"
-            android:textSize="30sp"
-            android:layout_margin="16dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/setup_title" />
-
         <ListView
             android:id="@+id/setup_list"
             android:layout_width="match_parent"
