@@ -284,7 +284,7 @@ public class GGApp extends Application {
                         }
                     });
 
-                if(finished != null)
+                if(activity != null && finished != null)
                     activity.runOnUiThread(finished);
             }
         }.start();
