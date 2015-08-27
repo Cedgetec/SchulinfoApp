@@ -13,6 +13,11 @@
         <item name="android:windowActionModeOverlay">true</item>
     </style>
 
+    <!-- Setup application themes -->
+    <style name="SetupTheme" parent="AppTheme.Base.Light">
+        <!-- api 21 and higher -->
+    </style>
+
     <!-- Light application themes -->
     <style name="AppThemeRedLight" parent="AppTheme.Base.Light">
         <item name="colorPrimary">#F44336</item>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application themes
+    <!-- Base application themes -->
     <style name="AppTheme.Base.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowContentTransitions">true</item>
@@ -17,7 +17,12 @@
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
-    </style>-->
+    </style>
+
+    <!-- Setup application themes -->
+    <style name="SetupTheme" parent="AppTheme.Base.Light">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 
     <!-- Base popup themes -->
     <style name="Theme.AlertDialog.Base.Light" parent="Theme.AppCompat.Light.Dialog">
