@@ -1,68 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#607D8B">
+        android:layout_height="wrap_content"
+        app:tabMode="scrollable"
+        app:tabIndicatorHeight="0dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/setup_title_1"
-            android:gravity="center"
-            android:textSize="30sp"
-            android:textColor="#ffffff"
-            android:layout_margin="16dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/setup_title" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/setup_title"
-            android:layout_above="@+id/nextStep">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/setup_description"
-                    android:textColor="#ffffff"
-                    android:layout_margin="16dp" />
-            </LinearLayout>
-        </ScrollView>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/next"
-            android:id="@+id/nextStep"
-            android:background="@drawable/custom_white_button"
-            android:textColor="#455A64"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:paddingLeft="47dp"
-            android:paddingRight="47dp"
-            android:layout_margin="18dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
-        <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/coordinator_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.design.widget.CoordinatorLayout>
-
-    </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:background="@android:color/white" />
 
 </LinearLayout>

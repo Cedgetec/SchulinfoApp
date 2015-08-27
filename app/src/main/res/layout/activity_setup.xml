@@ -17,8 +17,7 @@
         <ListView
             android:id="@+id/setup_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/setup_title"/>
+            android:layout_height="match_parent"/>
 
         <View
             android:layout_width="fill_parent"
