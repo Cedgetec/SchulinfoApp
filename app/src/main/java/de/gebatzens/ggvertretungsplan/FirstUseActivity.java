@@ -29,21 +29,14 @@ public class FirstUseActivity extends AppCompatActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        //TODO
-        if(/*BuildConfig.DEBUG*/ true) {
-            startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
-            return;
-        }
-
         setContentView(R.layout.activity_firstuse);
 
         nextStep = (Button) findViewById(R.id.nextStep);
         nextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
-                //save and switch setup page
-
-                //startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
+                startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
+                finish();
             }
         });
 
