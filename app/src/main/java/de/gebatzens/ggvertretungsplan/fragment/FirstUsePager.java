@@ -62,12 +62,19 @@ public class FirstUsePager extends Fragment {
         ImageView i = new ImageView(getActivity());
         i.setAdjustViewBounds(true);
         i.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        i.setMaxHeight(toPixels(350));
+        i.setPadding(toPixels(20), toPixels(20), toPixels(20), toPixels(20));
+        RelativeLayout.LayoutParams iparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        iparams.addRule(RelativeLayout.ABOVE, R.id.first_use_text);
+        i.setLayoutParams(iparams);
         LinearLayout l = new LinearLayout(getActivity());
+        l.setId(R.id.first_use_text);
         l.setOrientation(LinearLayout.VERTICAL);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         l.setLayoutParams(lp);
-        l.setPadding(toPixels(48),toPixels(48),toPixels(48),toPixels(96));
+        l.setPadding(toPixels(48),toPixels(0),toPixels(48),toPixels(96));
         TextView tvhead = new TextView(getActivity());
         TextView tvsub = new TextView(getActivity());
         tvhead.setTextColor(Color.WHITE);
@@ -79,25 +86,25 @@ public class FirstUsePager extends Fragment {
         switch(mPage) {
             case 1:
                 r.setBackgroundColor(Color.parseColor("#1976D2"));
-                i.setImageResource(R.drawable.setup_2);
+                i.setImageResource(R.drawable.firstuse_vertretungsplan);
                 tvhead.setText("Deine SchulinfoAPP");
                 tvsub.setText("Ab sofort immer informiert über den Vertretungsplan und mehr...");
                 break;
             case 2:
                 r.setBackgroundColor(Color.parseColor("#F4511E"));
-                i.setImageResource(R.drawable.vegetarian);
+                i.setImageResource(R.drawable.firstuse_perso);
                 tvhead.setText("Planänderungen auf dich angepasst");
                 tvsub.setText("Personalisiere den Vertretungsplan und passe ihn auf deine Klasse an.");
                 break;
             case 3:
                 r.setBackgroundColor(Color.parseColor("#43A047"));
-                i.setImageResource(R.drawable.meat);
+                i.setImageResource(R.drawable.firstuse_filter);
                 tvhead.setText("Der Kursfilter");
                 tvsub.setText("Trage im Filtermenü Kurse ein, die dich nicht betreffen, um sie von deiner persönlichen Übersicht auszuschließen.");
                 break;
             case 4:
                 r.setBackgroundColor(Color.parseColor("#00ACC1"));
-                i.setImageResource(R.drawable.meat);
+                i.setImageResource(R.drawable.firstuse_weiteres);
                 tvhead.setText("Noch nicht genug?");
                 tvsub.setText("Weitere Funktionen: Falls von der Schule unterstützt, kannst du News-, Mensa-, und Klausurenplan in der App einsehen.");
                 break;
@@ -105,8 +112,8 @@ public class FirstUsePager extends Fragment {
 
         l.addView(tvhead);
         l.addView(tvsub);
-        r.addView(l);
         r.addView(i);
+        r.addView(l);
 
         return r;
     }
