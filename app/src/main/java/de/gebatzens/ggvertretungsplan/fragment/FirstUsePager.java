@@ -78,22 +78,28 @@ public class FirstUsePager extends Fragment {
 
         switch(mPage) {
             case 1:
-                r.setBackgroundColor(Color.parseColor("#1E88E5"));
-                i.setImageResource(R.drawable.no_content);
-                tvhead.setText("Unterwegs Dokumente erstellen und bearbeiten");
-                tvsub.setText("Bleiben Sie produktiv, mit oder ohne Internetverbindung.");
+                r.setBackgroundColor(Color.parseColor("#1976D2"));
+                i.setImageResource(R.drawable.setup_2);
+                tvhead.setText("Deine SchulinfoAPP");
+                tvsub.setText("Ab sofort immer informiert über den Vertretungsplan und mehr...");
                 break;
             case 2:
-                r.setBackgroundColor(Color.parseColor("#43A047"));
+                r.setBackgroundColor(Color.parseColor("#F4511E"));
                 i.setImageResource(R.drawable.vegetarian);
-                tvhead.setText("Unterwegs Dokumente erstellen und bearbeiten");
-                tvsub.setText("Bleiben Sie produktiv, mit oder ohne Internetverbindung.");
+                tvhead.setText("Planänderungen auf dich angepasst");
+                tvsub.setText("Personalisiere den Vertretungsplan und passe ihn auf deine Klasse an.");
                 break;
             case 3:
-                r.setBackgroundColor(Color.parseColor("#FB8C00"));
+                r.setBackgroundColor(Color.parseColor("#43A047"));
                 i.setImageResource(R.drawable.meat);
-                tvhead.setText("Unterwegs Dokumente erstellen und bearbeiten");
-                tvsub.setText("Bleiben Sie produktiv, mit oder ohne Internetverbindung.");
+                tvhead.setText("Der Kursfilter");
+                tvsub.setText("Trage im Filtermenü Kurse ein, die dich nicht betreffen, um sie von deiner persönlichen Übersicht auszuschließen.");
+                break;
+            case 4:
+                r.setBackgroundColor(Color.parseColor("#00ACC1"));
+                i.setImageResource(R.drawable.meat);
+                tvhead.setText("Noch nicht genug?");
+                tvsub.setText("Weitere Funktionen: Falls von der Schule unterstützt, kannst du News-, Mensa-, und Klausurenplan in der App einsehen.");
                 break;
         }
 

@@ -42,14 +42,8 @@ public class FirstUseActivity extends FragmentActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         /*
-        nextStep = (Button) findViewById(R.id.nextStep);
-        nextStep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View viewIn) {
-                startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
-                finish();
-            }
-        });
+        startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
+        finish();
         */
 
     }
