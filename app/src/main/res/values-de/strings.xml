@@ -141,6 +141,7 @@
     <string name="day_mode">Tagmodus</string>
     <string name="personalisation_pickColor">Farbe auswählen</string>
     <string name="download_schools">Lade Schulen</string>
+    <string name="classes">Klassen</string>
     <string name="room">Raum</string>
     <string name="i_accept">Ich akzeptiere die</string>
     <string name="downloading_image">Lade Bild herunter...</string>
@@ -169,6 +170,28 @@
         <item>fr|Französisch</item>
         <item>chi|Chinesisch</item>
     </string-array>
-    <string name="classes">Klassen</string>
+
+    <string-array name="theme_color_names">
+        <item>Rot</item>
+        <item>Rosa</item>
+        <item>Lila</item>
+        <item>Dunkellila</item>
+        <item>Indigo</item>
+        <item>Blau</item>
+        <item>Hellblau</item>
+        <item>Cyan</item>
+        <item>Teal</item>
+        <item>Grün</item>
+        <item>Hellgrün</item>
+        <item>Limone</item>
+        <item>Gelb</item>
+        <item>Bernstein</item>
+        <item>Orange</item>
+        <item>Dunkelorange</item>
+        <item>Braun</item>
+        <item>Grau</item>
+        <item>Blau Grau</item>
+        <item>Standard</item>
+    </string-array>
 
 </resources>

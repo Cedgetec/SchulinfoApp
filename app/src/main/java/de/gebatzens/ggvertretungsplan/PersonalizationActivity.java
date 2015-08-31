@@ -36,6 +36,8 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+
 public class PersonalizationActivity extends AppCompatActivity {
 
     Toolbar mToolBar;
@@ -158,7 +160,9 @@ public class PersonalizationActivity extends AppCompatActivity {
                         }
                         holder.icon.setBackgroundResource(R.drawable.colored_circle);
                         holder.icon.getBackground().setColorFilter(loadThemeColor(themeNames[position]), PorterDuff.Mode.SRC_ATOP);
-                        holder.title.setText(themeNames[position]);
+                        TypedArray theme_color_names_typedarray = getResources().obtainTypedArray(R.array.theme_color_names);
+                        CharSequence[] theme_color_names = theme_color_names_typedarray.getTextArray(0);
+                        holder.title.setText(theme_color_names[position]);
                         if (GGApp.GG_APP.isDarkThemeEnabled()) {
                             holder.title.setTextColor(Color.parseColor("#fafafa"));
                         } else{
