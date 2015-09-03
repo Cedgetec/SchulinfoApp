@@ -24,6 +24,10 @@ import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -107,47 +111,6 @@ public class School {
                    && colorArray == s.colorArray && image.equals(s.image) && city.equals(s.city) && website.equals(s.website) && loginNeeded == s.loginNeeded;
     }
 
-    private static void readJSON(JsonReader reader, School s) throws IOException {
-        while(reader.hasNext()) {
-            String name = reader.nextName();
-            if(name.equals("sid"))
-                s.sid = reader.nextString();
-            else if(name.equals("name"))
-                s.name = reader.nextString();
-            else if(name.equals("login"))
-                s.loginNeeded = reader.nextBoolean();
-            else if(name.equals("theme")) {
-                s.themeName = reader.nextString();
-                s.loadTheme();
-            } else if(name.equals("image"))
-                s.image = reader.nextString();
-            else if(name.equals("website"))
-                s.website = reader.nextString();
-            else if(name.equals("city"))
-                s.city = reader.nextString();
-            else if(name.equals("fragments")) {
-                reader.beginArray();
-                while(reader.hasNext()) {
-                    //TODO: Data
-                    GGApp.FragmentType type = null;
-                    s.fragments.add(type);
-                    reader.beginObject();
-                    while(reader.hasNext()) {
-                        String name2 = reader.nextName();
-                        if(name2.equals("type")) {
-                            type = GGApp.FragmentType.valueOf(reader.nextString());
-                        } else {
-                            reader.skipValue();
-                        }
-                    }
-                    reader.endObject();
-                }
-                reader.endArray();
-            } else
-                reader.skipValue();
-        }
-    }
-
     public static boolean fetchList() {
         Log.i("ggvp", "Downloading school list");
 
@@ -156,19 +119,29 @@ public class School {
         List<School> newList = new ArrayList<School>();
 
         try {
-            HttpURLConnection con = GGApp.GG_APP.remote.openConnection("/getSchools", false);
-            if(con.getResponseCode() == 200) {
-                JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
-                reader.beginArray();
-                while(reader.hasNext()) {
-                    reader.beginObject();
+            GGRemote.APIResponse re = GGApp.GG_APP.remote.doRequest("/getSchools", null);
+            if(re.state == GGRemote.APIState.SUCCEEDED) {
+                JSONArray schools = (JSONArray) re.data;
+                for(int i = 0; i < schools.length(); i++) {
+                    JSONObject school = schools.getJSONObject(i);
                     School s = new School();
-                    readJSON(reader, s);
                     newList.add(s);
-                    reader.endObject();
+
+                    s.name = school.optString("name", "[Undefined]");
+                    s.city = school.optString("city");
+                    s.themeName = school.optString("theme", "Blue");
+                    s.website = school.getString("website");
+                    s.loginNeeded = school.getBoolean("auth");
+                    s.sid = school.getInt("id") + "";
+                    s.image = school.optString("image", "");
+                    s.loadTheme();
+
+                    s.fragments.add(GGApp.FragmentType.PLAN);
+                    s.fragments.add(GGApp.FragmentType.NEWS);
+                    s.fragments.add(GGApp.FragmentType.MENSA);
+                    s.fragments.add(GGApp.FragmentType.EXAMS);
+
                 }
-                reader.endArray();
-                reader.close();
 
                 LIST.clear();
                 LIST.addAll(newList);
@@ -177,8 +150,7 @@ public class School {
 
                 return true;
             } else {
-                Log.e("ggvp", "server returned " + con.getResponseCode());
-
+                throw new Exception("Received state " + re.state);
             }
         } catch(Exception e) {
             Log.w("ggvp", "Failed to download school list", e);
@@ -200,7 +172,7 @@ public class School {
 
                 writer.name("sid").value(s.sid);
                 writer.name("name").value(s.name);
-                writer.name("login").value(s.loginNeeded);
+                writer.name("auth").value(s.loginNeeded);
                 writer.name("website").value(s.website);
                 writer.name("image").value(s.image);
                 writer.name("theme").value(s.themeName);
@@ -223,18 +195,30 @@ public class School {
     public static void loadList() {
         LIST.clear();
         try {
-            InputStream in = GGApp.GG_APP.openFileInput("schools");
-            JsonReader reader = new JsonReader(new InputStreamReader(in));
-            reader.beginArray();
-            while(reader.hasNext()) {
-                reader.beginObject();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(GGApp.GG_APP.openFileInput("schools")));
+            String content = "", line = "";
+            while((line = reader.readLine()) != null)
+                content += line;
+
+            JSONArray array = new JSONArray(content);
+            for(int i = 0; i < array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
                 School s = new School();
-                readJSON(reader, s);
-                reader.endObject();
                 LIST.add(s);
+
+                s.sid = obj.getString("sid");
+                s.name = obj.getString("name");
+                s.city = obj.getString("city");
+                s.themeName = obj.getString("theme");
+                s.website = obj.getString("website");
+                s.loginNeeded = obj.getBoolean("auth");
+                s.image = obj.getString("image");
+
             }
-            reader.endArray();
-            reader.close();
+
+
+
+
         } catch(Exception e) {
 
         }
