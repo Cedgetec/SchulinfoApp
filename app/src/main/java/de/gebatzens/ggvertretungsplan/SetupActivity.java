@@ -28,12 +28,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.Spanned;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,11 +40,8 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.regex.Pattern;
 
 import de.gebatzens.ggvertretungsplan.fragment.RemoteDataFragment;
 

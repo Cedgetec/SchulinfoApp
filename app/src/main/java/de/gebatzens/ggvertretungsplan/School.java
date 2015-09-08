@@ -20,7 +20,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
 
@@ -29,17 +28,13 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class School {
 
@@ -137,9 +132,6 @@ public class School {
                     s.loadTheme();
 
                     s.fragments.add(GGApp.FragmentType.PLAN);
-                    s.fragments.add(GGApp.FragmentType.NEWS);
-                    s.fragments.add(GGApp.FragmentType.MENSA);
-                    s.fragments.add(GGApp.FragmentType.EXAMS);
 
                 }
 

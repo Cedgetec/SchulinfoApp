@@ -46,6 +46,11 @@ public class MQTTService extends IntentService {
         if(started)
             return;
         started = true;
+
+        //TODO
+        if(true)
+            return;
+
         Log.w("ggmqtt", "MQTT Service started");
 
         final String token;

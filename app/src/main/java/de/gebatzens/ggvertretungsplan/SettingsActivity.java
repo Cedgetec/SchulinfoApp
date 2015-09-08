@@ -85,7 +85,8 @@ public class SettingsActivity extends AppCompatActivity {
                         protected Void doInBackground(Object... params) {
                             try {
 
-                                final String version = getVersion();
+                                //TODO
+                                final String version = BuildConfig.VERSION_NAME;
 
                                 if (!version.equals(BuildConfig.VERSION_NAME)) {
                                     ((SettingsActivity) getActivity()).showUpdateDialog(version);
@@ -349,23 +350,6 @@ public class SettingsActivity extends AppCompatActivity {
         i.putExtra("recreate", recreate);
         setResult(changed ? RESULT_OK : RESULT_CANCELED, i);
         super.finish();
-    }
-
-    public static String getVersion() throws Exception {
-        HttpsURLConnection con = (HttpsURLConnection) new URL(BuildConfig.BACKEND_SERVER + "/infoapp/update.php?version").openConnection();
-        con.setRequestMethod("POST");
-
-        if (con.getResponseCode() == 200) {
-            BufferedInputStream in = new BufferedInputStream(con.getInputStream());
-            Scanner scan = new Scanner(in);
-            final StringBuilder resp = new StringBuilder("");
-            while (scan.hasNextLine())
-                resp.append(scan.nextLine());
-            scan.close();
-            return resp.toString();
-        }
-        return null;
-
     }
 
     public void showUpdateDialog(final String version) throws Exception {

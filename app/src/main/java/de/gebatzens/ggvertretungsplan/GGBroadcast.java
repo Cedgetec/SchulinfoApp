@@ -105,7 +105,7 @@ public class GGBroadcast extends BroadcastReceiver {
             return;
         if(BuildConfig.DEBUG)
             return;
-        try {
+        /*try {
             String version = SettingsActivity.getVersion();
             if(!version.equals(BuildConfig.VERSION_NAME)) {
                 Intent intent = new Intent(gg, SettingsActivity.class);
@@ -117,7 +117,7 @@ public class GGBroadcast extends BroadcastReceiver {
         } catch(Exception e) {
             e.printStackTrace();
 
-        }
+        }*/
     }
 
     public static void createAlarm(Context context) {

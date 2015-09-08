@@ -44,7 +44,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import de.gebatzens.ggvertretungsplan.fragment.ExamFragment;
@@ -111,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
 
         mStrings = new String[] {getResources().getString(R.string.substitute_schedule), getResources().getString(R.string.news), getResources().getString(R.string.cafeteria),
                 getResources().getString(R.string.exams)};
-
 
 
         NotificationManager nm =
@@ -209,8 +207,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(linkIntent);
             }
         });
-        final int MENU_ITEMS = 5;
-        final ArrayList<View> mMenuItems = new ArrayList<>(MENU_ITEMS);
+
+        final ArrayList<View> mMenuItems = new ArrayList<>();
         final Menu navMenu = navigationView.getMenu();
         navigationView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -228,10 +226,16 @@ public class MainActivity extends AppCompatActivity {
         selectedItem = GGApp.GG_APP.school.fragments.indexOf(GGApp.GG_APP.getFragmentType());
         navigationView.getMenu().getItem(selectedItem).setChecked(true);
 
+        for(int i = 0; i < 4; i++) {
+            MenuItem item = navMenu.getItem(i);
+
+            item.setVisible(GGApp.GG_APP.school.fragments.indexOf(GGApp.FragmentType.values()[i]) != -1);
+        }
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
-                if(menuItem.getOrder() == mStrings.length){
+                if(menuItem.getOrder() == mStrings.length) {
                     mDrawerLayout.closeDrawers();
                     Intent i = new Intent(MainActivity.this, SettingsActivity.class);
                     startActivityForResult(i, 1);

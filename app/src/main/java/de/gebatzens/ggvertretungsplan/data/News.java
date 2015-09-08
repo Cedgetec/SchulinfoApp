@@ -19,6 +19,7 @@ package de.gebatzens.ggvertretungsplan.data;
 import android.content.Context;
 import android.util.JsonReader;
 import android.util.JsonWriter;
+import android.util.Log;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -100,7 +101,7 @@ public class News extends ArrayList<News.Entry> implements RemoteDataFragment.Re
             reader.endArray();
             reader.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            Log.w("ggvp", "News file does not exist");
             return false;
         }
 

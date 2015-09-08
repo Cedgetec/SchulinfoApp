@@ -36,8 +36,6 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
-
 public class PersonalizationActivity extends AppCompatActivity {
 
     Toolbar mToolBar;

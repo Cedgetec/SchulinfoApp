@@ -20,12 +20,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 
@@ -33,29 +30,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Scanner;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import de.gebatzens.ggvertretungsplan.data.Exams;
 import de.gebatzens.ggvertretungsplan.data.Filter;
