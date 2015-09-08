@@ -101,7 +101,7 @@ public class GGRemote {
 
     }
 
-    public void logout(boolean logout_local_only, final boolean delete_token) {
+    public void logout() {
         for(String name : GGApp.GG_APP.fileList())
             if(name.startsWith("schedule"))
                 GGApp.GG_APP.deleteFile(name);
@@ -121,7 +121,7 @@ public class GGRemote {
 
         try {
             Log.i("ggvp", "getPlans " + getToken());
-            APIResponse re = doRequest("/subst&token=" + getToken(), null);
+            APIResponse re = doRequest("/subst?token=" + getToken(), null);
 
 
             if(re.state == APIState.SUCCEEDED) {
@@ -175,7 +175,7 @@ public class GGRemote {
             e.date = p.date;
             p.entries.add(e);
             JSONObject entry = array.getJSONObject(i);
-            e.clazz = entry.getString("class");
+            e.clazz = entry.getString("sclass");
             e.lesson = "" + entry.getInt("lesson");
             e.teacher = entry.getString("substitutor");
             e.missing = entry.getString("missing");
@@ -342,6 +342,7 @@ public class GGRemote {
             JSONObject post = new JSONObject();
             post.put("username", user);
             post.put("passwd", pass);
+            post.put("sid", GGApp.GG_APP.getDefaultSID());
 
             APIResponse re = doRequest("/auth", post);
 
@@ -403,36 +404,27 @@ public class GGRemote {
     }
 
     public APIResponse doRequest(String url, JSONObject request) throws IOException {
-        HttpURLConnection con = (HttpURLConnection) new URL("https://" + BuildConfig.BACKEND_SERVER + url).openConnection();
+        HttpURLConnection con = (HttpURLConnection) new URL(BuildConfig.BACKEND_SERVER + url).openConnection();
 
         con.setRequestProperty("User-Agent", "SchulinfoAPP/" + BuildConfig.VERSION_NAME + " (" +
                 BuildConfig.VERSION_CODE + " " + BuildConfig.BUILD_TYPE + " Android " + Build.VERSION.RELEASE + " " + Build.PRODUCT + ")");
         con.setConnectTimeout(3000);
         con.setRequestMethod(request == null ? "GET" : "POST");
+        con.setInstanceFollowRedirects(false);
 
         if(request != null) {
             con.setDoOutput(true);
+            con.setRequestProperty("Content-Type", "application/json");
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            String s = "";
-            Iterator<String> keys = request.keys();
-            while(keys.hasNext()) {
-                String key = keys.next();
-                try {
-                    s += "&" + key + "=" + URLEncoder.encode(request.get(key).toString(), "utf-8");
-                } catch(JSONException e) {
-                    e.printStackTrace();
-
-                }
-            }
-            wr.writeBytes(s.substring(1));
+            wr.writeBytes(request.toString());
             wr.flush();
             wr.close();
         }
 
+        if(BuildConfig.DEBUG)
+            Log.d("ggvp", "connection to " + con.getURL() + " established");
 
-        Log.w("ggvp", "connection to " + con.getURL() + " established");
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(con.getResponseCode() != 200 ? con.getErrorStream() : con.getInputStream()));
         String response = "";
         String line = "";
         while((line = reader.readLine()) != null)
@@ -441,7 +433,10 @@ public class GGRemote {
         try {
             json = new JSONObject(response);
             String state = json.getString("state");
-            Object data = json.get("data");
+            if(BuildConfig.DEBUG)
+                Log.d("ggvp", "received state " + state + " " + con.getResponseCode());
+
+            Object data = json.opt("data");
             switch(state) {
                 case "not found":
                     return new APIResponse(APIState.NOT_FOUND);
@@ -453,7 +448,7 @@ public class GGRemote {
                     return new APIResponse(APIState.METHOD_NOT_ALLOWED);
                 case "missing parameter":
                     return new APIResponse(APIState.MISSING_PARAMETER);
-                case "suceeded":
+                case "succeeded":
                     return new APIResponse(APIState.SUCCEEDED, data);
                 case "error":
                 default:

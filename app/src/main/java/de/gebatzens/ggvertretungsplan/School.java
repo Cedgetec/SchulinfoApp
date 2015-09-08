@@ -127,12 +127,12 @@ public class School {
                     School s = new School();
                     newList.add(s);
 
-                    s.name = school.optString("name", "[Undefined]");
-                    s.city = school.optString("city");
-                    s.themeName = school.optString("theme", "Blue");
+                    s.name = school.getString("name");
+                    s.city = school.getString("city");
+                    s.themeName = school.getString("theme");
                     s.website = school.getString("website");
                     s.loginNeeded = school.getBoolean("auth");
-                    s.sid = school.getInt("id") + "";
+                    s.sid = school.getString("sid");
                     s.image = school.optString("image", "");
                     s.loadTheme();
 
@@ -246,7 +246,7 @@ public class School {
             return true;
         try {
             //InputStream in = GGApp.GG_APP.remote.openConnection("/infoapp/images/" + image, false).getInputStream();
-            InputStream in = new URL("https://" + BuildConfig.BACKEND_SERVER + "/images/" + image).openStream();
+            InputStream in = new URL(BuildConfig.BACKEND_SERVER + "/images/" + image).openStream();
             BitmapFactory.decodeStream(in).compress(Bitmap.CompressFormat.PNG, 90, GGApp.GG_APP.openFileOutput(image, Context.MODE_PRIVATE));
             in.close();
             return true;

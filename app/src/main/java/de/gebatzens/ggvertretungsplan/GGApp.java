@@ -121,13 +121,13 @@ public class GGApp extends Application {
                         .setSmallIcon(icon)
                         .setContentTitle(title)
                         .setContentText(message);
-        if(strings.length > 1) {
+        if (strings.length > 1) {
             NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
             inboxStyle.setBigContentTitle(strings[0]);
 
             boolean b = true;
-            for(String s : strings) {
-                if(!b) {
+            for (String s : strings) {
+                if (!b) {
                     inboxStyle.addLine(s);
                 }
                 b = false;
@@ -136,7 +136,7 @@ public class GGApp extends Application {
             mBuilder.setStyle(inboxStyle);
         }
         mBuilder.setColor(GGApp.GG_APP.school.getDarkColor());
-        if(light) {
+        if (light) {
             //mBuilder.setVibrate(new long[]{0, 1000});
             mBuilder.setLights(school.getColor(), 1000, 1000);
         }
@@ -152,10 +152,6 @@ public class GGApp extends Application {
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(id, mBuilder.build());
-    }
-
-    public String getSelectedProvider() {
-        return preferences.getString("schule", "gg");
     }
 
     public boolean notificationsEnabled() {
