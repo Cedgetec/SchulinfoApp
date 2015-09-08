@@ -24,11 +24,17 @@ import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +53,7 @@ public class School {
     public String website;
     public String city;
     public boolean loginNeeded;
+    public List<GGApp.FragmentType> fragments = new ArrayList<>();
 
     public static List<School> LIST = new ArrayList<School>();
 
@@ -112,38 +119,29 @@ public class School {
         List<School> newList = new ArrayList<School>();
 
         try {
-            HttpsURLConnection con = GGApp.GG_APP.remote.openConnection("/infoapp/get_schools.php", false);
-            if(con.getResponseCode() == 200) {
-                JsonReader reader = new JsonReader(new InputStreamReader(con.getInputStream()));
-                reader.beginArray();
-                while(reader.hasNext()) {
-                    reader.beginObject();
+            GGRemote.APIResponse re = GGApp.GG_APP.remote.doRequest("/getSchools", null);
+            if(re.state == GGRemote.APIState.SUCCEEDED) {
+                JSONArray schools = (JSONArray) re.data;
+                for(int i = 0; i < schools.length(); i++) {
+                    JSONObject school = schools.getJSONObject(i);
                     School s = new School();
-                    while(reader.hasNext()) {
-                        String name = reader.nextName();
-                        if(name.equals("sid"))
-                            s.sid = reader.nextString();
-                        else if(name.equals("name"))
-                            s.name = reader.nextString();
-                        else if(name.equals("login"))
-                            s.loginNeeded = reader.nextBoolean();
-                        else if(name.equals("theme")) {
-                            s.themeName = reader.nextString();
-                            s.loadTheme();
-                        } else if(name.equals("image"))
-                            s.image = reader.nextString();
-                        else if(name.equals("website"))
-                            s.website = reader.nextString();
-                        else if(name.equals("city"))
-                            s.city = reader.nextString();
-                        else
-                            reader.skipValue();
-                    }
                     newList.add(s);
-                    reader.endObject();
+
+                    s.name = school.getString("name");
+                    s.city = school.getString("city");
+                    s.themeName = school.getString("theme");
+                    s.website = school.getString("website");
+                    s.loginNeeded = school.getBoolean("auth");
+                    s.sid = school.getString("sid");
+                    s.image = school.optString("image", "");
+                    s.loadTheme();
+
+                    s.fragments.add(GGApp.FragmentType.PLAN);
+                    s.fragments.add(GGApp.FragmentType.NEWS);
+                    s.fragments.add(GGApp.FragmentType.MENSA);
+                    s.fragments.add(GGApp.FragmentType.EXAMS);
+
                 }
-                reader.endArray();
-                reader.close();
 
                 LIST.clear();
                 LIST.addAll(newList);
@@ -152,8 +150,7 @@ public class School {
 
                 return true;
             } else {
-                Log.e("ggvp", "server returned " + con.getResponseCode());
-
+                throw new Exception("Received state " + re.state);
             }
         } catch(Exception e) {
             Log.w("ggvp", "Failed to download school list", e);
@@ -175,11 +172,16 @@ public class School {
 
                 writer.name("sid").value(s.sid);
                 writer.name("name").value(s.name);
-                writer.name("login").value(s.loginNeeded);
+                writer.name("auth").value(s.loginNeeded);
                 writer.name("website").value(s.website);
                 writer.name("image").value(s.image);
                 writer.name("theme").value(s.themeName);
                 writer.name("city").value(s.city);
+                writer.name("fragment").beginArray();
+                for(GGApp.FragmentType type : s.fragments) {
+                    writer.beginObject().name("type").value(type.toString()).endObject();
+                }
+                writer.endArray();
 
                 writer.endObject();
             }
@@ -193,40 +195,30 @@ public class School {
     public static void loadList() {
         LIST.clear();
         try {
-            InputStream in = GGApp.GG_APP.openFileInput("schools");
-            JsonReader reader = new JsonReader(new InputStreamReader(in));
-            reader.beginArray();
-            while(reader.hasNext()) {
-                reader.beginObject();
-                School s = new School();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(GGApp.GG_APP.openFileInput("schools")));
+            String content = "", line = "";
+            while((line = reader.readLine()) != null)
+                content += line;
 
-                while(reader.hasNext()) {
-                    String name = reader.nextName();
-                    if(name.equals("sid"))
-                        s.sid = reader.nextString();
-                    else if(name.equals("name"))
-                        s.name = reader.nextString();
-                    else if(name.equals("theme")) {
-                        s.themeName = reader.nextString();
-                        s.loadTheme();
-                    } else if(name.equals("website"))
-                        s.website = reader.nextString();
-                    else if(name.equals("image"))
-                        s.image = reader.nextString();
-                    else if(name.equals("login"))
-                        s.loginNeeded = reader.nextBoolean();
-                    else if(name.equals("theme"))
-                        s.theme = reader.nextInt();
-                    else if(name.equals("city"))
-                        s.city = reader.nextString();
-                    else
-                        reader.skipValue();
-                }
-                reader.endObject();
+            JSONArray array = new JSONArray(content);
+            for(int i = 0; i < array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                School s = new School();
                 LIST.add(s);
+
+                s.sid = obj.getString("sid");
+                s.name = obj.getString("name");
+                s.city = obj.getString("city");
+                s.themeName = obj.getString("theme");
+                s.website = obj.getString("website");
+                s.loginNeeded = obj.getBoolean("auth");
+                s.image = obj.getString("image");
+
             }
-            reader.endArray();
-            reader.close();
+
+
+
+
         } catch(Exception e) {
 
         }
@@ -254,7 +246,7 @@ public class School {
             return true;
         try {
             //InputStream in = GGApp.GG_APP.remote.openConnection("/infoapp/images/" + image, false).getInputStream();
-            InputStream in = new URL("https://" + BuildConfig.BACKEND_SERVER + "/images/" + image).openStream();
+            InputStream in = new URL(BuildConfig.BACKEND_SERVER + "/images/" + image).openStream();
             BitmapFactory.decodeStream(in).compress(Bitmap.CompressFormat.PNG, 90, GGApp.GG_APP.openFileOutput(image, Context.MODE_PRIVATE));
             in.close();
             return true;

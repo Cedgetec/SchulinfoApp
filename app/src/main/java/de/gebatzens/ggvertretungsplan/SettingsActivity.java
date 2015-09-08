@@ -159,7 +159,7 @@ public class SettingsActivity extends AppCompatActivity {
                         builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                GGApp.GG_APP.remote.logout(false, cb.isChecked());
+                                GGApp.GG_APP.remote.logout();
                                 Intent i = new Intent();
                                 i.putExtra("setup", true);
                                 ((SettingsActivity) getActivity()).finish(RESULT_OK, i);

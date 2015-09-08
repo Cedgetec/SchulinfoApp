@@ -112,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
         mStrings = new String[] {getResources().getString(R.string.substitute_schedule), getResources().getString(R.string.news), getResources().getString(R.string.cafeteria),
                 getResources().getString(R.string.exams)};
 
+
+
         NotificationManager nm =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(123);
@@ -169,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setSubtitleTextColor(Color.WHITE);
         mToolbar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolbar.setTitle(GGApp.GG_APP.school.name);
-        mToolbar.setSubtitle(mStrings[Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType())]);
+        mToolbar.setSubtitle(mStrings[GGApp.GG_APP.school.fragments.indexOf(GGApp.GG_APP.getFragmentType())]);
 
         ((TextView) findViewById(R.id.drawer_image_text)).setText(GGApp.GG_APP.school.name);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -223,19 +225,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        selectedItem = Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType());
+        selectedItem = GGApp.GG_APP.school.fragments.indexOf(GGApp.GG_APP.getFragmentType());
         navigationView.getMenu().getItem(selectedItem).setChecked(true);
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
-                if(menuItem.getOrder() == 4){
+                if(menuItem.getOrder() == mStrings.length){
                     mDrawerLayout.closeDrawers();
                     Intent i = new Intent(MainActivity.this, SettingsActivity.class);
                     startActivityForResult(i, 1);
-                }else{
-                    if(GGApp.GG_APP.getFragmentType() != GGApp.FragmentType.values()[menuItem.getOrder()]) {
-                        GGApp.GG_APP.setFragmentType(GGApp.FragmentType.values()[menuItem.getOrder()]);
+                } else {
+                    if(GGApp.GG_APP.getFragmentType() != GGApp.GG_APP.school.fragments.get(menuItem.getOrder())) {
+                        GGApp.GG_APP.setFragmentType(GGApp.GG_APP.school.fragments.get(menuItem.getOrder()));
                         menuItem.setChecked(true);
                         mToolbar.setSubtitle(menuItem.getTitle());
                         mContent = createFragment();
