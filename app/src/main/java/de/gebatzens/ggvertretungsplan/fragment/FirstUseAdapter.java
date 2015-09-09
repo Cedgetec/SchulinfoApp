@@ -21,13 +21,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.HashMap;
+
 public class FirstUseAdapter extends FragmentPagerAdapter {
 
-    private Context context;
+    public HashMap<Integer, FirstUseFragment> fragments = new HashMap<>();
 
     public FirstUseAdapter(FragmentManager fm, Context context) {
         super(fm);
-        this.context = context;
+
     }
 
     @Override
@@ -37,7 +39,7 @@ public class FirstUseAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return FirstUseFragment.newInstance(position + 1);
+        return FirstUseFragment.newInstance(position);
     }
 
     @Override

@@ -3,6 +3,5 @@
 <resources>
 
     <item name="reload_button" type="id"/>
-    <item name="first_use_text" type="id"/>
 
 </resources>

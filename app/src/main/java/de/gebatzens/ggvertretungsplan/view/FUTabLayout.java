@@ -28,6 +28,7 @@ public class FUTabLayout  extends TabLayout {
 
     public FUTabLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+
     }
 
     @Override

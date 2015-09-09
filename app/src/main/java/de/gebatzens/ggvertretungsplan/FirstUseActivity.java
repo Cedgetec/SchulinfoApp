@@ -16,29 +16,67 @@
 
 package de.gebatzens.ggvertretungsplan;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import de.gebatzens.ggvertretungsplan.fragment.FirstUseAdapter;
+import de.gebatzens.ggvertretungsplan.fragment.FirstUseFragment;
 
 public class FirstUseActivity extends FragmentActivity {
+
+    public FirstUseAdapter adapter;
 
     @Override
     protected void onCreate(Bundle bundle) {
         setTheme(R.style.SetupTheme);
+        adapter = new FirstUseAdapter(getSupportFragmentManager(), FirstUseActivity.this);
+
         super.onCreate(bundle);
 
         setContentView(R.layout.activity_firstuse);
 
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new FirstUseAdapter(getSupportFragmentManager(),
-                FirstUseActivity.this));
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+                FirstUseAdapter adapter = (FirstUseAdapter) viewPager.getAdapter();
 
-        // Give the TabLayout the ViewPager
+                if(i >= 3)
+                    return;
+
+                FirstUseFragment frag1 = adapter.fragments.get(i);
+                FirstUseFragment frag2 = adapter.fragments.get(i + 1);
+
+
+                int red = (int) (Color.red(frag1.color) * (1f - v) + Color.red(frag2.color) * v);
+                int green = (int) (Color.green(frag1.color) * (1f - v) + Color.green(frag2.color) * v);
+                int blue = (int) (Color.blue(frag1.color) * (1f - v) + Color.blue(frag2.color) * v);
+                int newColor = Color.argb(255, red, green, blue);
+
+                if(frag1.getView() != null)
+                    frag1.getView().setBackgroundColor(newColor);
+                if(frag2.getView() != null)
+                    frag2.getView().setBackgroundColor(newColor);
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
