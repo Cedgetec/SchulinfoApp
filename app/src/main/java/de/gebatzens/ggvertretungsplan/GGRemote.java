@@ -67,19 +67,19 @@ public class GGRemote {
             @Override
             public void run() {
                 Snackbar.make(GGApp.GG_APP.activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), R.string.no_internet_connection, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.again, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            final View rv = GGApp.GG_APP.activity.getWindow().getDecorView();
-                            ((SwipeRefreshLayout) rv.findViewById(R.id.refresh)).setRefreshing(true);
-                            GGApp.GG_APP.refreshAsync(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ((SwipeRefreshLayout) rv.findViewById(R.id.refresh)).setRefreshing(false);
-                                }
-                            }, true, GGApp.GG_APP.getFragmentType());
-                        }
-                    }).show();
+                        .setAction(R.string.again, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final View rv = GGApp.GG_APP.activity.getWindow().getDecorView();
+                                ((SwipeRefreshLayout) rv.findViewById(R.id.refresh)).setRefreshing(true);
+                                GGApp.GG_APP.refreshAsync(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ((SwipeRefreshLayout) rv.findViewById(R.id.refresh)).setRefreshing(false);
+                                    }
+                                }, true, GGApp.GG_APP.getFragmentType());
+                            }
+                        }).show();
             }
         });
 
@@ -131,7 +131,10 @@ public class GGRemote {
             }
 
         } catch(Exception e) {
-            e.printStackTrace();
+            if(e instanceof IOException)
+                Log.w("ggvp", "Failed to get plans " + e.getMessage());
+            else
+                e.printStackTrace();
             plans.throwable = e;
 
         }
@@ -358,12 +361,13 @@ public class GGRemote {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
-            if (e instanceof IOException)
+            if (e instanceof IOException) {
+                Log.w("ggvp", "Login failed " + e.getMessage());
                 return 2;
-            else
+            } else {
+                e.printStackTrace();
                 return 3;
-
+            }
         }
     }
 

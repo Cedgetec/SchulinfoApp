@@ -28,6 +28,8 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -91,7 +93,7 @@ public class School {
 
     @Override
     public String toString() {
-        return "School[" + sid + "; " + name + "; " + color + "; " + darkColor + "; " + theme + "; " + colorArray + "; " + image + "; " + city + "; " + website + "; " + loginNeeded + "]";
+        return "School[" + sid + "; " + name + "; " + color + "; " + darkColor + "; " + theme + "; " + colorArray + "; " + image + "; " + city + "; " + website + "; " + loginNeeded +  ";" + fragments + "]";
     }
 
     @Override
@@ -145,8 +147,10 @@ public class School {
                 throw new Exception("Received state " + re.state);
             }
         } catch(Exception e) {
-            Log.w("ggvp", "Failed to download school list", e);
-
+            if(e instanceof IOException)
+                Log.w("ggvp", "Failed to download school list " + e.getMessage());
+            else
+                e.printStackTrace();
         }
 
         return false;
@@ -205,14 +209,22 @@ public class School {
                 s.website = obj.getString("website");
                 s.loginNeeded = obj.getBoolean("auth");
                 s.image = obj.getString("image");
+                JSONArray fragments = obj.getJSONArray("fragment");
+                for(int f = 0; f < fragments.length(); f++) {
+                    JSONObject fragObj = fragments.getJSONObject(f);
+                    s.fragments.add(GGApp.FragmentType.valueOf(fragObj.getString("type")));
+                }
+                Log.d("ggvp", "Loaded " + s);
 
             }
 
 
 
 
-        } catch(Exception e) {
+        } catch(FileNotFoundException e) {
 
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
 

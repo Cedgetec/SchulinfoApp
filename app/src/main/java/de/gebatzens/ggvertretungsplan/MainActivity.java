@@ -33,6 +33,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -169,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setSubtitleTextColor(Color.WHITE);
         mToolbar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolbar.setTitle(GGApp.GG_APP.school.name);
+        Log.d("ggvp", "fragment type " + GGApp.GG_APP.getFragmentType());
         mToolbar.setSubtitle(mStrings[GGApp.GG_APP.school.fragments.indexOf(GGApp.GG_APP.getFragmentType())]);
 
         ((TextView) findViewById(R.id.drawer_image_text)).setText(GGApp.GG_APP.school.name);
