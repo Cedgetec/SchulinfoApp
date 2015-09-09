@@ -23,8 +23,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class FirstUseAdapter extends FragmentPagerAdapter {
 
-    final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[] { "*", "*", "*" };
     private Context context;
 
     public FirstUseAdapter(FragmentManager fm, Context context) {
@@ -34,18 +32,17 @@ public class FirstUseAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return PAGE_COUNT;
+        return 4;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return FirstUsePager.newInstance(position + 1);
+        return FirstUseFragment.newInstance(position + 1);
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        // Generate title based on item position
-        return tabTitles[position];
+        return "";
     }
 
 }

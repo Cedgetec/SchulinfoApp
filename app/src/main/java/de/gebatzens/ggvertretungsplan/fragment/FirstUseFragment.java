@@ -17,7 +17,6 @@
 package de.gebatzens.ggvertretungsplan.fragment;
 
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -31,16 +30,14 @@ import android.widget.TextView;
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.R;
 
-public class FirstUsePager extends Fragment {
-
-    public static final String ARG_PAGE = "ARG_PAGE";
+public class FirstUseFragment extends Fragment {
 
     private int mPage;
 
-    public static FirstUsePager newInstance(int page) {
+    public static FirstUseFragment newInstance(int page) {
         Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
-        FirstUsePager fragment = new FirstUsePager();
+        args.putInt("page", page);
+        FirstUseFragment fragment = new FirstUseFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,7 +45,7 @@ public class FirstUsePager extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPage = getArguments().getInt(ARG_PAGE);
+        mPage = getArguments().getInt("page");
     }
 
     public static int toPixels(float dp) {
@@ -86,25 +83,25 @@ public class FirstUsePager extends Fragment {
         switch(mPage) {
             case 1:
                 r.setBackgroundColor(Color.parseColor("#1976D2"));
-                i.setImageResource(R.drawable.firstuse_vertretungsplan);
+                i.setImageResource(R.drawable.fu_device);
                 tvhead.setText("Deine SchulinfoAPP");
                 tvsub.setText("Ab sofort immer informiert über den Vertretungsplan und mehr...");
                 break;
             case 2:
                 r.setBackgroundColor(Color.parseColor("#F4511E"));
-                i.setImageResource(R.drawable.firstuse_perso);
+                i.setImageResource(R.drawable.fu_overview);
                 tvhead.setText("Planänderungen auf dich angepasst");
                 tvsub.setText("Personalisiere den Vertretungsplan und passe ihn auf deine Klasse an.");
                 break;
             case 3:
                 r.setBackgroundColor(Color.parseColor("#43A047"));
-                i.setImageResource(R.drawable.firstuse_filter);
+                i.setImageResource(R.drawable.fu_filter);
                 tvhead.setText("Der Kursfilter");
                 tvsub.setText("Trage im Filtermenü Kurse ein, die dich nicht betreffen, um sie von deiner persönlichen Übersicht auszuschließen.");
                 break;
             case 4:
                 r.setBackgroundColor(Color.parseColor("#00ACC1"));
-                i.setImageResource(R.drawable.firstuse_weiteres);
+                i.setImageResource(R.drawable.fu_more);
                 tvhead.setText("Noch nicht genug?");
                 tvsub.setText("Weitere Funktionen: Falls von der Schule unterstützt, kannst du News-, Mensa-, und Klausurenplan in der App einsehen.");
                 break;

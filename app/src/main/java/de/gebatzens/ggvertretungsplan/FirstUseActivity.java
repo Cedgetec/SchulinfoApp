@@ -36,6 +36,7 @@ public class FirstUseActivity extends FragmentActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new FirstUseAdapter(getSupportFragmentManager(),
                 FirstUseActivity.this));
+        viewPager.setOffscreenPageLimit(3);
 
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
