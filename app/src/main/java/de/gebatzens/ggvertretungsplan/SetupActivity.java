@@ -57,7 +57,7 @@ public class SetupActivity extends AppCompatActivity {
 
         if(GGApp.GG_APP.remote.isLoggedIn()) {
             startActivity(new Intent(this, MainActivity.class));
-            startDownloadThread(false);
+            //startDownloadThread(false);
             return;
         }
 
@@ -74,6 +74,8 @@ public class SetupActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.setup_refresh) {
                     showDownloadDialog();
+                } else if(menuItem.getItemId() == R.id.setup_other_school) {
+                    showLoginDialog(null, true);
                 }
                 return true;
             }
@@ -87,146 +89,8 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 School s = School.LIST.get(position);
-                GGApp.GG_APP.setSchool(s.sid);
 
-                Spanned link = Html.fromHtml(getResources().getString(R.string.i_accept) +
-                        " <a href='ggactivity://text?title=" + R.string.terms_title + "&text=" + R.string.terms + "'>" + getResources().getString(R.string.terms_title) + "</a>");
-
-                if (s.loginNeeded) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
-                    builder.setTitle(getResources().getString(R.string.login));
-                    builder.setView(((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.login_dialog, null));
-                    builder.setPositiveButton(getResources().getString(R.string.do_login_submit), new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(final DialogInterface dialog, int which) {
-                            new AsyncTask<Integer, Integer, Integer>() {
-
-                                @Override
-                                public void onPostExecute(Integer v) {
-                                    switch (v) {
-                                        case 0:
-                                            startDownloading();
-                                            break;
-                                        case 1:
-                                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.username_or_password_wrong), Snackbar.LENGTH_LONG).show();
-                                            break;
-                                        case 2:
-                                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
-                                            break;
-                                        case 3:
-                                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
-                                            break;
-                                    }
-                                }
-
-                                @Override
-                                protected Integer doInBackground(Integer... params) {
-                                    String user = ((EditText) ((Dialog) dialog).findViewById(R.id.usernameInput)).getText().toString();
-                                    String pass = ((EditText) ((Dialog) dialog).findViewById(R.id.passwordInput)).getText().toString();
-                                    return GGApp.GG_APP.remote.login(user, pass);
-
-                                }
-
-                            }.execute();
-                            dialog.dismiss();
-                        }
-                    });
-
-
-                    builder.setNegativeButton(getString(R.string.abort), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-
-                    final AlertDialog dialog = builder.create();
-                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                    dialog.show();
-                    final EditText passwordInput = (EditText) dialog.findViewById(R.id.passwordInput);
-                    final CheckBox passwordToggle = (CheckBox) dialog.findViewById(R.id.passwordToggle);
-                    passwordToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (!isChecked) {
-                                passwordInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                                passwordInput.setSelection(passwordInput.getText().length());
-                            } else {
-                                passwordInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                                passwordInput.setSelection(passwordInput.getText().length());
-                            }
-                        }
-                    });
-
-                    CheckBox acceptTerms = (CheckBox) dialog.findViewById(R.id.acceptTerms);
-                    acceptTerms.setMovementMethod(new LinkMovementMethod());
-                    acceptTerms.setClickable(true);
-                    acceptTerms.setText(link);
-
-                    acceptTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(isChecked);
-                        }
-                    });
-
-                    dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
-
-
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
-                    builder.setTitle(getResources().getString(R.string.login));
-
-                    TextView text = new TextView(SetupActivity.this);
-                    text.setTextSize(15);
-                    int p = RemoteDataFragment.toPixels(20);
-                    text.setPadding(p, p, p, p);
-                    text.setMovementMethod(new LinkMovementMethod());
-                    text.setText(link);
-                    builder.setView(text);
-
-                    builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-
-                            new AsyncTask<Integer, Integer, Integer>() {
-
-                                @Override
-                                public void onPostExecute(Integer i) {
-                                    switch (i) {
-                                        case 0:
-                                            startDownloading();
-                                            break;
-                                        case 1:
-                                            //Bug
-                                            break;
-                                        case 2:
-                                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
-                                            break;
-                                        case 3:
-                                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
-                                            break;
-                                    }
-                                }
-
-                                @Override
-                                protected Integer doInBackground(Integer... params) {
-                                    return GGApp.GG_APP.remote.login(null, null);
-                                }
-                            }.execute();
-                        }
-                    });
-                    builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.create().show();
-
-                }
+                showLoginDialog(s.sid, s.loginNeeded);
             }
         });
 
@@ -265,6 +129,109 @@ public class SetupActivity extends AppCompatActivity {
 
             }
         }.start();
+    }
+
+    public void showLoginDialog(final String sid, final boolean auth) {
+
+        Spanned link = Html.fromHtml(getResources().getString(R.string.i_accept) +
+                " <a href='ggactivity://text?title=" + R.string.terms_title + "&text=" + R.string.terms + "'>" + getResources().getString(R.string.terms_title) + "</a>");
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
+        builder.setTitle(getResources().getString(R.string.login));
+
+        builder.setView(((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.login_dialog, null));
+
+        builder.setPositiveButton(getResources().getString(R.string.do_login_submit), new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(final DialogInterface dialog, int which) {
+                new AsyncTask<Integer, Integer, Integer>() {
+
+                    @Override
+                    public void onPostExecute(Integer v) {
+                        switch (v) {
+                            case 0:
+                                startDownloading();
+                                break;
+                            case 1:
+                                Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.username_or_password_wrong), Snackbar.LENGTH_LONG).show();
+                                break;
+                            case 2:
+                                Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
+                                break;
+                            case 3:
+                                Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
+                                break;
+                        }
+                    }
+
+                    @Override
+                    protected Integer doInBackground(Integer... params) {
+                        String user = auth ? ((EditText) ((Dialog) dialog).findViewById(R.id.usernameInput)).getText().toString() : null;
+                        String pass = auth ? ((EditText) ((Dialog) dialog).findViewById(R.id.passwordInput)).getText().toString() : null;
+                        String lsid = sid == null ? ((EditText) ((Dialog) dialog).findViewById(R.id.sidInput)).getText().toString() : sid;
+                        return GGApp.GG_APP.remote.login(lsid, user, pass);
+
+                    }
+
+                }.execute();
+                dialog.dismiss();
+            }
+        });
+
+
+        builder.setNegativeButton(getString(R.string.abort), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.show();
+
+        if(auth) {
+            final EditText passwordInput = (EditText) dialog.findViewById(R.id.passwordInput);
+            final CheckBox passwordToggle = (CheckBox) dialog.findViewById(R.id.passwordToggle);
+            passwordToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (!isChecked) {
+                        passwordInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        passwordInput.setSelection(passwordInput.getText().length());
+                    } else {
+                        passwordInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        passwordInput.setSelection(passwordInput.getText().length());
+                    }
+                }
+            });
+        } else {
+            dialog.findViewById(R.id.passwordInput).setVisibility(View.GONE);
+            dialog.findViewById(R.id.passwordToggle).setVisibility(View.GONE);
+            dialog.findViewById(R.id.usernameInput).setVisibility(View.GONE);
+        }
+
+        if(sid != null) {
+            dialog.findViewById(R.id.sidInput).setVisibility(View.GONE);
+        }
+
+        CheckBox acceptTerms = (CheckBox) dialog.findViewById(R.id.acceptTerms);
+        acceptTerms.setMovementMethod(new LinkMovementMethod());
+        acceptTerms.setClickable(true);
+        acceptTerms.setText(link);
+
+        acceptTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(isChecked);
+                }
+        });
+
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+
+
     }
 
     public void showDownloadDialog() {

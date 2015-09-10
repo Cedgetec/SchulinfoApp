@@ -130,7 +130,7 @@
     <string name="anonymous">Anonymous user</string>
     <string name="download_error">An error occurred while downloading</string>
     <string name="developer_dialog">Built by bemused for the confused, your substitute schedule!\n\nHauke Oldsen\nLasse Rosenow\nLennart Schmidt\nFabian Schultis</string>
-    <string name="dessert" translatable="false">Dessert</string>
+    <string name="dessert">Dessert</string>
     <string name="personalisation">Change design</string>
     <string name="personalize_your_theme">Customize the design of the App</string>
     <string name="dark_theme_is_not_activated">Dark theme is not activated</string>
@@ -146,6 +146,8 @@
     <string name="classes">Classes</string>
     <string name="i_accept">I accept the</string>
     <string name="downloading_image">Downloading image...</string>
+    <string name="other_school">Other School</string>
+    <string name="school_id">School ID</string>
 
     <string name="terms_title">Terms of use</string>
     <string name="terms">1. The data showed in the app is preliminary. We cannot guarantee accuracy and currency.\n\n

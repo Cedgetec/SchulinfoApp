@@ -8,6 +8,14 @@
     android:paddingRight="20dp"
     android:paddingTop="10dp">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sidInput"
+        android:singleLine="true"
+        android:inputType="textFilter"
+        android:hint="@string/school_id"/>
+
     <EditText android:layout_height="wrap_content"
         android:id="@+id/usernameInput"
         android:hint="@string/username"

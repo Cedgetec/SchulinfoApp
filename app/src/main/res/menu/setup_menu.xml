@@ -6,4 +6,9 @@
         android:title="@string/refresh"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/setup_other_school"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:title="@string/other_school"
+        app:showAsAction="never"/>
+
 </menu>

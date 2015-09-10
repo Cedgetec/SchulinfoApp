@@ -24,6 +24,7 @@ import android.util.JsonWriter;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -108,6 +109,23 @@ public class School {
                    && colorArray == s.colorArray && image.equals(s.image) && city.equals(s.city) && website.equals(s.website) && loginNeeded == s.loginNeeded;
     }
 
+    public static void addSchool(JSONObject school) throws JSONException {
+        School s = new School();
+
+        s.name = school.getString("name");
+        s.city = school.getString("city");
+        s.themeName = school.getString("theme");
+        s.website = school.getString("website");
+        s.loginNeeded = school.getBoolean("auth");
+        s.sid = school.getString("sid");
+        s.image = school.optString("image", "");
+        s.loadTheme();
+
+        s.fragments.add(GGApp.FragmentType.PLAN);
+
+        LIST.add(s);
+    }
+
     public static boolean fetchList() {
         Log.i("ggvp", "Downloading school list");
 
@@ -118,27 +136,13 @@ public class School {
         try {
             GGRemote.APIResponse re = GGApp.GG_APP.remote.doRequest("/getSchools", null);
             if(re.state == GGRemote.APIState.SUCCEEDED) {
+                LIST.clear();
                 JSONArray schools = (JSONArray) re.data;
                 for(int i = 0; i < schools.length(); i++) {
                     JSONObject school = schools.getJSONObject(i);
-                    School s = new School();
-                    newList.add(s);
-
-                    s.name = school.getString("name");
-                    s.city = school.getString("city");
-                    s.themeName = school.getString("theme");
-                    s.website = school.getString("website");
-                    s.loginNeeded = school.getBoolean("auth");
-                    s.sid = school.getString("sid");
-                    s.image = school.optString("image", "");
-                    s.loadTheme();
-
-                    s.fragments.add(GGApp.FragmentType.PLAN);
+                    addSchool(school);
 
                 }
-
-                LIST.clear();
-                LIST.addAll(newList);
 
                 Log.i("ggvp", "Downloaded school list");
 
@@ -217,9 +221,6 @@ public class School {
                 Log.d("ggvp", "Loaded " + s);
 
             }
-
-
-
 
         } catch(FileNotFoundException e) {
 

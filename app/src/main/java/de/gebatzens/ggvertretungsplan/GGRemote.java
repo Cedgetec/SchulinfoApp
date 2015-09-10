@@ -324,21 +324,18 @@ public class GGRemote {
      * @param pass
      * @return 0: ok, 1: invalid user/passwd, 2: no connection, 3: everything else
      */
-    public int login(String user, String pass) {
+    public int login(String sid, String user, String pass) {
         try {
             JSONObject post = new JSONObject();
             post.put("username", user);
             post.put("passwd", pass);
-            post.put("sid", GGApp.GG_APP.getDefaultSID());
+            post.put("sid", sid);
 
             APIResponse re = doRequest("/auth", post);
 
             switch(re.state) {
                 case SUCCEEDED:
-                    SharedPreferences.Editor edit = prefs.edit();
-                    edit.putString("username", user);
-                    edit.putString("token", (String) re.data);
-                    edit.apply();
+                    JSONObject data = (JSONObject) re.data;
 
                     GGApp.GG_APP.startService(new Intent(GGApp.GG_APP, MQTTService.class));
 
@@ -352,6 +349,17 @@ public class GGRemote {
                         filters.mainFilter.filter = user;
                     }
                     FilterActivity.saveFilter(GGApp.GG_APP.filters);
+
+                    if(School.getBySID(sid) == null) {
+                        School.addSchool(data.getJSONObject("school"));
+                    }
+
+                    SharedPreferences.Editor edit = prefs.edit();
+                    edit.putString("username", user);
+                    edit.putString("token", (String) data.getString("token"));
+                    edit.apply();
+
+                    GGApp.GG_APP.setSchool(sid);
 
                     return 0;
                 case INVALID_AUTH:
