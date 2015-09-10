@@ -146,6 +146,7 @@
     <string name="classes">Classes</string>
     <string name="i_accept">I accept the</string>
     <string name="downloading_image">Downloading image...</string>
+    <string name="finish">finish</string>
 
     <string name="terms_title">Terms of use</string>
     <string name="terms">1. The data showed in the app is preliminary. We cannot guarantee accuracy and currency.\n\n

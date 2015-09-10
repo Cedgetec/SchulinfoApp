@@ -29,18 +29,35 @@
         android:layout_alignParentBottom="true"
         android:background="#00000000"/>
 
-    <ImageButton
-        android:layout_width="48dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/firstuse_finish"
-        android:src="@drawable/ic_totheright"
-        android:adjustViewBounds="true"
-        android:padding="16dp"
-        android:scaleType="fitCenter"
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_below="@+id/view"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:visibility="invisible" />
+        android:layout_below="@+id/view"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/finish"
+            android:textAllCaps="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="#fff"
+            android:layout_gravity="center_vertical"/>
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_totheright"
+            android:adjustViewBounds="true"
+            android:padding="16dp"
+            android:scaleType="fitCenter"/>
+    </LinearLayout>
 
 </RelativeLayout>

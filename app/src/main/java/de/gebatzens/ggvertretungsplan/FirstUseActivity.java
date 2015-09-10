@@ -18,15 +18,12 @@ package de.gebatzens.ggvertretungsplan;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import de.gebatzens.ggvertretungsplan.fragment.FirstUseAdapter;
 import de.gebatzens.ggvertretungsplan.fragment.FirstUseFragment;
@@ -34,7 +31,7 @@ import de.gebatzens.ggvertretungsplan.fragment.FirstUseFragment;
 public class FirstUseActivity extends FragmentActivity {
 
     public FirstUseAdapter adapter;
-    ImageButton ib;
+    LinearLayout ib;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -45,7 +42,7 @@ public class FirstUseActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_firstuse);
 
-        ib = (ImageButton) findViewById(R.id.firstuse_finish);
+        ib = (LinearLayout) findViewById(R.id.firstuse_finish);
 
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
