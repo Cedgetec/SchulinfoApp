@@ -16,6 +16,7 @@
 
 package de.gebatzens.ggvertretungsplan.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,6 +34,7 @@ import android.widget.TextView;
 import de.gebatzens.ggvertretungsplan.FirstUseActivity;
 import de.gebatzens.ggvertretungsplan.GGApp;
 import de.gebatzens.ggvertretungsplan.R;
+import de.gebatzens.ggvertretungsplan.SetupActivity;
 
 public class FirstUseFragment extends Fragment {
 
@@ -85,6 +88,23 @@ public class FirstUseFragment extends Fragment {
                 break;
             case 3:
                 color = Color.parseColor("#00ACC1");
+                layout.setBackgroundColor(color);
+                i.setImageResource(R.drawable.fu_more);
+                tvhead.setText("Noch nicht genug?");
+                tvsub.setText("Weitere Funktionen: Falls von der Schule unterstützt, kannst du News-, Mensa-, und Klausurenplan in der App einsehen.");
+                break;
+            case 4:
+                layout = (RelativeLayout) inflater.inflate(R.layout.fu_card_finish, container, false);
+                Button bu = (Button) layout.findViewById(R.id.fu_button);
+                bu.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        GGApp.GG_APP.preferences.edit().putBoolean("first_use", true).apply();
+                        startActivity(new Intent(getActivity(), SetupActivity.class));
+                        getActivity().finish();
+                    }
+                });
+                color = Color.parseColor("#F57C00");
                 layout.setBackgroundColor(color);
                 i.setImageResource(R.drawable.fu_more);
                 tvhead.setText("Noch nicht genug?");

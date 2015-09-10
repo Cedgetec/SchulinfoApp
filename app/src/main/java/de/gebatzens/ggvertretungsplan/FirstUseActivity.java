@@ -31,7 +31,6 @@ import de.gebatzens.ggvertretungsplan.fragment.FirstUseFragment;
 public class FirstUseActivity extends FragmentActivity {
 
     public FirstUseAdapter adapter;
-    LinearLayout ib;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -48,17 +47,6 @@ public class FirstUseActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_firstuse);
 
-        ib = (LinearLayout) findViewById(R.id.firstuse_finish);
-
-        ib.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GGApp.GG_APP.preferences.edit().putBoolean("first_use", true).apply();
-                startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
-                finish();
-            }
-        });
-
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
@@ -67,7 +55,7 @@ public class FirstUseActivity extends FragmentActivity {
             public void onPageScrolled(int i, float v, int i1) {
                 FirstUseAdapter adapter = (FirstUseAdapter) viewPager.getAdapter();
 
-                if (i >= 3)
+                if (i >= 4)
                     return;
 
                 FirstUseFragment frag1 = adapter.fragments.get(i);
@@ -88,11 +76,7 @@ public class FirstUseActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int i) {
-                if (i == 3) {
-                    ib.setVisibility(View.VISIBLE);
-                } else {
-                    ib.setVisibility(View.INVISIBLE);
-                }
+
             }
 
             @Override
