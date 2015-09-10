@@ -146,6 +146,7 @@
     <string name="i_accept">Ich akzeptiere die</string>
     <string name="downloading_image">Lade Bild herunter...</string>
     <string name="school_id">Schul-ID</string>
+    <string name="finish">fertig</string>
 
     <string name="terms_title">Nutzungshinweise</string>
     <string name="terms">1. Diese App gibt lediglich einen vorläufigen Planungsstand der Schule wieder. Deshalb können wir keine Haftung für die Richtigkeit und Aktualität der Informationen übernehmen.\n\n

@@ -148,6 +148,7 @@
     <string name="downloading_image">Downloading image...</string>
     <string name="other_school">Other School</string>
     <string name="school_id">School ID</string>
+    <string name="finish">finish</string>
 
     <string name="terms_title">Terms of use</string>
     <string name="terms">1. The data showed in the app is preliminary. We cannot guarantee accuracy and currency.\n\n
