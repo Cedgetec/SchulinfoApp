@@ -352,6 +352,7 @@ public class GGRemote {
 
                     if(School.getBySID(sid) == null) {
                         School.addSchool(data.getJSONObject("school"));
+                        School.saveList();
                     }
 
                     SharedPreferences.Editor edit = prefs.edit();
