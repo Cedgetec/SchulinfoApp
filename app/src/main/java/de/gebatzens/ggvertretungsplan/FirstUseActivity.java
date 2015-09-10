@@ -40,6 +40,12 @@ public class FirstUseActivity extends FragmentActivity {
 
         super.onCreate(bundle);
 
+        if(GGApp.GG_APP.preferences.getBoolean("first_use", false)) {
+            startActivity(new Intent(this, SetupActivity.class));
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_firstuse);
 
         ib = (LinearLayout) findViewById(R.id.firstuse_finish);
@@ -47,6 +53,7 @@ public class FirstUseActivity extends FragmentActivity {
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GGApp.GG_APP.preferences.edit().putBoolean("first_use", true).apply();
                 startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
                 finish();
             }
