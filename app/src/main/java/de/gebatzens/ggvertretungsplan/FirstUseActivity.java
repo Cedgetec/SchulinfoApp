@@ -60,12 +60,6 @@ public class FirstUseActivity extends FragmentActivity {
             public void onPageScrolled(int i, float v, int i1) {
                 FirstUseAdapter adapter = (FirstUseAdapter) viewPager.getAdapter();
 
-                if (i == 3) {
-                    ib.setVisibility(View.VISIBLE);
-                } else {
-                    ib.setVisibility(View.INVISIBLE);
-                }
-
                 if (i >= 3)
                     return;
 
@@ -87,7 +81,11 @@ public class FirstUseActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int i) {
-
+                if (i == 3) {
+                    ib.setVisibility(View.VISIBLE);
+                } else {
+                    ib.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
