@@ -27,6 +27,20 @@
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
         android:layout_alignParentBottom="true"
-        android:background="#00000000" />
+        android:background="#00000000"/>
+
+    <ImageButton
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/firstuse_finish"
+        android:src="@drawable/ic_totheright"
+        android:adjustViewBounds="true"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_below="@+id/view"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible" />
 
 </RelativeLayout>

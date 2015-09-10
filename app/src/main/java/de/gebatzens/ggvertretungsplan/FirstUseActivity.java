@@ -16,12 +16,17 @@
 
 package de.gebatzens.ggvertretungsplan;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import de.gebatzens.ggvertretungsplan.fragment.FirstUseAdapter;
 import de.gebatzens.ggvertretungsplan.fragment.FirstUseFragment;
@@ -29,6 +34,7 @@ import de.gebatzens.ggvertretungsplan.fragment.FirstUseFragment;
 public class FirstUseActivity extends FragmentActivity {
 
     public FirstUseAdapter adapter;
+    ImageButton ib;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -39,6 +45,16 @@ public class FirstUseActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_firstuse);
 
+        ib = (ImageButton) findViewById(R.id.firstuse_finish);
+
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
+                finish();
+            }
+        });
+
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
@@ -47,7 +63,13 @@ public class FirstUseActivity extends FragmentActivity {
             public void onPageScrolled(int i, float v, int i1) {
                 FirstUseAdapter adapter = (FirstUseAdapter) viewPager.getAdapter();
 
-                if(i >= 3)
+                if (i == 3) {
+                    ib.setVisibility(View.VISIBLE);
+                } else {
+                    ib.setVisibility(View.INVISIBLE);
+                }
+
+                if (i >= 3)
                     return;
 
                 FirstUseFragment frag1 = adapter.fragments.get(i);
@@ -59,9 +81,9 @@ public class FirstUseActivity extends FragmentActivity {
                 int blue = (int) (Color.blue(frag1.color) * (1f - v) + Color.blue(frag2.color) * v);
                 int newColor = Color.argb(255, red, green, blue);
 
-                if(frag1.getView() != null)
+                if (frag1.getView() != null)
                     frag1.getView().setBackgroundColor(newColor);
-                if(frag2.getView() != null)
+                if (frag2.getView() != null)
                     frag2.getView().setBackgroundColor(newColor);
 
             }
@@ -79,11 +101,6 @@ public class FirstUseActivity extends FragmentActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
-
-        /*
-        startActivity(new Intent(FirstUseActivity.this, SetupActivity.class));
-        finish();
-        */
 
     }
 

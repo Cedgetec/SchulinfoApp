@@ -54,11 +54,6 @@ public class FirstUseFragment extends Fragment {
 
     }
 
-    public static int toPixels(float dp) {
-        float scale = GGApp.GG_APP.getResources().getDisplayMetrics().density;
-        return (int) (dp * scale);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fu_card, container, false);

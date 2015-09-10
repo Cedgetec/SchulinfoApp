@@ -9,7 +9,7 @@
         android:layout_height="172dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/sws_logo"
+        android:src="@drawable/no_content"
         android:layout_gravity="center"/>
     <View
         android:layout_width="match_parent"
