@@ -116,7 +116,7 @@ public class School {
         s.city = school.getString("city");
         s.themeName = school.getString("theme");
         s.website = school.getString("website");
-        s.loginNeeded = school.getBoolean("auth");
+        s.loginNeeded = school.getBoolean("authRequired");
         s.sid = school.getString("sid");
         s.image = school.optString("image", "");
         s.loadTheme();
@@ -172,7 +172,7 @@ public class School {
 
                 writer.name("sid").value(s.sid);
                 writer.name("name").value(s.name);
-                writer.name("auth").value(s.loginNeeded);
+                writer.name("authRequired").value(s.loginNeeded);
                 writer.name("website").value(s.website);
                 writer.name("image").value(s.image);
                 writer.name("theme").value(s.themeName);
@@ -203,22 +203,7 @@ public class School {
             JSONArray array = new JSONArray(content);
             for(int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
-                School s = new School();
-                LIST.add(s);
-
-                s.sid = obj.getString("sid");
-                s.name = obj.getString("name");
-                s.city = obj.getString("city");
-                s.themeName = obj.getString("theme");
-                s.website = obj.getString("website");
-                s.loginNeeded = obj.getBoolean("auth");
-                s.image = obj.getString("image");
-                JSONArray fragments = obj.getJSONArray("fragment");
-                for(int f = 0; f < fragments.length(); f++) {
-                    JSONObject fragObj = fragments.getJSONObject(f);
-                    s.fragments.add(GGApp.FragmentType.valueOf(fragObj.getString("type")));
-                }
-                Log.d("ggvp", "Loaded " + s);
+                addSchool(obj);
 
             }
 
