@@ -8,7 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:padding="20dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:id="@+id/fu_image"
         android:layout_above="@+id/fu_text_layout"/>
 
@@ -18,7 +21,10 @@
         android:orientation="vertical"
         android:id="@+id/fu_text_layout"
         android:layout_alignParentBottom="true"
-        android:padding="48dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="48dp"
+        android:paddingLeft="48dp"
+        android:paddingRight="48dp"
         android:layout_marginBottom="48dp">
 
         <TextView
