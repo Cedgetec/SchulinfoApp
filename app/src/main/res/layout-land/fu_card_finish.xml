@@ -8,14 +8,15 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
+        android:src="@drawable/fu_finish"
         android:paddingTop="20dp"
-        android:paddingBottom="20dp"
+        android:paddingBottom="35dp"
         android:paddingStart="35dp"
-        android:paddingLeft="35dp"
+        android:paddingLeft="20dp"
         android:paddingEnd="20dp"
         android:paddingRight="20dp"
         android:id="@+id/fu_image"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="48dp"/>
 
     <LinearLayout
@@ -28,7 +29,8 @@
         android:layout_toRightOf="@+id/fu_image"
         android:layout_toEndOf="@+id/fu_image"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,14 +38,20 @@
             android:textColor="#fff"
             android:textSize="24sp"
             android:paddingBottom="12dp"
-            android:id="@+id/fu_header"/>
+            android:text="@string/have_fun_with_the_app"
+            android:gravity="center"/>
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
-            android:textSize="16sp"
-            android:id="@+id/fu_text"/>
+            android:text="@string/start_now"
+            android:id="@+id/fu_button"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 

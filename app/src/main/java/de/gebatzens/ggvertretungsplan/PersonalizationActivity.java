@@ -158,8 +158,7 @@ public class PersonalizationActivity extends AppCompatActivity {
                         }
                         holder.icon.setBackgroundResource(R.drawable.colored_circle);
                         holder.icon.getBackground().setColorFilter(loadThemeColor(themeNames[position]), PorterDuff.Mode.SRC_ATOP);
-                        TypedArray theme_color_names_typedarray = getResources().obtainTypedArray(R.array.theme_color_names);
-                        CharSequence[] theme_color_names = theme_color_names_typedarray.getTextArray(0);
+                        String[] theme_color_names = getResources().getStringArray(R.array.theme_color_names);
                         holder.title.setText(theme_color_names[position]);
                         if (GGApp.GG_APP.isDarkThemeEnabled()) {
                             holder.title.setTextColor(Color.parseColor("#fafafa"));

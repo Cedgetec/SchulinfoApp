@@ -104,11 +104,8 @@ public class FirstUseFragment extends Fragment {
                         getActivity().finish();
                     }
                 });
-                color = Color.parseColor("#F57C00");
+                color = Color.parseColor("#8BC34A");
                 layout.setBackgroundColor(color);
-                i.setImageResource(R.drawable.fu_more);
-                tvhead.setText("Noch nicht genug?");
-                tvsub.setText("Weitere Funktionen: Falls von der Schule unterstützt, kannst du News-, Mensa-, und Klausurenplan in der App einsehen.");
                 break;
         }
 
