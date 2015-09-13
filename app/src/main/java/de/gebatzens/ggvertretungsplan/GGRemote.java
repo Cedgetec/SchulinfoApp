@@ -350,6 +350,11 @@ public class GGRemote {
                     }
                     FilterActivity.saveFilter(GGApp.GG_APP.filters);
 
+                    if(data.has("username")) {
+                        if(!data.getString("username").equals(user) || !data.getString("sid").equals(sid))
+                            return 3;
+                    }
+
                     if(School.getBySID(sid) == null) {
                         School.addSchool(data.getJSONObject("school"));
                         School.saveList();
