@@ -151,6 +151,14 @@
     <string name="finish">finish</string>
     <string name="start_now">Start now</string>
     <string name="have_fun_with_the_app">Have fun with the app!</string>
+    <string name="fu_firstpage_title">Your SchoolInfoAPP</string>
+    <string name="fu_firstpage_content">Be informed about your school everywhere and every time!</string>
+    <string name="fu_secondpage_title">Schedule changings adapted to you</string>
+    <string name="fu_secondpage_content">Custimize the representation plan and adapt it to you class!</string>
+    <string name="fu_third_title">Subject filter</string>
+    <string name="fu_third_content">Enter subjects not affecting you into the filter menu to exclude it from your own Survey.</string>
+    <string name="fu_fourth_title">Not enough?</string>
+    <string name="fu_fourth_content">More funktions: If supported by your School, you can make use of News plan, Mensa plan as well as exam plan.</string>
 
     <string name="terms_title">Terms of use</string>
     <string name="terms">1. The data showed in the app is preliminary. We cannot guarantee accuracy and currency.\n\n
