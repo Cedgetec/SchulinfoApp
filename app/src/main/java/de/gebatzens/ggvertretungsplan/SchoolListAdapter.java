@@ -17,10 +17,12 @@
 package de.gebatzens.ggvertretungsplan;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -51,6 +53,8 @@ public class SchoolListAdapter extends BaseAdapter {
         ((TextView) v.findViewById(R.id.school_name)).setText(list.get(position).name);
 
         ((TextView) v.findViewById(R.id.school_city)).setText(list.get(position).city);
+
+        ((ImageView) v.findViewById(R.id.school_city_blazon)).setImageResource(R.drawable.fu_finish);
 
         return v;
     }
