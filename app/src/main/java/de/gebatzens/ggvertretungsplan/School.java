@@ -36,6 +36,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -224,9 +225,9 @@ public class School {
 
     public Bitmap loadImage() {
         try {
-            return BitmapFactory.decodeStream(GGApp.GG_APP.openFileInput(GGApp.GG_APP.school.image));
+            return BitmapFactory.decodeStream(GGApp.GG_APP.openFileInput(image));
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.w("ggvp", "school image not found " + image);
             return BitmapFactory.decodeResource(GGApp.GG_APP.getResources(), R.drawable.no_content);
         }
     }
@@ -234,9 +235,9 @@ public class School {
     public boolean downloadImage() {
         if(new File(image).exists())
             return true;
+
         try {
-            //InputStream in = GGApp.GG_APP.remote.openConnection("/infoapp/images/" + image, false).getInputStream();
-            InputStream in = new URL(BuildConfig.BACKEND_SERVER + "/images/" + image).openStream();
+            InputStream in = new URL(BuildConfig.BACKEND_SERVER + "/image?name=" + URLEncoder.encode(image, "utf-8")).openStream();
             BitmapFactory.decodeStream(in).compress(Bitmap.CompressFormat.PNG, 90, GGApp.GG_APP.openFileOutput(image, Context.MODE_PRIVATE));
             in.close();
             return true;
