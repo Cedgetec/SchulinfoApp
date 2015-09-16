@@ -17,6 +17,11 @@
 package de.gebatzens.ggvertretungsplan;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +35,7 @@ import java.util.List;
 public class SchoolListAdapter extends BaseAdapter {
 
     List<School> list = School.LIST;
+    Context context;
 
     @Override
     public int getCount() {
@@ -54,7 +60,13 @@ public class SchoolListAdapter extends BaseAdapter {
 
         ((TextView) v.findViewById(R.id.school_city)).setText(list.get(position).city);
 
-        ((ImageView) v.findViewById(R.id.school_city_blazon)).setImageResource(R.drawable.fu_finish);
+        GradientDrawable gd = (GradientDrawable) parent.getResources().getDrawable(R.drawable.colored_circle);
+        gd.setColor(list.get(position).getColor());
+        ((ImageView) v.findViewById(R.id.school_firstletter_image)).setImageDrawable(gd);
+
+        ((TextView) v.findViewById(R.id.school_firstletter_text)).setText(list.get(position).name.substring(0,1));
+
+        ((TextView) v.findViewById(R.id.school_user_number)).setText(parent.getResources().getString(R.string.user) + ": 36");
 
         return v;
     }
