@@ -69,29 +69,29 @@ public class FirstUseFragment extends Fragment {
                 color = Color.parseColor("#1976D2");
                 layout.setBackgroundColor(color);
                 i.setImageResource(R.drawable.fu_device);
-                tvhead.setText("Deine SchulinfoAPP");
-                tvsub.setText("Ab sofort immer informiert über den Vertretungsplan und mehr...");
+                tvhead.setText(R.string.fu_firstpage_title);
+                tvsub.setText(R.string.fu_firstpage_content);
                 break;
             case 1:
                 color = Color.parseColor("#F4511E");
                 layout.setBackgroundColor(color);
                 i.setImageResource(R.drawable.fu_overview);
-                tvhead.setText("Planänderungen auf dich angepasst");
-                tvsub.setText("Personalisiere den Vertretungsplan und passe ihn auf deine Klasse an.");
+                tvhead.setText(R.string.fu_secondpage_title);
+                tvsub.setText(R.string.fu_secondpage_content);
                 break;
             case 2:
                 color = Color.parseColor("#43A047");
                 layout.setBackgroundColor(color);
                 i.setImageResource(R.drawable.fu_filter);
-                tvhead.setText("Der Kursfilter");
-                tvsub.setText("Trage im Filtermenü Kurse ein, die dich nicht betreffen, um sie von deiner persönlichen Übersicht auszuschließen.");
+                tvhead.setText(R.string.fu_third_title);
+                tvsub.setText(R.string.fu_third_content);
                 break;
             case 3:
                 color = Color.parseColor("#00ACC1");
                 layout.setBackgroundColor(color);
                 i.setImageResource(R.drawable.fu_more);
-                tvhead.setText("Noch nicht genug?");
-                tvsub.setText("Weitere Funktionen: Falls von der Schule unterstützt, kannst du News-, Mensa-, und Klausurenplan in der App einsehen.");
+                tvhead.setText(R.string.fu_fourth_title);
+                tvsub.setText(R.string.fu_fourth_content);
                 break;
             case 4:
                 layout = (RelativeLayout) inflater.inflate(R.layout.fu_card_finish, container, false);

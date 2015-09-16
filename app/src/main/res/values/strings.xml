@@ -13,7 +13,7 @@
     <string name="main_filter_mode">Mode</string>
     <string name="main_filter_content">Filter</string>
     <string name="value">Value</string>
-    <string name="filter_help">The Main filter ensures that the right substitute schedule is displayed for the specified class or specified teacher in the overview.\n\nThe Subject/Course filters are used to enter subjects/courses that you do not want to see in the overview, for example French or Latin.</string>
+    <string name="filter_help">The Main filter ensures that the right substitute schedule is displayed for the specified class or teacher in the overview.\n\nThe Subject/Course filters are used to enter subjects/courses that you do not want to see in the overview, for example French or Latin.</string>
     <string name="settings">Settings</string>
     <string name="check_connection">Check internet connection and repeat</string>
     <string name="again">Try again</string>
@@ -151,10 +151,18 @@
     <string name="finish">finish</string>
     <string name="start_now">Start now</string>
     <string name="have_fun_with_the_app">Have fun with the app!</string>
+    <string name="fu_firstpage_title">Your SchoolInfoAPP</string>
+    <string name="fu_firstpage_content">Be informed about your school everywhere and every time!</string>
+    <string name="fu_secondpage_title">Schedule changings adapted to you</string>
+    <string name="fu_secondpage_content">Custumize the representation plan and adapt it to your class!</string>
+    <string name="fu_third_title">Subject filter</string>
+    <string name="fu_third_content">Enter subjects not affecting you into the filter menu to exclude it from your own survey.</string>
+    <string name="fu_fourth_title">Not enough?</string>
+    <string name="fu_fourth_content">More functions: If supported by your school, you can make use of news plan, mensa plan as well as an exam plan.</string>
 
     <string name="terms_title">Terms of use</string>
     <string name="terms">1. The data showed in the app is preliminary. We cannot guarantee accuracy and currency.\n\n
-    2. In general only the schedules in school are valid.\n\n
+    2. In general only the schedules in your school are valid.\n\n
     3. If you have questions or suggestions, please send us an e-mail: info@ggdevelopers.de</string>
 
     <string-array name="subjects">

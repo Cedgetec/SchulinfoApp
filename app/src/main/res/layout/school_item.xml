@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="20dp">
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1">
 
-    <TextView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="15sp"
-        android:textColor="#000"
-        android:id="@+id/school_name"/>
+        android:padding="20dp"
+        android:layout_weight="1">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="@color/setupText"
-        android:id="@+id/school_city"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="15sp"
+            android:textColor="#000"
+            android:id="@+id/school_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/setupText"
+            android:id="@+id/school_city"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:src="@drawable/helpdesk_icon"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_weight="0"
+        android:id="@+id/school_city_blazon"/>
 
 </LinearLayout>
