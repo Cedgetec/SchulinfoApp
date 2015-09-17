@@ -31,7 +31,7 @@ public class Filter {
             return false;
         switch(type) {
             case CLASS:
-                return e.clazz.toLowerCase().equals(filter.toLowerCase());
+                return e.clazz.toLowerCase().replace(" ", "").equals(filter.toLowerCase().replace(" ", ""));
             case TEACHER:
                 return e.teacher.toLowerCase().equals(filter.toLowerCase()) || e.comment.toLowerCase().endsWith(filter.toLowerCase());
             case SUBJECT:
