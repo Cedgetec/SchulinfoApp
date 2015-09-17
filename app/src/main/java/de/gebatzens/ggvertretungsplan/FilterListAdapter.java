@@ -47,7 +47,7 @@ public class FilterListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final Filter filter = list.get(position);
-        final ViewGroup vg = (ViewGroup) View.inflate(c, R.layout.filter_item, parent);
+        final ViewGroup vg = (ViewGroup) c.getLayoutInflater().inflate(R.layout.filter_item, parent, false);
         ((TextView) vg.findViewById(R.id.filter_main_text)).setText(filter.toString(false));
         FrameLayout edit = (FrameLayout) vg.findViewById(R.id.filter_edit);
         edit.setOnClickListener(new View.OnClickListener() {
@@ -91,10 +91,10 @@ public class FilterListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 c.changed = true;
-                list.remove(getItem(position));
+                list.remove(position);
                 notifyDataSetChanged();
                 FilterActivity.saveFilter(GGApp.GG_APP.filters);
-                setListViewHeightBasedOnChildren(c.listView);
+                FilterActivity.setListViewHeightBasedOnChildren(c.listView);
               
             }
         });
@@ -114,28 +114,6 @@ public class FilterListAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
-    }
-
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
-
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.requestLayout();
     }
 
 

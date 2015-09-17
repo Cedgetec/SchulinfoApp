@@ -130,7 +130,7 @@ public class GGRemote {
             }
 
         } catch(Exception e) {
-            if(e instanceof IOException)
+            if(e instanceof IOException || e instanceof VPLoginException)
                 Log.w("ggvp", "Failed to get plans " + e.getMessage());
             else
                 e.printStackTrace();
