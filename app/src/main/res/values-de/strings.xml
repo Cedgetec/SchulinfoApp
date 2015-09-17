@@ -92,7 +92,6 @@
     <string name="no_filter_active">Kein Filter aktiv</string>
     <string name="filter_active">1 Filter aktiv</string>
     <string name="filters_active">%d Filter aktiv</string>
-    <string name="helpdesk">Helpdesk</string>
     <string name="contact_us">Kontaktiere uns, falls du ein Problem mit der App hast</string>
     <string name="submit">Absenden</string>
     <string name="email_address">E-Mail-Adresse</string>
@@ -158,6 +157,8 @@
     <string name="fu_fourthpage_title">Noch nicht genug?</string>
     <string name="fu_fourthpage_content">Weitere Funktionen: Falls von der Schule unterstützt, kannst du News-, Mensa-, und Klausurenplan in der App einsehen.</string>
     <string name="user">User</string>
+    <string name="please_read">Wichtig: Bitte lesen!</string>
+    <string name="contact">Kontakt</string>
 
     <string name="terms_title">Nutzungshinweise</string>
     <string name="terms">1. Diese App gibt lediglich einen vorläufigen Planungsstand der Schule wieder. Deshalb können wir keine Haftung für die Richtigkeit und Aktualität der Informationen übernehmen.\n\n

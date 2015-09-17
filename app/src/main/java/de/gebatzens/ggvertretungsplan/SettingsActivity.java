@@ -200,15 +200,17 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             Preference helpdesk = findPreference("helpdesk");
-            LayerDrawable ld = (LayerDrawable) this.getActivity().getResources().getDrawable(R.drawable.helpdesk_icon);
+            LayerDrawable ld = (LayerDrawable) this.getActivity().getResources().getDrawable(R.drawable.helpdesk_icon, null);
             GradientDrawable gd = (GradientDrawable) ld.findDrawableByLayerId(R.id.first_image);
             gd.setColor(GGApp.GG_APP.school.getColor());
             helpdesk.setIcon(ld);
             helpdesk.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Intent i = new Intent(getActivity(), HelpdeskActivity.class);
-                    getActivity().startActivityForResult(i, 1);
+                    Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                            "mailto","gebatzens@archlinux.info", null));
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SchulinfoApp " + GGApp.GG_APP.school.name);
+                    startActivity(Intent.createChooser(emailIntent, "E-Mail senden"));
                     return false;
                 }
             });

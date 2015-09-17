@@ -17,10 +17,6 @@
             android:summary="@string/notify_class"
             android:key="notifications"
             android:defaultValue="true" />
-        <CheckBoxPreference android:title="@string/app_update"
-            android:summary="@string/app_update_notify"
-            android:key="notify_updates"
-            android:defaultValue="true" />
         <ListPreference android:title="@string/automatic_updates"
             android:summary="@string/only_update_over_wireless_lan"
             android:key="auto_data_updates"
@@ -36,7 +32,7 @@
             android:dialogMessage="@string/developer_dialog"
             android:negativeButtonText=""/>
         <Preference android:title="@string/terms_title"
-            android:summary=""
+            android:summary="@string/please_read"
             android:key="terms">
         </Preference>
         <Preference android:title="@string/github"
@@ -48,7 +44,7 @@
         <Preference android:title="@string/build_version"
             android:summary="Version: x.x.x"
             android:key="buildversion"/>
-        <Preference android:title="@string/helpdesk"
+        <Preference android:title="@string/contact"
             android:summary="@string/contact_us"
             android:key="helpdesk"
             android:icon="@drawable/helpdesk_icon"/>

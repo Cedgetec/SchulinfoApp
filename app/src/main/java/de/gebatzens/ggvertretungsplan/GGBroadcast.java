@@ -100,25 +100,6 @@ public class GGBroadcast extends BroadcastReceiver {
 
     }
 
-    public void checkForAppUpdates(GGApp gg) {
-        if(!gg.appUpdatesEnabled())
-            return;
-        if(BuildConfig.DEBUG)
-            return;
-        /*try {
-            String version = SettingsActivity.getVersion();
-            if(!version.equals(BuildConfig.VERSION_NAME)) {
-                Intent intent = new Intent(gg, SettingsActivity.class);
-                intent.putExtra("update", true);
-                intent.putExtra("version", version);
-                gg.createNotification(R.drawable.ic_notification_update, gg.getString(R.string.app_update_title), gg.getString(R.string.app_update_message),
-                        intent, 124, false);
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-
-        }*/
-    }
 
     public static void createAlarm(Context context) {
         Intent i = new Intent(context, GGBroadcast.class);
@@ -156,7 +137,6 @@ public class GGBroadcast extends BroadcastReceiver {
                 @Override
                 protected Void doInBackground(GGApp... params) {
                     checkForUpdates(params[0], true);
-                    checkForAppUpdates(params[0]);
                     return null;
                 }
             }.execute((GGApp) context.getApplicationContext());

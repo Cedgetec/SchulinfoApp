@@ -92,7 +92,6 @@
     <string name="filters_active">%d filters active</string>
     <string name="filter_active">1 filter active</string>
     <string name="no_filter_active">No filter active</string>
-    <string name="helpdesk">Helpdesk</string>
     <string name="contact_us">Contact us, if you have a problem or enhancement for this app</string>
     <string name="submit">Submit</string>
     <string name="name">Name</string>
@@ -160,6 +159,8 @@
     <string name="fu_fourthpage_title">Not enough?</string>
     <string name="fu_fourthpage_content">More functions: If supported by your school, you can make use of news plan, mensa plan as well as an exam plan.</string>
     <string name="user">User</string>
+    <string name="please_read">Read this, please!</string>
+    <string name="contact">Support</string>
 
     <string name="terms_title">Terms of use</string>
     <string name="terms">1. The data showed in the app is preliminary. We cannot guarantee accuracy and currency.\n\n

@@ -45,10 +45,6 @@
             android:windowSoftInputMode="adjustNothing">
         </activity>
 
-        <activity android:name=".HelpdeskActivity"
-            android:label="@string/helpdesk">
-        </activity>
-
         <activity android:name=".SetupActivity"
             android:label="Setup">
         </activity>
