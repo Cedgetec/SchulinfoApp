@@ -121,7 +121,7 @@ public class FilterActivity extends AppCompatActivity {
             public void onClick(View viewIn) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
                 builder.setTitle(getApplication().getString(R.string.set_main_filter));
-                builder.setView(getLayoutInflater().inflate(R.layout.filter_dialog, null));
+                builder.setView(View.inflate(FilterActivity.this, R.layout.filter_dialog, null));
                 builder.setPositiveButton(getApplication().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -194,7 +194,7 @@ public class FilterActivity extends AppCompatActivity {
             public void onClick(View viewIn) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
                 builder.setTitle(getApplication().getString(R.string.add_filter));
-                builder.setView(getLayoutInflater().inflate(R.layout.filter_dialog, null));
+                builder.setView(View.inflate(FilterActivity.this, R.layout.filter_dialog, null));
                 builder.setPositiveButton(getApplication().getString(R.string.add), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

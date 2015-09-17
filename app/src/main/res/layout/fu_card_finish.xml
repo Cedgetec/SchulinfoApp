@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:src="@drawable/fu_finish"
+        android:id="@+id/fu_image"
         android:paddingTop="40dp"
         android:paddingBottom="20dp"
         android:paddingLeft="20dp"

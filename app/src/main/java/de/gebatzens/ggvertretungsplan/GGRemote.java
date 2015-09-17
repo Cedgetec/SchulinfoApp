@@ -107,7 +107,6 @@ public class GGRemote {
             Log.i("ggvp", "getPlans " + getToken());
             APIResponse re = doRequest("/subst?token=" + getToken(), null);
 
-
             if(re.state == APIState.SUCCEEDED) {
                 Iterator<String> days = ((JSONObject) re.data).keys();
                 while (days.hasNext()) {

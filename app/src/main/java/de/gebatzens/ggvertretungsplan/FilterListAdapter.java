@@ -47,7 +47,7 @@ public class FilterListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final Filter filter = list.get(position);
-        final ViewGroup vg = (ViewGroup) ((LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.filter_item, parent, false);
+        final ViewGroup vg = (ViewGroup) View.inflate(c, R.layout.filter_item, parent);
         ((TextView) vg.findViewById(R.id.filter_main_text)).setText(filter.toString(false));
         FrameLayout edit = (FrameLayout) vg.findViewById(R.id.filter_edit);
         edit.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +55,7 @@ public class FilterListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(c);
                 builder.setTitle(c.getString(R.string.edit_filter));
-                builder.setView(c.getLayoutInflater().inflate(R.layout.filter_dialog, null));
+                builder.setView(View.inflate(c, R.layout.filter_dialog, null));
                 builder.setPositiveButton(c.getString(R.string.refresh), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

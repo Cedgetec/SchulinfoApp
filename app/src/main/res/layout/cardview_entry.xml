@@ -12,6 +12,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginLeft="10dp"
+            android:minWidth="80dp"
             android:gravity="center_horizontal">
 
 
