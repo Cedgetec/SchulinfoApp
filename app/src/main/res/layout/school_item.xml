@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="72dp"
     android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="72dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:src="@drawable/colored_circle"
+            android:id="@+id/school_firstletter_image"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="G"
+            android:textSize="28sp"
+            android:id="@+id/school_firstletter_text"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         android:layout_weight="1">
 
         <TextView
@@ -27,14 +56,14 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="80dp"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:padding="20dp"
-        android:src="@drawable/helpdesk_icon"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
+        android:padding="16dp"
+        android:gravity="center"
+        android:textColor="#464646"
+        android:text="User: 15"
         android:layout_weight="0"
-        android:id="@+id/school_city_blazon"/>
+        android:id="@+id/school_user_number"/>
 
 </LinearLayout>

@@ -83,15 +83,15 @@ public class FirstUseFragment extends Fragment {
                 color = Color.parseColor("#43A047");
                 layout.setBackgroundColor(color);
                 i.setImageResource(R.drawable.fu_filter);
-                tvhead.setText(R.string.fu_third_title);
-                tvsub.setText(R.string.fu_third_content);
+                tvhead.setText(R.string.fu_thirdpage_title);
+                tvsub.setText(R.string.fu_thirdpage_content);
                 break;
             case 3:
                 color = Color.parseColor("#00ACC1");
                 layout.setBackgroundColor(color);
                 i.setImageResource(R.drawable.fu_more);
-                tvhead.setText(R.string.fu_fourth_title);
-                tvsub.setText(R.string.fu_fourth_content);
+                tvhead.setText(R.string.fu_fourthpage_title);
+                tvsub.setText(R.string.fu_fourthpage_content);
                 break;
             case 4:
                 layout = (RelativeLayout) inflater.inflate(R.layout.fu_card_finish, container, false);

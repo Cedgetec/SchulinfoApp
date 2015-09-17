@@ -155,10 +155,11 @@
     <string name="fu_firstpage_content">Be informed about your school everywhere and every time!</string>
     <string name="fu_secondpage_title">Schedule changings adapted to you</string>
     <string name="fu_secondpage_content">Custumize the representation plan and adapt it to your class!</string>
-    <string name="fu_third_title">Subject filter</string>
-    <string name="fu_third_content">Enter subjects not affecting you into the filter menu to exclude it from your own survey.</string>
-    <string name="fu_fourth_title">Not enough?</string>
-    <string name="fu_fourth_content">More functions: If supported by your school, you can make use of news plan, mensa plan as well as an exam plan.</string>
+    <string name="fu_thirdpage_title">Subject filter</string>
+    <string name="fu_thirdpage_content">Enter subjects not affecting you into the filter menu to exclude it from your own survey.</string>
+    <string name="fu_fourthpage_title">Not enough?</string>
+    <string name="fu_fourthpage_content">More functions: If supported by your school, you can make use of news plan, mensa plan as well as an exam plan.</string>
+    <string name="user">User</string>
 
     <string name="terms_title">Terms of use</string>
     <string name="terms">1. The data showed in the app is preliminary. We cannot guarantee accuracy and currency.\n\n
