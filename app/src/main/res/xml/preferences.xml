@@ -25,7 +25,7 @@
             android:defaultValue="wifi" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/information">
-        <de.gebatzens.ggvertretungsplan.GGDialogPreference
+        <de.gebatzens.sia.GGDialogPreference
             android:title="@string/developer"
             android:summary="@string/developer_info"
             android:key="developers"

@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <de.gebatzens.ggvertretungsplan.view.GGSwipeLayout
+        <de.gebatzens.sia.view.GGSwipeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/refresh">
@@ -18,7 +18,7 @@
                 android:orientation="vertical"
                 android:id="@+id/exam_content" />
 
-        </de.gebatzens.ggvertretungsplan.view.GGSwipeLayout>
+        </de.gebatzens.sia.view.GGSwipeLayout>
 
         <View
             android:layout_width="match_parent"

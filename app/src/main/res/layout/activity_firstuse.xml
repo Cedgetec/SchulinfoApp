@@ -19,7 +19,7 @@
         android:layout_above="@+id/sliding_tabs"
         android:id="@+id/view" />
 
-    <de.gebatzens.ggvertretungsplan.view.FUTabLayout
+    <de.gebatzens.sia.view.FUTabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

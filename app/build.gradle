@@ -5,11 +5,11 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "de.gebatzens.ggvertretungsplan"
+        applicationId "de.gebatzens.sia"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 100
-        versionName "1.0.0-rc1"
+        versionCode 101
+        versionName "1.0.0"
 	
     }
     
