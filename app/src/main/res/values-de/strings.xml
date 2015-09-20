@@ -171,9 +171,9 @@
 
     <string name="terms_title">Nutzungshinweise</string>
     <string-array name="terms">
-        <item>1. Diese App gibt lediglich einen vorläufigen Planungsstand der Schule wieder. Deshalb können wir keine Haftung für die Richtigkeit und Aktualität der Informationen übernehmen.</item>
-        <item>2. Generell sind die Pläne in der Schule gültig.</item>
-        <item>3. Bei Fragen und Anregungen wende dich bitte an info@ggdevelopers.de.</item>
+        <item>Diese App gibt lediglich einen vorläufigen Planungsstand der Schule wieder. Deshalb können wir keine Haftung für die Richtigkeit und Aktualität der Informationen übernehmen.</item>
+        <item>Generell sind die Pläne in der Schule gültig.</item>
+        <item>Bei Fragen und Anregungen wende dich bitte an info@ggdevelopers.de.</item>
     </string-array>
 
     <string-array name="subjects">

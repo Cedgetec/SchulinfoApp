@@ -21,8 +21,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class TextActivity extends AppCompatActivity {
@@ -57,11 +60,23 @@ public class TextActivity extends AppCompatActivity {
 
         mToolBar.setTitle(getString(titleRes));
 
-        TextView tv = (TextView) findViewById(R.id.content_text);
+        LinearLayout lcontent = (LinearLayout) findViewById(R.id.textactivityContent);
 
         String[] terms = getResources().getStringArray(textRes);
 
-        tv.setText(terms[0]);
+        for (int i = 0; i < terms.length; i++){
+            CardView cv = (CardView) getLayoutInflater().inflate(R.layout.textactivity_cards, null);
+            LinearLayout l = new LinearLayout(this);
+            l.setOrientation(LinearLayout.HORIZONTAL);
+            TextView tv = new TextView(this);
+            tv.setText(terms[i]);
+            TextView tv2 = new TextView(this);
+            tv2.setText(i+1 + ". ");
+            l.addView(tv2);
+            l.addView(tv);
+            cv.addView(l);
+            lcontent.addView(cv);
+        }
     }
 
     @Override
