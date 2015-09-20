@@ -251,6 +251,15 @@ public class GGPlan {
         Collections.sort(list, new Comparator<Entry>() {
             @Override
             public int compare(Entry lhs, Entry rhs) {
+                try {
+                    int l1 = Integer.parseInt(lhs.lesson);
+                    int l2 = Integer.parseInt(rhs.lesson);
+
+                    return l1 - l2;
+                } catch(Exception e) {
+                    Log.d("ggvp", "Lesson parsing failed " + e.getMessage());
+                }
+
                 return lhs.lesson.compareTo(rhs.lesson);
             }
         });
