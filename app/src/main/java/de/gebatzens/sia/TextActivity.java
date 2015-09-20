@@ -70,6 +70,7 @@ public class TextActivity extends AppCompatActivity {
             l.setOrientation(LinearLayout.HORIZONTAL);
             TextView tv = new TextView(this);
             tv.setText(terms[i]);
+            tv.setTextColor(ContextCompat.getColor(this, R.color.textTerms));
             TextView tv2 = new TextView(this);
             tv2.setText(i+1 + ". ");
             l.addView(tv2);
