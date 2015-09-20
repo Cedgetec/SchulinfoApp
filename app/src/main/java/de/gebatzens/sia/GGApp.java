@@ -112,7 +112,7 @@ public class GGApp extends Application {
         }
     }
 
-    public void createNotification(int icon, String title, String message, Intent intent, int id, boolean light, String... strings) {
+    public void createNotification(int icon, String title, String message, Intent intent, int id, String... strings) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(icon)
@@ -133,10 +133,18 @@ public class GGApp extends Application {
             mBuilder.setStyle(inboxStyle);
         }
         mBuilder.setColor(GGApp.GG_APP.school.getDarkColor());
-        if (light) {
-            //mBuilder.setVibrate(new long[]{0, 1000});
+        if (nlightEnabled()) {
             mBuilder.setLights(school.getColor(), 1000, 1000);
         }
+
+        String vibration = preferences.getString("vibration", "off");
+        if(vibration.equals("short"))
+            mBuilder.setVibrate(new long[] {0, 500});
+        else if(vibration.equals("default"))
+            mBuilder.setVibrate(new long[] {0, 200, 200, 200, 200, 200});
+        else if(vibration.equals("long"))
+            mBuilder.setVibrate(new long[] {0, 200, 100, 400, 200, 800, 300, 1000, 1200, 200});
+
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addParentStack(MainActivity.class);
         stackBuilder.addNextIntent(intent);
@@ -171,7 +179,14 @@ public class GGApp extends Application {
     }
 
     public int getUpdateType() {
-        return translateUpdateType(preferences.getString("appupdates", "wifi"));
+        if(preferences.getBoolean("notifications", true))
+            return translateUpdateType(preferences.getString("appupdates", "wifi"));
+        else
+            return UPDATE_DISABLE;
+    }
+
+    public boolean nlightEnabled() {
+        return preferences.getBoolean("notification_led", true);
     }
 
     public FragmentType getFragmentType() {

@@ -92,12 +92,12 @@ public class GGBroadcast extends BroadcastReceiver {
             if (newList.size() == 1) {
                 GGPlan.Entry entry = newList.get(0);
                 gg.createNotification(R.drawable.ic_gg_notification, entry.lesson + ". " + gg.getString(R.string.lhour) + ": " + entry.type, entry.subject.replace("&#x2192;", ""),
-                        intent, 123, true/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
+                        intent, 123/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
                         tomo.getWeekday() + ": " + stdtm*/);
 
             } else {
                 gg.createNotification(R.drawable.ic_gg_notification, gg.getString(R.string.schedule_change), newList.size() + " " + gg.getString(R.string.new_entries),
-                        intent, 123, true/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
+                        intent, 123/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
                         tomo.getWeekday() + ": " + stdtm*/);
             }
         }

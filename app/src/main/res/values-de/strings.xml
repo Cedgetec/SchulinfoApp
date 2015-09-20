@@ -159,6 +159,15 @@
     <string name="user">User</string>
     <string name="please_read">Wichtig: Bitte lesen!</string>
     <string name="contact">Kontakt</string>
+    <string name="notification_led">Benachrichtigungslicht</string>
+    <string name="vibration">Vibration</string>
+
+    <string-array name="vibration_values">
+        <item>Aus</item>
+        <item>Kurz</item>
+        <item>Normal</item>
+        <item>Lang</item>
+    </string-array>
 
     <string name="terms_title">Nutzungshinweise</string>
     <string-array name="terms">

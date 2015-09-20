@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <string-array name="vibration_keys" translateable="false">
+        <item>off</item>
+        <item>short</item>
+        <item>default</item>
+        <item>long</item>
+    </string-array>
+
     <string-array name="data_updates_keys" translatable="false">
-        <item>@string/update_never</item>
         <item>@string/only_update_over_wireless_lan</item>
         <item>@string/update_always</item>
     </string-array>
     <string-array name="data_updates_values" translatable="false">
-        <item>disable</item>
         <item>wifi</item>
         <item>all</item>
     </string-array>

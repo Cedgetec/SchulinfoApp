@@ -17,6 +17,16 @@
             android:summary="@string/notify_class"
             android:key="notifications"
             android:defaultValue="true" />
+        <CheckBoxPreference android:title="@string/notification_led"
+            android:summary=""
+            android:defaultValue="true"
+            android:key="notification_led"/>
+        <ListPreference android:title="@string/vibration"
+            android:key="vibration"
+            android:entryValues="@array/vibration_keys"
+            android:entries="@array/vibration_values"
+            android:summary="%s"
+            android:defaultValue="off"/>
         <ListPreference android:title="@string/automatic_updates"
             android:summary="@string/only_update_over_wireless_lan"
             android:key="auto_data_updates"

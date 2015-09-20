@@ -26,6 +26,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -59,8 +60,14 @@ public class SettingsActivity extends AppCompatActivity {
             SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
             sp.registerOnSharedPreferenceChangeListener(this);
 
+            CheckBoxPreference notifications = (CheckBoxPreference) findPreference("notifications");
+
             Preference update = findPreference("auto_data_updates");
             update.setSummary(gg.translateUpdateType(gg.getUpdateType()));
+            update.setEnabled(notifications.isChecked());
+
+            Preference nlight = findPreference("notification_led");
+            nlight.setEnabled(notifications.isChecked());
 
             Preference pref_buildversion = findPreference("buildversion");
             String versionName = BuildConfig.VERSION_NAME;
@@ -179,10 +186,14 @@ public class SettingsActivity extends AppCompatActivity {
 
             changed = true;
 
-
             if(key.equals("auto_data_updates")) {
                 ListPreference listPreference = (ListPreference) pref;
                 listPreference.setSummary(listPreference.getEntry());
+            } else if(key.equals("notifications")) {
+                CheckBoxPreference no = (CheckBoxPreference) pref;
+
+                findPreference("auto_data_updates").setEnabled(no.isChecked());
+                findPreference("notification_led").setEnabled(no.isChecked());
             }
             /*if(key.equals("darkTheme")){
                 Intent intent2 = getActivity().getIntent();

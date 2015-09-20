@@ -161,6 +161,15 @@
     <string name="user">User</string>
     <string name="please_read">Read this, please!</string>
     <string name="contact">Support</string>
+    <string name="notification_led">Notification light</string>
+    <string name="vibration">Vibration</string>
+
+    <string-array name="vibration_values">
+        <item>Off</item>
+        <item>Short</item>
+        <item>Default</item>
+        <item>Long</item>
+    </string-array>
 
     <string name="terms_title">Terms of use</string>
     <string-array name="terms">
