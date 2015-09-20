@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <string-array name="vibration_keys" translateable="false">
+    <string-array name="vibration_keys" translatable="false">
         <item>off</item>
         <item>short</item>
         <item>default</item>
