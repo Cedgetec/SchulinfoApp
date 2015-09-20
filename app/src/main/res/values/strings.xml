@@ -164,9 +164,9 @@
 
     <string name="terms_title">Terms of use</string>
     <string-array name="terms">
-        <item>1. The data showed in the app is preliminary. We cannot guarantee accuracy and currency.</item>
-        <item>2. In general only the schedules in your school are valid.</item>
-        <item>3. If you have questions or suggestions, please send us an e-mail: info@ggdevelopers.de</item>
+        <item>The data showed in the app is preliminary. We cannot guarantee accuracy and currency.</item>
+        <item>In general only the schedules in your school are valid.</item>
+        <item>If you have questions or suggestions, please send us an e-mail: info@ggdevelopers.de</item>
     </string-array>
 
     <string-array name="subjects">
