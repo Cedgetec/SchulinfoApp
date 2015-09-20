@@ -133,10 +133,6 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-            if(gg.remote.isLoggedIn()) {
-                    pref_username.setSummary(gg.remote.getUsername() + " (" + getResources().getString(R.string.touch_to_logout) + ")");
-            }
-
             Preference filter = findPreference("filter");
             filter.setSummary(GGApp.GG_APP.filters.mainFilter.filter.isEmpty() ? getActivity().getString(R.string.no_filter_active)
                     : GGApp.GG_APP.filters.size() == 0 ? getActivity().getString(R.string.filter_active) :

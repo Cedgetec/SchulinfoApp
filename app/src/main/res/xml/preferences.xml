@@ -4,9 +4,9 @@
         <Preference android:title="Filter"
             android:key="filter"
             android:summary="@string/no_filter_active" />
-        <Preference android:title="@string/username"
+        <Preference android:title="@string/logout"
             android:key="authentication_username"
-            android:summary="@string/not_logged_in">
+            android:summary="@string/touch_to_logout">
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/general">

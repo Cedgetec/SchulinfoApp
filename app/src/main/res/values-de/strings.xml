@@ -48,7 +48,7 @@
     <string name="news">News</string>
     <string name="cafeteria">Mensa</string>
     <string name="close">Schließen</string>
-    <string name="touch_to_update">Zum\u00A0Aktualisieren\u00A0berühren</string>
+    <string name="touch_to_update">Zum Aktualisieren berühren</string>
     <string name="not_available_in_debug_mode">Im Debugmodus nicht verfügbar</string>
     <string name="update_available">Aktualisierung verfügbar</string>
     <string name="should_the_app_be_updated">SchulinfoAPP aktualisieren?</string>
@@ -59,7 +59,7 @@
     <string name="logout_confirm">Wirklich abmelden?</string>
     <string name="logout_on_all_devices">Auf allen Geräten abmelden</string>
     <string name="not_logged_in">Sie sind nicht angemeldet</string>
-    <string name="touch_to_logout">Zum\u00A0Abmelden\u00A0berühren</string>
+    <string name="touch_to_logout">Zum Abmelden berühren</string>
     <string name="school_settings">Schuleinstellungen</string>
     <string name="school">Schule</string>
     <string name="school_class">Klasse</string>
