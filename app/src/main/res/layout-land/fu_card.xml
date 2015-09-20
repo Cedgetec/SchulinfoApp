@@ -10,10 +10,8 @@
         android:adjustViewBounds="true"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
-        android:paddingStart="35dp"
-        android:paddingLeft="35dp"
-        android:paddingEnd="20dp"
-        android:paddingRight="20dp"
+        android:paddingStart="48dp"
+        android:paddingLeft="48dp"
         android:id="@+id/fu_image"
         android:layout_marginTop="48dp"
         android:layout_marginBottom="48dp"/>
