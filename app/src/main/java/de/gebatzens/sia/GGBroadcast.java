@@ -22,8 +22,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.v4.net.ConnectivityManagerCompat;
 import android.util.Log;
 
 import java.util.List;
@@ -111,9 +115,19 @@ public class GGBroadcast extends BroadcastReceiver {
         am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
     }
 
+    @SuppressWarnings("deprecation")
     public static boolean isWlanConnected(Context c) {
         ConnectivityManager cm = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            for(Network n : cm.getAllNetworks()) {
+                NetworkInfo info = cm.getNetworkInfo(n);
+                if(info.getType() == ConnectivityManager.TYPE_WIFI && info.isConnected())
+                    return true;
+            }
+            return false;
+        } else {
+            return cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected();
+        }
 
     }
 
@@ -151,7 +165,7 @@ public class GGBroadcast extends BroadcastReceiver {
                             try {
                                 Thread.sleep(100);
                             } catch (InterruptedException e) {
-
+                                e.printStackTrace();
                             }
                             s++;
                             if(s > 100)

@@ -81,7 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
                 public boolean onPreferenceClick(Preference preference) {
                     Intent intent = new Intent(getActivity(), TextActivity.class);
                     intent.putExtra("title", R.string.terms_title);
-                    intent.putExtra("text", R.string.terms);
+                    intent.putExtra("text", R.array.terms);
                     startActivity(intent);
                     return true;
                 }

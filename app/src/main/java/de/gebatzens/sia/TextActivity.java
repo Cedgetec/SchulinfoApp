@@ -19,6 +19,7 @@ package de.gebatzens.sia;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -35,7 +36,7 @@ public class TextActivity extends AppCompatActivity {
 
         Toolbar mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mToolBar.setTitleTextColor(Color.WHITE);
-        mToolBar.setBackgroundColor(getResources().getColor(R.color.setupColor));
+        mToolBar.setBackgroundColor(ContextCompat.getColor(this, R.color.setupColor));
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +59,9 @@ public class TextActivity extends AppCompatActivity {
 
         TextView tv = (TextView) findViewById(R.id.content_text);
 
-        tv.setText(getString(textRes));
+        String[] terms = getResources().getStringArray(textRes);
+
+        tv.setText(terms[0]);
     }
 
     @Override

@@ -259,10 +259,10 @@ public abstract class RemoteDataFragment extends Fragment {
 
     }
 
-    public static interface RemoteData {
-        public Throwable getThrowable();
-        public void save();
-        public boolean load();
+    public interface RemoteData {
+        Throwable getThrowable();
+        void save();
+        boolean load();
 
     }
 

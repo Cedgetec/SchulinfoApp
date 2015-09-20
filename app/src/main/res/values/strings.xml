@@ -163,9 +163,11 @@
     <string name="contact">Support</string>
 
     <string name="terms_title">Terms of use</string>
-    <string name="terms">1. The data showed in the app is preliminary. We cannot guarantee accuracy and currency.\n\n
-    2. In general only the schedules in your school are valid.\n\n
-    3. If you have questions or suggestions, please send us an e-mail: info@ggdevelopers.de</string>
+    <string-array name="terms">
+        <item>1. The data showed in the app is preliminary. We cannot guarantee accuracy and currency.</item>
+        <item>2. In general only the schedules in your school are valid.</item>
+        <item>3. If you have questions or suggestions, please send us an e-mail: info@ggdevelopers.de</item>
+    </string-array>
 
     <string-array name="subjects">
         <item>d|German</item>

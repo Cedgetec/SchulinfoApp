@@ -132,7 +132,7 @@ public class SetupActivity extends AppCompatActivity {
     public void showLoginDialog(final String sid, final boolean auth) {
 
         Spanned link = Html.fromHtml(getResources().getString(R.string.i_accept) +
-                " <a href='ggactivity://text?title=" + R.string.terms_title + "&text=" + R.string.terms + "'>" + getResources().getString(R.string.terms_title) + "</a>");
+                " <a href='ggactivity://text?title=" + R.string.terms_title + "&text=" + R.array.terms + "'>" + getResources().getString(R.string.terms_title) + "</a>");
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
@@ -144,7 +144,16 @@ public class SetupActivity extends AppCompatActivity {
 
             @Override
             public void onClick(final DialogInterface dialog, int which) {
-                new AsyncTask<Integer, Integer, Integer>() {
+                String user = auth ? ((EditText) ((Dialog) dialog).findViewById(R.id.usernameInput)).getText().toString() : "_anonymous";
+                String pass = auth ? ((EditText) ((Dialog) dialog).findViewById(R.id.passwordInput)).getText().toString() : "";
+                String lsid = sid == null ? ((EditText) ((Dialog) dialog).findViewById(R.id.sidInput)).getText().toString() : sid;
+
+                new AsyncTask<String, Integer, Integer>() {
+
+                    @Override
+                    public void onPreExecute() {
+
+                    }
 
                     @Override
                     public void onPostExecute(Integer v) {
@@ -165,15 +174,13 @@ public class SetupActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    protected Integer doInBackground(Integer... params) {
-                        String user = auth ? ((EditText) ((Dialog) dialog).findViewById(R.id.usernameInput)).getText().toString() : "_anonymous";
-                        String pass = auth ? ((EditText) ((Dialog) dialog).findViewById(R.id.passwordInput)).getText().toString() : "";
-                        String lsid = sid == null ? ((EditText) ((Dialog) dialog).findViewById(R.id.sidInput)).getText().toString() : sid;
-                        return GGApp.GG_APP.remote.login(lsid, user, pass);
+                    protected Integer doInBackground(String... params) {
+
+                        return GGApp.GG_APP.remote.login(params[0], params[1], params[2]);
 
                     }
 
-                }.execute();
+                }.execute(lsid, user, pass);
                 dialog.dismiss();
             }
         });
@@ -187,7 +194,9 @@ public class SetupActivity extends AppCompatActivity {
         });
 
         final AlertDialog dialog = builder.create();
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        if(auth) {
+            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        }
         dialog.show();
 
         if(auth) {
@@ -248,7 +257,7 @@ public class SetupActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         adapter.notifyDataSetChanged();
-                        if(!b)
+                        if (!b)
                             Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)
                                     .setAction(getString(R.string.again), new View.OnClickListener() {
                                         @Override
@@ -260,7 +269,8 @@ public class SetupActivity extends AppCompatActivity {
                     }
                 });
                 GGApp.GG_APP.setSchool(GGApp.GG_APP.getDefaultSID());
-                d.dismiss();
+                if(d.isShowing())
+                    d.dismiss();
             }
         }.start();
     }
@@ -284,7 +294,8 @@ public class SetupActivity extends AppCompatActivity {
                         }
                     });
                 }
-                d.dismiss();
+                if(d.isShowing())
+                    d.dismiss();
                 Intent i = new Intent(SetupActivity.this, MainActivity.class);
                 i.putExtra("reload", true);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
