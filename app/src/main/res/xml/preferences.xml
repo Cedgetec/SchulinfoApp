@@ -28,11 +28,11 @@
             android:summary="%s"
             android:defaultValue="off"/>
         <ListPreference android:title="@string/automatic_updates"
-            android:summary="@string/only_update_over_wireless_lan"
-            android:key="auto_data_updates"
+            android:summary="%s"
+            android:key="background_updates"
             android:entries="@array/data_updates_keys"
             android:entryValues="@array/data_updates_values"
-            android:defaultValue="wifi" />
+            android:defaultValue="all" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/information">
         <de.gebatzens.sia.GGDialogPreference

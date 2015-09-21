@@ -30,52 +30,51 @@ import android.os.Build;
 import android.support.v4.net.ConnectivityManagerCompat;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import de.gebatzens.sia.data.Filter;
 import de.gebatzens.sia.data.GGPlan;
 import de.gebatzens.sia.fragment.SubstFragment;
 
 public class GGBroadcast extends BroadcastReceiver {
 
-    public void checkForUpdates(final GGApp gg, boolean notification) {
-        if(!gg.notificationsEnabled() && notification)
-            return;
+    public void checkForUpdates(final GGApp gg) {
         if(gg.getUpdateType() == GGApp.UPDATE_DISABLE) {
             Log.w("ggvp", "update disabled");
             return;
         }
+
         boolean w = isWlanConnected(gg);
         if(!w && gg.getUpdateType() == GGApp.UPDATE_WLAN ) {
             Log.w("ggvp", "wlan not conected");
             return;
         }
-        GGRemote r = GGApp.GG_APP.remote;
 
-        GGPlan.GGPlans newPlans = r.getPlans(false);
+        GGPlan.GGPlans newPlans = gg.remote.getPlans(false);
         GGPlan.GGPlans oldPlans = gg.plans;
+        gg.plans = newPlans;
 
         if(newPlans.throwable != null || oldPlans == null || oldPlans.throwable != null)
             return;
 
-        List<GGPlan.Entry> newList = null;
-        for(int i = 0; i < newPlans.size() && newList == null; i++) {
+        List<GGPlan.Entry> diff = new ArrayList<>();
+        for(int i = 0; i < newPlans.size(); i++) {
             GGPlan old = oldPlans.getPlanByDate(newPlans.get(i).date);
+
             if(old != null) {
-                //if(newList == null)
-                    newList = newPlans.get(i).filter(gg.filters);
-                //else
-                 //   newList.addAll(newPlans.get(i).filter(gg.filters));
-                List<GGPlan.Entry> oldList = old.filter(gg.filters);
-                if(!oldList.equals(newList))
-                    newList.removeAll(oldList);
-                else
-                    newList = null;
-            } else
-                newList = null;
+                List<GGPlan.Entry> ne = new ArrayList<>();
+                ne.addAll(newPlans.get(i).filter(gg.filters));
+                ne.removeAll(old.filter(gg.filters));
+
+                diff.addAll(ne);
+
+            } else {
+                // New day
+                diff.addAll(newPlans.get(i).filter(gg.filters));
+            }
 
         }
-
-        gg.plans = newPlans;
 
         //This will happen very rarely and can probably be ignored since it causes some problems
         /*if(gg.activity != null && gg.getFragmentType() == GGApp.FragmentType.PLAN)
@@ -86,17 +85,17 @@ public class GGBroadcast extends BroadcastReceiver {
                 }
             });*/
 
-        if(newList != null && newList.size() > 0) {
+        if(diff.size() > 0) {
             Intent intent = new Intent(gg, MainActivity.class);
             intent.putExtra("fragment", "PLAN");
-            if (newList.size() == 1) {
-                GGPlan.Entry entry = newList.get(0);
+            if (diff.size() == 1) {
+                GGPlan.Entry entry = diff.get(0);
                 gg.createNotification(R.drawable.ic_gg_notification, entry.lesson + ". " + gg.getString(R.string.lhour) + ": " + entry.type, entry.subject.replace("&#x2192;", ""),
                         intent, 123/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
                         tomo.getWeekday() + ": " + stdtm*/);
 
             } else {
-                gg.createNotification(R.drawable.ic_gg_notification, gg.getString(R.string.schedule_change), newList.size() + " " + gg.getString(R.string.new_entries),
+                gg.createNotification(R.drawable.ic_gg_notification, gg.getString(R.string.schedule_change), diff.size() + " " + gg.getString(R.string.new_entries),
                         intent, 123/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
                         tomo.getWeekday() + ": " + stdtm*/);
             }
@@ -112,7 +111,7 @@ public class GGBroadcast extends BroadcastReceiver {
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pi);
-        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
+        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, 30000, pi);
     }
 
     @SuppressWarnings("deprecation")
@@ -133,29 +132,23 @@ public class GGBroadcast extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.w("ggvp", "onReceive " + intent.getAction());
         Intent intent1 = new Intent(context, MQTTService.class);
         context.startService(intent1);
         if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-            AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-            Intent i = new Intent(context, GGBroadcast.class);
-            i.setAction("de.gebatzens.ACTION_ALARM");
-            PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 1000, AlarmManager.INTERVAL_HALF_HOUR, pi);
+            createAlarm(context);
 
         } else if (intent.getAction().equals("de.gebatzens.ACTION_ALARM")) {
             new AsyncTask<GGApp, Void, Void>() {
 
                 @Override
                 protected Void doInBackground(GGApp... params) {
-                    checkForUpdates(params[0], true);
+                    Log.d("ggvp", "checking for updates");
+                    checkForUpdates(params[0]);
                     return null;
                 }
             }.execute((GGApp) context.getApplicationContext());
 
-        } else if (intent.getAction().equals(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION)) {
+        } /*else if (intent.getAction().equals(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION)) {
                 new AsyncTask<GGApp, Void, Void>() {
 
                     @Override
@@ -187,7 +180,7 @@ public class GGBroadcast extends BroadcastReceiver {
                     }
                 }.execute((GGApp) context.getApplicationContext());
 
-        }
+        }*/
     }
 
 }

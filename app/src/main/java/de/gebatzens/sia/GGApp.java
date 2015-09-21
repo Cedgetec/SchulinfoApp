@@ -28,6 +28,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -159,10 +160,6 @@ public class GGApp extends Application {
         mNotificationManager.notify(id, mBuilder.build());
     }
 
-    public boolean notificationsEnabled() {
-        return preferences.getBoolean("benachrichtigungen", true);
-    }
-
     public int translateUpdateType(String s) {
         if(s.equals("disable"))
             return UPDATE_DISABLE;
@@ -173,14 +170,9 @@ public class GGApp extends Application {
         return UPDATE_DISABLE;
     }
 
-    public String translateUpdateType(int i) {
-        String[] s = getResources().getStringArray(R.array.data_updates_keys);
-        return s[i];
-    }
-
     public int getUpdateType() {
         if(preferences.getBoolean("notifications", true))
-            return translateUpdateType(preferences.getString("appupdates", "wifi"));
+            return translateUpdateType(preferences.getString("appupdates", "all"));
         else
             return UPDATE_DISABLE;
     }
@@ -238,6 +230,7 @@ public class GGApp extends Application {
     }
 
     public void refreshAsync(final Runnable finished, final boolean updateFragments, final FragmentType type) {
+        Log.d("ggvp", "REFRESH ASYNC " + type);
         new Thread() {
             @Override
             public void run() {
@@ -262,6 +255,7 @@ public class GGApp extends Application {
 
                         } else {
                             update = oldPlans == null || !oldPlans.equals(plans);
+                            Log.d("ggvp", "UPDATE FRAGMENT: " + update);
                         }
 
                         break;

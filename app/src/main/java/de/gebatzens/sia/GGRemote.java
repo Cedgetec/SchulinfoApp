@@ -38,6 +38,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -137,6 +139,13 @@ public class GGRemote {
             plans.throwable = e;
 
         }
+
+        Collections.sort(plans, new Comparator<GGPlan>() {
+            @Override
+            public int compare(GGPlan lhs, GGPlan rhs) {
+                return lhs.date.compareTo(rhs.date);
+            }
+        });
 
         if(plans.throwable != null) {
             if (plans.load()) {

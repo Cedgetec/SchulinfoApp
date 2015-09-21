@@ -62,12 +62,9 @@ public class SettingsActivity extends AppCompatActivity {
 
             CheckBoxPreference notifications = (CheckBoxPreference) findPreference("notifications");
 
-            Preference update = findPreference("auto_data_updates");
-            update.setSummary(gg.translateUpdateType(gg.getUpdateType()));
-            update.setEnabled(notifications.isChecked());
-
-            Preference nlight = findPreference("notification_led");
-            nlight.setEnabled(notifications.isChecked());
+            findPreference("background_updates").setEnabled(notifications.isChecked());
+            findPreference("notification_led").setEnabled(notifications.isChecked());
+            findPreference("vibration").setEnabled(notifications.isChecked());
 
             Preference pref_buildversion = findPreference("buildversion");
             String versionName = BuildConfig.VERSION_NAME;
@@ -78,6 +75,16 @@ public class SettingsActivity extends AppCompatActivity {
                 public boolean onPreferenceClick(Preference preference) {
                     Intent linkIntent = new Intent(Intent.ACTION_VIEW);
                     linkIntent.setData(Uri.parse("https://github.com/GGDevelopers/SchulinfoAPP"));
+                    startActivity(linkIntent);
+                    return true;
+                }
+            });
+
+            Preference license = findPreference("license");
+            license.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent linkIntent = new Intent(Intent.ACTION_VIEW);
+                    linkIntent.setData(Uri.parse("http://www.apache.org/licenses/LICENSE-2.0"));
                     startActivity(linkIntent);
                     return true;
                 }
@@ -194,6 +201,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 findPreference("auto_data_updates").setEnabled(no.isChecked());
                 findPreference("notification_led").setEnabled(no.isChecked());
+                findPreference("vibration").setEnabled(no.isChecked());
             }
             /*if(key.equals("darkTheme")){
                 Intent intent2 = getActivity().getIntent();
