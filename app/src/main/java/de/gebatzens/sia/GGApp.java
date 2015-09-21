@@ -253,7 +253,7 @@ public class GGApp extends Application {
                             }
 
                         }
-                        
+
                         if(activity != null && recreate) {
                             activity.runOnUiThread(new Runnable() {
                                 @Override
