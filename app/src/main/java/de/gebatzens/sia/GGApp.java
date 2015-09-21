@@ -230,7 +230,6 @@ public class GGApp extends Application {
     }
 
     public void refreshAsync(final Runnable finished, final boolean updateFragments, final FragmentType type) {
-        Log.d("ggvp", "REFRESH ASYNC " + type);
         new Thread() {
             @Override
             public void run() {
@@ -255,7 +254,6 @@ public class GGApp extends Application {
 
                         } else {
                             update = oldPlans == null || !oldPlans.equals(plans);
-                            Log.d("ggvp", "UPDATE FRAGMENT: " + update);
                         }
 
                         break;

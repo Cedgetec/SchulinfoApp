@@ -33,6 +33,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -42,6 +43,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.zip.GZIPInputStream;
 
 import de.gebatzens.sia.data.Exams;
 import de.gebatzens.sia.data.Filter;
@@ -418,6 +420,7 @@ public class GGRemote {
 
         con.setRequestProperty("User-Agent", "SchulinfoAPP/" + BuildConfig.VERSION_NAME + " (" +
                 BuildConfig.VERSION_CODE + " " + BuildConfig.BUILD_TYPE + " Android " + Build.VERSION.RELEASE + " " + Build.PRODUCT + ")");
+        con.setRequestProperty("Accept-Encoding", "gzip");
         con.setConnectTimeout(3000);
         con.setRequestMethod(request == null ? "GET" : "POST");
         con.setInstanceFollowRedirects(false);
@@ -434,7 +437,13 @@ public class GGRemote {
         if(BuildConfig.DEBUG)
             Log.d("ggvp", "connection to " + con.getURL() + " established");
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(con.getResponseCode() != 200 ? con.getErrorStream() : con.getInputStream()));
+        InputStream in = con.getResponseCode() != 200 ? con.getErrorStream() : con.getInputStream();
+        String encoding = con.getHeaderField("Content-Encoding");
+        if(encoding != null && encoding.equalsIgnoreCase("gzip")) {
+            in = new GZIPInputStream(in);
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String response = "";
         String line = "";
         while((line = reader.readLine()) != null)
