@@ -207,6 +207,9 @@ public class GGApp extends Application {
 
     public void setSchool(String sid) {
         preferences.edit().putString("sid", sid).apply();
+        if(sid == null)
+            return;
+
         School b = school;
         school = School.getBySID(sid);
         if(activity != null && b != null && !b.equals(school)) {

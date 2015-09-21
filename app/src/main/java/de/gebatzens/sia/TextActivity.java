@@ -33,13 +33,13 @@ public class TextActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle bundle) {
-        setTheme(R.style.AppThemeIndigoLight);
+        setTheme(GGApp.GG_APP.school == null ? R.style.AppThemeIndigoLight : GGApp.GG_APP.school.getTheme());
         super.onCreate(bundle);
         setContentView(R.layout.activity_text);
 
         Toolbar mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mToolBar.setTitleTextColor(Color.WHITE);
-        mToolBar.setBackgroundColor(ContextCompat.getColor(this, R.color.setupColor));
+        mToolBar.setBackgroundColor(GGApp.GG_APP.school == null ? ContextCompat.getColor(this, R.color.setupColor) : GGApp.GG_APP.school.getColor());
         mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

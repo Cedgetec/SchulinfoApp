@@ -59,6 +59,8 @@ public class SetupActivity extends AppCompatActivity {
             return;
         }
 
+        GGApp.GG_APP.setSchool(null);
+
         setContentView(R.layout.activity_setup);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -123,7 +125,6 @@ public class SetupActivity extends AppCompatActivity {
 
                         }
                     });
-                GGApp.GG_APP.setSchool(GGApp.GG_APP.getDefaultSID());
 
             }
         }.start();
@@ -268,7 +269,6 @@ public class SetupActivity extends AppCompatActivity {
                                     .show();
                     }
                 });
-                GGApp.GG_APP.setSchool(GGApp.GG_APP.getDefaultSID());
                 if(d.isShowing())
                     d.dismiss();
             }
