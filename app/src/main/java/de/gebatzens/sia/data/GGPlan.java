@@ -218,7 +218,21 @@ public class GGPlan {
             }
         }
 
-        Collections.sort(list);
+        Collections.sort(list, new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                try {
+                    int l1 = Integer.parseInt(lhs);
+                    int l2 = Integer.parseInt(rhs);
+
+                    return l1 - l2;
+                } catch(Exception e) {
+                    Log.d("ggvp", "Lesson parsing failed " + e.getMessage());
+                }
+
+                return lhs.compareTo(rhs);
+            }
+        });
 
         return list;
     }

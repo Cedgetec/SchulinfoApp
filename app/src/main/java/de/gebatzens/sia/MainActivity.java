@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
             GGApp.GG_APP.setFragmentType(type);
         }
 
-       /* if(intent != null && intent.getBooleanExtra("reload", false))
-            GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());*/
+        if(intent != null && intent.getBooleanExtra("reload", false))
+            GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());
 
         mStrings = new String[] {getResources().getString(R.string.substitute_schedule), getResources().getString(R.string.news), getResources().getString(R.string.cafeteria),
                 getResources().getString(R.string.exams)};

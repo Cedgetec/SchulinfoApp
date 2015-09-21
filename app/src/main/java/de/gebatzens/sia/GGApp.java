@@ -242,8 +242,19 @@ public class GGApp extends Application {
                         GGPlan.GGPlans oldPlans = plans;
                         plans = remote.getPlans(updateFragments);
 
-                        // recreate whole fragment if number of plans changed
-                        if(activity != null && (oldPlans == null || plans.size() > oldPlans.size())) {
+                        boolean recreate = false;
+
+                        if(activity != null && (oldPlans == null || plans.size() != oldPlans.size())) {
+                            recreate = true;
+                        } else if (updateFragments) {
+                            for (int i = 0; i < plans.size() && !recreate; i++) {
+                                if (!plans.get(i).date.equals(oldPlans.get(i).date) || plans.get(i).entries.size() != oldPlans.get(i).entries.size())
+                                    recreate = true;
+                            }
+
+                        }
+                        
+                        if(activity != null && recreate) {
                             activity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -254,9 +265,7 @@ public class GGApp extends Application {
                                     transaction.commit();
                                 }
                             });
-
-                        } else {
-                            update = oldPlans == null || !oldPlans.equals(plans);
+                            Log.d("ggvp", "RECRATE FRAGMENT");
                         }
 
                         break;
