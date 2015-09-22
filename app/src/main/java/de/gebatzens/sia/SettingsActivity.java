@@ -193,22 +193,13 @@ public class SettingsActivity extends AppCompatActivity {
 
             changed = true;
 
-            if(key.equals("auto_data_updates")) {
-                ListPreference listPreference = (ListPreference) pref;
-                listPreference.setSummary(listPreference.getEntry());
-            } else if(key.equals("notifications")) {
+            if(key.equals("notifications")) {
                 CheckBoxPreference no = (CheckBoxPreference) pref;
 
-                findPreference("auto_data_updates").setEnabled(no.isChecked());
+                findPreference("background_updates").setEnabled(no.isChecked());
                 findPreference("notification_led").setEnabled(no.isChecked());
                 findPreference("vibration").setEnabled(no.isChecked());
             }
-            /*if(key.equals("darkTheme")){
-                Intent intent2 = getActivity().getIntent();
-                getActivity().finish();
-                startActivity(intent2);
-            }*/
-
 
         }
 
