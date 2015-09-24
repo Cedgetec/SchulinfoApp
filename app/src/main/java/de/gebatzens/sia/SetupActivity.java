@@ -55,6 +55,7 @@ public class SetupActivity extends AppCompatActivity {
 
         if(GGApp.GG_APP.remote.isLoggedIn()) {
             startActivity(new Intent(this, MainActivity.class));
+            finish();
             //startDownloadThread(false);
             return;
         }
