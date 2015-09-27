@@ -47,16 +47,16 @@ public class Filter {
             case CLASS:
                 String[] classes = item.clazz.split(",");
                 for (String s : classes) {
-                    if (s.toLowerCase().equals(filter.toLowerCase()))
+                    if (filter.toLowerCase().contains(s.toLowerCase()))
                         return true;
                 }
                 return false;
             case TEACHER:
-                return item.teacher.toLowerCase().equals(filter.toLowerCase());
+                return item.teacher.equalsIgnoreCase(filter);
             case SUBJECT:
-                return item.subject.toLowerCase().equals(filter.toLowerCase());
+                return item.subject.equalsIgnoreCase(filter);
             case LESSON:
-                return item.lesson.toLowerCase().equals(filter.toLowerCase());
+                return item.lesson.equalsIgnoreCase(filter);
         }
         return false;
     }

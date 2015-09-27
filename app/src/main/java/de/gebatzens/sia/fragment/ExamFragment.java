@@ -145,7 +145,7 @@ public class ExamFragment extends RemoteDataFragment {
         return (ViewGroup) getView().findViewById(R.id.exam_content);
     }
 
-    private CardView createCardItem(Exams.ExamItem exam_item, LayoutInflater i) {
+    private CardView createCardItem(Exams.ExamItem examItem, LayoutInflater i) {
         CardView ecv = createCardView();
         String[] colors = getActivity().getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
         ecv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
@@ -161,17 +161,27 @@ public class ExamFragment extends RemoteDataFragment {
         c.setTime(d);
         c.add(Calendar.DAY_OF_YEAR, -1);
         Date dt = c.getTime();
-        if(exam_item.date.before(dt)) {
+        if(examItem.date.before(dt)) {
             //ecv.setAlpha(0.35f);
             return null;
         }
-        String lesson = exam_item.lesson;
-        if(Integer.parseInt(exam_item.length) > 1)
-            lesson += ". - " + (Integer.parseInt(exam_item.lesson) + Integer.parseInt(exam_item.length) - 1) + ".";
-        ((TextView) ecv.findViewById(R.id.ecv_date)).setText(getFormattedDate(exam_item.date));
-        ((TextView) ecv.findViewById(R.id.ecv_lesson)).setText(getDay(exam_item.date));
-        ((TextView) ecv.findViewById(R.id.ecv_subject_teacher)).setText(GGPlan.Entry.translateSubject(exam_item.subject) + " [" + exam_item.teacher + "]");
-        ((TextView) ecv.findViewById(R.id.ecv_schoolclass)).setText(exam_item.clazz + "\n" + getString(R.string.lessons) + " " + lesson);
+
+        ((TextView) ecv.findViewById(R.id.ecv_date)).setText(getFormattedDate(examItem.date));
+        ((TextView) ecv.findViewById(R.id.ecv_lesson)).setText(getDay(examItem.date));
+        String content = examItem.subject;
+        if(!examItem.teacher.equals(""))
+            content += " [" + examItem.teacher + "]";
+        ((TextView) ecv.findViewById(R.id.ecv_subject_teacher)).setText(content);
+
+        String lessonContent = examItem.clazz;
+        if(!examItem.lesson.equals("")) {
+            String lesson = examItem.lesson;
+            if(Integer.parseInt(examItem.length) > 1)
+                lesson += ". - " + (Integer.parseInt(examItem.lesson) + Integer.parseInt(examItem.length) - 1) + ".";
+
+            lessonContent += "\n" + getString(R.string.lessons) + " " + lesson;
+        }
+        ((TextView) ecv.findViewById(R.id.ecv_schoolclass)).setText(lessonContent);
         return ecv;
     }
 

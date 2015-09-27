@@ -299,9 +299,8 @@ public class GGRemote {
                     Exams.ExamItem e = new Exams.ExamItem();
                     exams.add(e);
 
-                    e.id = obj.getString("id");
                     e.date = sdf.parse(obj.getString("date"));
-                    e.clazz = obj.getString("class");
+                    e.clazz = obj.getString("sclass");
                     e.lesson = obj.getString("lesson");
                     e.length = obj.getString("length");
                     e.subject = obj.getString("subject");

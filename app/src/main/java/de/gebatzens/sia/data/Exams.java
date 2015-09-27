@@ -50,13 +50,13 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
             for(ExamItem s : this) {
                 writer.beginObject();
 
-                writer.name("id").value(s.id);
                 writer.name("date").value(s.date.getTime());
                 writer.name("clazz").value(s.clazz);
                 writer.name("lesson").value(s.lesson);
                 writer.name("length").value(s.length);
                 writer.name("subject").value(s.subject);
                 writer.name("teacher").value(s.teacher);
+                writer.name("selected").value(s.selected);
 
                 writer.endObject();
             }
@@ -96,9 +96,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
 
                 while(reader.hasNext()) {
                     String name = reader.nextName();
-                    if(name.equals("id"))
-                        s.id = reader.nextString();
-                    else if(name.equals("date"))
+                    if(name.equals("date"))
                         s.date = new Date(reader.nextLong());
                     else if(name.equals("clazz"))
                         s.clazz = reader.nextString();
@@ -110,6 +108,8 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
                         s.subject = reader.nextString();
                     else if(name.equals("teacher"))
                         s.teacher = reader.nextString();
+                    else if(name.equals("selected"))
+                        s.selected = reader.nextBoolean();
                     else
                         reader.skipValue();
                 }
@@ -127,20 +127,20 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
     }
 
     public static class ExamItem {
-        public String id;
         public Date date;
         public String clazz;
         public String lesson;
         public String length;
         public String subject;
         public String teacher;
+        public boolean selected;
 
         @Override
         public boolean equals(Object o) {
             if(!(o instanceof ExamItem))
                 return false;
             ExamItem e = (ExamItem) o;
-            return e.date.equals(date) && e.id.equals(id) && e.clazz.equals(clazz) && e.lesson.equals(lesson) &&
+            return e.date.equals(date) && e.clazz.equals(clazz) && e.lesson.equals(lesson) &&
                     e.length.equals(length) && e.subject.equals(subject) && e.teacher.equals(teacher);
         }
     }

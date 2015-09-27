@@ -45,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.gebatzens.sia.fragment.ExamFragment;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
     String[] mStrings;
-    ImageView mNacvigationImage;
+    ImageView mNavigationImage;
     View mNavigationSchoolpictureLink;
     public Bundle savedState;
     NavigationView navigationView;
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolbar.setTitle(GGApp.GG_APP.school.name);
         Log.d("ggvp", "fragment type " + GGApp.GG_APP.getFragmentType());
-        mToolbar.setSubtitle(mStrings[GGApp.GG_APP.school.fragments.indexOf(GGApp.GG_APP.getFragmentType())]);
+        mToolbar.setSubtitle(mStrings[Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType())]);
 
         ((TextView) findViewById(R.id.drawer_image_text)).setText(GGApp.GG_APP.school.name);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -197,8 +198,8 @@ public class MainActivity extends AppCompatActivity {
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        mNacvigationImage = (ImageView) findViewById(R.id.navigation_schoolpicture);
-        mNacvigationImage.setImageBitmap(GGApp.GG_APP.school.loadImage());
+        mNavigationImage = (ImageView) findViewById(R.id.navigation_schoolpicture);
+        mNavigationImage.setImageBitmap(GGApp.GG_APP.school.loadImage());
         mNavigationSchoolpictureLink = (View) findViewById(R.id.navigation_schoolpicture_link);
         mNavigationSchoolpictureLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < 4; i++) {
             MenuItem item = navMenu.getItem(i);
 
-            item.setVisible(GGApp.GG_APP.school.fragments.indexOf(GGApp.FragmentType.values()[i]) != -1);
+            item.setVisible(GGApp.GG_APP.school.fragments.contains(GGApp.FragmentType.values()[i]));
         }
 
 
@@ -242,8 +243,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent i = new Intent(MainActivity.this, SettingsActivity.class);
                     startActivityForResult(i, 1);
                 } else {
-                    if(GGApp.GG_APP.getFragmentType() != GGApp.GG_APP.school.fragments.get(menuItem.getOrder())) {
-                        GGApp.GG_APP.setFragmentType(GGApp.GG_APP.school.fragments.get(menuItem.getOrder()));
+                    if(GGApp.GG_APP.getFragmentType() != GGApp.FragmentType.values()[menuItem.getOrder()]) {
+                        GGApp.GG_APP.setFragmentType(GGApp.FragmentType.values()[menuItem.getOrder()]);
                         menuItem.setChecked(true);
                         mToolbar.setSubtitle(menuItem.getTitle());
                         mContent = createFragment();
@@ -334,8 +335,8 @@ public class MainActivity extends AppCompatActivity {
 
             //GGApp.GG_APP.recreateProvider();
             //setTheme(GGApp.GG_APP.provider.getTheme());
-            mNacvigationImage = (ImageView) findViewById(R.id.navigation_schoolpicture);
-            mNacvigationImage.setImageBitmap(GGApp.GG_APP.school.loadImage());
+            mNavigationImage = (ImageView) findViewById(R.id.navigation_schoolpicture);
+            mNavigationImage.setImageBitmap(GGApp.GG_APP.school.loadImage());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 GGApp.GG_APP.setStatusBarColorTransparent(getWindow());
             }

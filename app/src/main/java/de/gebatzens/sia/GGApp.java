@@ -28,6 +28,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -304,7 +305,7 @@ public class GGApp extends Application {
     public void setStatusBarColorTransparent(Window w) {
         w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        w.setStatusBarColor(getResources().getColor(R.color.transparent));
+        w.setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
     }
 
     public static enum FragmentType {

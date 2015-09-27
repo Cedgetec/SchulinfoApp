@@ -2,36 +2,32 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:minWidth="80dp"
+        android:gravity="center_horizontal">
 
-        <LinearLayout
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:minWidth="80dp"
-            android:gravity="center_horizontal">
+            android:id="@+id/cv_hour"
+            android:textSize="35dp"
+            android:layout_marginBottom="-6dp"
+            android:layout_marginTop="-6dp"
+            android:textColor="#fff"/>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/cv_hour"
-                android:textSize="35dp"
-                android:layout_marginBottom="-6dp"
-                android:layout_marginTop="-6dp"
-                android:textColor="#fff"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/cv_subject"
-                android:textSize="15dp"
-                android:textColor="#fff"/>
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cv_subject"
+            android:maxLength="20"
+            android:textSize="15dp"
+            android:textColor="#fff"/>
     </LinearLayout>
 
     <LinearLayout

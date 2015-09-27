@@ -124,7 +124,14 @@ public class School {
         s.users = school.optInt("users", 0);
         s.loadTheme();
 
-        s.fragments.add(GGApp.FragmentType.PLAN);
+        JSONArray frags = school.optJSONArray("fragments");
+        if(frags != null) {
+            for(int i = 0; i < frags.length(); i++) {
+                s.fragments.add(GGApp.FragmentType.valueOf(frags.getJSONObject(i).getString("type")));
+            }
+        } else {
+            s.fragments.add(GGApp.FragmentType.PLAN);
+        }
 
         LIST.add(s);
     }
@@ -181,7 +188,7 @@ public class School {
                 writer.name("theme").value(s.themeName);
                 writer.name("city").value(s.city);
                 writer.name("users").value(s.users);
-                writer.name("fragment").beginArray();
+                writer.name("fragments").beginArray();
                 for(GGApp.FragmentType type : s.fragments) {
                     writer.beginObject().name("type").value(type.toString()).endObject();
                 }

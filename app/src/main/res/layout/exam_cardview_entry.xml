@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ecv_lesson"
-                android:textSize="35dp"
+                android:textSize="35sp"
                 android:layout_marginBottom="-6dp"
                 android:layout_marginTop="-6dp"
                 android:textColor="#fff"/>
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ecv_date"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textColor="#fff"/>
         </LinearLayout>
     </LinearLayout>
@@ -45,14 +45,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#fff"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:id="@+id/ecv_subject_teacher"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#fff"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:id="@+id/ecv_schoolclass"/>
 
     </LinearLayout>

@@ -81,7 +81,7 @@ public class FilterActivity extends AppCompatActivity {
 
         Filter.FilterList list = GGApp.GG_APP.filters;
         mainFilterCategory = (TextView) findViewById(R.id.filter_main_category);
-        mainFilterCategory.setText(list.mainFilter.filter.isEmpty() ? getString(R.string.not_selected) : list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher));
+        mainFilterCategory.setText(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher));
         mainFilterContent = (TextView) findViewById(R.id.filter_main_content);
         mainFilterContent.setText(list.mainFilter.filter);
 
