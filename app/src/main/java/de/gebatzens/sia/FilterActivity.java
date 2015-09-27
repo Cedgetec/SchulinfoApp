@@ -63,6 +63,21 @@ public class FilterActivity extends AppCompatActivity {
         super.onCreate(bundle);
         setContentView(R.layout.activity_filter);
 
+        if(GGApp.GG_APP.preferences.getBoolean("first_use_filter", true)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
+            builder.setTitle(getApplication().getString(R.string.explanation));
+            builder.setMessage(getApplication().getString(R.string.filter_help));
+            builder.setPositiveButton(getApplication().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        }
+
+        GGApp.GG_APP.preferences.edit().putBoolean("first_use_filter", false).apply();
+
         final String[] main_filterStrings = new String[] { getApplication().getString(R.string.school_class), getApplication().getString(R.string.teacher)};
 
         listView = (ListView) findViewById(R.id.filter_list);
@@ -151,7 +166,7 @@ public class FilterActivity extends AppCompatActivity {
                 d.show();
                 Filter.FilterList list = GGApp.GG_APP.filters;
                 EditText mainEdit = (EditText) d.findViewById(R.id.filter_text);
-                mainEdit.setHint(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher_shortcut));
+                mainEdit.setHint(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class_name) : getApplication().getString(R.string.teacher_shortcut));
                 mainEdit.setText(list.mainFilter.filter);
             }
         });
@@ -193,14 +208,14 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onClick(View viewIn) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
-                builder.setTitle(getApplication().getString(R.string.add_filter));
+                builder.setTitle(getApplication().getString(R.string.hide_subject));
                 builder.setView(View.inflate(FilterActivity.this, R.layout.filter_dialog, null));
-                builder.setPositiveButton(getApplication().getString(R.string.add), new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getApplication().getString(R.string.hide), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         changed = true;
                         EditText text = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
-                        text.setHint(getApplication().getString(R.string.subject_course));
+                        text.setHint(getApplication().getString(R.string.subject_course_name));
                         Filter f = new Filter();
                         f.type = Filter.FilterType.SUBJECT;
                         f.filter = text.getText().toString().trim();
@@ -225,7 +240,7 @@ public class FilterActivity extends AppCompatActivity {
                 d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 d.show();
                 EditText mainEdit = (EditText) d.findViewById(R.id.filter_text);
-                mainEdit.setHint(getApplication().getString(R.string.subject_course));
+                mainEdit.setHint(getApplication().getString(R.string.subject_course_name));
             }
         });
 

@@ -107,13 +107,24 @@
                     android:layout_marginLeft="16dp"
                     android:fontFamily="sans-serif-medium"
                     android:id="@+id/filter_sep_2"
-                    android:text="@string/filters"/>
+                    android:text="@string/hiden_filters"/>
 
                 <ListView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/filter_list"
-                    android:drawSelectorOnTop="true"/>
+                    android:listSelector="@android:color/transparent"/>
+
+                <android.support.design.widget.FloatingActionButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/addfilter_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_action_add"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    app:fabSize="normal"
+                    app:borderWidth="0dp"/>
 
             </LinearLayout>
         </ScrollView>
@@ -128,17 +139,6 @@
             android:id="@+id/coordinator_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <android.support.design.widget.FloatingActionButton
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/addfilter_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_add"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="16dp"
-                app:fabSize="normal"
-                app:borderWidth="0dp"/>
         </android.support.design.widget.CoordinatorLayout>
 
     </RelativeLayout>

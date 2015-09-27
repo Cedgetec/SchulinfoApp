@@ -63,6 +63,7 @@
     <string name="school_settings">School settings</string>
     <string name="school">School</string>
     <string name="school_class">Class</string>
+    <string name="school_class_name">Classname</string>
     <string name="username">Username</string>
     <string name="general">General</string>
     <string name="show_notifications">Show notifications</string>
@@ -80,13 +81,14 @@
     <string name="as_of">Last updated</string>
     <string name="refresh">Refresh</string>
     <string name="filter">Filter</string>
-    <string name="filters">Subject filters</string>
+    <string name="hiden_filters">Hiden subject/course</string>
     <string name="teacher">Teacher</string>
     <string name="teacher_shortcut">Teacher shortcut</string>
-    <string name="subject_course">Subject</string>
+    <string name="subject_course_name">Subject-/coursename</string>
     <string name="invalid_filter">Invalid filter</string>
     <string name="add">Add</string>
-    <string name="add_filter">Add filter</string>
+    <string name="hide_subject">Hide subject/course</string>
+    <string name="hide">hide</string>
     <string name="edit_filter">Edit filter</string>
     <string name="all">All</string>
     <string name="filters_active">%d filters active</string>
@@ -163,6 +165,7 @@
     <string name="contact">Support</string>
     <string name="notification_led">Notification light</string>
     <string name="vibration">Vibration</string>
+    <string name="explanation">Explanation</string>
 
     <string-array name="vibration_values">
         <item>Off</item>
