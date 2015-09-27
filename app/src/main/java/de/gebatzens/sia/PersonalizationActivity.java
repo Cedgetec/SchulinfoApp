@@ -120,14 +120,13 @@ public class PersonalizationActivity extends AppCompatActivity {
                         "Green",
                         "LightGreen",
                         "Lime",
-                        "Yellow",
                         "Amber",
                         "Orange",
                         "DeepOrange",
                         "Brown",
                         "Grey",
                         "BlueGrey",
-                        "Default"
+                        "DarkGrey"
                 };
 
                 ListAdapter adapter = new ArrayAdapter<String>(

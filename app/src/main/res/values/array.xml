@@ -149,17 +149,6 @@
         <item>#827717</item>
         <item>#9E9D24</item>
     </string-array>
-    <string-array name="CardviewColorYellowLight" translatable="false">
-        <item>#FFEB3B</item>
-        <item>#FBC02D</item>
-        <item>#F57F17</item>
-        <item>#FDD835</item>
-        <item>#F9A825</item>
-        <item>#FFEB3B</item>
-        <item>#FDD835</item>
-        <item>#F57F17</item>
-        <item>#F9A825</item>
-    </string-array>
     <string-array name="CardviewColorAmberLight" translatable="false">
         <item>#FFC107</item>
         <item>#FFA000</item>
@@ -226,8 +215,8 @@
         <item>#263238</item>
         <item>#37474F</item>
     </string-array>
-    <string-array name="CardviewColorDefaultLight" translatable="false">
-        <item>#ffffff</item>
+    <string-array name="CardviewColorDarkGreyLight" translatable="false">
+        <item>#424242</item>
     </string-array>
     <!--Dark Card Colors-->
     <string-array name="CardviewColorRedDark" translatable="false">
@@ -326,14 +315,6 @@
         <item>#AFB42B</item>
         <item>#827717</item>
     </string-array>
-    <string-array name="CardviewColorYellowDark" translatable="false">
-        <item>#FBC02D</item>
-        <item>#F57F17</item>
-        <item>#F9A825</item>
-        <item>#F57F17</item>
-        <item>#FBC02D</item>
-        <item>#F57F17</item>
-    </string-array>
     <string-array name="CardviewColorAmberDark" translatable="false">
         <item>#FFA000</item>
         <item>#FF6F00</item>
@@ -382,7 +363,7 @@
         <item>#455A64</item>
         <item>#263238</item>
     </string-array>
-    <string-array name="CardviewColorDefaultDark" translatable="false">
+    <string-array name="CardviewColorDarkGreyDark" translatable="false">
         <item>#424242</item>
     </string-array>
 </resources>

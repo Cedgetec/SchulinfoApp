@@ -66,11 +66,12 @@ public class TextActivity extends AppCompatActivity {
 
         for (int i = 0; i < terms.length; i++){
             CardView cv = (CardView) getLayoutInflater().inflate(R.layout.textactivity_cards, null);
+            cv.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
             LinearLayout l = new LinearLayout(this);
             l.setOrientation(LinearLayout.HORIZONTAL);
             TextView tv = new TextView(this);
             tv.setText(terms[i]);
-            tv.setTextColor(ContextCompat.getColor(this, R.color.textTerms));
+            tv.setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#ffffff" : "#212121"));
             TextView tv2 = new TextView(this);
             tv2.setText(i+1 + ". ");
             l.addView(tv2);

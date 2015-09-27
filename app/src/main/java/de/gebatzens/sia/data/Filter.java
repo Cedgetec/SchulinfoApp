@@ -71,7 +71,7 @@ public class Filter {
                 s = GGApp.GG_APP.getString(R.string.teacher);
                 break;
             case SUBJECT:
-                s = GGApp.GG_APP.getString(R.string.subject_course);
+                s = GGApp.GG_APP.getString(R.string.subject_course_name);
                 break;
             case LESSON:
                 s = GGApp.GG_APP.getString(R.string.lhour);
