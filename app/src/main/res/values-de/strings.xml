@@ -212,14 +212,13 @@
         <item>Grün</item>
         <item>Hellgrün</item>
         <item>Limone</item>
-        <item>Gelb</item>
         <item>Bernstein</item>
         <item>Orange</item>
         <item>Dunkelorange</item>
         <item>Braun</item>
         <item>Grau</item>
         <item>Blau Grau</item>
-        <item>Schwarzweiß</item>
+        <item>Dunkelgrau</item>
     </string-array>
     <string name="dessert">Dessert</string>
     <string name="other_school">Andere Schule</string>

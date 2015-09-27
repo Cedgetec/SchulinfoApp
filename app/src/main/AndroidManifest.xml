@@ -17,7 +17,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:name=".GGApp"
-        android:theme="@style/AppThemeBlackWhiteLight">
+        android:theme="@style/AppThemeDarkGreyLight">
 
         <activity
             android:name=".FirstUseActivity"
