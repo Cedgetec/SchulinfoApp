@@ -134,11 +134,11 @@
         <item name="colorAccent">#607D8B</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.BlueGrey.Light</item>
     </style>
-    <style name="AppThemeDefaultLight" parent="AppTheme.Base.Light">
+    <style name="AppThemeBlackWhiteLight" parent="AppTheme.Base.Light">
         <item name="colorPrimary">#F5F5F5</item>
         <item name="colorPrimaryDark">#E0E0E0</item>
         <item name="colorAccent">#212121</item>
-        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Default.Light</item>
+        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.BlackWhite.Light</item>
     </style>
     <!-- Dark application themes -->
     <style name="AppThemeRedDark" parent="AppTheme.Base.Dark">
@@ -255,11 +255,11 @@
         <item name="colorAccent">#455A64</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.BlueGrey.Dark</item>
     </style>
-    <style name="AppThemeDefaultDark" parent="AppTheme.Base.Dark">
+    <style name="AppThemeBlackWhiteDark" parent="AppTheme.Base.Dark">
         <item name="colorPrimary">#212121</item>
         <item name="colorPrimaryDark">#000000</item>
         <item name="colorAccent">#F5F5F5</item>
-        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Default.Dark</item>
+        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.BlackWhite.Dark</item>
     </style>
 
 
@@ -337,7 +337,7 @@
     <style name="Theme.AlertDialog.BlueGrey.Light" parent="Theme.AlertDialog.Base.Light">
         <item name="colorAccent">#607D8B</item>
     </style>
-    <style name="Theme.AlertDialog.Default.Light" parent="Theme.AlertDialog.Base.Light">
+    <style name="Theme.AlertDialog.BlackWhite.Light" parent="Theme.AlertDialog.Base.Light">
         <item name="colorAccent">#212121</item>
     </style>
     <!-- Dark popup themes -->
@@ -398,7 +398,7 @@
     <style name="Theme.AlertDialog.BlueGrey.Dark" parent="Theme.AlertDialog.Base.Dark">
         <item name="colorAccent">#607D8B</item>
     </style>
-    <style name="Theme.AlertDialog.Default.Dark" parent="Theme.AlertDialog.Base.Dark">
+    <style name="Theme.AlertDialog.BlackWhite.Dark" parent="Theme.AlertDialog.Base.Dark">
         <item name="colorAccent">#F5F5F5</item>
     </style>
 </resources>

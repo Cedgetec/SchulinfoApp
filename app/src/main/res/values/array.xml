@@ -226,7 +226,7 @@
         <item>#263238</item>
         <item>#37474F</item>
     </string-array>
-    <string-array name="CardviewColorDefaultLight" translatable="false">
+    <string-array name="CardviewColorBlackWhiteLight" translatable="false">
         <item>#ffffff</item>
     </string-array>
     <!--Dark Card Colors-->
@@ -382,7 +382,7 @@
         <item>#455A64</item>
         <item>#263238</item>
     </string-array>
-    <string-array name="CardviewColorDefaultDark" translatable="false">
+    <string-array name="CardviewColorBlackWhiteDark" translatable="false">
         <item>#424242</item>
     </string-array>
 </resources>

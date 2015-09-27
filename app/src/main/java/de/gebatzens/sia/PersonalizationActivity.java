@@ -127,7 +127,7 @@ public class PersonalizationActivity extends AppCompatActivity {
                         "Brown",
                         "Grey",
                         "BlueGrey",
-                        "Default"
+                        "BlackWhite"
                 };
 
                 ListAdapter adapter = new ArrayAdapter<String>(
