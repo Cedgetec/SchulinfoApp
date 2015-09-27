@@ -63,6 +63,7 @@
     <string name="school_settings">Schuleinstellungen</string>
     <string name="school">Schule</string>
     <string name="school_class">Klasse</string>
+    <string name="school_class_name">Klassenname</string>
     <string name="username">Benutzername</string>
     <string name="general">Allgemein</string>
     <string name="show_notifications">Benachrichtigungen anzeigen</string>
