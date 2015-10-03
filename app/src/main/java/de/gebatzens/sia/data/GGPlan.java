@@ -320,7 +320,7 @@ public class GGPlan {
                 if(task.find())
                     comment = GGApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
             } else if(type.equals("eva")) {
-                type = "EVA";
+                type = GGApp.GG_APP.getString(R.string.work_autonomous);
 
                 if(task.find())
                     comment = GGApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);

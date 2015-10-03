@@ -30,6 +30,7 @@
     <string name="tomorrow">Morgen</string>
     <string name="lesson">Unterricht</string>
     <string name="substitute">Vertretung</string>
+    <string name="work_autonomous">EVA</string>
     <string name="shift">Verlegung</string>
     <string name="exam">Klausur</string>
     <string name="supervision">Betreuung</string>
