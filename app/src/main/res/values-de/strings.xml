@@ -94,10 +94,6 @@
     <string name="set_main_filter">Hauptfilter einstellen</string>
     <string name="set_main_filter_mode">Modus einstellen</string>
     <string name="not_selected">Nicht ausgewählt</string>
-    <string name="app_update">App-Updates</string>
-    <string name="app_update_notify">Benachrichtigen, wenn eine neue Version der App verfügbar ist</string>
-    <string name="app_update_title">SchulinfoAPP Aktualisierung</string>
-    <string name="app_update_message">Eine Aktualisierung für die SchulinfoAPP ist verfügbar</string>
     <string name="read">Gelesen</string>
     <string name="nothing">Nichts</string>
     <string name="help">Hilfe</string>

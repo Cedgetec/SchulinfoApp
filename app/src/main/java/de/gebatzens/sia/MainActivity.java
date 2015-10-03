@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(123);
 
-        setContentView(getLayoutInflater().inflate(R.layout.activity_main, null));
+        setContentView(R.layout.activity_main);
 
         removeAllFragments();
 

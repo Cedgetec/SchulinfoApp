@@ -94,10 +94,6 @@
     <string name="set_main_filter">Set Main filter</string>
     <string name="set_main_filter_mode">Set mode</string>
     <string name="not_selected">Not selected</string>
-    <string name="app_update">Check for app updates</string>
-    <string name="app_update_notify">Notify if new version is available</string>
-    <string name="app_update_title">SchoolinfoAPP update</string>
-    <string name="app_update_message">An update for the SchoolinfoAPP is available</string>
     <string name="read">Read</string>
     <string name="nothing">Nothing</string>
     <string name="help">Help</string>
@@ -130,7 +126,7 @@
     <string name="room">Room</string>
     <string name="classes">Classes</string>
     <string name="i_accept">I accept the</string>
-    <string name="downloading_image">Downloading image...</string>
+    <string name="downloading_image">Downloading image…</string>
     <string name="other_school">Other School</string>
     <string name="school_id">School ID</string>
     <string name="finish">finish</string>
