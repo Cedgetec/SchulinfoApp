@@ -211,21 +211,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final ArrayList<View> mMenuItems = new ArrayList<>();
         final Menu navMenu = navigationView.getMenu();
-        navigationView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                for (int i = 0, length = navMenu.size(); i < length; i++) {
-                    final MenuItem item = navMenu.getItem(i);
-                    navigationView.findViewsWithText(mMenuItems, item.getTitle(), View.FIND_VIEWS_WITH_TEXT);
-                }
-                for (final View menuItem : mMenuItems) {
-                    ((TextView) menuItem).setTextSize(14);
-                    ((TextView) menuItem).setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-                }
-            }
-        });
         selectedItem = GGApp.GG_APP.school.fragments.indexOf(GGApp.GG_APP.getFragmentType());
         navigationView.getMenu().getItem(selectedItem).setChecked(true);
 
