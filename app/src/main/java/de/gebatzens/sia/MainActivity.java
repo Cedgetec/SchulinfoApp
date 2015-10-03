@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,14 +37,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -176,12 +173,12 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setSubtitle(mStrings[Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType())]);
 
         ((TextView) findViewById(R.id.drawer_image_text)).setText(GGApp.GG_APP.school.name);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            GGApp.GG_APP.setStatusBarColorTransparent(getWindow());
+            GGApp.GG_APP.setStatusBarColorTransparent(getWindow()); // because of the navigation drawer
         }
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 mToolbar, R.string.drawer_open, R.string.drawer_close) {
 
@@ -201,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationImage = (ImageView) findViewById(R.id.navigation_schoolpicture);
         mNavigationImage.setImageBitmap(GGApp.GG_APP.school.loadImage());
-        mNavigationSchoolpictureLink = (View) findViewById(R.id.navigation_schoolpicture_link);
+        mNavigationSchoolpictureLink = findViewById(R.id.navigation_schoolpicture_link);
         mNavigationSchoolpictureLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
@@ -225,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
-                if(menuItem.getOrder() == mStrings.length) {
+                if(menuItem.getItemId() == R.id.navigation_drawer_settings) {
                     mDrawerLayout.closeDrawers();
                     Intent i = new Intent(MainActivity.this, SettingsActivity.class);
                     startActivityForResult(i, 1);

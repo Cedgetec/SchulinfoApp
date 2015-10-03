@@ -24,18 +24,14 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.v4.net.ConnectivityManagerCompat;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.gebatzens.sia.data.Filter;
 import de.gebatzens.sia.data.GGPlan;
-import de.gebatzens.sia.fragment.SubstFragment;
 
 public class GGBroadcast extends BroadcastReceiver {
 

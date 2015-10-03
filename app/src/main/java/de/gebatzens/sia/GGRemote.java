@@ -371,7 +371,7 @@ public class GGRemote {
 
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putString("username", user);
-                    edit.putString("token", (String) data.getString("token"));
+                    edit.putString("token", data.getString("token"));
                     edit.apply();
 
                     GGApp.GG_APP.setSchool(sid);

@@ -83,7 +83,7 @@ public class FilterListAdapter extends BaseAdapter {
                 ed.setText(list.get(position).filter);
             }
         });
-        ((FrameLayout)vg.findViewById(R.id.filter_delete)).setOnClickListener(new View.OnClickListener() {
+        vg.findViewById(R.id.filter_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 c.changed = true;
@@ -91,7 +91,7 @@ public class FilterListAdapter extends BaseAdapter {
                 notifyDataSetChanged();
                 FilterActivity.saveFilter(GGApp.GG_APP.filters);
                 FilterActivity.setListViewHeightBasedOnChildren(c.listView);
-              
+
             }
         });
         return vg;

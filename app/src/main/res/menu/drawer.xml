@@ -3,30 +3,24 @@
     <group android:id="@+id/group_1" android:checkableBehavior="single">
         <item
             android:id="@+id/menuItem1"
-            android:orderInCategory="0"
-            android:checked="true"
-            android:icon="@drawable/vertretungsplan_icon"
+            android:icon="@drawable/substitution_icon"
             android:title="@string/substitute_schedule"/>
         <item
             android:id="@+id/menuItem2"
-            android:orderInCategory="1"
             android:icon="@drawable/news_icon"
             android:title="@string/news"/>
         <item
             android:id="@+id/menuItem3"
-            android:orderInCategory="2"
             android:icon="@drawable/mensa_icon"
             android:title="@string/cafeteria"/>
         <item
             android:id="@+id/menuItem4"
-            android:orderInCategory="3"
             android:icon="@drawable/exam_icon"
             android:title="@string/exams"/>
     </group>
     <group android:id="@+id/group_2" android:checkableBehavior="none">
         <item
-            android:id="@+id/menuItem5"
-            android:orderInCategory="4"
+            android:id="@+id/navigation_drawer_settings"
             android:title="@string/settings"/>
     </group>
 </menu>

@@ -35,7 +35,6 @@ import java.util.Locale;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Exams;
-import de.gebatzens.sia.data.GGPlan;
 
 public class ExamFragment extends RemoteDataFragment {
 

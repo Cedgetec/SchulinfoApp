@@ -69,10 +69,6 @@ public class NewsFragmentDatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null) {
             cursor.moveToFirst();
         }
-        if(cursor.getCount()==0) {
-            return false;
-        } else {
-            return true;
-        }
+        return cursor.getCount() != 0;
     }
 }

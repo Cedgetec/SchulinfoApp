@@ -91,7 +91,7 @@ public class Filter {
         return (st ? (getTypeString(type) + " ") : "") + filter;
     }
 
-    public static enum FilterType {
+    public enum FilterType {
         CLASS, TEACHER, SUBJECT, LESSON
     }
 

@@ -181,9 +181,9 @@ public class MensaFragment extends RemoteDataFragment {
             @Override
             protected void onPostExecute(ViewHolder result) {
                 try {
-                    ImageView imgView = (ImageView) result.imgview;
+                    ImageView imgView = result.imgview;
                     if(result.bitmap != null) {
-                        imgView.setImageBitmap((Bitmap) result.bitmap);
+                        imgView.setImageBitmap(result.bitmap);
                     } else {
                         imgView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.no_content));
                     }

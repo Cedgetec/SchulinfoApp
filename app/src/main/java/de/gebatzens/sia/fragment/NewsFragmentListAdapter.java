@@ -36,8 +36,6 @@ import de.gebatzens.sia.data.News;
 public class NewsFragmentListAdapter extends BaseAdapter {
     private Context context;
     private News news;
-    private LayoutInflater inflater;
-    private String formattedDate;
     private NewsFragmentDatabaseHelper mDatabaseHelper;
 
     /*public NewsFragmentListAdapter(Context pContext, String[] pTitle, String[] pContent, int[] pIcon) {*/
@@ -49,7 +47,7 @@ public class NewsFragmentListAdapter extends BaseAdapter {
  
     @SuppressLint("ViewHolder")
 	public View getView(int position, View convertView, ViewGroup parent) {
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = inflater.inflate(R.layout.news_fragment_list_item, parent, false);
         TextView txtDate = (TextView) itemView.findViewById(R.id.newsDate);
         TextView txtTitle = (TextView) itemView.findViewById(R.id.newsTitle);
@@ -57,7 +55,7 @@ public class NewsFragmentListAdapter extends BaseAdapter {
         //ImageView imgIcon = (ImageView) itemView.findViewById(R.id.newsIcon);
 
         DateFormat dateFormatter = new SimpleDateFormat("d. MMM yy");
-        formattedDate = dateFormatter.format(news.get(position).date);
+        String formattedDate = dateFormatter.format(news.get(position).date);
 
         txtDate.setText(formattedDate);
         txtTitle.setText(news.get(position).title);

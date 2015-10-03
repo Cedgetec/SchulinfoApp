@@ -145,13 +145,13 @@
     <string name="classes">Klassen</string>
     <string name="room">Raum</string>
     <string name="i_accept">Ich akzeptiere die</string>
-    <string name="downloading_image">Lade Bild herunter...</string>
+    <string name="downloading_image">Lade Bild herunter…</string>
     <string name="school_id">Schul-ID</string>
     <string name="finish">fertig</string>
     <string name="start_now">Jetzt starten</string>
     <string name="have_fun_with_the_app">Viel Spaß mit der App!</string>
     <string name="fu_firstpage_title">Deine SchulinfoAPP</string>
-    <string name="fu_firstpage_content">Ab sofort immer informiert über den Vertretungsplan und mehr...</string>
+    <string name="fu_firstpage_content">Ab sofort immer informiert über den Vertretungsplan und mehr…</string>
     <string name="fu_secondpage_title">Planänderungen auf dich angepasst</string>
     <string name="fu_secondpage_content">Personalisiere den Vertretungsplan und passe ihn auf deine Klasse an.</string>
     <string name="fu_thirdpage_title">Der Kursfilter</string>

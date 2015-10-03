@@ -308,7 +308,7 @@ public class GGApp extends Application {
         w.setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
     }
 
-    public static enum FragmentType {
+    public enum FragmentType {
         PLAN, NEWS, MENSA, EXAMS
     }
 

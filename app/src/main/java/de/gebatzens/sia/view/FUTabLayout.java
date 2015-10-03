@@ -19,8 +19,6 @@ package de.gebatzens.sia.view;
 import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import de.gebatzens.sia.R;
 
