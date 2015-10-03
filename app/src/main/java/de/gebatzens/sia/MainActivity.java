@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -275,6 +276,15 @@ public class MainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
