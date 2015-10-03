@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <color name="textTerms">#212121</color>
     <color name="custom_material_green">#0f9d58</color>
     <color name="custom_material_red">#db4437</color>
     <color name="custom_material_blue">#4285f4</color>
     <color name="custom_material_orange">#f4b400</color>
     <color name="primary_red">#F44336</color>
-    <color name="primary_red_dark">#D32F2F</color>
     <color name="transparent">#00000000</color>
     <color name="setupColor">#3f51b5</color>
     <color name="setupText">#303f9f</color>

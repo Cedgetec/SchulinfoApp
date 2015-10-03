@@ -21,7 +21,7 @@
             android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
@@ -33,6 +33,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="1dp"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:fontFamily="sans-serif-medium"
                     android:id="@+id/filter_sep_1"
                     android:text="@string/main_filter"/>
@@ -105,6 +106,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="1dp"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:fontFamily="sans-serif-medium"
                     android:id="@+id/filter_sep_2"
                     android:text="@string/hiden_filters"/>
@@ -113,6 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/filter_list"
+                    android:isScrollContainer="false"
                     android:listSelector="@android:color/transparent"/>
 
                 <android.support.design.widget.FloatingActionButton

@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:minWidth="80dp"
         android:gravity="center_horizontal">
 
@@ -16,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cv_hour"
-            android:textSize="35dp"
+            android:textSize="35sp"
             android:layout_marginBottom="-6dp"
             android:layout_marginTop="-6dp"
             android:textColor="#fff"/>
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/cv_subject"
             android:maxLength="20"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:textColor="#fff"/>
     </LinearLayout>
 
@@ -42,14 +43,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#fff"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:id="@+id/cv_header"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#fff"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:id="@+id/cv_detail"/>
 
     </LinearLayout>

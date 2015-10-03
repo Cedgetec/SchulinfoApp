@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:id="@+id/fragment_layout">
 
-    <RelativeLayout
+    <de.gebatzens.sia.view.GGSwipeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/refresh">
 
-        <de.gebatzens.sia.view.GGSwipeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/refresh">
+            android:orientation="vertical"
+            android:id="@+id/exam_content" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:id="@+id/exam_content" />
+    </de.gebatzens.sia.view.GGSwipeLayout>
 
-        </de.gebatzens.sia.view.GGSwipeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:id="@+id/ShaderTabLayout"
+        android:background="@drawable/tablayoutbackground"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:id="@+id/ShaderTabLayout"
-            android:background="@drawable/tablayoutbackground"/>
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.design.widget.CoordinatorLayout>
 
-        <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/coordinator_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.design.widget.CoordinatorLayout>
-
-    </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

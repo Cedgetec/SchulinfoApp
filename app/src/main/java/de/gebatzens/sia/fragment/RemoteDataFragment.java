@@ -160,23 +160,6 @@ public abstract class RemoteDataFragment extends Fragment {
         l.addView(sv);
     }
 
-    public void createText(ViewGroup l, String text) {
-        RelativeLayout r = new RelativeLayout(getActivity());
-        r.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        r.setGravity(Gravity.CENTER);
-
-        TextView tv = new TextView(getActivity());
-        RelativeLayout.LayoutParams tvparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        tv.setLayoutParams(tvparams);
-        tv.setText(text);
-        tv.setTextSize(30);
-        tv.setTextColor(getResources().getColor(R.color.primary_text_default_material_dark));
-        tv.setPadding(0, 0, 0, toPixels(15));
-        r.addView(tv);
-
-        l.addView(r);
-    }
-
     public void createNoEntriesCard(ViewGroup vg, LayoutInflater inflater) {
         FrameLayout f2 = new FrameLayout(getActivity());
         f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));

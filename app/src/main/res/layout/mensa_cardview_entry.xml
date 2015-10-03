@@ -48,7 +48,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/mcv_day"
-                            android:textSize="28dp"
+                            android:textSize="28sp"
                             android:layout_marginBottom="-6dp"
                             android:layout_marginTop="-6dp"
                             android:textColor="#fff"/>
@@ -57,7 +57,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/mcv_date"
-                            android:textSize="12dp"
+                            android:textSize="12sp"
                             android:textColor="#fff"/>
                     </LinearLayout>
 
@@ -73,7 +73,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#fff"
-                        android:textSize="17dp"
+                        android:textSize="17sp"
                         android:id="@+id/mcv_meal"/>
 
                 </LinearLayout>
@@ -100,15 +100,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:textSize="15dp"
+                android:textSize="15sp"
+                android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:id="@+id/mcv_garnish"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:id="@+id/mcv_dessert"/>
         </LinearLayout>
     </LinearLayout>

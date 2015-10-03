@@ -48,13 +48,8 @@
     <string name="news">News</string>
     <string name="cafeteria">Cafeteria</string>
     <string name="close">Close</string>
-    <string name="touch_to_update">Touch to update</string>
-    <string name="not_available_in_debug_mode">Not available in debug mode</string>
-    <string name="update_available">Update available</string>
-    <string name="should_the_app_be_updated">Update SchoolinfoAPP?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="no_new_version_available">Everything up to date</string>
     <string name="logout">Logout</string>
     <string name="logout_confirm">Are you sure that you want to logout?</string>
     <string name="logout_on_all_devices">Logout on all devices</string>
@@ -76,7 +71,6 @@
     <string name="github">GitHub</string>
     <string name="license">License</string>
     <string name="build_version">Build version</string>
-    <string name="update_never">Deny automatic substitute schedule updates</string>
     <string name="update_always">Update always</string>
     <string name="as_of">Last updated</string>
     <string name="refresh">Refresh</string>
@@ -95,14 +89,6 @@
     <string name="filter_active">1 filter active</string>
     <string name="no_filter_active">No filter active</string>
     <string name="contact_us">Contact us, if you have a problem or enhancement for this app</string>
-    <string name="submit">Submit</string>
-    <string name="name">Name</string>
-    <string name="email_address">Email address</string>
-    <string name="email_subject">Subject</string>
-    <string name="message">Message</string>
-    <string name="message_sent_successfully">Message sent successfully</string>
-    <string name="please_fill_out_all_inputs">Please fill out all inputs</string>
-    <string name="error_while_sending_message">Error while sending message</string>
     <string name="ok">OK</string>
     <string name="main_filter">Main filter</string>
     <string name="set_main_filter">Set Main filter</string>
@@ -123,8 +109,6 @@
     <string name="all_exams">All exams</string>
     <string name="lhour">Lesson</string>
     <string name="next">Next</string>
-    <string name="setup_title_1">Welcome to the SchoolinfoAPP!</string>
-    <string name="setup_description">Welcome to the SchoolinfoAPP!</string>
     <string name="lessons">Lessons</string>
     <string name="no_entries">No entries</string>
     <string name="supported_schools">Supported schools</string>
@@ -146,7 +130,7 @@
     <string name="room">Room</string>
     <string name="classes">Classes</string>
     <string name="i_accept">I accept the</string>
-    <string name="downloading_image">Downloading image…</string>
+    <string name="downloading_image">Downloading image...</string>
     <string name="other_school">Other School</string>
     <string name="school_id">School ID</string>
     <string name="finish">finish</string>

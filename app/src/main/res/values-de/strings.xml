@@ -48,13 +48,8 @@
     <string name="news">News</string>
     <string name="cafeteria">Mensa</string>
     <string name="close">Schließen</string>
-    <string name="touch_to_update">Zum Aktualisieren berühren</string>
-    <string name="not_available_in_debug_mode">Im Debugmodus nicht verfügbar</string>
-    <string name="update_available">Aktualisierung verfügbar</string>
-    <string name="should_the_app_be_updated">SchulinfoAPP aktualisieren?</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
-    <string name="no_new_version_available">Keine neue Version verfügbar</string>
     <string name="logout">Abmelden</string>
     <string name="logout_confirm">Wirklich abmelden?</string>
     <string name="logout_on_all_devices">Auf allen Geräten abmelden</string>
@@ -76,7 +71,6 @@
     <string name="github">GitHub</string>
     <string name="license">Lizenz</string>
     <string name="build_version">Build-Version</string>
-    <string name="update_never">Keine automatischen Aktualisierungen des Vertretungsplans zulassen</string>
     <string name="update_always">Jederzeit automatisch aktualisieren</string>
     <string name="as_of">Stand</string>
     <string name="refresh">Aktualisieren</string>
@@ -95,14 +89,6 @@
     <string name="filter_active">1 Filter aktiv</string>
     <string name="filters_active">%d Filter aktiv</string>
     <string name="contact_us">Kontaktiere uns, falls du ein Problem mit der App hast</string>
-    <string name="submit">Absenden</string>
-    <string name="email_address">E-Mail-Adresse</string>
-    <string name="email_subject">Betreff</string>
-    <string name="message">Nachricht</string>
-    <string name="name">Name</string>
-    <string name="message_sent_successfully">Nachricht erfolgreich gesendet</string>
-    <string name="please_fill_out_all_inputs">Bitte alle Eingabefelder ausfüllen</string>
-    <string name="error_while_sending_message">Fehler beim Senden der Nachricht</string>
     <string name="ok">OK</string>
     <string name="main_filter">Hauptfilter</string>
     <string name="set_main_filter">Hauptfilter einstellen</string>
@@ -123,8 +109,6 @@
     <string name="my_exams">Meine Klausuren</string>
     <string name="lhour">Stunde</string>
     <string name="next">Weiter</string>
-    <string name="setup_title_1">Willkommen in der SchulinfoAPP!</string>
-    <string name="setup_description">Willkommen in der SchulinfoAPP!</string>
     <string name="lessons">Stunden</string>
     <string name="no_entries">Keine Einträge</string>
     <string name="supported_schools">Unterstützte Schulen</string>
