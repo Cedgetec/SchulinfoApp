@@ -232,7 +232,7 @@ public abstract class RemoteDataFragment extends Fragment {
 
         FrameLayout contentFrame = (FrameLayout) getActivity().findViewById(R.id.content_fragment);
         contentFrame.setVisibility(View.VISIBLE);
-        LinearLayout fragmentLayout = (LinearLayout) getActivity().findViewById(R.id.fragment_layout);
+        ViewGroup fragmentLayout = (ViewGroup) getActivity().findViewById(R.id.fragment_layout);
         Animation fadeIn = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fade_in);
         fragmentLayout.startAnimation(fadeIn);
 

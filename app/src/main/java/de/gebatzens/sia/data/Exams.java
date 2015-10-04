@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
@@ -82,6 +83,17 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
             }
         }
         return e;
+    }
+
+    public List<String> getAllClasses() {
+        ArrayList<String> list = new ArrayList<String>();
+
+        for(ExamItem e : this) {
+            if(!list.contains(e.clazz)) {
+                list.add(e.clazz);
+            }
+        }
+        return list;
     }
 
     public boolean load() {

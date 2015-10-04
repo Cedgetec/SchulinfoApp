@@ -83,6 +83,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public GGApp.FragmentType menuIdToType(int id) {
+        switch(id) {
+            case R.id.menuItem1:
+                return GGApp.FragmentType.PLAN;
+            case R.id.menuItem2:
+                return GGApp.FragmentType.NEWS;
+            case R.id.menuItem3:
+                return GGApp.FragmentType.MENSA;
+            case R.id.menuItem4:
+                return GGApp.FragmentType.EXAMS;
+            default:
+                return null;
+        }
+    }
+
     public void removeAllFragments() {
         List<Fragment> frags = getSupportFragmentManager().getFragments();
         if(frags != null)
@@ -231,17 +246,21 @@ public class MainActivity extends AppCompatActivity {
                     Intent i = new Intent(MainActivity.this, SettingsActivity.class);
                     startActivityForResult(i, 1);
                 } else {
-                    if(GGApp.GG_APP.getFragmentType() != GGApp.FragmentType.values()[menuItem.getOrder()]) {
-                        GGApp.GG_APP.setFragmentType(GGApp.FragmentType.values()[menuItem.getOrder()]);
+                    GGApp.FragmentType type = menuIdToType(menuItem.getItemId());
+                    if(GGApp.GG_APP.getFragmentType() != type) {
+                        GGApp.GG_APP.setFragmentType(type);
                         menuItem.setChecked(true);
                         mToolbar.setSubtitle(menuItem.getTitle());
                         mContent = createFragment();
+                        Log.e("ggvp", "WAS FÜR EINE SCHEISSE");
                         Animation fadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
                         fadeOut.setAnimationListener(new Animation.AnimationListener() {
+
                             @Override
                             public void onAnimationStart(Animation animation) {
-                                // Called when the Animation starts
+
                             }
+
                             @Override
                             public void onAnimationEnd(Animation animation) {
                                 FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_fragment);
@@ -254,10 +273,12 @@ public class MainActivity extends AppCompatActivity {
                                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.content_fragment, mContent, "gg_content_fragment");
                                 transaction.commit();
+                                Log.w("ggvp", "TEST!!!!!!!!!!!!");
                             }
+
                             @Override
                             public void onAnimationRepeat(Animation animation) {
-                                // This is called each time the Animation repeats
+
                             }
                         });
                         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_fragment);
