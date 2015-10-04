@@ -43,6 +43,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 public class SetupActivity extends AppCompatActivity {
 
     SchoolListAdapter adapter;
@@ -54,9 +58,26 @@ public class SetupActivity extends AppCompatActivity {
         super.onCreate(saved);
 
         if(GGApp.GG_APP.remote.isLoggedIn()) {
+            new Thread() {
+                @Override
+                public void run() {
+                    GGRemote.APIResponse resp = null;
+                    try {
+                        resp = GGApp.GG_APP.remote.doRequest("/schoolInfo?token=" + GGApp.GG_APP.remote.getToken(), null);
+                        if(resp.state == GGRemote.APIState.SUCCEEDED) {
+                            School.updateSchool((JSONObject) resp.data);
+                            School.saveList();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }.start();
+
             startActivity(new Intent(this, MainActivity.class));
             finish();
-            //startDownloadThread(false);
+
             return;
         }
 

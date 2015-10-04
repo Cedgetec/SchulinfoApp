@@ -173,7 +173,7 @@ public class ExamFragment extends RemoteDataFragment {
         ((TextView) ecv.findViewById(R.id.ecv_subject_teacher)).setText(content);
 
         String lessonContent = examItem.clazz;
-        if(!examItem.lesson.equals("")) {
+        if(Integer.parseInt(examItem.lesson) > 0) {
             String lesson = examItem.lesson;
             if(Integer.parseInt(examItem.length) > 1)
                 lesson += ". - " + (Integer.parseInt(examItem.lesson) + Integer.parseInt(examItem.length) - 1) + ".";
