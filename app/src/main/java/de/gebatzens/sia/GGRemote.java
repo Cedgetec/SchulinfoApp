@@ -364,15 +364,17 @@ public class GGRemote {
                             return 3;
                     }
 
-                    if(School.getBySID(sid) == null) {
-                        School.addSchool(data.getJSONObject("school"));
-                        School.saveList();
-                    }
-
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putString("username", user);
                     edit.putString("token", data.getString("token"));
                     edit.apply();
+
+                    APIResponse resp = doRequest("/schoolInfo?token=" + data.getString("token"), null);
+                    if(resp.state != APIState.SUCCEEDED)
+                        return 3;
+
+                    School.updateSchool((JSONObject) resp.data);
+                    School.saveList();
 
                     GGApp.GG_APP.setSchool(sid);
 

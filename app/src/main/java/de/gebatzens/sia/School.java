@@ -52,7 +52,7 @@ public class School {
     public String website;
     public String city;
     public boolean loginNeeded;
-    public List<GGApp.FragmentType> fragments = new ArrayList<>();
+    public List<GGApp.FragmentType> fragments;
     public int users;
 
     public static List<School> LIST = new ArrayList<School>();
@@ -111,19 +111,25 @@ public class School {
                    && colorArray == s.colorArray && image.equals(s.image) && city.equals(s.city) && website.equals(s.website) && loginNeeded == s.loginNeeded;
     }
 
-    public static void addSchool(JSONObject school) throws JSONException {
-        School s = new School();
+    public static void updateSchool(JSONObject school) throws JSONException {
+        String sid = school.getString("sid");
+        School s = getBySID(sid);
+        if(s == null) {
+            s = new School();
+            LIST.add(s);
+            s.sid = sid;
+        }
 
         s.name = school.getString("name");
         s.city = school.getString("city");
         s.themeName = school.getString("theme");
-        s.website = school.getString("website");
+        s.website = school.optString("website");
         s.loginNeeded = school.getBoolean("authRequired");
-        s.sid = school.getString("sid");
         s.image = school.optString("image", "");
         s.users = school.optInt("users", 0);
         s.loadTheme();
 
+        s.fragments = new ArrayList<>();
         JSONArray frags = school.optJSONArray("fragments");
         if(frags != null) {
             for(int i = 0; i < frags.length(); i++) {
@@ -133,7 +139,6 @@ public class School {
             s.fragments.add(GGApp.FragmentType.PLAN);
         }
 
-        LIST.add(s);
     }
 
     public static boolean fetchList() {
@@ -150,7 +155,7 @@ public class School {
                 JSONArray schools = (JSONArray) re.data;
                 for(int i = 0; i < schools.length(); i++) {
                     JSONObject school = schools.getJSONObject(i);
-                    addSchool(school);
+                    updateSchool(school);
 
                 }
 
@@ -214,7 +219,7 @@ public class School {
             JSONArray array = new JSONArray(content);
             for(int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
-                addSchool(obj);
+                updateSchool(obj);
 
             }
 
@@ -229,7 +234,7 @@ public class School {
         for(School s : LIST)
             if(s.sid.equals(sid))
                 return s;
-        Log.w("ggvp", "School " + sid + " not found");
+        //Log.w("ggvp", "School " + sid + " not found");
         return null;
     }
 
