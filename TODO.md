@@ -2,7 +2,7 @@
 
 - [ ] Mensaplan für SWS
   - [ ] PDF/HTML-Fragment
-- [ ] Klausurenplan für SWS
+- [x] Klausurenplan für SWS
 - [ ] MQTT-Messages speichern
 - [ ] HiddenActivity
 - [x] GEMS Wiesenfeld
@@ -15,5 +15,5 @@
 - [ ] Performance im SubstFragment verbessern (Beim Drehen)
 - [x] Dunkle Theme-Farben
 - [ ] Fragment für eigene HTML/PDF-Dateien
-- [ ] Pläne sortierbar nach Stunden machen
+- [x] Pläne sortierbar nach Stunden machen
 - [ ] backend: Kursliste
