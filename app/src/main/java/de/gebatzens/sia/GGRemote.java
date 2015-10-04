@@ -300,7 +300,7 @@ public class GGRemote {
                     exams.add(e);
 
                     e.date = sdf.parse(obj.getString("date"));
-                    e.clazz = obj.getString("sclass");
+                    e.clazz = obj.getString("class");
                     e.lesson = obj.getString("lesson");
                     e.length = obj.getString("length");
                     e.subject = obj.getString("subject");
