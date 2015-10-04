@@ -211,7 +211,11 @@ public class MainActivity extends AppCompatActivity {
 
         final Menu navMenu = navigationView.getMenu();
         selectedItem = GGApp.GG_APP.school.fragments.indexOf(GGApp.GG_APP.getFragmentType());
-        navigationView.getMenu().getItem(selectedItem).setChecked(true);
+        try {
+            navigationView.getMenu().getItem(selectedItem).setChecked(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         for(int i = 0; i < 4; i++) {
             MenuItem item = navMenu.getItem(i);

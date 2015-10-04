@@ -172,13 +172,13 @@ public class GGRemote {
             e.date = p.date;
             p.entries.add(e);
             JSONObject entry = array.getJSONObject(i);
-            e.clazz = entry.getString("sclass");
+            e.clazz = entry.getString("class");
             e.lesson = "" + entry.getInt("lesson");
             e.teacher = entry.getString("substitutor");
             e.missing = entry.getString("missing");
             e.subject = entry.getString("subject");
-            e.repsub = entry.getString("newSubject");
-            e.type = entry.getString("type");
+            e.repsub = entry.getString("substitutionsubject");
+            e.type = entry.getString("substitutionplantype");
             e.comment = entry.getString("comment");
             e.room = entry.getString("room");
 
@@ -194,7 +194,7 @@ public class GGRemote {
 
             DateFormat parser = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-            APIResponse re = doRequest("/data?site=news&token=" + getToken(), null);
+            APIResponse re = doRequest("/news?token=" + getToken(), null);
 
             if(re.state == APIState.SUCCEEDED) {
 
