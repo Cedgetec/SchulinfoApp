@@ -108,16 +108,7 @@ public class SettingsActivity extends AppCompatActivity {
                     if(gg.remote.isLoggedIn()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle(getResources().getString(R.string.logout));
-                        LinearLayout ll = new LinearLayout(getActivity());
-                        ll.setOrientation(LinearLayout.VERTICAL);
-                        int p = 25;
-                        float d = getActivity().getResources().getDisplayMetrics().density;
-                        int padding_left = (int)(p * d);
-                        ll.setPadding(padding_left,0,0,0);
-                        TextView tv = new TextView(getActivity());
-                        tv.setText(getResources().getString(R.string.logout_confirm));
-                        ll.addView(tv);
-                        builder.setView(ll);
+                        builder.setMessage(getResources().getString(R.string.logout_confirm));
                         builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
