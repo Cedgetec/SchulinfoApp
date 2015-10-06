@@ -30,7 +30,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_action_edit"/>
+                android:src="@drawable/ic_edit"/>
         </FrameLayout>
         <FrameLayout
             android:layout_width="50dp"
@@ -41,7 +41,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_action_delete"/>
+                android:src="@drawable/ic_delete"/>
         </FrameLayout>
     </LinearLayout>
 </LinearLayout>

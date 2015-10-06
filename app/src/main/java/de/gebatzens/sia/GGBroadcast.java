@@ -86,12 +86,12 @@ public class GGBroadcast extends BroadcastReceiver {
             intent.putExtra("fragment", "PLAN");
             if (diff.size() == 1) {
                 GGPlan.Entry entry = diff.get(0);
-                gg.createNotification(R.drawable.ic_gg_notification, entry.lesson + ". " + gg.getString(R.string.lhour) + ": " + entry.type, entry.subject.replace("&#x2192;", ""),
+                gg.createNotification(R.drawable.ic_notification, entry.lesson + ". " + gg.getString(R.string.lhour) + ": " + entry.type, entry.subject.replace("&#x2192;", ""),
                         intent, 123/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
                         tomo.getWeekday() + ": " + stdtm*/);
 
             } else {
-                gg.createNotification(R.drawable.ic_gg_notification, gg.getString(R.string.schedule_change), diff.size() + " " + gg.getString(R.string.new_entries),
+                gg.createNotification(R.drawable.ic_notification, gg.getString(R.string.schedule_change), diff.size() + " " + gg.getString(R.string.new_entries),
                         intent, 123/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
                         tomo.getWeekday() + ": " + stdtm*/);
             }

@@ -141,14 +141,13 @@ public class FilterActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         changed = true;
-                        EditText text = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
-                        text.setHint(getApplication().getString(R.string.school_class));
-                        String text2 = text.getText().toString().trim();
-                        if (text2.isEmpty())
+                        EditText ed = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
+                        String filtertext = ed.getText().toString().trim();
+                        if (filtertext.isEmpty())
                             Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                         else {
                             Filter.FilterList list = GGApp.GG_APP.filters;
-                            list.mainFilter.filter = text2;
+                            list.mainFilter.filter = filtertext;
                             mainFilterContent.setText(list.mainFilter.filter);
                             FilterActivity.saveFilter(GGApp.GG_APP.filters);
                         }
@@ -165,9 +164,10 @@ public class FilterActivity extends AppCompatActivity {
                 d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 d.show();
                 Filter.FilterList list = GGApp.GG_APP.filters;
-                EditText mainEdit = (EditText) d.findViewById(R.id.filter_text);
-                mainEdit.setHint(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class_name) : getApplication().getString(R.string.teacher_shortcut));
-                mainEdit.setText(list.mainFilter.filter);
+                EditText ed = (EditText) d.findViewById(R.id.filter_text);
+                ed.setHint(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class_name) : getApplication().getString(R.string.teacher_shortcut));
+                ed.setText(list.mainFilter.filter);
+                ed.setSelectAllOnFocus(true);
             }
         });
 
@@ -214,11 +214,10 @@ public class FilterActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         changed = true;
-                        EditText text = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
-                        text.setHint(getApplication().getString(R.string.subject_course_name));
+                        EditText ed = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
                         Filter f = new Filter();
                         f.type = Filter.FilterType.SUBJECT;
-                        f.filter = text.getText().toString().trim();
+                        f.filter = ed.getText().toString().trim();
                         if (f.filter.isEmpty())
                             Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                         else {
@@ -239,8 +238,8 @@ public class FilterActivity extends AppCompatActivity {
                 AlertDialog d = builder.create();
                 d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 d.show();
-                EditText mainEdit = (EditText) d.findViewById(R.id.filter_text);
-                mainEdit.setHint(getApplication().getString(R.string.subject_course_name));
+                EditText ed = (EditText) d.findViewById(R.id.filter_text);
+                ed.setHint(getApplication().getString(R.string.subject_course_name));
             }
         });
 
