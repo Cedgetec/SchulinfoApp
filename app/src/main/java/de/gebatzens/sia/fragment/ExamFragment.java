@@ -15,11 +15,13 @@
  */
 package de.gebatzens.sia.fragment;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,18 +102,32 @@ public class ExamFragment extends RemoteDataFragment {
     public void createView(final LayoutInflater inflater, ViewGroup view) {
         LinearLayout lroot = (LinearLayout) view.findViewById(R.id.exam_content);
 
+        ScrollView sv = new ScrollView(getActivity());
+        sv.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
+        sv.setFillViewport(true);
+        sv.setTag("gg_scroll");
+        lroot.addView(sv);
+
+        LinearLayout l = new LinearLayout(getActivity());
+        l.setOrientation(LinearLayout.VERTICAL);
+        l.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        sv.addView(l);
+
+
         CardView cv2 = new CardView(getActivity());
         cv2.setRadius(0);
         cv2.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
         LinearLayout l2 = new LinearLayout(getActivity());
         cv2.addView(l2);
-        lroot.addView(cv2);
+        l.addView(cv2);
 
         TextView tv5 = createTextView(getString(R.string.school_class), 15, inflater, l2);
         tv5.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
-        final LinearLayout scrollLayout = new LinearLayout(getActivity());
-        lroot.addView(scrollLayout);
+        LinearLayout l4 = new LinearLayout(getActivity());
+        l4.setGravity(Gravity.END | Gravity.CENTER);
+        l4.setPadding(0, 0, toPixels(16), 0);
+        l4.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
         final List<String> classes = new ArrayList<>();
         classes.add(getString(R.string.not_selected));
@@ -124,7 +140,13 @@ public class ExamFragment extends RemoteDataFragment {
         if(selection < classes.size())
             classSpinner.setSelection(selection);
 
-        l2.addView(classSpinner);
+        l4.addView(classSpinner);
+        l2.addView(l4);
+
+        final LinearLayout lcontent = new LinearLayout(getActivity());
+        lcontent.setOrientation(LinearLayout.VERTICAL);
+        lcontent.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        l.addView(lcontent);
 
         classSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -138,19 +160,14 @@ public class ExamFragment extends RemoteDataFragment {
                 GGApp.GG_APP.preferences.edit().putInt("exam_selected", position).apply();
 
                 if(position == 0) {
-                    scrollLayout.removeAllViews();
-                    createMessage(scrollLayout, getString(R.string.not_selected), null, null);
+                    lcontent.removeAllViews();
+                    createMessage(lcontent, getString(R.string.not_selected), null, null);
                 } else {
-                    scrollLayout.removeAllViews();
+                    lcontent.removeAllViews();
 
-                    ScrollView sv = new ScrollView(getActivity());
-                    sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                    sv.setTag("gg_scroll");
-                    sv.setFillViewport(true);
                     final LinearLayout l = new LinearLayout(getActivity());
                     createRootLayout(l);
-                    sv.addView(l);
-                    scrollLayout.addView(sv);
+                    lcontent.addView(l);
 
                     String cl = classes.get(position);
                     Filter.FilterList list = new Filter.FilterList();

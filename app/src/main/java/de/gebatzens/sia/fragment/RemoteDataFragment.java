@@ -124,30 +124,29 @@ public abstract class RemoteDataFragment extends Fragment {
     }
 
     public void createMessage(ViewGroup l, String text, String button, View.OnClickListener onclick) {
-        ScrollView sv = new ScrollView(getActivity());
-        sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        sv.setTag("gg_scroll");
-        sv.setFillViewport(true);
-
         RelativeLayout r = new RelativeLayout(getActivity());
         r.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
+        LinearLayout l2 = new LinearLayout(getActivity());
+        l2.setOrientation(LinearLayout.VERTICAL);
+        RelativeLayout.LayoutParams layoutparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutparams.addRule(RelativeLayout.CENTER_VERTICAL);
+        l2.setLayoutParams(layoutparams);
+        l2.setGravity(Gravity.CENTER_HORIZONTAL);
+
         TextView tv = new TextView(getActivity());
-        RelativeLayout.LayoutParams tvparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        tvparams.addRule(RelativeLayout.ABOVE, R.id.reload_button);
-        tvparams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        LinearLayout.LayoutParams tvparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
         tv.setLayoutParams(tvparams);
         tv.setText(text);
         tv.setTextSize(23);
-        tv.setPadding( 0, 0, 0, toPixels(15));
-        tv.setGravity(Gravity.CENTER_HORIZONTAL);
-        r.addView(tv);
+        tv.setPadding(0, 0, 0, toPixels(15));
+        l2.addView(tv);
 
         if(button != null) {
             Button b = new Button(getActivity());
-            RelativeLayout.LayoutParams bparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            bparams.addRule(RelativeLayout.CENTER_VERTICAL);
-            bparams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            LinearLayout.LayoutParams bparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
             b.setLayoutParams(bparams);
             b.setId(R.id.reload_button);
             b.setText(button);
@@ -155,13 +154,12 @@ public abstract class RemoteDataFragment extends Fragment {
             b.setAllCaps(false);
             b.setTypeface(null, Typeface.NORMAL);
             b.setOnClickListener(onclick);
-            r.addView(b);
+            l2.addView(b);
 
         }
 
-        sv.addView(r);
-
-        l.addView(sv);
+        r.addView(l2);
+        l.addView(r);
     }
 
     public void createNoEntriesCard(ViewGroup vg, LayoutInflater inflater) {
