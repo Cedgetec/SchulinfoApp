@@ -160,7 +160,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             Preference helpdesk = findPreference("helpdesk");
-            LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.helpdesk_icon);
+            LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.circle_with_mail_icon);
             GradientDrawable gd = (GradientDrawable) ld.findDrawableByLayerId(R.id.first_image);
             gd.setColor(GGApp.GG_APP.school.getColor());
             helpdesk.setIcon(ld);

@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">SchulinfoAPP</string>
     <string name="drawer_open">Navigation öffnen</string>
     <string name="drawer_close">Navigation schließen</string>
     <string name="schedule_change">Vertretungsplanänderung</string>
     <string name="new_entries">neue Einträge</string>
-    <string name="affected_lessons">Betroffene Stunden:</string>
     <string name="no_entries_schedule">Keine Einträge im Vertretungsplan</string>
     <string name="special_messages">Besondere Mitteilungen</string>
     <string name="no_filter_applied">Kein Filter ausgewählt</string>
     <string name="main_filter_mode">Modus</string>
     <string name="main_filter_content">Filter</string>
-    <string name="value">Wert</string>
     <string name="filter_help">Der Hauptfilter sorgt dafür, dass für die angegebene Klasse bzw. den angegebenen Lehrer in der Übersicht der passende Vertretungsplan angezeigt wird.\n\nDie Kategorie "Ausgeblendete Fächer/Kurse" ist dafür da, um Fächer/Kurse einzutragen, welche man nicht in der Übersicht sehen will z.B. Französich oder Latein.</string>
     <string name="settings">Einstellungen</string>
-    <string name="check_connection">Verbindung überprüfen und wiederholen</string>
     <string name="again">Nochmal</string>
     <string name="login_required">Anmeldung benötigt!</string>
     <string name="do_login">Anmelden</string>
@@ -26,8 +23,6 @@
     <string name="unknown_error_login">Unbekannter Fehler bei der Anmeldung</string>
     <string name="abort">Abbrechen</string>
     <string name="overview">Übersicht</string>
-    <string name="today">Heute</string>
-    <string name="tomorrow">Morgen</string>
     <string name="lesson">Unterricht</string>
     <string name="substitute">Vertretung</string>
     <string name="work_autonomous">EVA</string>
@@ -38,13 +33,9 @@
     <string name="task_through">Aufgabe durch</string>
     <string name="shifted_to_today">Verlegt in</string>
     <string name="shifted_to">Verlegt nach</string>
-    <string name="autonomous_work">Eigenverantwortliches Arbeiten</string>
     <string name="instead_of">Statt</string>
     <string name="canceled">Ausfall</string>
-    <string name="logout_successful">Abmeldung erfolgreich</string>
-    <string name="logout_error">Abmeldefehler</string>
     <string name="no_internet_connection">Keine Internetverbindung</string>
-    <string name="unknown_error">Unbekannter Fehler</string>
     <string name="substitute_schedule">Vertretungsplan</string>
     <string name="news">News</string>
     <string name="cafeteria">Mensa</string>
@@ -57,7 +48,6 @@
     <string name="not_logged_in">Sie sind nicht angemeldet</string>
     <string name="touch_to_logout">Zum Abmelden berühren</string>
     <string name="school_settings">Schuleinstellungen</string>
-    <string name="school">Schule</string>
     <string name="school_class">Klasse</string>
     <string name="school_class_name">Klassenname</string>
     <string name="username">Benutzername</string>
@@ -75,7 +65,6 @@
     <string name="update_always">Jederzeit automatisch aktualisieren</string>
     <string name="as_of">Stand</string>
     <string name="refresh">Aktualisieren</string>
-    <string name="add">Hinzufügen</string>
     <string name="hide_subject">Fach/Kurs ausblenden</string>
     <string name="hide">ausblenden</string>
     <string name="filter">Filter</string>
@@ -95,17 +84,13 @@
     <string name="set_main_filter">Hauptfilter einstellen</string>
     <string name="set_main_filter_mode">Modus einstellen</string>
     <string name="not_selected">Nicht ausgewählt</string>
-    <string name="read">Gelesen</string>
-    <string name="nothing">Nichts</string>
     <string name="help">Hilfe</string>
     <string name="password">Passwort</string>
-    <string name="vegi">Vegetarisch</string>
     <string name="garnish">Beilage</string>
     <string name="exams">Klausurenplan</string>
     <string name="all_exams">Alle Klausuren</string>
     <string name="my_exams">Meine Klausuren</string>
     <string name="lhour">Stunde</string>
-    <string name="next">Weiter</string>
     <string name="lessons">Stunden</string>
     <string name="no_entries">Keine Einträge</string>
     <string name="supported_schools">Unterstützte Schulen</string>
@@ -128,7 +113,6 @@
     <string name="i_accept">Ich akzeptiere die</string>
     <string name="downloading_image">Lade Bild herunter…</string>
     <string name="school_id">Schul-ID</string>
-    <string name="finish">fertig</string>
     <string name="start_now">Jetzt starten</string>
     <string name="have_fun_with_the_app">Viel Spaß mit der App!</string>
     <string name="fu_firstpage_title">Deine SchulinfoAPP</string>

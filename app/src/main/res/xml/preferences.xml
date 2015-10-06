@@ -57,7 +57,7 @@
         <Preference android:title="@string/contact"
             android:summary="@string/contact_us"
             android:key="helpdesk"
-            android:icon="@drawable/helpdesk_icon"/>
+            android:icon="@drawable/circle_with_mail_icon"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
