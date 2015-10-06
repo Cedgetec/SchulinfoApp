@@ -234,7 +234,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
         } else if(index == INDEX_OVERVIEW) {
             //Overview, no filter applied
 
-            createButtonWithText( l, getResources().getString(R.string.no_filter_applied), getResources().getString(R.string.settings), new View.OnClickListener() {
+            createMessage(l, getResources().getString(R.string.no_filter_applied), getResources().getString(R.string.settings), new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {

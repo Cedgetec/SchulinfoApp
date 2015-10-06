@@ -321,9 +321,10 @@ public class GGRemote {
                     e.lesson = obj.getString("lesson");
                     e.length = obj.getString("length");
                     e.subject = obj.getString("subject");
-                    e.teacher = obj.getString("teacher");
+                    e.teacher = obj.optString("teacher");
 
                 }
+                exams.sort();
                 exams.save();
             } else if(re.state == APIState.INVALID_AUTH)
                 throw new VPLoginException();

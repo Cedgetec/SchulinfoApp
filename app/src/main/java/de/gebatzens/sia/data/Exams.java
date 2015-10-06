@@ -26,6 +26,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -66,6 +69,16 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void sort() {
+        Collections.sort(this, new Comparator<ExamItem>() {
+            @Override
+            public int compare(ExamItem lhs, ExamItem rhs) {
+                return lhs.date.compareTo(rhs.date);
+            }
+
+        });
     }
 
     public Exams filter(Filter.FilterList filters) {

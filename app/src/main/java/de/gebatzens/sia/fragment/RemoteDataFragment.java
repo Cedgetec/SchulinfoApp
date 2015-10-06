@@ -123,7 +123,7 @@ public abstract class RemoteDataFragment extends Fragment {
         return sv;
     }
 
-    public void createButtonWithText(ViewGroup l, String text, String button, View.OnClickListener onclick) {
+    public void createMessage(ViewGroup l, String text, String button, View.OnClickListener onclick) {
         ScrollView sv = new ScrollView(getActivity());
         sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         sv.setTag("gg_scroll");
@@ -143,18 +143,22 @@ public abstract class RemoteDataFragment extends Fragment {
         tv.setGravity(Gravity.CENTER_HORIZONTAL);
         r.addView(tv);
 
-        Button b = new Button(getActivity());
-        RelativeLayout.LayoutParams bparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        bparams.addRule(RelativeLayout.CENTER_VERTICAL);
-        bparams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        b.setLayoutParams(bparams);
-        b.setId(R.id.reload_button);
-        b.setText(button);
-        b.setTextSize(23);
-        b.setAllCaps(false);
-        b.setTypeface(null, Typeface.NORMAL);
-        b.setOnClickListener(onclick);
-        r.addView(b);
+        if(button != null) {
+            Button b = new Button(getActivity());
+            RelativeLayout.LayoutParams bparams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            bparams.addRule(RelativeLayout.CENTER_VERTICAL);
+            bparams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            b.setLayoutParams(bparams);
+            b.setId(R.id.reload_button);
+            b.setText(button);
+            b.setTextSize(23);
+            b.setAllCaps(false);
+            b.setTypeface(null, Typeface.NORMAL);
+            b.setOnClickListener(onclick);
+            r.addView(b);
+
+        }
+
         sv.addView(r);
 
         l.addView(sv);
@@ -197,10 +201,10 @@ public abstract class RemoteDataFragment extends Fragment {
         } else if(data.getThrowable() != null) {
             Throwable t = data.getThrowable();
             if(t instanceof VPLoginException) {
-                createButtonWithText(vg, getResources().getString(R.string.login_required), getResources().getString(R.string.do_login), new View.OnClickListener() {
+                createMessage(vg, getResources().getString(R.string.login_required), getResources().getString(R.string.do_login), new View.OnClickListener() {
                     @Override
                     public void onClick(View c) {
-                    //TODO: Login dialog (token expired)
+                        //TODO: Login dialog (token expired)
 
                     }
                 });
