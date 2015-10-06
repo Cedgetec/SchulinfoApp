@@ -101,6 +101,21 @@ public class GGRemote {
         GGApp.GG_APP.filters.mainFilter = new Filter();
 
         prefs.edit().clear().apply();
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    APIResponse re = doRequest("/logout?token=" + getToken(), null);
+                    if(re.state != APIState.SUCCEEDED) {
+                        Log.w("ggvp", "Warning: Logout received " + re.state);
+                    }
+                } catch(Exception e) {
+                    Log.w("ggvp", "Warning: Logout failed " + e.getMessage());
+                }
+            }
+        }.start();
+
     }
 
     public GGPlan.GGPlans getPlans(boolean toast) {
