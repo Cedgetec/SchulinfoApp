@@ -81,18 +81,34 @@ public class FilterListAdapter extends BaseAdapter {
                 d.show();
                 EditText ed = (EditText) d.findViewById(R.id.filter_text);
                 ed.setText(list.get(position).filter);
-                ed.setHint(R.string.subject_course_name);
+                ed.setHint(c.getString(R.string.subject_course_name));
                 ed.setSelectAllOnFocus(true);
             }
         });
         vg.findViewById(R.id.filter_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                c.changed = true;
-                list.remove(position);
-                notifyDataSetChanged();
-                FilterActivity.saveFilter(GGApp.GG_APP.filters);
-                FilterActivity.setListViewHeightBasedOnChildren(c.listView);
+                AlertDialog.Builder builder = new AlertDialog.Builder(c);
+                builder.setTitle(c.getString(R.string.delete_filter));
+                builder.setMessage(c.getString(R.string.delete_filter_message));
+                builder.setPositiveButton(c.getString(R.string.delete), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        c.changed = true;
+                        list.remove(position);
+                        notifyDataSetChanged();
+                        FilterActivity.saveFilter(GGApp.GG_APP.filters);
+                        FilterActivity.setListViewHeightBasedOnChildren(c.listView);
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton(c.getString(R.string.abort), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
 
             }
         });

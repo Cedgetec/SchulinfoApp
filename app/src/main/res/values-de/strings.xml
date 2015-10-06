@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <string name="app_name">SchulinfoAPP</string>
     <string name="drawer_open">Navigation öffnen</string>
@@ -11,7 +11,7 @@
     <string name="no_filter_applied">Kein Filter ausgewählt</string>
     <string name="main_filter_mode">Modus</string>
     <string name="main_filter_content">Filter</string>
-    <string name="filter_help">Der Hauptfilter sorgt dafür, dass für die angegebene Klasse bzw. den angegebenen Lehrer in der Übersicht der passende Vertretungsplan angezeigt wird.\n\nDie Kategorie "Ausgeblendete Fächer/Kurse" ist dafür da, um Fächer/Kurse einzutragen, welche man nicht in der Übersicht sehen will z.B. Französich oder Latein.</string>
+    <string name="filter_help">Der Hauptfilter sorgt dafür, dass für die angegebene Klasse bzw. den angegebenen Lehrer in der Übersicht der passende Vertretungsplan angezeigt wird.\n\nDie ausgeblendete Fächer/Kurse sind Fächer/Kurse, welche man in der Übersicht nicht sehen will z.B. Französich oder Latein.</string>
     <string name="settings">Einstellungen</string>
     <string name="again">Nochmal</string>
     <string name="login_required">Anmeldung benötigt!</string>
@@ -129,6 +129,9 @@
     <string name="notification_led">Benachrichtigungslicht</string>
     <string name="vibration">Vibration</string>
     <string name="explanation">Erklärung</string>
+    <string name="delete">Löschen</string>
+    <string name="delete_filter">Filter löschen</string>
+    <string name="delete_filter_message">Fach/Kurs Filter wirklich löschen?</string>
 
     <string-array name="vibration_values">
         <item>Aus</item>
