@@ -56,10 +56,10 @@ public class FilterListAdapter extends BaseAdapter {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         c.changed = true;
-                        EditText text = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
+                        EditText ed = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
                         Filter f = list.get(position);
                         f.type = Filter.FilterType.SUBJECT;
-                        f.filter = text.getText().toString().trim();
+                        f.filter = ed.getText().toString().trim();
                         if (f.filter.isEmpty())
                             Snackbar.make(c.getWindow().getDecorView().findViewById(R.id.coordinator_layout), c.getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                         else {
@@ -81,6 +81,8 @@ public class FilterListAdapter extends BaseAdapter {
                 d.show();
                 EditText ed = (EditText) d.findViewById(R.id.filter_text);
                 ed.setText(list.get(position).filter);
+                ed.setHint(R.string.subject_course_name);
+                ed.setSelectAllOnFocus(true);
             }
         });
         vg.findViewById(R.id.filter_delete).setOnClickListener(new View.OnClickListener() {
