@@ -117,9 +117,6 @@ public class SettingsActivity extends AppCompatActivity {
                         TextView tv = new TextView(getActivity());
                         tv.setText(getResources().getString(R.string.logout_confirm));
                         ll.addView(tv);
-                        final CheckBox cb = new CheckBox(getActivity());
-                        cb.setText(getResources().getString(R.string.logout_on_all_devices));
-                        ll.addView(cb);
                         builder.setView(ll);
                         builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
