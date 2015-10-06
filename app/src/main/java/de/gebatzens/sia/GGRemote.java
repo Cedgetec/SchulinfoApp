@@ -90,6 +90,8 @@ public class GGRemote {
     }
 
     public void logout() {
+        final String token = getToken();
+
         for(String name : GGApp.GG_APP.fileList())
             if(name.startsWith("schedule"))
                 GGApp.GG_APP.deleteFile(name);
@@ -106,7 +108,7 @@ public class GGRemote {
             @Override
             public void run() {
                 try {
-                    APIResponse re = doRequest("/logout?token=" + getToken(), null);
+                    APIResponse re = doRequest("/logout?token=" + token, null);
                     if(re.state != APIState.SUCCEEDED) {
                         Log.w("ggvp", "Warning: Logout received " + re.state);
                     }
