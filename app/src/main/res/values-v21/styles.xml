@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Start application themes -->
+    <style name="AppTheme.StartTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorPrimaryDark">#c9c9c9</item>
+    </style>
+
     <!-- Base application themes -->
     <style name="AppTheme.Base.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
