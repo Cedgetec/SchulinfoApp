@@ -16,6 +16,28 @@
         <item>wifi</item>
         <item>all</item>
     </string-array>
+
+    <string-array name="theme_names" translatable="false">
+        <item>Red</item>
+        <item>Pink</item>
+        <item>Purple</item>
+        <item>DeepPurple</item>
+        <item>Indigo</item>
+        <item>Blue</item>
+        <item>LightBlue</item>
+        <item>Cyan</item>
+        <item>Teal</item>
+        <item>Green</item>
+        <item>LightGreen</item>
+        <item>Lime</item>
+        <item>Amber</item>
+        <item>Orange</item>
+        <item>DeepOrange</item>
+        <item>Brown</item>
+        <item>Grey</item>
+        <item>BlueGrey</item>
+        <item>DarkGrey</item>
+    </string-array>
     <!-- Light Card Colors -->
     <string-array name="CardviewColorRedLight" translatable="false">
         <item>#F44336</item>

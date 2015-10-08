@@ -61,7 +61,7 @@
         </activity>
 
         <activity android:name=".PersonalizationActivity"
-            android:label="@string/personalisation"
+            android:label="@string/design"
             android:windowSoftInputMode="adjustNothing">
         </activity>
 

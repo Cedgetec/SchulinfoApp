@@ -8,7 +8,7 @@
         android:id="@+id/toolbar"
         android:layout_height="?attr/actionBarSize"
         android:layout_width="match_parent"
-        android:title="@string/personalisation"
+        android:title="@string/design"
         app:theme="@style/ToolBarStyle"/>
 
     <RelativeLayout
@@ -54,7 +54,7 @@
                             android:fontFamily="sans-serif"
                             android:textColor="?android:textColorSecondary"
                             android:id="@+id/personalisation_toggleSubheader"
-                            android:text="@string/dark_theme_is_not_activated"/>
+                            android:text="@string/dark_theme_description"/>
                     </LinearLayout>
 
                     <android.support.v7.widget.SwitchCompat
