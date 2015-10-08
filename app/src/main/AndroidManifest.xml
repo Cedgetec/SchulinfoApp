@@ -60,11 +60,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PersonalizationActivity"
-            android:label="@string/design"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
-
         <receiver android:enabled="true" android:name=".GGBroadcast"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>

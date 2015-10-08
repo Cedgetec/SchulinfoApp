@@ -162,6 +162,7 @@ public class SettingsActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             GGApp.GG_APP.setCustomThemeName(themeNames[which]);
                             GGApp.GG_APP.school.loadTheme();
+                            recreate = true;
                             getActivity().recreate();
                         }
 
@@ -253,10 +254,12 @@ public class SettingsActivity extends AppCompatActivity {
                 if(sharedPreferences.getBoolean(key, true)){
                     GGApp.GG_APP.setDarkThemeEnabled(true);
                     GGApp.GG_APP.school.loadTheme();
+                    recreate = true;
                     getActivity().recreate();
                 } else {
                     GGApp.GG_APP.setDarkThemeEnabled(false);
                     GGApp.GG_APP.school.loadTheme();
+                    recreate = true;
                     getActivity().recreate();
                 }
             }
