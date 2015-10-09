@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/first_image"
-        android:height="46dp"
-        android:width="46dp">
-        <shape android:shape="oval">
+    <item android:id="@+id/first_image">
+        <shape android:shape="oval" android:padding="10dp">
             <solid android:color="@color/primary_red"/>
+            <size android:height="46dp" android:width="46dp"/>
         </shape>
     </item>
-    <item android:id="@+id/second_image" android:drawable="@drawable/ic_mail"
-        android:width="27dp"
-        android:height="27dp"
-        android:gravity="center">
+    <item android:id="@+id/second_image">
+        <inset xmlns:android="http://schemas.android.com/apk/res/android"
+        android:drawable="@drawable/ic_mail"
+        android:insetTop="12dp"
+        android:insetLeft="12dp"
+        android:insetRight="12dp"
+        android:insetBottom="12dp" />
     </item>
 </layer-list>
