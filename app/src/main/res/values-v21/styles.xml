@@ -25,9 +25,10 @@
     </style>
 
     <!-- Setup application themes -->
-    <style name="SetupTheme" parent="AppTheme.Base.Light">
+    <style name="FirstUseTheme" parent="AppTheme.Base.Light">
         <item name="android:colorButtonNormal">#fff</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="windowActionBar">false</item>
     </style>
 
     <!-- Base popup themes -->

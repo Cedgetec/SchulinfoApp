@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -56,7 +57,7 @@ public class FirstUseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fu_card, container, false);
+        LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.fu_card, container, false);
         ImageView i = (ImageView) layout.findViewById(R.id.fu_image);
         TextView tvhead = (TextView) layout.findViewById(R.id.fu_header);
         TextView tvsub = (TextView) layout.findViewById(R.id.fu_text);
@@ -91,7 +92,7 @@ public class FirstUseFragment extends Fragment {
                 tvsub.setText(R.string.fu_fourthpage_content);
                 break;
             case 4:
-                layout = (RelativeLayout) inflater.inflate(R.layout.fu_card_finish, container, false);
+                layout = (LinearLayout) inflater.inflate(R.layout.fu_card_finish, container, false);
                 Button bu = (Button) layout.findViewById(R.id.fu_button);
                 bu.setOnClickListener(new View.OnClickListener() {
                     @Override

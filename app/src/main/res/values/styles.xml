@@ -19,7 +19,7 @@
     </style>
 
     <!-- Setup application themes -->
-    <style name="SetupTheme" parent="AppTheme.Base.Light">
+    <style name="FirstUseTheme" parent="AppTheme.Base.Light">
         <item name="colorButtonNormal">#fff</item>
         <!-- api 21 and higher -->
     </style>

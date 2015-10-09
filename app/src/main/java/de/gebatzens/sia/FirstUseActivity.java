@@ -32,7 +32,7 @@ public class FirstUseActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle bundle) {
-        setTheme(R.style.SetupTheme);
+        setTheme(R.style.FirstUseTheme);
         adapter = new FirstUseAdapter(getSupportFragmentManager(), FirstUseActivity.this);
 
         super.onCreate(bundle);
