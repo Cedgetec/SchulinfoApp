@@ -283,7 +283,7 @@ public class GGApp extends Application {
                     case EXAMS:
                         Exams oe = exams;
                         exams = remote.getExams(updateFragments);
-                        update = oe == null || !oe.equals(exams);
+                        update = true;
                         break;
                 }
 

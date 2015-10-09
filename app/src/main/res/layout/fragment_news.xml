@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:id="@+id/ShaderTabLayout"
-        android:background="@drawable/tablayoutbackground"/>
+        android:background="@drawable/toolbar_shadow"/>
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"

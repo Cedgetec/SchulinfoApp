@@ -15,26 +15,35 @@
  */
 package de.gebatzens.sia.fragment;
 
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Exams;
+import de.gebatzens.sia.data.Filter;
 
 public class ExamFragment extends RemoteDataFragment {
 
@@ -90,16 +99,110 @@ public class ExamFragment extends RemoteDataFragment {
     }
 
     @Override
-    public void createView(LayoutInflater inflater, ViewGroup view) {
+    public void createView(final LayoutInflater inflater, ViewGroup view) {
         LinearLayout lroot = (LinearLayout) view.findViewById(R.id.exam_content);
+
         ScrollView sv = new ScrollView(getActivity());
-        sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        sv.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
+        sv.setFillViewport(true);
         sv.setTag("gg_scroll");
-        LinearLayout l = new LinearLayout(getActivity());
-        createRootLayout(l);
-        sv.addView(l);
         lroot.addView(sv);
-        Exams filtered = GGApp.GG_APP.exams.filter(GGApp.GG_APP.filters);
+
+        LinearLayout l = new LinearLayout(getActivity());
+        l.setOrientation(LinearLayout.VERTICAL);
+        l.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        sv.addView(l);
+
+
+        CardView cv2 = new CardView(getActivity());
+        cv2.setRadius(0);
+        cv2.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
+        LinearLayout l2 = new LinearLayout(getActivity());
+        cv2.addView(l2);
+        l.addView(cv2);
+
+        TextView tv5 = createTextView(getString(R.string.school_class), 15, inflater, l2);
+        tv5.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
+
+        LinearLayout l4 = new LinearLayout(getActivity());
+        l4.setGravity(Gravity.END | Gravity.CENTER);
+        l4.setPadding(0, 0, toPixels(16), 0);
+        l4.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        final List<String> classes = new ArrayList<>();
+        classes.add(getString(R.string.not_selected));
+        classes.addAll(GGApp.GG_APP.exams.getAllClasses());
+        Spinner classSpinner = new Spinner(getActivity());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, classes);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        classSpinner.setAdapter(adapter);
+        int selection = GGApp.GG_APP.preferences.getInt("exam_selected", 0);
+        if(selection < classes.size())
+            classSpinner.setSelection(selection);
+
+        l4.addView(classSpinner);
+        l2.addView(l4);
+
+        final LinearLayout lcontent = new LinearLayout(getActivity());
+        lcontent.setOrientation(LinearLayout.VERTICAL);
+        lcontent.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        l.addView(lcontent);
+
+        classSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                GGApp.GG_APP.preferences.edit().putInt("exam_selected", position).apply();
+
+                if(position == 0) {
+                    lcontent.removeAllViews();
+                    createMessage(lcontent, getString(R.string.not_selected), null, null);
+                } else {
+                    lcontent.removeAllViews();
+
+                    final LinearLayout l = new LinearLayout(getActivity());
+                    createRootLayout(l);
+                    lcontent.addView(l);
+
+                    String cl = classes.get(position);
+                    Filter.FilterList list = new Filter.FilterList();
+                    list.mainFilter = new Filter();
+                    list.mainFilter.type = Filter.FilterType.CLASS;
+                    list.mainFilter.filter = cl;
+
+                    List<Exams.ExamItem> items = GGApp.GG_APP.exams.filter(list);
+                    if(GGApp.GG_APP.exams.size() != 0) {
+                        TextView tv = createTextView(cl, 27, inflater, l);
+                        tv.setPadding(toPixels(2.8f), 0, 0, 0);
+                        if (GGApp.GG_APP.isDarkThemeEnabled()) {
+                            tv.setTextColor(Color.parseColor("#a0a0a0"));
+                        } else{
+                            tv.setTextColor(Color.parseColor("#6e6e6e"));
+                        }
+                        for (Exams.ExamItem item : items) {
+                            if(item.date.after(new Date(System.currentTimeMillis() - 86400000L))) {
+                                CardView cv = createCardItem(item, inflater);
+                                if (cv != null) {
+                                    l.addView(cv);
+                                }
+                            }
+                        }
+                    } else {
+                        createNoEntriesCard(l, inflater);
+                    }
+                }
+
+
+            }
+        });
+
+
+        /*Exams filtered = GGApp.GG_APP.exams.filter(GGApp.GG_APP.filters);
 
         if(!filtered.isEmpty()) {
             TextView tv = createTextView(getResources().getString(R.string.my_exams), 27, inflater, l);
@@ -115,28 +218,12 @@ public class ExamFragment extends RemoteDataFragment {
                     l.addView(cv);
                 }
             }
-        }
+        }*/
 
         cardColorIndex = 0;
 
-        if(GGApp.GG_APP.exams.size() != 0) {
-            TextView tv = createTextView(getResources().getString(R.string.all_exams), 27, inflater, l);
-            tv.setPadding(toPixels(2.8f), 0, 0, 0);
-            if (GGApp.GG_APP.isDarkThemeEnabled()) {
-                tv.setTextColor(Color.parseColor("#a0a0a0"));
-            } else{
-                tv.setTextColor(Color.parseColor("#6e6e6e"));
-            }
-            for (Exams.ExamItem item : GGApp.GG_APP.exams) {
-                CardView cv = createCardItem(item, inflater);
-                if (cv != null) {
-                    l.addView(cv);
-                }
-            }
-        } else {
-            createNoEntriesCard(l, inflater);
-        }
-        cardColorIndex = 0;
+
+
     }
 
     @Override

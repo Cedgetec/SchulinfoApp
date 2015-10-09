@@ -90,6 +90,8 @@ public class GGRemote {
     }
 
     public void logout() {
+        final String token = getToken();
+
         for(String name : GGApp.GG_APP.fileList())
             if(name.startsWith("schedule"))
                 GGApp.GG_APP.deleteFile(name);
@@ -101,6 +103,21 @@ public class GGRemote {
         GGApp.GG_APP.filters.mainFilter = new Filter();
 
         prefs.edit().clear().apply();
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    APIResponse re = doRequest("/logout?token=" + token, null);
+                    if(re.state != APIState.SUCCEEDED) {
+                        Log.w("ggvp", "Warning: Logout received " + re.state);
+                    }
+                } catch(Exception e) {
+                    Log.w("ggvp", "Warning: Logout failed " + e.getMessage());
+                }
+            }
+        }.start();
+
     }
 
     public GGPlan.GGPlans getPlans(boolean toast) {
@@ -304,9 +321,10 @@ public class GGRemote {
                     e.lesson = obj.getString("lesson");
                     e.length = obj.getString("length");
                     e.subject = obj.getString("subject");
-                    e.teacher = obj.getString("teacher");
+                    e.teacher = obj.optString("teacher");
 
                 }
+                exams.sort();
                 exams.save();
             } else if(re.state == APIState.INVALID_AUTH)
                 throw new VPLoginException();

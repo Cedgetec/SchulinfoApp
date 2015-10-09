@@ -10,9 +10,6 @@
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/general">
-        <Preference android:title="@string/personalisation"
-            android:summary="@string/personalize_your_theme"
-            android:key="personalization" />
         <CheckBoxPreference android:title="@string/show_notifications"
             android:summary="@string/notify_class"
             android:key="notifications"
@@ -33,6 +30,16 @@
             android:entries="@array/data_updates_keys"
             android:entryValues="@array/data_updates_values"
             android:defaultValue="all" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/design">
+        <SwitchPreference android:title="@string/dark_theme"
+            android:summary="@string/dark_theme_description"
+            android:key="toggleThemeMode"
+            />
+        <Preference android:title="@string/personalisation_changeColor"
+            android:summary="@string/personalisation_changeColor_description"
+            android:key="theme_color"
+            android:icon="@drawable/settings_circle"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/information">
         <de.gebatzens.sia.GGDialogPreference
@@ -57,7 +64,7 @@
         <Preference android:title="@string/contact"
             android:summary="@string/contact_us"
             android:key="helpdesk"
-            android:icon="@drawable/helpdesk_icon"/>
+            android:icon="@drawable/settings_circle_with_mail_icon"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

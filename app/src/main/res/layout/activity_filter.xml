@@ -123,7 +123,7 @@
                     android:id="@+id/addfilter_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_action_add"
+                    android:src="@drawable/ic_add"
                     android:layout_gravity="center"
                     android:layout_margin="16dp"
                     app:fabSize="normal"
@@ -136,7 +136,7 @@
             android:layout_width="fill_parent"
             android:layout_height="10dp"
             android:id="@+id/ShaderTabLayout"
-            android:background="@drawable/tablayoutbackground"/>
+            android:background="@drawable/toolbar_shadow"/>
 
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/coordinator_layout"

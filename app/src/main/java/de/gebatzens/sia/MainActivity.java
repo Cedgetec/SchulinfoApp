@@ -225,12 +225,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final Menu navMenu = navigationView.getMenu();
-        selectedItem = GGApp.GG_APP.school.fragments.indexOf(GGApp.GG_APP.getFragmentType());
-        try {
-            navigationView.getMenu().getItem(selectedItem).setChecked(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        selectedItem = Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType());
+        if(selectedItem != -1)
+            navMenu.getItem(selectedItem).setChecked(true);
+
 
         for(int i = 0; i < 4; i++) {
             MenuItem item = navMenu.getItem(i);
@@ -252,7 +250,6 @@ public class MainActivity extends AppCompatActivity {
                         menuItem.setChecked(true);
                         mToolbar.setSubtitle(menuItem.getTitle());
                         mContent = createFragment();
-                        Log.e("ggvp", "WAS FÜR EINE SCHEISSE");
                         Animation fadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
                         fadeOut.setAnimationListener(new Animation.AnimationListener() {
 
@@ -273,7 +270,6 @@ public class MainActivity extends AppCompatActivity {
                                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.content_fragment, mContent, "gg_content_fragment");
                                 transaction.commit();
-                                Log.w("ggvp", "TEST!!!!!!!!!!!!");
                             }
 
                             @Override

@@ -114,7 +114,7 @@ public class MQTTService extends IntentService {
             if(l1[0].equals("Notification")) {
 
                 String[] s = lines[1].split(";");
-                GGApp.GG_APP.createNotification(R.drawable.ic_gg_message, s[0], s[1], new Intent(this, MainActivity.class), id++);
+                GGApp.GG_APP.createNotification(R.drawable.ic_message, s[0], s[1], new Intent(this, MainActivity.class), id++);
             } else if(l1[0].equals("Update")) {
                 //TODO
             }

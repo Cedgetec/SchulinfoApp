@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:padding="0dp"
             android:id="@+id/exam_content" />
 
     </de.gebatzens.sia.view.GGSwipeLayout>
@@ -21,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:id="@+id/ShaderTabLayout"
-        android:background="@drawable/tablayoutbackground"/>
+        android:background="@drawable/toolbar_shadow"/>
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
