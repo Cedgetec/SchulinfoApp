@@ -249,7 +249,8 @@ public class GGApp extends Application {
                             recreate = true;
                         } else if (updateFragments) {
                             for (int i = 0; i < plans.size() && !recreate; i++) {
-                                if (!plans.get(i).date.equals(oldPlans.get(i).date) || plans.get(i).entries.size() != oldPlans.get(i).entries.size())
+                                if (!plans.get(i).date.equals(oldPlans.get(i).date) ||
+                                        plans.get(i).entries.size() != oldPlans.get(i).entries.size() || plans.get(i).special.size() != oldPlans.get(i).special.size())
                                     recreate = true;
                             }
 

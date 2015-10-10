@@ -135,7 +135,7 @@ public class School {
             for(int i = 0; i < frags.length(); i++) {
                 s.fragments.add(GGApp.FragmentType.valueOf(frags.getJSONObject(i).getString("type")));
             }
-            
+
         } else {
             s.fragments.add(GGApp.FragmentType.PLAN);
         }
