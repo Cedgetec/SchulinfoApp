@@ -97,12 +97,12 @@
     <string name="anonymous">Anonymer Benutzer</string>
     <string name="download_error">Während des Downloadens ist ein Fehler aufgetreten</string>
     <string name="developer_dialog">Von Verplanten für Verplante, Ihr Vertretungsplan!\n\nHauke Oldsen\nLasse Rosenow\nLennart Schmidt\nFabian Schultis</string>
-    <string name="personalisation">Design ändern</string>
+    <string name="design">Design</string>
     <string name="personalize_your_theme">Design der App anpassen</string>
-    <string name="dark_theme_is_not_activated">Dunkles Thema ist nicht aktiviert</string>
-    <string name="dark_theme_is_activated">Dunkles Thema ist aktiviert</string>
-    <string name="dark_theme">Dunkles Thema</string>
+    <string name="dark_theme_description">Stellt die App in dunklen Farben da</string>
+    <string name="dark_theme">Dunkles Design</string>
     <string name="personalisation_changeColor">Farbe ändern</string>
+    <string name="personalisation_changeColor_description">Hauptfarbe der App</string>
     <string name="show_pwd">Passwort anzeigen</string>
     <string name="night_mode">Nachtmodus</string>
     <string name="day_mode">Tagmodus</string>

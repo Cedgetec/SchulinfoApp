@@ -18,13 +18,16 @@ package de.gebatzens.sia;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -37,8 +40,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -100,6 +105,80 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
+            Preference theme_color = findPreference("theme_color");
+
+            GradientDrawable tcgd = (GradientDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle);
+            tcgd.setColor(GGApp.GG_APP.school.getColor());
+            theme_color.setIcon(tcgd);
+
+            final String[] themeNames = getResources().getStringArray(R.array.theme_names);
+
+            final ListAdapter adapter = new ArrayAdapter<String>(
+                    getActivity().getApplicationContext(), R.layout.custom_theme_choose_list, themeNames) {
+
+                ViewHolder holder;
+
+                class ViewHolder {
+                    ImageView icon;
+                    TextView title;
+                }
+
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    final LayoutInflater inflater = (LayoutInflater) getActivity().getApplicationContext()
+                            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                    if (convertView == null) {
+                        convertView = inflater.inflate(
+                                R.layout.custom_theme_choose_list, null);
+
+                        holder = new ViewHolder();
+                        holder.icon = (ImageView) convertView.findViewById(R.id.ThemeIcon);
+                        holder.title = (TextView) convertView.findViewById(R.id.ThemeName);
+                        convertView.setTag(holder);
+                    } else {
+                        holder = (ViewHolder) convertView.getTag();
+                    }
+                    holder.icon.setBackgroundResource(R.drawable.colored_circle);
+                    holder.icon.getBackground().setColorFilter(loadThemeColor(themeNames[position]), PorterDuff.Mode.SRC_ATOP);
+                    String[] theme_color_names = getResources().getStringArray(R.array.theme_color_names);
+                    holder.title.setText(theme_color_names[position]);
+                    if (GGApp.GG_APP.isDarkThemeEnabled()) {
+                        holder.title.setTextColor(Color.parseColor("#fafafa"));
+                    } else{
+                        holder.title.setTextColor(Color.parseColor("#424242"));
+                    }
+                    return convertView;
+                }
+            };
+
+            theme_color.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle(getResources().getString(R.string.personalisation_pickColor));
+
+                    builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            GGApp.GG_APP.setCustomThemeName(themeNames[which]);
+                            GGApp.GG_APP.school.loadTheme();
+                            recreate = true;
+                            getActivity().recreate();
+                        }
+
+                    });
+                    builder.setPositiveButton(getResources().getString(R.string.abort), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //nothing
+                        }
+                    });
+                    builder.create();
+                    builder.show();
+
+                    return false;
+                }
+            });
+
             final Preference pref_username = findPreference("authentication_username");
 
             pref_username.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -148,7 +227,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             Preference helpdesk = findPreference("helpdesk");
-            LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.circle_with_mail_icon);
+            LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_with_mail_icon);
             GradientDrawable gd = (GradientDrawable) ld.findDrawableByLayerId(R.id.first_image);
             gd.setColor(GGApp.GG_APP.school.getColor());
             helpdesk.setIcon(ld);
@@ -162,15 +241,6 @@ public class SettingsActivity extends AppCompatActivity {
                     return false;
                 }
             });
-            Preference personalisation = findPreference("personalization");
-            personalisation.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent i = new Intent(getActivity(), PersonalizationActivity.class);
-                    getActivity().startActivityForResult(i, 2);
-                    return false;
-                }
-            });
 
         }
 
@@ -179,6 +249,20 @@ public class SettingsActivity extends AppCompatActivity {
             Preference pref = findPreference(key);
 
             changed = true;
+
+            if(key.equals("toggleThemeMode")) {
+                if(sharedPreferences.getBoolean(key, true)){
+                    GGApp.GG_APP.setDarkThemeEnabled(true);
+                    GGApp.GG_APP.school.loadTheme();
+                    recreate = true;
+                    getActivity().recreate();
+                } else {
+                    GGApp.GG_APP.setDarkThemeEnabled(false);
+                    GGApp.GG_APP.school.loadTheme();
+                    recreate = true;
+                    getActivity().recreate();
+                }
+            }
 
             if(key.equals("notifications")) {
                 CheckBoxPreference no = (CheckBoxPreference) pref;
@@ -253,9 +337,6 @@ public class SettingsActivity extends AppCompatActivity {
             changed = true;
             Preference filter = frag.findPreference("filter");
             filter.setSummary(GGApp.GG_APP.filters.mainFilter.filter.isEmpty() ? "Kein Filter aktiv" : (GGApp.GG_APP.filters.size() + 1) + " Filter aktiv");
-        } else if(req == 2 && resp == RESULT_OK) {
-            recreate = true;
-            recreate();
         }
     }
 
@@ -275,6 +356,11 @@ public class SettingsActivity extends AppCompatActivity {
         i.putExtra("recreate", recreate);
         setResult(changed ? RESULT_OK : RESULT_CANCELED, i);
         super.finish();
+    }
+
+    public static int loadThemeColor(String name) {
+        int theme = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "AppTheme" + name + "Dark" : "AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
+        return GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary}).getColor(0, Color.RED);
     }
 
 }

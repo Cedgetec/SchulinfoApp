@@ -98,12 +98,12 @@
     <string name="download_error">An error occurred while downloading</string>
     <string name="developer_dialog">Built by bemused for the confused, your substitute schedule!\n\nHauke Oldsen\nLasse Rosenow\nLennart Schmidt\nFabian Schultis\nDaniel Deutsch</string>
     <string name="dessert">Dessert</string>
-    <string name="personalisation">Change design</string>
+    <string name="design">Design</string>
     <string name="personalize_your_theme">Customize the design of the App</string>
-    <string name="dark_theme_is_not_activated">Dark theme is not activated</string>
-    <string name="dark_theme_is_activated">Dark theme is activated</string>
+    <string name="dark_theme_description">Sets the app in dark colors</string>
     <string name="dark_theme">Dark theme</string>
     <string name="personalisation_changeColor">Change color</string>
+    <string name="personalisation_changeColor_description">Main color of the app</string>
     <string name="show_pwd">Show password</string>
     <string name="night_mode">Night mode</string>
     <string name="day_mode">Day mode</string>

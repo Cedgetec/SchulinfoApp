@@ -320,8 +320,8 @@ public class SetupActivity extends AppCompatActivity {
                     d.dismiss();
                 Intent i = new Intent(SetupActivity.this, MainActivity.class);
                 i.putExtra("reload", true);
-                //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
+                finish();
 
             }
         }.start();
