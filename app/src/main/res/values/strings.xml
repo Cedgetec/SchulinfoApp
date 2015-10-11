@@ -125,6 +125,8 @@
     <string name="fu_thirdpage_content">Add filters for subjects not affecting you to exclude them from your own overview page.</string>
     <string name="fu_fourthpage_title">Not enough?</string>
     <string name="fu_fourthpage_content">More features: You can read news of your school, cafeteria schedules as well as the exam plan.</string>
+    <string name="fu_fifthpage_title">Exam filter</string>
+    <string name="fu_fifthpage_content">Mark exams affecting you to let them appear in the overview where you get an useful view of upcoming exams.</string>
     <string name="user">User</string>
     <string name="please_read">Read this, please!</string>
     <string name="contact">Support</string>

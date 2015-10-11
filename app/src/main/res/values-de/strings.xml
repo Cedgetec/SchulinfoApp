@@ -123,6 +123,8 @@
     <string name="fu_thirdpage_content">Trage im Filtermenü Kurse ein, die dich nicht betreffen, um sie von deiner persönlichen Übersicht auszuschließen.</string>
     <string name="fu_fourthpage_title">Noch nicht genug?</string>
     <string name="fu_fourthpage_content">Weitere Funktionen: Falls von der Schule unterstützt, kannst du News-, Mensa-, und Klausurenplan in der App einsehen.</string>
+    <string name="fu_fifthpage_title">Klausurenfilter</string>
+    <string name="fu_fifthpage_content">Markiere deine Klausuren, um sie in der Übersicht anzeigen zu lassen. Dort kannst du dir einen praktischen Überblick verschaffen.</string>
     <string name="user">User</string>
     <string name="please_read">Wichtig: Bitte lesen!</string>
     <string name="contact">Kontakt</string>

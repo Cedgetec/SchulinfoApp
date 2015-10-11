@@ -84,13 +84,20 @@ public class FirstUseFragment extends Fragment {
                 tvsub.setText(R.string.fu_thirdpage_content);
                 break;
             case 3:
+                color = Color.parseColor("#d32f2f");
+                layout.setBackgroundColor(color);
+                i.setImageResource(R.drawable.fu_exam);
+                tvhead.setText(R.string.fu_fifthpage_title);
+                tvsub.setText(R.string.fu_fifthpage_content);
+                break;
+            case 4:
                 color = Color.parseColor("#00ACC1");
                 layout.setBackgroundColor(color);
                 i.setImageResource(R.drawable.fu_more);
                 tvhead.setText(R.string.fu_fourthpage_title);
                 tvsub.setText(R.string.fu_fourthpage_content);
                 break;
-            case 4:
+            case 5:
                 layout = (LinearLayout) inflater.inflate(R.layout.fu_card_finish, container, false);
                 Button bu = (Button) layout.findViewById(R.id.fu_button);
                 bu.setOnClickListener(new View.OnClickListener() {

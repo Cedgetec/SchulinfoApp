@@ -53,7 +53,7 @@ public class FirstUseActivity extends FragmentActivity {
             public void onPageScrolled(int i, float v, int i1) {
                 FirstUseAdapter adapter = (FirstUseAdapter) viewPager.getAdapter();
 
-                if (i >= 4)
+                if (i >= 5)
                     return;
 
                 FirstUseFragment frag1 = adapter.fragments.get(i);
