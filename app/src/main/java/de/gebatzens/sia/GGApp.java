@@ -282,8 +282,11 @@ public class GGApp extends Application {
                         update = om == null || !om.equals(mensa);
                         break;
                     case EXAMS:
-                        Exams oe = exams;
-                        exams = remote.getExams(updateFragments);
+                        Exams newExams = remote.getExams(updateFragments);
+                        if(exams != null) {
+                            exams.reuseSelected(newExams);
+                        }
+                        exams = newExams;
                         update = true;
                         break;
                 }

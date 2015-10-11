@@ -45,8 +45,6 @@ import android.widget.ListView;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
-
 public class SetupActivity extends AppCompatActivity {
 
     SchoolListAdapter adapter;
@@ -61,9 +59,8 @@ public class SetupActivity extends AppCompatActivity {
             new Thread() {
                 @Override
                 public void run() {
-                    GGRemote.APIResponse resp = null;
                     try {
-                        resp = GGApp.GG_APP.remote.doRequest("/schoolInfo?token=" + GGApp.GG_APP.remote.getToken(), null);
+                        GGRemote.APIResponse resp = GGApp.GG_APP.remote.doRequest("/schoolInfo?token=" + GGApp.GG_APP.remote.getToken(), null);
                         if(resp.state == GGRemote.APIState.SUCCEEDED) {
                             School.updateSchool((JSONObject) resp.data);
                             School.saveList();

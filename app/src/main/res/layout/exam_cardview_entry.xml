@@ -1,13 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:id="@+id/frel_exam"
         android:gravity="center_horizontal">
 
 
@@ -25,15 +26,19 @@
             android:layout_height="wrap_content"
             android:id="@+id/ecv_date"
             android:textSize="15sp"
+            android:layout_below="@id/ecv_lesson"
             android:textColor="#fff"/>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/srel_exam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="35dp"
         android:layout_marginStart="35dp"
+        android:layout_toRightOf="@id/frel_exam"
+        android:layout_toEndOf="@id/frel_exam"
         android:orientation="vertical">
 
         <TextView
@@ -48,8 +53,24 @@
             android:layout_height="wrap_content"
             android:textColor="#fff"
             android:textSize="15sp"
+            android:layout_below="@id/ecv_subject_teacher"
             android:id="@+id/ecv_schoolclass"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true">
+
+        <CheckBox
+            android:id="@+id/ecv_checkbox"
+            android:theme="@style/CheckBoxTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

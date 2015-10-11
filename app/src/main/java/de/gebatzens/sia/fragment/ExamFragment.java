@@ -15,18 +15,20 @@
  */
 package de.gebatzens.sia.fragment;
 
-import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -98,6 +100,23 @@ public class ExamFragment extends RemoteDataFragment {
 
     }
 
+    private void createContentList(List<Exams.ExamItem> list, String title, ViewGroup l, LayoutInflater inflater, boolean checkbox) {
+        TextView tv = createTextView(title, 27, inflater, l);
+        tv.setPadding(toPixels(2.8f), 0, 0, 0);
+        if (GGApp.GG_APP.isDarkThemeEnabled()) {
+            tv.setTextColor(Color.parseColor("#a0a0a0"));
+        } else {
+            tv.setTextColor(Color.parseColor("#6e6e6e"));
+        }
+        for (Exams.ExamItem item : list) {
+            if (item.date.after(new Date(System.currentTimeMillis() - 86400000L))) {
+                CardView cv = createCardItem(item, inflater, checkbox);
+                l.addView(cv);
+
+            }
+        }
+    }
+
     @Override
     public void createView(final LayoutInflater inflater, ViewGroup view) {
         LinearLayout lroot = (LinearLayout) view.findViewById(R.id.exam_content);
@@ -130,7 +149,7 @@ public class ExamFragment extends RemoteDataFragment {
         l4.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
         final List<String> classes = new ArrayList<>();
-        classes.add(getString(R.string.not_selected));
+        classes.add(getString(R.string.overview));
         classes.addAll(GGApp.GG_APP.exams.getAllClasses());
         Spinner classSpinner = new Spinner(getActivity());
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, classes);
@@ -159,16 +178,20 @@ public class ExamFragment extends RemoteDataFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 GGApp.GG_APP.preferences.edit().putInt("exam_selected", position).apply();
 
-                if(position == 0) {
-                    lcontent.removeAllViews();
-                    createMessage(lcontent, getString(R.string.not_selected), null, null);
+                lcontent.removeAllViews();
+
+                final LinearLayout l = new LinearLayout(getActivity());
+                createRootLayout(l);
+                lcontent.addView(l);
+
+                if (position == 0) {
+                    List<Exams.ExamItem> list = GGApp.GG_APP.exams.getSelectedItems();
+                    if (list.size() == 0) {
+                        createNoEntriesCard(l, inflater);
+                    } else {
+                        createContentList(list, getString(R.string.overview), l, inflater, false);
+                    }
                 } else {
-                    lcontent.removeAllViews();
-
-                    final LinearLayout l = new LinearLayout(getActivity());
-                    createRootLayout(l);
-                    lcontent.addView(l);
-
                     String cl = classes.get(position);
                     Filter.FilterList list = new Filter.FilterList();
                     list.mainFilter = new Filter();
@@ -176,22 +199,8 @@ public class ExamFragment extends RemoteDataFragment {
                     list.mainFilter.filter = cl;
 
                     List<Exams.ExamItem> items = GGApp.GG_APP.exams.filter(list);
-                    if(GGApp.GG_APP.exams.size() != 0) {
-                        TextView tv = createTextView(cl, 27, inflater, l);
-                        tv.setPadding(toPixels(2.8f), 0, 0, 0);
-                        if (GGApp.GG_APP.isDarkThemeEnabled()) {
-                            tv.setTextColor(Color.parseColor("#a0a0a0"));
-                        } else{
-                            tv.setTextColor(Color.parseColor("#6e6e6e"));
-                        }
-                        for (Exams.ExamItem item : items) {
-                            if(item.date.after(new Date(System.currentTimeMillis() - 86400000L))) {
-                                CardView cv = createCardItem(item, inflater);
-                                if (cv != null) {
-                                    l.addView(cv);
-                                }
-                            }
-                        }
+                    if (GGApp.GG_APP.exams.size() != 0) {
+                        createContentList(items, cl, l, inflater, true);
                     } else {
                         createNoEntriesCard(l, inflater);
                     }
@@ -231,7 +240,7 @@ public class ExamFragment extends RemoteDataFragment {
         return (ViewGroup) getView().findViewById(R.id.exam_content);
     }
 
-    private CardView createCardItem(Exams.ExamItem examItem, LayoutInflater i) {
+    private CardView createCardItem(final Exams.ExamItem examItem, LayoutInflater i, boolean checkbox) {
         CardView ecv = createCardView();
         String[] colors = getActivity().getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
         ecv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
@@ -242,16 +251,6 @@ public class ExamFragment extends RemoteDataFragment {
         params.setMargins(0, 0, 0, toPixels(6));
         ecv.setLayoutParams(params);
         i.inflate(R.layout.exam_cardview_entry, ecv, true);
-        Date d = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(d);
-        c.add(Calendar.DAY_OF_YEAR, -1);
-        Date dt = c.getTime();
-        if(examItem.date.before(dt)) {
-            //ecv.setAlpha(0.35f);
-            return null;
-        }
-
         ((TextView) ecv.findViewById(R.id.ecv_date)).setText(getFormattedDate(examItem.date));
         ((TextView) ecv.findViewById(R.id.ecv_lesson)).setText(getDay(examItem.date));
         String content = examItem.subject;
@@ -268,6 +267,27 @@ public class ExamFragment extends RemoteDataFragment {
             lessonContent += "\n" + getString(R.string.lessons) + " " + lesson;
         }
         ((TextView) ecv.findViewById(R.id.ecv_schoolclass)).setText(lessonContent);
+        CheckBox cb = (CheckBox) ecv.findViewById(R.id.ecv_checkbox);
+        if(checkbox) {
+            cb.setChecked(examItem.selected);
+            cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    examItem.selected = isChecked;
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            GGApp.GG_APP.exams.save();
+                        }
+                    }.start();
+
+                }
+            });
+        } else {
+            cb.setVisibility(View.INVISIBLE);
+        }
+
+
         return ecv;
     }
 

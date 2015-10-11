@@ -107,6 +107,7 @@
         <item name="colorPrimary">#FF9800</item>
         <item name="colorPrimaryDark">#F57C00</item>
         <item name="colorAccent">#FF9800</item>
+
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Orange.Light</item>
     </style>
     <style name="AppThemeDeepOrangeLight" parent="AppTheme.Base.Light">
@@ -253,6 +254,12 @@
         <item name="colorPrimaryDark">#000000</item>
         <item name="colorAccent">#F5F5F5</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.DarkGrey.Dark</item>
+    </style>
+
+    <!-- Checkbox theme -->
+    <style name="CheckBoxTheme" parent="AppTheme.Base.Light">
+        <item name="colorAccent">#fff</item>
+        <item name="android:textColorSecondary">#fff</item>
     </style>
 
 

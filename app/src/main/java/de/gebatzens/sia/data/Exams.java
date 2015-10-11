@@ -26,7 +26,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -107,6 +106,26 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
             }
         }
         return list;
+    }
+
+    public List<ExamItem> getSelectedItems() {
+        ArrayList<ExamItem> list = new ArrayList<>();
+
+        for(ExamItem e : this) {
+            if (e.selected)
+                list.add(e);
+        }
+
+        return list;
+    }
+
+    public void reuseSelected(Exams exams) {
+        for(ExamItem e : exams) {
+            int index = indexOf(e);
+            if(index != -1) {
+                e.selected = get(index).selected;
+            }
+        }
     }
 
     public boolean load() {
