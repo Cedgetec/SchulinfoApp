@@ -229,13 +229,11 @@ public class MainActivity extends AppCompatActivity {
         if(selectedItem != -1)
             navMenu.getItem(selectedItem).setChecked(true);
 
-
         for(int i = 0; i < 4; i++) {
             MenuItem item = navMenu.getItem(i);
 
             item.setVisible(GGApp.GG_APP.school.fragments.contains(GGApp.FragmentType.values()[i]));
         }
-
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override public boolean onNavigationItemSelected(MenuItem menuItem) {

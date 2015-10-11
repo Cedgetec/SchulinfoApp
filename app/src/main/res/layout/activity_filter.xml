@@ -109,7 +109,7 @@
                     android:layout_marginStart="16dp"
                     android:fontFamily="sans-serif-medium"
                     android:id="@+id/filter_sep_2"
-                    android:text="@string/hiden_filters"/>
+                    android:text="@string/hidden_filters"/>
 
                 <ListView
                     android:layout_width="match_parent"

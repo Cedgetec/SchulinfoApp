@@ -68,7 +68,7 @@
     <string name="hide_subject">Fach/Kurs ausblenden</string>
     <string name="hide">ausblenden</string>
     <string name="filter">Filter</string>
-    <string name="hiden_filters">Ausgeblendete Fächer/Kurse</string>
+    <string name="hidden_filters">Ausgeblendete Fächer/Kurse</string>
     <string name="invalid_filter">Ungültiger Filter</string>
     <string name="subject_course_name">Fach-/Kursname</string>
     <string name="teacher">Lehrer</string>
