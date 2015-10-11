@@ -44,6 +44,8 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
     }
 
     public void save() {
+        Log.d("ggvp", "Saving exams");
+
         try {
             OutputStream out = GGApp.GG_APP.openFileOutput("exams", Context.MODE_PRIVATE);
             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out));
@@ -105,6 +107,10 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
                 list.add(e.clazz);
             }
         }
+
+        //TODO
+        Collections.sort(list);
+
         return list;
     }
 
@@ -120,6 +126,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
     }
 
     public void reuseSelected(Exams exams) {
+        Log.d("ggvp", "reuse selected exams");
         for(ExamItem e : exams) {
             int index = indexOf(e);
             if(index != -1) {

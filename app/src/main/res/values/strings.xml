@@ -23,6 +23,7 @@
     <string name="unknown_error_login">Unknown error occurred while trying to log in</string>
     <string name="abort">Cancel</string>
     <string name="overview">Overview</string>
+    <string name="your_overview">Your overview</string>
     <string name="lesson">Lesson</string>
     <string name="substitute">Substitute</string>
     <string name="work_autonomous">Self dependent work</string>
@@ -124,7 +125,7 @@
     <string name="fu_thirdpage_title">Subject filter</string>
     <string name="fu_thirdpage_content">Add filters for subjects not affecting you to exclude them from your own overview page.</string>
     <string name="fu_fourthpage_title">Not enough?</string>
-    <string name="fu_fourthpage_content">More features: You can read news of your school, cafeteria schedules as well as the exam plan.</string>
+    <string name="fu_fourthpage_content">More features: You can read news of your school and cafeteria schedules</string>
     <string name="fu_fifthpage_title">Exam filter</string>
     <string name="fu_fifthpage_content">Mark exams affecting you to let them appear in the overview where you get an useful view of upcoming exams.</string>
     <string name="user">User</string>
@@ -136,6 +137,8 @@
     <string name="delete">Delete</string>
     <string name="delete_filter">Delete filter</string>
     <string name="delete_filter_message">Really delete subject/course filter?</string>
+    <string name="exam_explain">Here you can see all exams grouped by grades. You can check the exams you are going to write to make them appear in your overview.</string>
+    <string name="entries">Entries:</string>
 
     <string-array name="vibration_values">
         <item>Off</item>

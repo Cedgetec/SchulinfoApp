@@ -122,7 +122,7 @@
     <string name="fu_thirdpage_title">Der Kursfilter</string>
     <string name="fu_thirdpage_content">Trage im Filtermenü Kurse ein, die dich nicht betreffen, um sie von deiner persönlichen Übersicht auszuschließen.</string>
     <string name="fu_fourthpage_title">Noch nicht genug?</string>
-    <string name="fu_fourthpage_content">Weitere Funktionen: Falls von der Schule unterstützt, kannst du News-, Mensa-, und Klausurenplan in der App einsehen.</string>
+    <string name="fu_fourthpage_content">Weitere Funktionen: Falls von der Schule unterstützt, kannst du News- und Mensaplan in der App einsehen.</string>
     <string name="fu_fifthpage_title">Klausurenfilter</string>
     <string name="fu_fifthpage_content">Markiere deine Klausuren, um sie in der Übersicht anzeigen zu lassen. Dort kannst du dir einen praktischen Überblick verschaffen.</string>
     <string name="user">User</string>
@@ -134,6 +134,9 @@
     <string name="delete">Löschen</string>
     <string name="delete_filter">Filter löschen</string>
     <string name="delete_filter_message">Fach/Kurs Filter wirklich löschen?</string>
+    <string name="exam_explain">Hier werden die Klausuren nach Jahrgängen angezeigt. Du kannst die Klausuren, die du schreibst, mit einem Haken versehen. Die markierten Klausuren werden dann in deiner Übersicht angezeigt.</string>
+    <string name="your_overview">Deine Übersicht</string>
+    <string name="entries">Einträge:</string>
 
     <string-array name="vibration_values">
         <item>Aus</item>

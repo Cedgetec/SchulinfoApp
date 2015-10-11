@@ -83,7 +83,8 @@ public class GGPlan {
                 }
 
             } catch(FileNotFoundException e) {
-                Log.w("ggvp", "Subst file does not exist");
+                if(size() == 0)
+                    Log.w("ggvp", "Subst file does not exist");
             } catch(Exception e) {
                 e.printStackTrace();
             }

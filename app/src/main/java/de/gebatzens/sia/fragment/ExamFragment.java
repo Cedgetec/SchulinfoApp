@@ -15,12 +15,15 @@
  */
 package de.gebatzens.sia.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,6 +124,20 @@ public class ExamFragment extends RemoteDataFragment {
     public void createView(final LayoutInflater inflater, ViewGroup view) {
         LinearLayout lroot = (LinearLayout) view.findViewById(R.id.exam_content);
 
+        if(GGApp.GG_APP.preferences.getBoolean("first_use_exam_filter", true)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(getString(R.string.explanation));
+            builder.setMessage(getString(R.string.exam_explain));
+            builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        }
+        GGApp.GG_APP.preferences.edit().putBoolean("first_use_exam_filter", false).apply();
+
         ScrollView sv = new ScrollView(getActivity());
         sv.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
         sv.setFillViewport(true);
@@ -140,7 +157,7 @@ public class ExamFragment extends RemoteDataFragment {
         cv2.addView(l2);
         l.addView(cv2);
 
-        TextView tv5 = createTextView(getString(R.string.school_class), 15, inflater, l2);
+        final TextView tv5 = createTextView("", 15, inflater, l2);
         tv5.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
         LinearLayout l4 = new LinearLayout(getActivity());
@@ -186,10 +203,11 @@ public class ExamFragment extends RemoteDataFragment {
 
                 if (position == 0) {
                     List<Exams.ExamItem> list = GGApp.GG_APP.exams.getSelectedItems();
+                    tv5.setText(getString(R.string.entries) + " " + list.size());
                     if (list.size() == 0) {
                         createNoEntriesCard(l, inflater);
                     } else {
-                        createContentList(list, getString(R.string.overview), l, inflater, false);
+                        createContentList(list, getString(R.string.your_overview), l, inflater, false);
                     }
                 } else {
                     String cl = classes.get(position);
@@ -199,6 +217,7 @@ public class ExamFragment extends RemoteDataFragment {
                     list.mainFilter.filter = cl;
 
                     List<Exams.ExamItem> items = GGApp.GG_APP.exams.filter(list);
+                    tv5.setText(getString(R.string.entries) + " " + items.size());
                     if (GGApp.GG_APP.exams.size() != 0) {
                         createContentList(items, cl, l, inflater, true);
                     } else {
@@ -209,25 +228,6 @@ public class ExamFragment extends RemoteDataFragment {
 
             }
         });
-
-
-        /*Exams filtered = GGApp.GG_APP.exams.filter(GGApp.GG_APP.filters);
-
-        if(!filtered.isEmpty()) {
-            TextView tv = createTextView(getResources().getString(R.string.my_exams), 27, inflater, l);
-            tv.setPadding(toPixels(2.8f), 0, 0, 0);
-            if (GGApp.GG_APP.isDarkThemeEnabled()) {
-                tv.setTextColor(Color.parseColor("#a0a0a0"));
-            } else{
-                tv.setTextColor(Color.parseColor("#6e6e6e"));
-            }
-            for (Exams.ExamItem item : filtered) {
-                CardView cv = createCardItem(item, inflater);
-                if (cv != null) {
-                    l.addView(cv);
-                }
-            }
-        }*/
 
         cardColorIndex = 0;
 
@@ -273,6 +273,7 @@ public class ExamFragment extends RemoteDataFragment {
             cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    Log.d("ggvp", "checked " + isChecked);
                     examItem.selected = isChecked;
                     new Thread() {
                         @Override
