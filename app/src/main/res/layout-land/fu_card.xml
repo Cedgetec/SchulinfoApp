@@ -1,53 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fu_card"
     android:paddingBottom="48dp">
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        android:paddingTop="50dp"
-        android:paddingBottom="45dp"
-        android:paddingStart="48dp"
-        android:paddingLeft="48dp"
-        android:id="@+id/fu_image"
-        android:layout_weight="0.4"/>
-
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/fu_text_layout"
-        android:paddingLeft="48dp"
-        android:paddingRight="48dp"
-        android:gravity="center"
-        android:layout_weight="0.6">
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:paddingTop="50dp"
+            android:paddingBottom="45dp"
+            android:paddingStart="48dp"
+            android:paddingLeft="48dp"
+            android:id="@+id/fu_image"
+            android:layout_weight="0.4"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/fu_text_layout"
+            android:paddingLeft="48dp"
+            android:paddingRight="48dp"
+            android:gravity="center"
+            android:layout_weight="0.6">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:textSize="24sp"
-                android:paddingBottom="12dp"
-                android:id="@+id/fu_header"/>
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:textSize="24sp"
+                    android:paddingBottom="12dp"
+                    android:id="@+id/fu_header"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:textSize="16sp"
+                    android:id="@+id/fu_text"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatButton xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:textSize="16sp"
-                android:id="@+id/fu_text"/>
+                android:text="@string/skip"
+                android:id="@+id/fu_button"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="center_horizontal"
+                app:backgroundTint="#fff"/>
 
         </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
