@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/start_now"
-            android:id="@+id/fu_button"
+            android:id="@+id/fu_finish_button"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:paddingTop="20dp"

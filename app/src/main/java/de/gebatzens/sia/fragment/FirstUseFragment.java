@@ -58,6 +58,7 @@ public class FirstUseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RelativeLayout layout = (RelativeLayout) inflater.inflate(R.layout.fu_card, container, false);
+        Button finish = (Button) layout.findViewById(R.id.fu_finish_button);
         ImageView i = (ImageView) layout.findViewById(R.id.fu_image);
         TextView tvhead = (TextView) layout.findViewById(R.id.fu_header);
         TextView tvsub = (TextView) layout.findViewById(R.id.fu_text);
@@ -100,19 +101,20 @@ public class FirstUseFragment extends Fragment {
                 break;
             case 5:
                 layout = (RelativeLayout) inflater.inflate(R.layout.fu_card_finish, container, false);
-                Button bu = (Button) layout.findViewById(R.id.fu_button);
-                bu.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        GGApp.GG_APP.preferences.edit().putBoolean("first_use", true).apply();
-                        startActivity(new Intent(getActivity(), SetupActivity.class));
-                        getActivity().finish();
-                    }
-                });
+                finish = (Button) layout.findViewById(R.id.fu_finish_button);
                 color = Color.parseColor("#8BC34A");
                 layout.setBackgroundColor(color);
                 break;
         }
+
+        finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GGApp.GG_APP.preferences.edit().putBoolean("first_use", true).apply();
+                startActivity(new Intent(getActivity(), SetupActivity.class));
+                getActivity().finish();
+            }
+        });
 
         return layout;
     }
