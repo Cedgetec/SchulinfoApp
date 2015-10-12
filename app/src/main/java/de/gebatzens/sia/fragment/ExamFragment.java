@@ -273,7 +273,6 @@ public class ExamFragment extends RemoteDataFragment {
             cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Log.d("ggvp", "checked " + isChecked);
                     examItem.selected = isChecked;
                     new Thread() {
                         @Override

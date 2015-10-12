@@ -242,6 +242,8 @@ public class GGApp extends Application {
                     case PLAN:
                         GGPlan.GGPlans oldPlans = plans;
                         plans = remote.getPlans(updateFragments);
+                        if(plans.throwable == null)
+                            plans.save();
 
                         boolean recreate = false;
 
@@ -274,11 +276,15 @@ public class GGApp extends Application {
                     case NEWS:
                         News on = news;
                         news = remote.getNews(updateFragments);
+                        if(news.throwable == null)
+                            on.save();
                         update = on == null || !on.equals(news);
                         break;
                     case MENSA:
                         Mensa om = mensa;
                         mensa = remote.getMensa(updateFragments);
+                        if(mensa.throwable == null)
+                            mensa.save();
                         update = om == null || !om.equals(mensa);
                         break;
                     case EXAMS:
@@ -287,6 +293,8 @@ public class GGApp extends Application {
                             exams.reuseSelected(newExams);
                         }
                         exams = newExams;
+                        if(exams.throwable == null)
+                            exams.save();
                         update = true;
                         break;
                 }

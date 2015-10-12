@@ -176,7 +176,6 @@ public class GGRemote {
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
             plans.loadDate = GGApp.GG_APP.getResources().getString(R.string.as_of) + ": " + sdf.format(new Date());
-            plans.save();
 
         }
 
@@ -228,8 +227,6 @@ public class GGRemote {
                     e.text = cobj.getString("text");
 
                 }
-
-                n.save();
             } else if(re.state == APIState.INVALID_AUTH)
                 throw new VPLoginException();
             else
@@ -268,7 +265,6 @@ public class GGRemote {
                     mi.image = obj.getString("image");
 
                 }
-                m.save();
             } else if(re.state == APIState.INVALID_AUTH)
                 throw new VPLoginException();
             else
@@ -325,7 +321,6 @@ public class GGRemote {
 
                 }
                 exams.sort();
-                exams.save();
             } else if(re.state == APIState.INVALID_AUTH)
                 throw new VPLoginException();
             else

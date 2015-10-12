@@ -126,7 +126,6 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
     }
 
     public void reuseSelected(Exams exams) {
-        Log.d("ggvp", "reuse selected exams");
         for(ExamItem e : exams) {
             int index = indexOf(e);
             if(index != -1) {
