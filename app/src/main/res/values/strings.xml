@@ -139,7 +139,6 @@
     <string name="delete_filter_message">Really delete subject/course filter?</string>
     <string name="exam_explain">Here you can see all exams grouped by grades. You can check the exams you are going to write to make them appear in your overview.</string>
     <string name="entries">Entries:</string>
-    <string name="skip">Skip</string>
 
     <string-array name="vibration_values">
         <item>Off</item>
