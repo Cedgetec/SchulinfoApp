@@ -126,7 +126,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
         if(tv.getText().toString().trim().isEmpty())
             ((ViewGroup) tv.getParent()).removeView(tv);
 
-        ((TextView) cv.findViewById(R.id.cv_subject)).setText(Html.fromHtml(((type & (CARD_LESSON | CARD_CLASS)) == (CARD_LESSON | CARD_CLASS) ? entry.clazz + " " : "") + entry.subject));
+        String subText = ((type & (CARD_LESSON | CARD_CLASS)) == (CARD_LESSON | CARD_CLASS) ? entry.clazz + " " : "") + entry.subject;
+
+        if(subText.trim().isEmpty())
+            cv.findViewById(R.id.cv_subject).setVisibility(View.GONE);
+        else
+            ((TextView) cv.findViewById(R.id.cv_subject)).setText(Html.fromHtml(subText));
         return cv;
     }
 

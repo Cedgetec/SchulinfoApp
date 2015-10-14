@@ -1,16 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:minWidth="80dp"
-        android:gravity="center_horizontal">
+        android:id="@+id/cv_left_box"
+        android:layout_centerVertical="true"
+        android:minWidth="80dp">
 
 
         <TextView
@@ -18,26 +16,28 @@
             android:layout_height="wrap_content"
             android:id="@+id/cv_hour"
             android:textSize="35sp"
-            android:layout_marginBottom="-6dp"
-            android:layout_marginTop="-6dp"
+            android:layout_centerHorizontal="true"
             android:textColor="#fff"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cv_subject"
+            android:layout_below="@id/cv_hour"
             android:maxLength="20"
+            android:layout_centerHorizontal="true"
             android:textSize="15sp"
             android:textColor="#fff"/>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="35dp"
-        android:layout_marginStart="35dp"
-        android:orientation="vertical">
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_toRightOf="@id/cv_left_box"
+        android:layout_toEndOf="@id/cv_left_box">
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,8 +51,9 @@
             android:layout_height="wrap_content"
             android:textColor="#fff"
             android:textSize="15sp"
+            android:layout_below="@id/cv_header"
             android:id="@+id/cv_detail"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
