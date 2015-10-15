@@ -141,7 +141,10 @@ public class GGRemote {
 
                     JSONArray messages = obj.getJSONArray("messages");
                     for (int i = 0; i < messages.length(); i++) {
-                        plan.special.add("&#8226;  " + messages.getString(i));
+                        if(i < messages.length())
+                            plan.special.add(messages.getString(i) + "\n");
+                        else
+                            plan.special.add(messages.getString(i));
                     }
                 }
             } else if(re.state == APIState.INVALID_AUTH) {
