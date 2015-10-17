@@ -41,6 +41,7 @@ import de.gebatzens.sia.data.GGPlan;
 import de.gebatzens.sia.data.Mensa;
 import de.gebatzens.sia.data.News;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
+import de.gebatzens.sia.fragment.SubstFragment;
 
 public class GGApp extends Application {
 
@@ -245,6 +246,7 @@ public class GGApp extends Application {
                         if(plans.throwable == null)
                             plans.save();
 
+
                         boolean recreate = false;
 
                         if(activity != null && (oldPlans == null || plans.size() != oldPlans.size())) {
@@ -270,6 +272,14 @@ public class GGApp extends Application {
                                 }
                             });
                             Log.d("ggvp", "RECRATE FRAGMENT");
+                        } else if(activity != null) {
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((SubstFragment) activity.mContent).updateTime(plans.loadDate);
+                                }
+                            });
+
                         }
 
                         break;

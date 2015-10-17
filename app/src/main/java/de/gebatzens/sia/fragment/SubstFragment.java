@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
@@ -31,6 +32,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.Date;
+import java.util.List;
 
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.MainActivity;
@@ -58,6 +63,19 @@ public class SubstFragment extends RemoteDataFragment {
     private int toPixels(int dp) {
         float scale = getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
+    }
+
+    public void updateTime(Date newTime) {
+        List<Fragment> frags = getChildFragmentManager().getFragments();
+        for(Fragment fr : frags) {
+            View v = fr.getView();
+            if(v != null) {
+                v = v.findViewWithTag("gg_time");
+                if(v != null) {
+                    ((TextView) v).setText(SubstPagerFragment.getTimeDiff(getActivity(), newTime));
+                }
+            }
+        }
     }
 
     @Override
