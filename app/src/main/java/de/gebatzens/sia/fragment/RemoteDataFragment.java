@@ -169,7 +169,7 @@ public abstract class RemoteDataFragment extends Fragment {
         if (GGApp.GG_APP.isDarkThemeEnabled()) {
             cv.setCardBackgroundColor(Color.parseColor("#424242"));
         } else{
-            cv.setCardBackgroundColor(Color.parseColor("#fafafa"));
+            cv.setCardBackgroundColor(Color.parseColor("#ffffff"));
         }
         f2.addView(cv);
         createTextView(getResources().getString(R.string.no_entries), 20, inflater, cv);

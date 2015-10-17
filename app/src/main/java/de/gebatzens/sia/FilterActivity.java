@@ -35,6 +35,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.io.InputStream;
@@ -56,6 +57,7 @@ public class FilterActivity extends AppCompatActivity {
     int mainModePosition;
     boolean changed = false;
     FloatingActionButton mAddFilterButton;
+    ScrollView sv;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -75,6 +77,8 @@ public class FilterActivity extends AppCompatActivity {
             });
             builder.create().show();
         }
+
+        sv = (ScrollView) findViewById(R.id.scrollView);
 
         GGApp.GG_APP.preferences.edit().putBoolean("first_use_filter", false).apply();
 
@@ -323,10 +327,21 @@ public class FilterActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle b) {
+    protected void onSaveInstanceState(Bundle b) {
         super.onSaveInstanceState(b);
         b.putBoolean("changed", changed);
+        b.putIntArray("ARTICLE_SCROLL_POSITION", new int[]{sv.getScrollX(), sv.getScrollY()});
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        final int[] position = savedInstanceState.getIntArray("ARTICLE_SCROLL_POSITION");
+        if(position != null)
+            sv.post(new Runnable() {
+                public void run() {
+                    sv.scrollTo(position[0], position[1]);
+                }
+            });
     }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
