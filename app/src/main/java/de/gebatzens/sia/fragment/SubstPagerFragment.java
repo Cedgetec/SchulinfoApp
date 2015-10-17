@@ -199,7 +199,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.addView(l2);
             l0.addView(cv2);
 
-            TextView tv4 = createTextView(GGApp.GG_APP.plans.loadDate, 15, inflater, l2);
+            TextView tv4 = createTextView(getTimeDiff(GGApp.GG_APP.plans.loadDate), 15, inflater, l2);
             tv4.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
             TextView tv2 = createTextView(
@@ -259,7 +259,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.addView(l2);
             l0.addView(cv2);
 
-            TextView tv5 = createTextView(GGApp.GG_APP.plans.loadDate, 15, inflater, l2);
+            TextView tv5 = createTextView(getTimeDiff(GGApp.GG_APP.plans.loadDate), 15, inflater, l2);
             tv5.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
             LinearLayout l4 = new LinearLayout(getActivity());
@@ -411,5 +411,18 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
         sb.append(convertedDateFormat.format(date));
         return sb.toString();
+    }
+
+    private String getTimeDiff(Date old) {
+        long diff = new Date().getTime() - old.getTime();
+        long minutes = diff / (1000 * 60);
+
+        if(minutes == 0) {
+            return getString(R.string.just_now);
+        } else if(minutes == 1) {
+            return getString(R.string.one_minute);
+        } else {
+            return getString(R.string.minutes, minutes);
+        }
     }
 }

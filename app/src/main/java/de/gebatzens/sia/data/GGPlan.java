@@ -57,7 +57,7 @@ public class GGPlan {
     public static class GGPlans extends ArrayList<GGPlan> implements RemoteDataFragment.RemoteData {
 
         public Throwable throwable;
-        public String loadDate;
+        public Date loadDate;
 
         @Override
         public Throwable getThrowable() {
@@ -66,7 +66,7 @@ public class GGPlan {
 
         @Override
         public void save() {
-            GGApp.GG_APP.preferences.edit().putString("loadDate", loadDate).commit();
+            GGApp.GG_APP.preferences.edit().putLong("substLoadDate", loadDate.getTime()).commit();
 
             for(int i = 0; i < size(); i++)
                 get(i).save("schedule" + i);
@@ -74,7 +74,7 @@ public class GGPlan {
 
         @Override
         public boolean load() {
-            loadDate = GGApp.GG_APP.preferences.getString("loadDate", "");
+            loadDate = new Date(GGApp.GG_APP.preferences.getLong("substLoadDate", new Date().getTime()));
             try {
                 for(int i = 0; ; i++) {
                     GGPlan plan = new GGPlan();

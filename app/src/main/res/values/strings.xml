@@ -97,7 +97,7 @@
     <string name="supported_schools">Supported schools</string>
     <string name="anonymous">Anonymous user</string>
     <string name="download_error">An error occurred while downloading</string>
-    <string name="developer_dialog">Built by bemused for the confused, your substitute schedule!\n\nHauke Oldsen\nLasse Rosenow\nLennart Schmidt\nFabian Schultis\nDaniel Deutsch</string>
+    <string name="developer_dialog">Built by bemused for the confused, your substitute schedule!\n\nHauke Oldsen\nLasse Rosenow\nLennart Schmidt\nFabian Schultis</string>
     <string name="dessert">Dessert</string>
     <string name="design">Design</string>
     <string name="personalize_your_theme">Customize the design of the App</string>
@@ -139,6 +139,9 @@
     <string name="delete_filter_message">Really delete subject/course filter?</string>
     <string name="exam_explain">Here you can see all exams grouped by grades. You can check the exams you are going to write to make them appear in your overview.</string>
     <string name="entries">Entries:</string>
+    <string name="minutes">Updated: %d minutes ago</string>
+    <string name="one_minute">Updated: One minute ago</string>
+    <string name="just_now">Updated: Just now</string>
 
     <string-array name="vibration_values">
         <item>Off</item>

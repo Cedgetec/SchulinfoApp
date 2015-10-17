@@ -137,6 +137,9 @@
     <string name="exam_explain">Hier werden die Klausuren nach Jahrgängen angezeigt. Du kannst die Klausuren, die du schreibst, mit einem Haken versehen. Die markierten Klausuren werden dann in deiner Übersicht angezeigt.</string>
     <string name="your_overview">Deine Übersicht</string>
     <string name="entries">Einträge:</string>
+    <string name="minutes">Vor %d Minuten aktualisiert</string>
+    <string name="one_minute">Vor einer Minute aktualisiert</string>
+    <string name="just_now">Gerade aktualisiert</string>
 
     <string-array name="vibration_values">
         <item>Aus</item>
