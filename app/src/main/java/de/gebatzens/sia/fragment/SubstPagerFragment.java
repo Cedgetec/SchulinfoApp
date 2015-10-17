@@ -94,7 +94,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
         for(GGPlan.Entry e : list) {
             FrameLayout f2 = new FrameLayout(getActivity());
-            f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
+            f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
             f2.addView(createCardItem(e, inflater, type));
             group.addView(f2);
         }
@@ -170,14 +170,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
         LinearLayout l0 = new LinearLayout(getActivity());
         l0.setOrientation(LinearLayout.VERTICAL);
         LinearLayout l = new LinearLayout(getActivity());
-        l.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
-        l.setOrientation(LinearLayout.VERTICAL);
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            l.setPadding(toPixels(55),toPixels(4),toPixels(55),toPixels(4));
-        }
-        else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            l.setPadding(toPixels(4),toPixels(4),toPixels(4),toPixels(4));
-        }
+        createRootLayout(l);
         group.addView(sv);
 
         if(index == INDEX_INVALID) {
