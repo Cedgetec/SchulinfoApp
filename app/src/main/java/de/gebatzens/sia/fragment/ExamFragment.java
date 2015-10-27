@@ -17,6 +17,7 @@ package de.gebatzens.sia.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -240,6 +242,18 @@ public class ExamFragment extends RemoteDataFragment {
         return (ViewGroup) getView().findViewById(R.id.exam_content);
     }
 
+    private void addToCalendar(Date date, String title){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setType("vnd.android.cursor.item/event");
+        intent.putExtra("beginTime", cal.getTimeInMillis());
+        intent.putExtra("allDay", true);
+        intent.putExtra("endTime", cal.getTimeInMillis() + 60 * 60 * 1000);
+        intent.putExtra("title", title);
+        startActivity(intent);
+    }
+
     private CardView createCardItem(final Exams.ExamItem examItem, LayoutInflater i, boolean checkbox) {
         CardView ecv = createCardView();
         String[] colors = getActivity().getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
@@ -257,7 +271,6 @@ public class ExamFragment extends RemoteDataFragment {
         if(!examItem.teacher.equals(""))
             content += " [" + examItem.teacher + "]";
         ((TextView) ecv.findViewById(R.id.ecv_subject_teacher)).setText(content);
-
         String lessonContent = examItem.clazz;
         if(Integer.parseInt(examItem.lesson) > 0) {
             String lesson = examItem.lesson;
@@ -267,6 +280,14 @@ public class ExamFragment extends RemoteDataFragment {
             lessonContent += "\n" + getString(R.string.lessons) + " " + lesson;
         }
         ((TextView) ecv.findViewById(R.id.ecv_schoolclass)).setText(lessonContent);
+        final String calendarTitle = getResources().getString(R.string.exam) + ": " + content;
+        ImageButton ib = (ImageButton) ecv.findViewById(R.id.ecv_calendar);
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToCalendar(examItem.date, calendarTitle);
+            }
+        });
         CheckBox cb = (CheckBox) ecv.findViewById(R.id.ecv_checkbox);
         if(checkbox) {
             cb.setChecked(examItem.selected);
@@ -284,7 +305,7 @@ public class ExamFragment extends RemoteDataFragment {
                 }
             });
         } else {
-            cb.setVisibility(View.INVISIBLE);
+            cb.setVisibility(View.GONE);
         }
 
 
