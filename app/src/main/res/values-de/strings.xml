@@ -140,6 +140,10 @@
     <string name="minutes">Vor %d Minuten aktualisiert</string>
     <string name="one_minute">Vor einer Minute aktualisiert</string>
     <string name="just_now">Gerade aktualisiert</string>
+    <string name="add_to_calendar">Zum Kalender hinzufügen</string>
+    <string name="no_exams_selected">Keine Klausuren ausgewählt</string>
+    <string name="no_cal_avail">Kein Kalender verfügbar</string>
+    <string name="cancel">Abbrechen</string>
 
     <string-array name="vibration_values">
         <item>Aus</item>
@@ -199,5 +203,10 @@
     </string-array>
     <string name="dessert">Dessert</string>
     <string name="other_school">Andere Schule</string>
+
+    <plurals name="n_events_will_be_added">
+        <item quantity="one">Ein Eintrag wird zum Kalender hinzugefügt</item>
+        <item quantity="other">%d Einträge werden zum Kalender hinzugefügt</item>
+    </plurals>
 
 </resources>

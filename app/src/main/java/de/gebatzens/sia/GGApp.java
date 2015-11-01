@@ -16,24 +16,33 @@
 
 package de.gebatzens.sia;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.annotation.TargetApi;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.CalendarContract;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 import de.gebatzens.sia.data.Exams;
 import de.gebatzens.sia.data.Filter;
@@ -160,6 +169,36 @@ public class GGApp extends Application {
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(id, mBuilder.build());
+    }
+
+    public long getCalendarId() {
+        //TODO select default calendar
+
+        String[] projection = new String[]{CalendarContract.Calendars._ID, CalendarContract.Calendars.NAME};
+        Cursor cursor = getContentResolver().query(CalendarContract.Calendars.CONTENT_URI, projection, null, null, null);
+        if (cursor.moveToFirst()) {
+            long id = cursor.getLong(0);
+            cursor.close();
+            return id;
+        }
+
+        Log.w("ggvp", "No calendar available");
+        return -1;
+
+    }
+
+    public void addToCalendar(long calId, Date date, String title){
+        //TODO getTime should be enough
+        long start = date.getTime() + 1000 * 60 * 60 * 6;
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Events.DTSTART, start);
+        values.put(CalendarContract.Events.DTEND, start);
+        values.put(CalendarContract.Events.CALENDAR_ID, calId);
+        values.put(CalendarContract.Events.ACCESS_LEVEL, CalendarContract.Events.ACCESS_DEFAULT);
+        values.put(CalendarContract.Events.ALL_DAY, 1);
+        values.put(CalendarContract.Events.TITLE, title);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+        getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values).getLastPathSegment();
     }
 
     public int translateUpdateType(String s) {

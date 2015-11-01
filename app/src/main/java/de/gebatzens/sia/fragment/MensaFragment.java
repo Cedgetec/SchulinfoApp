@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Mensa;
 
@@ -54,6 +56,9 @@ public class MensaFragment extends RemoteDataFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle bundle) {
+        Toolbar toolbar = ((MainActivity) getActivity()).mToolbar;
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.toolbar_menu);
         ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.fragment_mensa, group, false);
         if(GGApp.GG_APP.mensa != null)
             createRootView(inflater, vg);

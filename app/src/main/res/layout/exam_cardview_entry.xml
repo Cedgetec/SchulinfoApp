@@ -67,18 +67,6 @@
         android:layout_centerInParent="true"
         android:id="@+id/relativeLayout">
 
-        <ImageButton
-            android:layout_width="33dp"
-            android:layout_height="33dp"
-            android:src="@drawable/ic_calendar"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:layout_gravity="center"
-            android:id="@+id/ecv_calendar"
-            android:padding="8dp"
-            android:background="?attr/selectableItemBackground"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
-
         <CheckBox
             android:id="@+id/ecv_checkbox"
             android:theme="@style/CheckBoxTheme"

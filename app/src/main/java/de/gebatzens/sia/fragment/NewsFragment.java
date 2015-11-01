@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.NewsFragmentDatabaseHelper;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.News;
@@ -49,6 +51,9 @@ public class NewsFragment extends RemoteDataFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle bundle) {
+        Toolbar toolbar = ((MainActivity) getActivity()).mToolbar;
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.toolbar_menu);
         ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.fragment_news, group, false);
         if(GGApp.GG_APP.news != null)
             createRootView(inflater, vg);

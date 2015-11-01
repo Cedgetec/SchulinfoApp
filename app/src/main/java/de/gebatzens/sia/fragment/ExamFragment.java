@@ -15,16 +15,24 @@
  */
 package de.gebatzens.sia.fragment;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,10 +52,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Exams;
 import de.gebatzens.sia.data.Filter;
@@ -64,6 +76,9 @@ public class ExamFragment extends RemoteDataFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle b) {
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_exam, vg, false);
+        Toolbar toolbar = ((MainActivity) getActivity()).mToolbar;
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.toolbar_exam_menu);
         if(GGApp.GG_APP.exams != null)
             createRootView(inflater, v);
         return v;
@@ -242,18 +257,6 @@ public class ExamFragment extends RemoteDataFragment {
         return (ViewGroup) getView().findViewById(R.id.exam_content);
     }
 
-    private void addToCalendar(Date date, String title){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        Intent intent = new Intent(Intent.ACTION_EDIT);
-        intent.setType("vnd.android.cursor.item/event");
-        intent.putExtra("beginTime", cal.getTimeInMillis());
-        intent.putExtra("allDay", true);
-        intent.putExtra("endTime", cal.getTimeInMillis() + 60 * 60 * 1000);
-        intent.putExtra("title", title);
-        startActivity(intent);
-    }
-
     private CardView createCardItem(final Exams.ExamItem examItem, LayoutInflater i, boolean checkbox) {
         CardView ecv = createCardView();
         String[] colors = getActivity().getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
@@ -281,13 +284,6 @@ public class ExamFragment extends RemoteDataFragment {
         }
         ((TextView) ecv.findViewById(R.id.ecv_schoolclass)).setText(lessonContent);
         final String calendarTitle = getResources().getString(R.string.exam) + ": " + content;
-        ImageButton ib = (ImageButton) ecv.findViewById(R.id.ecv_calendar);
-        ib.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addToCalendar(examItem.date, calendarTitle);
-            }
-        });
         CheckBox cb = (CheckBox) ecv.findViewById(R.id.ecv_checkbox);
         if(checkbox) {
             cb.setChecked(examItem.selected);
@@ -307,7 +303,6 @@ public class ExamFragment extends RemoteDataFragment {
         } else {
             cb.setVisibility(View.GONE);
         }
-
 
         return ecv;
     }
