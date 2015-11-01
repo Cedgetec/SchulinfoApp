@@ -193,7 +193,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.addView(l2);
             l0.addView(cv2);
 
-            TextView tv4 = createTextView(getTimeDiff(getActivity(), GGApp.GG_APP.plans.loadDate), 15, inflater, l2);
+            TextView tv4 = createTextView(getTimeDiff(getActivity(), GGApp.GG_APP.plans.loadDate), 13, inflater, l2);
             tv4.setTag("gg_time");
             tv4.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
@@ -254,7 +254,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.addView(l2);
             l0.addView(cv2);
 
-            TextView tv5 = createTextView(getTimeDiff(getActivity(), GGApp.GG_APP.plans.loadDate), 15, inflater, l2);
+            TextView tv5 = createTextView(getTimeDiff(getActivity(), GGApp.GG_APP.plans.loadDate), 13, inflater, l2);
             tv5.setTag("gg_time");
             tv5.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
