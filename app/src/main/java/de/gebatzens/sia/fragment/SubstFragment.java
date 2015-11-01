@@ -32,6 +32,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.Date;
@@ -177,5 +178,20 @@ public class SubstFragment extends RemoteDataFragment {
          //   frag.spinnerPos = 0;
         if(substAdapter != null)
             substAdapter.update(GGApp.GG_APP.plans);
+    }
+
+    public void resetScrollPositions() {
+        List<Fragment> frags = getChildFragmentManager().getFragments();
+        if(frags != null) {
+            for (Fragment fr : frags) {
+                View v = fr.getView();
+                if (v != null) {
+                    v = v.findViewWithTag("gg_scroll");
+                    if (v != null) {
+                        ((ScrollView) v).setScrollY(0);
+                    }
+                }
+            }
+        }
     }
 }

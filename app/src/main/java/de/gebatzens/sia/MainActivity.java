@@ -368,6 +368,10 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         GGApp.GG_APP.activity = this;
+
+        if(mContent instanceof SubstFragment) {
+            ((SubstFragment) mContent).resetScrollPositions();
+        }
     }
 
     @Override
