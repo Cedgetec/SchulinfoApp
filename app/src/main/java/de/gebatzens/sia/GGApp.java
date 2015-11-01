@@ -178,14 +178,19 @@ public class GGApp extends Application {
     }
 
     public long getCalendarId() {
-        //TODO select default calendar
+        //TODO select default calendar and try catch
 
-        String[] projection = new String[]{CalendarContract.Calendars._ID, CalendarContract.Calendars.NAME};
-        Cursor cursor = getContentResolver().query(CalendarContract.Calendars.CONTENT_URI, projection, null, null, null);
-        if (cursor.moveToFirst()) {
-            long id = cursor.getLong(0);
-            cursor.close();
-            return id;
+        try {
+            String[] projection = new String[]{CalendarContract.Calendars._ID, CalendarContract.Calendars.NAME};
+            Cursor cursor = getContentResolver().query(CalendarContract.Calendars.CONTENT_URI, projection, null, null, null);
+            if (cursor.moveToFirst()) {
+                long id = cursor.getLong(0);
+                cursor.close();
+                return id;
+            }
+        } catch(Exception e) {
+            //no permission
+            e.printStackTrace();
         }
 
         Log.w("ggvp", "No calendar available");
@@ -193,7 +198,7 @@ public class GGApp extends Application {
 
     }
 
-    public void addToCalendar(long calId, Date date, String title){
+    public void addToCalendar(long calId, Date date, String title) {
         //TODO getTime should be enough
         long start = date.getTime() + 1000 * 60 * 60 * 6;
         ContentValues values = new ContentValues();
