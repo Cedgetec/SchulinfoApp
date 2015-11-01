@@ -59,6 +59,11 @@ public class GGPlan {
         public Throwable throwable;
         public Date loadDate;
 
+        /**
+         * true, if this data was loaded from storage rather than downloaded
+         */
+        public boolean isLocal;
+
         @Override
         public Throwable getThrowable() {
             return throwable;
@@ -74,6 +79,7 @@ public class GGPlan {
 
         @Override
         public boolean load() {
+            isLocal = true;
             loadDate = new Date(GGApp.GG_APP.preferences.getLong("substLoadDate", new Date().getTime()));
             try {
                 for(int i = 0; ; i++) {
