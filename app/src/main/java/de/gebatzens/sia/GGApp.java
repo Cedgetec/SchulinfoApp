@@ -19,6 +19,7 @@ package de.gebatzens.sia;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.TargetApi;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -41,6 +42,7 @@ import android.view.WindowManager;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
@@ -71,6 +73,8 @@ public class GGApp extends Application {
     public Filter.FilterList filters = new Filter.FilterList();
     public HashMap<String, String> subjects = new HashMap<String, String>();
 
+    public LifecycleHandler lifecycle;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -83,6 +87,8 @@ public class GGApp extends Application {
         School.loadList();
         loadSavedData();
         school = School.getBySID(preferences.getString("sid", null));
+        lifecycle = new LifecycleHandler();
+        registerActivityLifecycleCallbacks(lifecycle);
 
     }
 
@@ -291,11 +297,7 @@ public class GGApp extends Application {
                         if(activity != null && (oldPlans == null || plans.size() != oldPlans.size())) {
                             recreate = true;
                         } else if (updateFragments) {
-                            for (int i = 0; i < plans.size() && !recreate; i++) {
-                                if (!plans.get(i).date.equals(oldPlans.get(i).date) ||
-                                        plans.get(i).entries.size() != oldPlans.get(i).entries.size() || plans.get(i).special.size() != oldPlans.get(i).special.size())
-                                    recreate = true;
-                            }
+                            recreate = oldPlans.shouldRecreateView(plans);
 
                         }
 

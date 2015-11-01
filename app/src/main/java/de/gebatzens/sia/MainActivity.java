@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(GGApp.GG_APP.school.getTheme());
         super.onCreate(savedInstanceState);
+        Log.w("ggvp", "CREATE NEW MAINACTIVITY");
         GGApp.GG_APP.activity = this;
         savedState = savedInstanceState;
 
@@ -366,7 +367,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         GGApp.GG_APP.activity = this;
     }
 

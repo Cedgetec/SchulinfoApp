@@ -97,6 +97,19 @@ public class GGPlan {
                     return plan;
             return null;
         }
+
+        public boolean shouldRecreateView(GGPlans newPlans) {
+            if(size() != newPlans.size())
+                return true;
+
+            for (int i = 0; i < newPlans.size(); i++) {
+                if (!newPlans.get(i).date.equals(this.get(i).date) ||
+                        newPlans.get(i).entries.size() != this.get(i).entries.size() || newPlans.get(i).special.size() != this.get(i).special.size())
+                    return true;
+            }
+
+            return false;
+        }
     }
 
     public void load(String file) throws Exception {
@@ -245,6 +258,7 @@ public class GGPlan {
             return plan.entries.equals(entries) && plan.date.equals(date) && plan.special.equals(special);
         } else
             return false;
+
     }
 
     public List<Entry> filter(Filter.FilterList filters) {

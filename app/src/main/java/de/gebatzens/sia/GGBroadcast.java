@@ -54,6 +54,10 @@ public class GGBroadcast extends BroadcastReceiver {
         if(newPlans.throwable != null || oldPlans == null || oldPlans.throwable != null)
             return;
 
+        if(gg.activity != null && oldPlans.shouldRecreateView(gg.plans) && !gg.lifecycle.isAppInForeground()) {
+            gg.activity.finish();
+        }
+
         List<GGPlan.Entry> diff = new ArrayList<>();
         for(int i = 0; i < newPlans.size(); i++) {
             GGPlan old = oldPlans.getPlanByDate(newPlans.get(i).date);
@@ -107,7 +111,7 @@ public class GGBroadcast extends BroadcastReceiver {
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pi);
-        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
+        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, 60000, pi);
     }
 
     @SuppressWarnings("deprecation")
