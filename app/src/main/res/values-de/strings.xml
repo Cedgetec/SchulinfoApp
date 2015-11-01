@@ -137,13 +137,11 @@
     <string name="exam_explain">Hier werden die Klausuren nach Jahrgängen angezeigt. Du kannst die Klausuren, die du schreibst, mit einem Haken versehen. Die markierten Klausuren werden dann in deiner Übersicht angezeigt. Wenn du willst, kannst du deine Klausuren auch in den Kalender eintragen lassen.</string>
     <string name="your_overview">Deine Übersicht</string>
     <string name="entries">Einträge:</string>
-    <string name="minutes">Vor %d Minuten aktualisiert</string>
-    <string name="one_minute">Vor einer Minute aktualisiert</string>
-    <string name="just_now">Gerade aktualisiert</string>
     <string name="add_to_calendar">Zum Kalender hinzufügen</string>
     <string name="no_exams_selected">Keine Klausuren ausgewählt</string>
     <string name="no_cal_avail">Kein Kalender verfügbar</string>
     <string name="cancel">Abbrechen</string>
+    <string name="just_now">Gerade aktualisiert</string>
 
     <string-array name="vibration_values">
         <item>Aus</item>
@@ -207,6 +205,16 @@
     <plurals name="n_events_will_be_added">
         <item quantity="one">Ein Eintrag wird zum Kalender hinzugefügt</item>
         <item quantity="other">%d Einträge werden zum Kalender hinzugefügt</item>
+    </plurals>
+
+    <plurals name="time_diff">
+        <item quantity="one">Vor einer Minute aktualisiert</item>
+        <item quantity="other">Vor %d Minuten aktualisiert</item>
+    </plurals>
+
+    <plurals name="time_diff_hours">
+        <item quantity="one">Vor einer Stunde aktualisiert</item>
+        <item quantity="other">Vor %d Stunden aktualisiert</item>
     </plurals>
 
 </resources>

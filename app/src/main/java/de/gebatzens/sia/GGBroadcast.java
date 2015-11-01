@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.gebatzens.sia.data.GGPlan;
+import de.gebatzens.sia.fragment.SubstFragment;
 
 public class GGBroadcast extends BroadcastReceiver {
 
@@ -56,6 +57,15 @@ public class GGBroadcast extends BroadcastReceiver {
 
         if(gg.activity != null && oldPlans.shouldRecreateView(gg.plans) && !gg.lifecycle.isAppInForeground()) {
             gg.activity.finish();
+        }
+
+        if(gg.activity != null && gg.activity.mContent instanceof SubstFragment) {
+            gg.activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ((SubstFragment) gg.activity.mContent).updateTime(gg.plans.loadDate);
+                }
+            });
         }
 
         List<GGPlan.Entry> diff = new ArrayList<>();
@@ -103,7 +113,6 @@ public class GGBroadcast extends BroadcastReceiver {
 
     }
 
-
     public static void createAlarm(Context context) {
         Intent i = new Intent(context, GGBroadcast.class);
         i.setAction("de.gebatzens.ACTION_ALARM");
@@ -111,7 +120,7 @@ public class GGBroadcast extends BroadcastReceiver {
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pi);
-        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, 60000, pi);
+        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
     }
 
     @SuppressWarnings("deprecation")

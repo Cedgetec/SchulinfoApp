@@ -139,13 +139,11 @@
     <string name="delete_filter_message">Do you really want to delete your subject/course filter/s?</string>
     <string name="exam_explain">Here you can see all exams grouped by grades. You can check the exams you are going to write to make them appear in your overview.</string>
     <string name="entries">Entries:</string>
-    <string name="minutes">Updated: %d minutes ago</string>
-    <string name="one_minute">Updated: One minute ago</string>
-    <string name="just_now">Updated: Just now</string>
     <string name="add_to_calendar">Add to calendar</string>
     <string name="no_exams_selected">No exams selected</string>
     <string name="no_cal_avail">No calendar available</string>
     <string name="cancel">Cancel</string>
+    <string name="just_now">Updated: Just now</string>
 
     <string-array name="vibration_values">
         <item>Off</item>
@@ -207,6 +205,16 @@
     <plurals name="n_events_will_be_added">
         <item quantity="one">One event will be added to your calendar</item>
         <item quantity="other">%d events will be added to your calendar</item>
+    </plurals>
+
+    <plurals name="time_diff">
+        <item quantity="one">Updated: One minute ago</item>
+        <item quantity="other">Updated: %d minutes ago</item>
+    </plurals>
+
+    <plurals name="time_diff_hours">
+        <item quantity="one">Updated: One hour ago</item>
+        <item quantity="other">Updated: %d hours ago</item>
     </plurals>
 
 </resources>

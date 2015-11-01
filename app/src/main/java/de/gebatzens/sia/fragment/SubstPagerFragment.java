@@ -271,6 +271,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l4.addView(spinMode);
 
             final Spinner spin = new Spinner(getActivity());
+
             ArrayList<String> items = new ArrayList<String>();
             items.add(getActivity().getString(R.string.all));
             items.addAll(plan.getAllClasses());
@@ -411,14 +412,17 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     public static String getTimeDiff(Context ctx, Date old) {
         long diff = new Date().getTime() - old.getTime();
-        long minutes = diff / (1000 * 60);
+        int minutes = (int) (diff / (1000 * 60));
 
-        if(minutes == 0) {
-            return ctx.getString(R.string.just_now);
-        } else if(minutes == 1) {
-            return ctx.getString(R.string.one_minute);
+        if(minutes > 100) {
+            int hours = (int) Math.floor((float) minutes / 60.0f);
+            return ctx.getResources().getQuantityString(R.plurals.time_diff_hours, hours, hours);
         } else {
-            return ctx.getString(R.string.minutes, minutes);
+            if(minutes == 0)
+                return ctx.getString(R.string.just_now);
+            else
+                return ctx.getResources().getQuantityString(R.plurals.time_diff, minutes, minutes);
         }
+
     }
 }
