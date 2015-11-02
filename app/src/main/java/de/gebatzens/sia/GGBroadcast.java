@@ -52,6 +52,9 @@ public class GGBroadcast extends BroadcastReceiver {
         GGPlan.GGPlans oldPlans = gg.plans;
         gg.plans = newPlans;
 
+        if(gg.plans.throwable == null)
+            gg.plans.save();
+
         if(newPlans.throwable != null || oldPlans == null || oldPlans.throwable != null)
             return;
 
@@ -85,15 +88,6 @@ public class GGBroadcast extends BroadcastReceiver {
             }
 
         }
-
-        //This will happen very rarely and can probably be ignored since it causes some problems
-        /*if(gg.activity != null && gg.getFragmentType() == GGApp.FragmentType.PLAN)
-            gg.activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    gg.activity.mContent.updateFragment();
-                }
-            });*/
 
         if(diff.size() > 0) {
             Intent intent = new Intent(gg, MainActivity.class);
