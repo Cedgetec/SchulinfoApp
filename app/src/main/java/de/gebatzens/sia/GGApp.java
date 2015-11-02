@@ -16,6 +16,7 @@
 
 package de.gebatzens.sia;
 
+import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.TargetApi;
@@ -27,10 +28,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -180,7 +183,12 @@ public class GGApp extends Application {
     public long getCalendarId() {
         //TODO select default calendar and try catch
 
-        try {
+        boolean hasPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED;
+
+        if(!hasPermission && lifecycle.isAppInForeground()) {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_CONTACTS}, 1);
+            return -2;
+        } else if(hasPermission) {
             String[] projection = new String[]{CalendarContract.Calendars._ID, CalendarContract.Calendars.NAME};
             Cursor cursor = getContentResolver().query(CalendarContract.Calendars.CONTENT_URI, projection, null, null, null);
             if (cursor.moveToFirst()) {
@@ -188,9 +196,6 @@ public class GGApp extends Application {
                 cursor.close();
                 return id;
             }
-        } catch(Exception e) {
-            //no permission
-            e.printStackTrace();
         }
 
         Log.w("ggvp", "No calendar available");

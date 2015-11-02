@@ -22,11 +22,13 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -113,6 +115,62 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int req, @NonNull String[] permissions, @NonNull int[] results) {
+        if(req == 1) {
+            boolean b = true;
+            for(int i : results) {
+                if(i != PackageManager.PERMISSION_GRANTED)
+                    b = false;
+            }
+
+            if(b) {
+                showExamDialog();
+            }
+        }
+    }
+
+    private void showExamDialog() {
+        final List<Exams.ExamItem> exams = GGApp.GG_APP.exams.getSelectedItems();
+        if(exams.size() == 0) {
+            Snackbar.make(findViewById(R.id.coordinator_layout), R.string.no_exams_selected, Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+
+        final long calId = GGApp.GG_APP.getCalendarId();
+        if(calId == -2) {
+            return; // permission request
+        }
+
+        if(calId == -1) {
+            Snackbar.make(findViewById(R.id.coordinator_layout), R.string.no_cal_avail, Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(R.string.add_to_calendar);
+        builder.setMessage(getResources().getQuantityString(R.plurals.n_events_will_be_added, exams.size(), exams.size()));
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO title could change
+                for (Exams.ExamItem e : exams) {
+                    GGApp.GG_APP.addToCalendar(calId, e.date, getString(R.string.exam) + ": " + e.subject);
+                }
+            }
+        });
+
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(GGApp.GG_APP.school.getTheme());
         super.onCreate(savedInstanceState);
@@ -181,41 +239,7 @@ public class MainActivity extends AppCompatActivity {
                         recreate();
                         return true;
                     case R.id.action_addToCalendar:
-                        final List<Exams.ExamItem> exams = GGApp.GG_APP.exams.getSelectedItems();
-                        if(exams.size() == 0) {
-                            Snackbar.make(findViewById(R.id.coordinator_layout), R.string.no_exams_selected, Snackbar.LENGTH_SHORT).show();
-                            return true;
-                        }
-
-                        final long calId = GGApp.GG_APP.getCalendarId();
-                        if(calId == -1) {
-                            Snackbar.make(findViewById(R.id.coordinator_layout), R.string.no_cal_avail, Snackbar.LENGTH_SHORT).show();
-                            return true;
-                        }
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setTitle(R.string.add_to_calendar);
-                        builder.setMessage(getResources().getQuantityString(R.plurals.n_events_will_be_added, exams.size(), exams.size()));
-
-                        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //TODO title could change
-                                for (Exams.ExamItem e : exams) {
-                                    GGApp.GG_APP.addToCalendar(calId, e.date, getString(R.string.exam) + ": " + e.subject);
-                                }
-                            }
-                        });
-
-                        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        builder.create().show();
-
+                        showExamDialog();
                         return true;
                 }
 
