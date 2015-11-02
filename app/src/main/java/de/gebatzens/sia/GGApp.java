@@ -183,10 +183,10 @@ public class GGApp extends Application {
     public long getCalendarId() {
         //TODO select default calendar and try catch
 
-        boolean hasPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_DENIED;
+        boolean hasPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED;
 
         if(!hasPermission && lifecycle.isAppInForeground()) {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_CONTACTS}, 1);
+            ActivityCompat.requestPermissions(activity, new String[]{ Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_CALENDAR }, 1);
             return -2;
         } else if(hasPermission) {
             String[] projection = new String[]{CalendarContract.Calendars._ID, CalendarContract.Calendars.NAME};
