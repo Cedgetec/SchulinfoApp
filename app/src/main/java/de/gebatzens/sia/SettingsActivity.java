@@ -234,7 +234,7 @@ public class SettingsActivity extends AppCompatActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                            "mailto","gebatzens@archlinux.info", null));
+                            "mailto","support@cedgetec.com", null));
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SchulinfoApp " + GGApp.GG_APP.school.name);
                     startActivity(Intent.createChooser(emailIntent, "E-Mail senden"));
                     return false;
