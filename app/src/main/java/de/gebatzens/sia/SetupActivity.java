@@ -52,7 +52,7 @@ public class SetupActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle saved) {
-        setTheme(R.style.AppThemeIndigoLight);
+        setTheme(R.style.AppThemeBlueLight);
         super.onCreate(saved);
 
         if(GGApp.GG_APP.remote.isLoggedIn()) {
@@ -85,7 +85,7 @@ public class SetupActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle(getString(R.string.supported_schools));
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.setupColor));
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.custom_material_blue));
         toolbar.inflateMenu(R.menu.setup_menu);
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
