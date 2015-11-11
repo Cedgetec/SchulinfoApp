@@ -154,10 +154,10 @@
 
     <string name="terms_title">Terms of use</string>
     <string-array name="terms">
-        <item>The data showed in the app is preliminary. We cannot guarantee accuracy and currency.</item>
-        <item>In general only the schedules in your school are valid.</item>
-        <item>If a prohibition of mobile phones exits in your school, it still persists.</item>
-        <item>If you have questions or suggestions, please send us an e-mail: support@cedgetec.com</item>
+        <item>The content shown in the app is preliminary. We cannot guarantee integrity.</item>
+        <item>In general only the plans at school are valid.</item>
+        <item>If mobile phones are prohibited in your school, you are still not allowed to use them, even when using this app.</item>
+        <item>If you have questions or suggestions, please send us an email: support@cedgetec.com</item>
     </string-array>
 
     <string-array name="subjects">
