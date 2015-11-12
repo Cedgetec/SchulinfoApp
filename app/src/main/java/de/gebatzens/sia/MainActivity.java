@@ -230,6 +230,12 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_changeThemeMode:
                         GGApp.GG_APP.setDarkThemeEnabled(!GGApp.GG_APP.isDarkThemeEnabled());
                         GGApp.GG_APP.school.loadTheme();
+                        MenuItem mi = menuItem;
+                        if(GGApp.GG_APP.isDarkThemeEnabled()) {
+                            mi.setTitle("Day Mode");
+                        } else {
+                            mi.setTitle("Night Mode");
+                        }
                         recreate();
                         return true;
                     case R.id.action_addToCalendar:
