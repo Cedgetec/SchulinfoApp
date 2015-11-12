@@ -33,6 +33,7 @@ import android.text.Spanned;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,13 +60,18 @@ public class SetupActivity extends AppCompatActivity {
             new Thread() {
                 @Override
                 public void run() {
+                    Log.d("ggvp", "Updating school " + GGApp.GG_APP.school.name);
                     try {
                         GGRemote.APIResponse resp = GGApp.GG_APP.remote.doRequest("/schoolInfo?token=" + GGApp.GG_APP.remote.getToken(), null);
                         if(resp.state == GGRemote.APIState.SUCCEEDED) {
                             School.updateSchool((JSONObject) resp.data);
                             School.saveList();
+
+                            // sid could have changed
+                            GGApp.GG_APP.preferences.edit().putString("sid", ((JSONObject) resp.data).getString("sid")).apply();
                         }
                     } catch (Exception e) {
+                        Log.e("ggvp", e.toString());
                         e.printStackTrace();
                     }
 

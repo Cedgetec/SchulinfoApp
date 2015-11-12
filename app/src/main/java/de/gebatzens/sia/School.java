@@ -205,6 +205,7 @@ public class School {
             writer.endArray();
             writer.close();
         } catch(Exception e) {
+            Log.e("ggvp", e.toString());
             e.printStackTrace();
         }
     }
@@ -225,8 +226,9 @@ public class School {
             }
 
         } catch(FileNotFoundException e) {
-
+            Log.e("ggvp", e.toString());
         } catch(Exception e) {
+            Log.e("ggvp", e.toString());
             e.printStackTrace();
         }
     }
@@ -258,6 +260,7 @@ public class School {
             in.close();
             return true;
         } catch(Exception e) {
+            Log.e("ggvp", e.toString());
             e.printStackTrace();
             return false;
         }

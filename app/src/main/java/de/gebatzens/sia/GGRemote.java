@@ -77,10 +77,12 @@ public class GGRemote {
                                 final View rv = GGApp.GG_APP.activity.getWindow().getDecorView();
                                 ((SwipeRefreshLayout) rv.findViewById(R.id.refresh)).setRefreshing(true);
                                 GGApp.GG_APP.refreshAsync(new Runnable() {
+
                                     @Override
                                     public void run() {
                                         ((SwipeRefreshLayout) rv.findViewById(R.id.refresh)).setRefreshing(false);
                                     }
+
                                 }, true, GGApp.GG_APP.getFragmentType());
                             }
                         }).show();
@@ -125,7 +127,6 @@ public class GGRemote {
         GGPlan.GGPlans plans = new GGPlan.GGPlans();
 
         try {
-            Log.i("ggvp", "getPlans " + getToken());
             APIResponse re = doRequest("/subst?token=" + getToken(), null);
 
             if(re.state == APIState.SUCCEEDED) {
@@ -469,8 +470,7 @@ public class GGRemote {
         try {
             json = new JSONObject(response);
             String state = json.getString("state");
-            if(BuildConfig.DEBUG)
-                Log.d("ggvp", "received state " + state + " " + con.getResponseCode());
+            Log.d("ggvp", "received state " + state + " " + con.getResponseCode());
 
             Object data = json.opt("data");
             switch(state) {
@@ -492,6 +492,7 @@ public class GGRemote {
             }
 
         } catch(JSONException e) {
+            Log.e("ggvp", e.toString());
             e.printStackTrace();
             return new APIResponse(APIState.ERROR);
         }
