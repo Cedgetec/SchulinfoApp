@@ -51,9 +51,7 @@ public class NewsFragment extends RemoteDataFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle bundle) {
-        Toolbar toolbar = ((MainActivity) getActivity()).mToolbar;
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.toolbar_menu);
+        ((MainActivity) getActivity()).updateMenu(R.menu.toolbar_menu);
         ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.fragment_news, group, false);
         if(GGApp.GG_APP.news != null)
             createRootView(inflater, vg);

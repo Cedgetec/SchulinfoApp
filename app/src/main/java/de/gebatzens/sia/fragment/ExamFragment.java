@@ -76,9 +76,7 @@ public class ExamFragment extends RemoteDataFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle b) {
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_exam, vg, false);
-        Toolbar toolbar = ((MainActivity) getActivity()).mToolbar;
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.toolbar_exam_menu);
+        ((MainActivity) getActivity()).updateMenu(R.menu.toolbar_exam_menu);
         if(GGApp.GG_APP.exams != null)
             createRootView(inflater, v);
         return v;

@@ -209,12 +209,6 @@ public class MainActivity extends AppCompatActivity {
         
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.inflateMenu(R.menu.toolbar_menu);
-        if(GGApp.GG_APP.isDarkThemeEnabled()){
-            mToolbar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources().getString(R.string.day_mode));
-        } else{
-            mToolbar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources().getString(R.string.night_mode));
-        }
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -396,6 +390,13 @@ public class MainActivity extends AppCompatActivity {
         if(mContent instanceof SubstFragment) {
             ((SubstFragment) mContent).resetScrollPositions();
         }
+    }
+
+    public void updateMenu(int menu) {
+        mToolbar.getMenu().clear();
+        mToolbar.inflateMenu(menu);
+        mToolbar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources()
+                .getString(GGApp.GG_APP.isDarkThemeEnabled() ? R.string.day_mode : R.string.night_mode));
     }
 
     @Override

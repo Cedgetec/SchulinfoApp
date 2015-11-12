@@ -58,9 +58,7 @@ public class SubstFragment extends RemoteDataFragment {
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Toolbar toolbar = ((MainActivity) getActivity()).mToolbar;
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.toolbar_menu);
+        ((MainActivity) getActivity()).updateMenu(R.menu.toolbar_menu);
         return inflater.inflate(R.layout.fragment_subst, container, false);
     }
 
