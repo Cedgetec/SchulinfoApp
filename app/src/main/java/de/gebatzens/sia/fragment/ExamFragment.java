@@ -129,11 +129,8 @@ public class ExamFragment extends RemoteDataFragment {
             tv.setTextColor(Color.parseColor("#6e6e6e"));
         }
         for (Exams.ExamItem item : list) {
-            if (item.date.after(new Date(System.currentTimeMillis() - 86400000L))) {
-                CardView cv = createCardItem(item, inflater, checkbox);
-                l.addView(cv);
-
-            }
+            CardView cv = createCardItem(item, inflater, checkbox);
+            l.addView(cv);
         }
     }
 
@@ -219,7 +216,7 @@ public class ExamFragment extends RemoteDataFragment {
                 lcontent.addView(l);
 
                 if (position == 0) {
-                    List<Exams.ExamItem> list = GGApp.GG_APP.exams.getSelectedItems();
+                    List<Exams.ExamItem> list = GGApp.GG_APP.exams.getSelectedItems(false);
                     tv5.setText(getString(R.string.entries) + " " + list.size());
                     if (list.size() == 0) {
                         createNoEntriesCard(l, inflater);
@@ -233,7 +230,7 @@ public class ExamFragment extends RemoteDataFragment {
                     list.mainFilter.type = Filter.FilterType.CLASS;
                     list.mainFilter.filter = cl;
 
-                    List<Exams.ExamItem> items = GGApp.GG_APP.exams.filter(list);
+                    List<Exams.ExamItem> items = GGApp.GG_APP.exams.filter(list, false);
                     tv5.setText(getString(R.string.entries) + " " + items.size());
                     if (GGApp.GG_APP.exams.size() != 0) {
                         createContentList(items, cl, l, inflater, true);

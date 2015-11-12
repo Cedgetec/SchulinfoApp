@@ -82,7 +82,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
         });
     }
 
-    public Exams filter(Filter.FilterList filters) {
+    public Exams filter(Filter.FilterList filters, boolean past) {
         Exams e = new Exams();
         for(ExamItem item : this) {
             boolean b = filters.mainFilter.matches(item);
@@ -91,7 +91,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
                     if(f.matches(item))
                         b = false;
                 }
-                if(b) {
+                if(b && (past || item.date.after(new Date(System.currentTimeMillis() - 86400000L)))) {
                     e.add(item);
                 }
             }
@@ -114,11 +114,11 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
         return list;
     }
 
-    public List<ExamItem> getSelectedItems() {
+    public List<ExamItem> getSelectedItems(boolean past) {
         ArrayList<ExamItem> list = new ArrayList<>();
 
         for(ExamItem e : this) {
-            if (e.selected)
+            if (e.selected && (past || e.date.after(new Date(System.currentTimeMillis() - 86400000L))))
                 list.add(e);
         }
 

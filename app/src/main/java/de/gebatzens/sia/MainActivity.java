@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showExamDialog() {
-        final List<Exams.ExamItem> exams = GGApp.GG_APP.exams.getSelectedItems();
+        final List<Exams.ExamItem> exams = GGApp.GG_APP.exams.getSelectedItems(false);
         if(exams.size() == 0) {
             Snackbar.make(findViewById(R.id.coordinator_layout), R.string.no_exams_selected, Snackbar.LENGTH_SHORT).show();
             return;
