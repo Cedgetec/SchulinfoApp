@@ -140,6 +140,12 @@
         <item name="colorAccent">#212121</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.DarkGrey.Light</item>
     </style>
+    <style name="AppThemeCedgetecCoporate" parent="AppTheme.Base.Light">
+        <item name="colorPrimary">#3073D4</item>
+        <item name="colorPrimaryDark">#245AB8</item>
+        <item name="colorAccent">#3073D4</item>
+        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.CedgetecCoporate</item>
+    </style>
     <!-- Dark application themes -->
     <style name="AppThemeRedDark" parent="AppTheme.Base.Dark">
         <item name="colorPrimary">#D32F2F</item>
@@ -336,6 +342,9 @@
     </style>
     <style name="Theme.AlertDialog.DarkGrey.Light" parent="Theme.AlertDialog.Base.Light">
         <item name="colorAccent">#212121</item>
+    </style>
+    <style name="Theme.AlertDialog.CedgetecCoporate" parent="Theme.AlertDialog.Base.Light">
+        <item name="colorAccent">#3073D4</item>
     </style>
     <!-- Dark popup themes -->
     <style name="Theme.AlertDialog.Red.Dark" parent="Theme.AlertDialog.Base.Dark">
