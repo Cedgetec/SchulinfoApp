@@ -32,6 +32,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
+import android.preference.SwitchPreference;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -77,7 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
             prefGithub.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     Intent linkIntent = new Intent(Intent.ACTION_VIEW);
-                    linkIntent.setData(Uri.parse("https://github.com/GGDevelopers/SchulinfoAPP"));
+                    linkIntent.setData(Uri.parse("https://github.com/Cedgetec/SchulinfoAPP"));
                     startActivity(linkIntent);
                     return true;
                 }
@@ -234,12 +235,15 @@ public class SettingsActivity extends AppCompatActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                            "mailto","support@cedgetec.com", null));
+                            "mailto", "support@cedgetec.com", null));
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SchulinfoApp " + GGApp.GG_APP.school.name);
                     startActivity(Intent.createChooser(emailIntent, "E-Mail senden"));
                     return false;
                 }
             });
+
+            SwitchPreference darkMode = (SwitchPreference) findPreference("toggleThemeMode");
+            darkMode.setChecked(GGApp.GG_APP.isDarkThemeEnabled());
 
         }
 
@@ -250,13 +254,9 @@ public class SettingsActivity extends AppCompatActivity {
             changed = true;
 
             if(key.equals("toggleThemeMode")) {
-                if(sharedPreferences.getBoolean(key, true)){
-                    GGApp.GG_APP.setDarkThemeEnabled(true);
-                    GGApp.GG_APP.school.loadTheme();
-                    recreate = true;
-                    getActivity().recreate();
-                } else {
-                    GGApp.GG_APP.setDarkThemeEnabled(false);
+                boolean b = sharedPreferences.getBoolean(key, true);
+                if(b != GGApp.GG_APP.isDarkThemeEnabled()) {
+                    GGApp.GG_APP.setDarkThemeEnabled(b);
                     GGApp.GG_APP.school.loadTheme();
                     recreate = true;
                     getActivity().recreate();
