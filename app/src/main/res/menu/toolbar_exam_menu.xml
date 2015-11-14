@@ -10,6 +10,13 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
 
+    <item android:id="@+id/action_help"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:title="@string/help"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_help"
+        app:showAsAction="never" />
+
     <item android:id="@+id/action_settings"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:title="@string/settings"

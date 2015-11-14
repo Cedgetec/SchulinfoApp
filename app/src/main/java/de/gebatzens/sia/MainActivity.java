@@ -235,6 +235,18 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_addToCalendar:
                         showExamDialog();
                         return true;
+                    case R.id.action_help:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle(getApplication().getString(R.string.help));
+                        builder.setMessage(getApplication().getString(R.string.exam_explain));
+                        builder.setPositiveButton(getApplication().getString(R.string.close), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.create().show();
+                        return true;
                 }
 
                 return false;
