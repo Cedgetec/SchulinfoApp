@@ -54,7 +54,7 @@
     <string name="general">Allgemein</string>
     <string name="show_notifications">Benachrichtigungen anzeigen</string>
     <string name="notify_class">Benachrichtigen, wenn für deine Klasse etwas ausfällt</string>
-    <string name="automatic_updates">Automatische Updates</string>
+    <string name="automatic_updates">Automatische Vertretungsplanupdates</string>
     <string name="only_update_over_wireless_lan">Nur über WLAN automatisch aktualisieren</string>
     <string name="information">Info</string>
     <string name="developer">Entwickler</string>

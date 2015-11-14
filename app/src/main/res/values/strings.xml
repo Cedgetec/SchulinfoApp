@@ -55,7 +55,7 @@
     <string name="general">General</string>
     <string name="show_notifications">Show notifications</string>
     <string name="notify_class">Notify me if my class is affected</string>
-    <string name="automatic_updates">Automatically update</string>
+    <string name="automatic_updates">Automatically update plans</string>
     <string name="only_update_over_wireless_lan">Only update over Wi-Fi</string>
     <string name="information">Information</string>
     <string name="developer">Developers</string>
