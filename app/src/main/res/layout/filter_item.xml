@@ -24,6 +24,16 @@
         <FrameLayout
             android:layout_width="50dp"
             android:layout_height="match_parent"
+            android:id="@+id/filter_star"
+            android:padding="12dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_star"/>
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
             android:background="?android:selectableItemBackground"
             android:id="@+id/filter_edit"
             android:padding="12dp">

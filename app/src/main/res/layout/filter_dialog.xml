@@ -14,4 +14,10 @@
         android:inputType="text"
         android:id="@+id/filter_text"/>
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkbox_contains"
+        android:text="@string/all_subjects_including"/>
+
 </LinearLayout>

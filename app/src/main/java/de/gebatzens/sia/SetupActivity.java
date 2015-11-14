@@ -29,13 +29,20 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.URLSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -43,14 +50,19 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
+
+import java.net.URL;
 
 public class SetupActivity extends AppCompatActivity {
 
     SchoolListAdapter adapter;
     ListView list;
-    
+    Dialog currentLoginDialog;
+
     @Override
     public void onCreate(Bundle saved) {
         setTheme(R.style.AppThemeBlueLight);
@@ -157,10 +169,6 @@ public class SetupActivity extends AppCompatActivity {
 
     public void showLoginDialog(final String sid, final boolean auth) {
 
-        Spanned link = Html.fromHtml(getResources().getString(R.string.i_accept) +
-                " <a href='ggactivity://text?title=" + R.string.terms_title + "&text=" + R.array.terms + "'>" + getResources().getString(R.string.terms_title) + "</a>");
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
         builder.setTitle(getResources().getString(R.string.login));
 
@@ -223,6 +231,7 @@ public class SetupActivity extends AppCompatActivity {
         if(auth) {
             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         }
+        currentLoginDialog = dialog;
         dialog.show();
 
         if(auth) {
@@ -250,10 +259,35 @@ public class SetupActivity extends AppCompatActivity {
             dialog.findViewById(R.id.sidInput).setVisibility(View.GONE);
         }
 
-        CheckBox acceptTerms = (CheckBox) dialog.findViewById(R.id.acceptTerms);
-        acceptTerms.setMovementMethod(new LinkMovementMethod());
+        final CheckBox acceptTerms = (CheckBox) dialog.findViewById(R.id.acceptTerms);
+        acceptTerms.setMovementMethod(LinkMovementMethod.getInstance());
         acceptTerms.setClickable(true);
-        acceptTerms.setText(link);
+
+        CharSequence link = Html.fromHtml(getString(R.string.i_accept) +
+                " <a href=\"\">" + getString(R.string.terms_title) + "</a>");
+        SpannableStringBuilder strBuilder = new SpannableStringBuilder(link);
+
+        for(URLSpan span : strBuilder.getSpans(0, strBuilder.length(), URLSpan.class)) {
+            int start = strBuilder.getSpanStart(span);
+            int end = strBuilder.getSpanEnd(span);
+
+            ClickableSpan c = new ClickableSpan() {
+
+                @Override
+                public void onClick(View widget) {
+                    Intent i = new Intent(SetupActivity.this, TextActivity.class);
+                    i.putExtra("title", R.string.terms_title);
+                    i.putExtra("text", R.array.terms);
+                    startActivityForResult(i, acceptTerms.isChecked() ? 1 : 0);
+                }
+
+            };
+
+            strBuilder.setSpan(c, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            strBuilder.removeSpan(span);
+        }
+
+        acceptTerms.setText(strBuilder);
 
         acceptTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -328,6 +362,13 @@ public class SetupActivity extends AppCompatActivity {
 
             }
         }.start();
+    }
+
+    @Override
+    public void onActivityResult(int req, int res, Intent data) {
+        if(currentLoginDialog != null && currentLoginDialog.isShowing()) {
+            ((CheckBox) currentLoginDialog.findViewById(R.id.acceptTerms)).setChecked(req == 1);
+        }
     }
 
 }

@@ -16,6 +16,8 @@
 
 package de.gebatzens.sia.data;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import de.gebatzens.sia.GGApp;
@@ -27,37 +29,55 @@ public class Filter {
     public String filter = "";
     public boolean contains = false;
 
+    private String deleteNonAlphanumeric(String s) {
+        return s.replaceAll("\\W", "").toLowerCase();
+    }
+
     public boolean matches(GGPlan.Entry e) {
         if(filter.isEmpty())
             return false;
+
+        String f = deleteNonAlphanumeric(filter);
+
         switch(type) {
             case CLASS:
-                return e.clazz.replace(" ", "").equalsIgnoreCase(filter.replace(" ", ""));
+                return deleteNonAlphanumeric(e.clazz).equals(f);
             case TEACHER:
-                return e.teacher.equalsIgnoreCase(filter) || e.comment.toLowerCase().endsWith(filter.toLowerCase());
+                return deleteNonAlphanumeric(e.teacher).equals(f) || deleteNonAlphanumeric(e.comment).endsWith(f);
             case SUBJECT:
-                return e.subject.replace(" ", "").equalsIgnoreCase(filter.replace(" ", ""));
+                if (contains)
+                    return deleteNonAlphanumeric(e.subject).contains(f);
+                else
+                    return deleteNonAlphanumeric(e.subject).equals(f);
             case LESSON:
-                return e.lesson.equalsIgnoreCase(filter);
+                return deleteNonAlphanumeric(e.lesson).equals(f);
         }
         return false;
     }
 
     public boolean matches(Exams.ExamItem item) {
+        if(filter.isEmpty())
+            return false;
+
+        String f = deleteNonAlphanumeric(filter);
+
         switch(type) {
             case CLASS:
                 String[] classes = item.clazz.split(",");
                 for (String s : classes) {
-                    if (filter.toLowerCase().contains(s.toLowerCase()))
+                    if (f.equals(s))
                         return true;
                 }
                 return false;
             case TEACHER:
-                return item.teacher.equalsIgnoreCase(filter);
+                return deleteNonAlphanumeric(item.teacher).equals(f);
             case SUBJECT:
-                return item.subject.equalsIgnoreCase(filter);
+                if (contains)
+                    return deleteNonAlphanumeric(item.subject).contains(f);
+                else
+                    return deleteNonAlphanumeric(item.subject).equals(f);
             case LESSON:
-                return item.lesson.equalsIgnoreCase(filter);
+                return deleteNonAlphanumeric(item.lesson).equals(f);
         }
         return false;
     }

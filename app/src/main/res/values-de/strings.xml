@@ -11,7 +11,7 @@
     <string name="no_filter_applied">Kein Filter ausgewählt</string>
     <string name="main_filter_mode">Modus</string>
     <string name="main_filter_content">Filter</string>
-    <string name="filter_help">Der Hauptfilter sorgt dafür, dass für die Klasse, die du angegeben hast, der passende Auszug des Vertretungsplans angezeigt wird.\n\nWenn du dann bestimmte Fächer/Kurse nicht in deiner Übersicht sehen willst, kannst du sie m mit dem Kursfilter ausblenden. .\nDu musst aber das auf dem Vertretungsplan verwendete Kürzel, z.B. lat1 oder fra2 eintragen.\nWenn du alle Lateinkurse ausblenden möchtest, schreibe einfach "lat"</string>
+    <string name="filter_help">Der Hauptfilter sorgt dafür, dass für die Klasse, die du angegeben hast, der passende Auszug des Vertretungsplans angezeigt wird.\n\nWenn du dann bestimmte Fächer/Kurse nicht in deiner Übersicht sehen willst, kannst du sie m mit dem Kursfilter ausblenden.\nDu musst aber das auf dem Vertretungsplan verwendete Kürzel, z.B. lat1 oder fra2 eintragen.\nWenn du alle Lateinkurse ausblenden möchtest, schreibe einfach "lat"</string>
     <string name="settings">Einstellungen</string>
     <string name="again">Nochmal</string>
     <string name="login_required">Anmeldung benötigt!</string>
@@ -142,6 +142,8 @@
     <string name="no_cal_avail">Kein Kalender verfügbar</string>
     <string name="cancel">Abbrechen</string>
     <string name="just_now">Gerade aktualisiert</string>
+    <string name="all_subjects_including">Alle %s-Kurse ausblenden</string>
+    <string name="all_subjects_including_disabled">Alle Kurse ausblenden</string>
 
     <string-array name="vibration_values">
         <item>Aus</item>

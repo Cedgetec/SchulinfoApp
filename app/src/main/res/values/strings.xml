@@ -144,6 +144,8 @@
     <string name="no_cal_avail">No calendar available</string>
     <string name="cancel">Cancel</string>
     <string name="just_now">Updated: Just now</string>
+    <string name="all_subjects_including">Hide all %s-subjects</string>
+    <string name="all_subjects_including_disabled">Hide all subjects</string>
 
     <string-array name="vibration_values">
         <item>Off</item>

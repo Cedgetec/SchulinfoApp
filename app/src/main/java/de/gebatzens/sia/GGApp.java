@@ -34,6 +34,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -327,7 +328,9 @@ public class GGApp extends Application {
                             activity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ((SubstFragment) activity.mContent).updateTime(plans.loadDate);
+                                    Fragment frag = activity.mContent;
+                                    if(frag instanceof SubstFragment)
+                                     ((SubstFragment) frag).updateTime(plans.loadDate);
                                 }
                             });
 

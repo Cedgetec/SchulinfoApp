@@ -89,7 +89,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
 
             f2.addView(cv);
-            createTextView(getResources().getString(R.string.no_entries_schedule), 20, inflater, cv);
+            createTextView(getResources().getString(R.string.no_entries), 20, inflater, cv);
             group.addView(f2);
         }
 

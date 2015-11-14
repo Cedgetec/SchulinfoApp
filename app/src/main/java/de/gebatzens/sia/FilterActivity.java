@@ -25,12 +25,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -172,6 +175,8 @@ public class FilterActivity extends AppCompatActivity {
                 ed.setHint(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class_name) : getApplication().getString(R.string.teacher_shortcut));
                 ed.setText(list.mainFilter.filter);
                 ed.setSelectAllOnFocus(true);
+
+                d.findViewById(R.id.checkbox_contains).setVisibility(View.GONE);
             }
         });
 
@@ -219,9 +224,11 @@ public class FilterActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         changed = true;
                         EditText ed = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
+                        CheckBox cb = (CheckBox) ((Dialog) dialog).findViewById(R.id.checkbox_contains);
                         Filter f = new Filter();
                         f.type = Filter.FilterType.SUBJECT;
                         f.filter = ed.getText().toString().trim();
+                        f.contains = cb.isChecked();
                         if (f.filter.isEmpty())
                             Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                         else {
@@ -233,17 +240,47 @@ public class FilterActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
+
                 builder.setNegativeButton(getApplication().getString(R.string.abort), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
-                });//
+                });
+
                 AlertDialog d = builder.create();
                 d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 d.show();
-                EditText ed = (EditText) d.findViewById(R.id.filter_text);
+                final EditText ed = (EditText) d.findViewById(R.id.filter_text);
                 ed.setHint(getApplication().getString(R.string.subject_course_name));
+
+                final CheckBox cb = (CheckBox) d.findViewById(R.id.checkbox_contains);
+                cb.setEnabled(false);
+                cb.setText(getString(R.string.all_subjects_including_disabled));
+
+                ed.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        String str = s.toString().trim();
+                        if(str.length() == 0) {
+                            cb.setEnabled(false);
+                            cb.setText(getString(R.string.all_subjects_including_disabled));
+                        } else {
+                            cb.setEnabled(true);
+                            cb.setText(getString(R.string.all_subjects_including, str));
+                        }
+                    }
+                });
             }
         });
 
@@ -275,6 +312,8 @@ public class FilterActivity extends AppCompatActivity {
                         f.type = Filter.FilterType.valueOf(reader.nextString());
                     else if(name.equals("filter"))
                         f.filter = reader.nextString();
+                    else if(name.equals("contains"))
+                        f.contains = reader.nextBoolean();
                     else
                         reader.skipValue();
 
@@ -318,6 +357,7 @@ public class FilterActivity extends AppCompatActivity {
                 writer.beginObject();
                 writer.name("type").value(f.type.toString());
                 writer.name("filter").value(f.filter);
+                writer.name("contains").value(f.contains);
                 writer.endObject();
             }
             writer.endArray();
