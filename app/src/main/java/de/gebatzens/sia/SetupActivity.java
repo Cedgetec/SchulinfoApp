@@ -50,7 +50,7 @@ public class SetupActivity extends AppCompatActivity {
 
     SchoolListAdapter adapter;
     ListView list;
-
+    
     @Override
     public void onCreate(Bundle saved) {
         setTheme(R.style.AppThemeBlueLight);

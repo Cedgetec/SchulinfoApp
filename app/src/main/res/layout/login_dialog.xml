@@ -1,45 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="10dp">
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/sidInput"
-        android:singleLine="true"
-        android:inputType="textFilter"
-        android:hint="@string/school_id"/>
+        android:orientation="vertical">
 
-    <EditText android:layout_height="wrap_content"
-        android:id="@+id/usernameInput"
-        android:hint="@string/username"
-        android:singleLine="true"
-        android:inputType="textFilter"
-        android:layout_width="match_parent"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sidInput"
+            android:singleLine="true"
+            android:inputType="textFilter"
+            android:hint="@string/school_id"/>
 
-    <EditText android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:id="@+id/passwordInput"
-        android:hint="@string/password"
-        android:layout_width="match_parent"/>
+        <EditText android:layout_height="wrap_content"
+            android:id="@+id/usernameInput"
+            android:hint="@string/username"
+            android:singleLine="true"
+            android:inputType="textFilter"
+            android:layout_width="match_parent"/>
 
-    <CheckBox
-        android:id="@+id/passwordToggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="@string/show_pwd" />
+        <EditText android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:id="@+id/passwordInput"
+            android:hint="@string/password"
+            android:layout_width="match_parent"/>
 
-    <CheckBox
-        android:id="@+id/acceptTerms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"/>
+        <CheckBox
+            android:id="@+id/passwordToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/show_pwd" />
 
-</LinearLayout>
+        <CheckBox
+            android:id="@+id/acceptTerms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

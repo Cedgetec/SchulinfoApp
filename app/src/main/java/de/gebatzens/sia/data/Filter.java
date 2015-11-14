@@ -25,19 +25,20 @@ public class Filter {
 
     public FilterType type = FilterType.CLASS;
     public String filter = "";
+    public boolean contains = false;
 
     public boolean matches(GGPlan.Entry e) {
         if(filter.isEmpty())
             return false;
         switch(type) {
             case CLASS:
-                return e.clazz.toLowerCase().replace(" ", "").equals(filter.toLowerCase().replace(" ", ""));
+                return e.clazz.replace(" ", "").equalsIgnoreCase(filter.replace(" ", ""));
             case TEACHER:
-                return e.teacher.toLowerCase().equals(filter.toLowerCase()) || e.comment.toLowerCase().endsWith(filter.toLowerCase());
+                return e.teacher.equalsIgnoreCase(filter) || e.comment.toLowerCase().endsWith(filter.toLowerCase());
             case SUBJECT:
-                return e.subject.toLowerCase().replace(" ", "").equals(filter.toLowerCase().replace(" ", ""));
+                return e.subject.replace(" ", "").equalsIgnoreCase(filter.replace(" ", ""));
             case LESSON:
-                return e.lesson.toLowerCase().equals(filter.toLowerCase());
+                return e.lesson.equalsIgnoreCase(filter);
         }
         return false;
     }
