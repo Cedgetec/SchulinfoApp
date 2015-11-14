@@ -100,6 +100,7 @@ public class GGRemote {
         GGApp.GG_APP.deleteFile("news");
         GGApp.GG_APP.deleteFile("mensa");
         GGApp.GG_APP.deleteFile("exams");
+        GGApp.GG_APP.deleteFile("ggfilter");
         GGApp.GG_APP.stopService(new Intent(GGApp.GG_APP, MQTTService.class));
         GGApp.GG_APP.filters.clear();
         GGApp.GG_APP.filters.mainFilter = new Filter();
