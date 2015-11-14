@@ -11,7 +11,7 @@
     <string name="no_filter_applied">No filter applied</string>
     <string name="main_filter_mode">Mode</string>
     <string name="main_filter_content">Filter</string>
-    <string name="filter_help">The main filter ensures the right substitute schedule is displayed for the specified class or teacher in the overview.\n\nThe hidden subjects/courses comprise the scope you don\'t want to see in your overview, for example French or Latin.</string>
+    <string name="filter_help">The main filter ensures the right substitute schedule is displayed for your specified class in the overview.\n\nThe hidden subjects/courses comprise the scope you don\'t want to see in your overview, for example French or Latin. To make sure the filter recognizes your subject you have to type in the shortcut used in the substitute schedule. If you want to hide every Latin subject you can simply write "lat"</string>
     <string name="settings">Settings</string>
     <string name="again">Try again</string>
     <string name="login_required">Login required!</string>
@@ -137,7 +137,7 @@
     <string name="delete">Delete</string>
     <string name="delete_filter">Delete filter</string>
     <string name="delete_filter_message">Do you really want to delete your subject/course filter/s?</string>
-    <string name="exam_explain">Here you can see all exams grouped by grades. You can check the exams you are going to write to make them appear in your overview.</string>
+    <string name="exam_explain">Here you can see all exams grouped by grades. You can check the exams you are going to write to make them appear in your overview. You can also register the exams in your overview to the Google Calendar.</string>
     <string name="entries">Entries:</string>
     <string name="add_to_calendar">Add to calendar</string>
     <string name="no_exams_selected">No exams selected</string>
