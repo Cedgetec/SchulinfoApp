@@ -16,25 +16,18 @@
 package de.gebatzens.sia;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -47,18 +40,20 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import de.gebatzens.sia.data.Filter;
+import de.gebatzens.sia.dialog.FilterDialog;
+import de.gebatzens.sia.dialog.TextDialog;
 
 public class FilterActivity extends AppCompatActivity {
 
     Toolbar mToolBar;
-    FilterListAdapter adapter;
+    public FilterListAdapter adapter;
     ListView listView;
 
     TextView mainFilterCategory;
-    TextView mainFilterContent;
+    public TextView mainFilterContent;
     int selectedMode;
     int mainModePosition;
-    boolean changed = false;
+    public boolean changed = false;
     FloatingActionButton mAddFilterButton;
     ScrollView sv;
 
@@ -69,16 +64,7 @@ public class FilterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_filter);
 
         if(GGApp.GG_APP.preferences.getBoolean("first_use_filter", true)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
-            builder.setTitle(getApplication().getString(R.string.explanation));
-            builder.setMessage(getApplication().getString(R.string.filter_help));
-            builder.setPositiveButton(getApplication().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.create().show();
+            TextDialog.newInstance(R.string.explanation, R.string.filter_help).show(getSupportFragmentManager(), "filter_help");
         }
 
         sv = (ScrollView) findViewById(R.id.scrollView);
@@ -91,7 +77,7 @@ public class FilterActivity extends AppCompatActivity {
         adapter = new FilterListAdapter(this, GGApp.GG_APP.filters);
         listView.setAdapter(adapter);
         listView.setDrawSelectorOnTop(true);
-        setListViewHeightBasedOnChildren(listView);
+        setListViewHeightBasedOnChildren();
 
         if(bundle != null)
             changed = bundle.getBoolean("changed", false);
@@ -141,42 +127,7 @@ public class FilterActivity extends AppCompatActivity {
         l_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
-                builder.setTitle(getApplication().getString(R.string.set_main_filter));
-                builder.setView(View.inflate(FilterActivity.this, R.layout.filter_dialog, null));
-                builder.setPositiveButton(getApplication().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        changed = true;
-                        EditText ed = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
-                        String filtertext = ed.getText().toString().trim();
-                        if (filtertext.isEmpty())
-                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
-                        else {
-                            Filter.FilterList list = GGApp.GG_APP.filters;
-                            list.mainFilter.filter = filtertext;
-                            mainFilterContent.setText(list.mainFilter.filter);
-                            FilterActivity.saveFilter(GGApp.GG_APP.filters);
-                        }
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNegativeButton(getApplication().getString(R.string.abort), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog d = builder.create();
-                d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                d.show();
-                Filter.FilterList list = GGApp.GG_APP.filters;
-                EditText ed = (EditText) d.findViewById(R.id.filter_text);
-                ed.setHint(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class_name) : getApplication().getString(R.string.teacher_shortcut));
-                ed.setText(list.mainFilter.filter);
-                ed.setSelectAllOnFocus(true);
-
-                d.findViewById(R.id.checkbox_contains).setVisibility(View.GONE);
+                FilterDialog.newInstance(true, -1).show(getSupportFragmentManager(), "main_filter");
             }
         });
 
@@ -216,71 +167,7 @@ public class FilterActivity extends AppCompatActivity {
         mAddFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
-                builder.setTitle(getApplication().getString(R.string.hide_subject));
-                builder.setView(View.inflate(FilterActivity.this, R.layout.filter_dialog, null));
-                builder.setPositiveButton(getApplication().getString(R.string.hide), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        changed = true;
-                        EditText ed = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
-                        CheckBox cb = (CheckBox) ((Dialog) dialog).findViewById(R.id.checkbox_contains);
-                        Filter f = new Filter();
-                        f.type = Filter.FilterType.SUBJECT;
-                        f.filter = ed.getText().toString().trim();
-                        f.contains = cb.isChecked();
-                        if (f.filter.isEmpty())
-                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
-                        else {
-                            GGApp.GG_APP.filters.add(f);
-                            adapter.notifyDataSetChanged();
-                            FilterActivity.saveFilter(GGApp.GG_APP.filters);
-                            setListViewHeightBasedOnChildren(listView);
-                        }
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.setNegativeButton(getApplication().getString(R.string.abort), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog d = builder.create();
-                d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                d.show();
-                final EditText ed = (EditText) d.findViewById(R.id.filter_text);
-                ed.setHint(getApplication().getString(R.string.subject_course_name));
-
-                final CheckBox cb = (CheckBox) d.findViewById(R.id.checkbox_contains);
-                cb.setEnabled(false);
-                cb.setText(getString(R.string.all_subjects_including_disabled));
-
-                ed.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        String str = s.toString().trim();
-                        if(str.length() == 0) {
-                            cb.setEnabled(false);
-                            cb.setText(getString(R.string.all_subjects_including_disabled));
-                        } else {
-                            cb.setEnabled(true);
-                            cb.setText(getString(R.string.all_subjects_including, str));
-                        }
-                    }
-                });
+                FilterDialog.newInstance(false, -1).show(getSupportFragmentManager(), "add_filter");
             }
         });
 
@@ -384,7 +271,7 @@ public class FilterActivity extends AppCompatActivity {
             });
     }
 
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
+    public void setListViewHeightBasedOnChildren() {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null)
             return;

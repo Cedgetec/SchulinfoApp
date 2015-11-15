@@ -17,10 +17,7 @@
 package de.gebatzens.sia;
 
 import android.Manifest;
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.annotation.TargetApi;
-import android.app.ActivityManager;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -40,15 +37,12 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.Window;
 import android.view.WindowManager;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.TimeZone;
-import java.util.regex.Pattern;
 
 import de.gebatzens.sia.data.Exams;
 import de.gebatzens.sia.data.Filter;

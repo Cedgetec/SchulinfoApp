@@ -16,8 +16,6 @@
 
 package de.gebatzens.sia.data;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import de.gebatzens.sia.GGApp;

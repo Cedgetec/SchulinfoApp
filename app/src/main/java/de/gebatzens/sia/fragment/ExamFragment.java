@@ -15,24 +15,12 @@
  */
 package de.gebatzens.sia.fragment;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.CalendarContract;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,28 +29,26 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
-import java.util.regex.Pattern;
 
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Exams;
 import de.gebatzens.sia.data.Filter;
+import de.gebatzens.sia.dialog.TextDialog;
 
 public class ExamFragment extends RemoteDataFragment {
 
@@ -137,16 +123,7 @@ public class ExamFragment extends RemoteDataFragment {
         LinearLayout lroot = (LinearLayout) view.findViewById(R.id.exam_content);
 
         if(GGApp.GG_APP.preferences.getBoolean("first_use_exam_filter", true)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(getString(R.string.explanation));
-            builder.setMessage(getString(R.string.exam_explain));
-            builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.create().show();
+            TextDialog.newInstance(R.string.explanation, R.string.exam_explain).show(getActivity().getSupportFragmentManager(), "exam_help");
         }
         GGApp.GG_APP.preferences.edit().putBoolean("first_use_exam_filter", false).apply();
 
