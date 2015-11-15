@@ -32,7 +32,7 @@ public class TextActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle bundle) {
-        setTheme(GGApp.GG_APP.school == null ? R.style.AppThemeIndigoLight : GGApp.GG_APP.school.getTheme());
+        setTheme(GGApp.GG_APP.school == null ? R.style.AppThemeCedgetecCoporate : GGApp.GG_APP.school.getTheme());
         super.onCreate(bundle);
         setContentView(R.layout.activity_text);
 
