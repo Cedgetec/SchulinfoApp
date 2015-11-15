@@ -63,7 +63,7 @@ public class Filter {
             case CLASS:
                 String[] classes = item.clazz.split(",");
                 for (String s : classes) {
-                    if (f.equals(s))
+                    if (f.equals(deleteNonAlphanumeric(s)))
                         return true;
                 }
                 return false;
