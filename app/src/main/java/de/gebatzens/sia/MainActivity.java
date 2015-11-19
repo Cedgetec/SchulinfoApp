@@ -67,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
     String[] mStrings;
-    ImageView mNavigationImage;
+    View mNavigationHeader;
+    TextView mNavigationSchoolpictureText;
+    ImageView mNavigationSchoolpicture;
     View mNavigationSchoolpictureLink;
     public Bundle savedState;
     NavigationView navigationView;
@@ -259,8 +261,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d("ggvp", "fragment type " + GGApp.GG_APP.getFragmentType());
         mToolbar.setSubtitle(mStrings[Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType())]);
 
-        ((TextView) findViewById(R.id.drawer_image_text)).setText(GGApp.GG_APP.school.name);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             GGApp.GG_APP.setStatusBarColorTransparent(getWindow()); // because of the navigation drawer
         }
@@ -283,9 +283,12 @@ public class MainActivity extends AppCompatActivity {
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        mNavigationImage = (ImageView) findViewById(R.id.navigation_schoolpicture);
-        mNavigationImage.setImageBitmap(GGApp.GG_APP.school.loadImage());
-        mNavigationSchoolpictureLink = findViewById(R.id.navigation_schoolpicture_link);
+        mNavigationHeader = navigationView.getHeaderView(0);
+        mNavigationSchoolpictureText = (TextView) mNavigationHeader.findViewById(R.id.drawer_image_text);
+        mNavigationSchoolpictureText.setText(GGApp.GG_APP.school.name);
+        mNavigationSchoolpicture = (ImageView) mNavigationHeader.findViewById(R.id.navigation_schoolpicture);
+        mNavigationSchoolpicture.setImageBitmap(GGApp.GG_APP.school.loadImage());
+        mNavigationSchoolpictureLink = mNavigationHeader.findViewById(R.id.navigation_schoolpicture_link);
         mNavigationSchoolpictureLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
@@ -429,14 +432,15 @@ public class MainActivity extends AppCompatActivity {
 
             //GGApp.GG_APP.recreateProvider();
             //setTheme(GGApp.GG_APP.provider.getTheme());
-            mNavigationImage = (ImageView) findViewById(R.id.navigation_schoolpicture);
-            mNavigationImage.setImageBitmap(GGApp.GG_APP.school.loadImage());
+            mNavigationSchoolpicture = (ImageView) mNavigationHeader.findViewById(R.id.navigation_schoolpicture);
+            mNavigationSchoolpicture.setImageBitmap(GGApp.GG_APP.school.loadImage());
+            mNavigationSchoolpictureText = (TextView) mNavigationHeader.findViewById(R.id.drawer_image_text);
+            mNavigationSchoolpictureText.setText(GGApp.GG_APP.school.name);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 GGApp.GG_APP.setStatusBarColorTransparent(getWindow());
             }
             mToolbar.setBackgroundColor(GGApp.GG_APP.school.getColor());
             mToolbar.setTitle(GGApp.GG_APP.school.name);
-            ((TextView) findViewById(R.id.drawer_image_text)).setText(GGApp.GG_APP.school.name);
 
             if(GGApp.GG_APP.getFragmentType() == GGApp.FragmentType.PLAN) {
                 ((SubstFragment)mContent).mTabLayout.setBackgroundColor(GGApp.GG_APP.school.getColor());
