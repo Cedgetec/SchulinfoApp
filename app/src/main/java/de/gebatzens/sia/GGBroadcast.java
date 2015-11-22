@@ -59,13 +59,14 @@ public class GGBroadcast extends BroadcastReceiver {
 
         if(gg.activity != null && oldPlans.shouldRecreateView(gg.plans) && !gg.lifecycle.isAppInForeground()) {
             gg.activity.finish();
-        }
-
-        if(gg.activity != null && gg.activity.mContent instanceof SubstFragment) {
+        } else if(gg.activity != null && gg.activity.mContent instanceof SubstFragment) {
             gg.activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    ((SubstFragment) gg.activity.mContent).updateTime(gg.plans.loadDate);
+                    SubstFragment frag = (SubstFragment) gg.activity.mContent;
+                    if(frag != null) {
+                        frag.updateTime(gg.plans.loadDate);
+                    }
                 }
             });
         }
