@@ -144,6 +144,7 @@
     <string name="just_now">Gerade aktualisiert</string>
     <string name="all_subjects_including">Alle %s-Kurse ausblenden</string>
     <string name="all_subjects_including_disabled">Alle Kurse ausblenden</string>
+    <string name="logged_in_as">Eingeloggt als %s</string>
 
     <string-array name="vibration_values">
         <item>Aus</item>

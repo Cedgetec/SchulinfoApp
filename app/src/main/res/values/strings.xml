@@ -146,6 +146,7 @@
     <string name="just_now">Updated: Just now</string>
     <string name="all_subjects_including">Hide all %s-subjects</string>
     <string name="all_subjects_including_disabled">Hide all subjects</string>
+    <string name="logged_in_as">Logged in as %s</string>
 
     <string-array name="vibration_values">
         <item>Off</item>

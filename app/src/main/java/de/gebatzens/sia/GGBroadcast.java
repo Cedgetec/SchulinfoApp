@@ -52,10 +52,13 @@ public class GGBroadcast extends BroadcastReceiver {
         GGPlan.GGPlans oldPlans = gg.plans;
         gg.plans = newPlans;
 
-        if(newPlans.throwable != null || oldPlans == null || oldPlans.throwable != null)
+        if(newPlans.throwable != null)
             return;
 
         gg.plans.save();
+
+        if(oldPlans == null || oldPlans.throwable != null)
+            return;
 
         if(gg.activity != null && oldPlans.shouldRecreateView(gg.plans) && !gg.lifecycle.isAppInForeground()) {
             gg.activity.finish();

@@ -182,7 +182,7 @@ public class SettingsActivity extends AppCompatActivity {
             final Preference pref_username = findPreference("authentication_username");
 
             if(GGApp.GG_APP.school.loginNeeded) {
-                pref_username.setSummary(GGApp.GG_APP.remote.getUsername());
+                pref_username.setSummary(getString(R.string.logged_in_as, GGApp.GG_APP.remote.getUsername()));
             }
 
             pref_username.setOnPreferenceClickListener(new OnPreferenceClickListener() {
