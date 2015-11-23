@@ -30,15 +30,34 @@
             android:textColor="#fff"/>
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:id="@+id/rlin_exam">
+
+        <CheckBox
+            android:id="@+id/ecv_checkbox"
+            android:theme="@style/CheckBoxTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/srel_exam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="35dp"
-        android:layout_marginStart="35dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:layout_toRightOf="@id/frel_exam"
         android:layout_toEndOf="@id/frel_exam"
+        android:layout_toLeftOf="@id/rlin_exam"
+        android:layout_toStartOf="@id/rlin_exam"
         android:orientation="vertical">
 
         <TextView
@@ -58,21 +77,6 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
-        android:id="@+id/relativeLayout">
 
-        <CheckBox
-            android:id="@+id/ecv_checkbox"
-            android:theme="@style/CheckBoxTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
 
 </RelativeLayout>
