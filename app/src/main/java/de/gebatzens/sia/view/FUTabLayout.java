@@ -17,8 +17,10 @@
 package de.gebatzens.sia.view;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import de.gebatzens.sia.R;
 
@@ -30,10 +32,15 @@ public class FUTabLayout  extends TabLayout {
     }
 
     @Override
-    public Tab newTab() {
-        Tab t = super.newTab();
+    public void addTab(@NonNull Tab t, int position, boolean selected) {
+        super.addTab(t, position, selected);
+        t.setCustomView(R.layout.fu_tab);
+    }
+
+    @Override
+    public void addTab(@NonNull Tab t, boolean selected) {
+        super.addTab(t, selected);
         t.setCustomView(R.layout.fu_tab);
 
-        return t;
     }
 }
