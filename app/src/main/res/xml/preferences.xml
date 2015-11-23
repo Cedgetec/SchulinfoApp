@@ -53,7 +53,7 @@
             android:key="terms">
         </Preference>
         <Preference android:title="@string/github"
-            android:summary="https://github.com/GGDevelopers/SchulinfoAPP"
+            android:summary="https://github.com/Cedgetec/SchulinfoAPP"
             android:key="githublink"/>
         <Preference android:title="@string/license"
             android:summary="Apache License 2.0"
