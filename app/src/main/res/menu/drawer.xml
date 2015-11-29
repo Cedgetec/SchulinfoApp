@@ -3,19 +3,19 @@
     <group android:id="@+id/group_1" android:checkableBehavior="single">
         <item
             android:id="@+id/menuItem1"
-            android:icon="@drawable/substitution_icon"
+            android:icon="@drawable/ic_substitution"
             android:title="@string/substitute_schedule"/>
         <item
             android:id="@+id/menuItem2"
-            android:icon="@drawable/news_icon"
+            android:icon="@drawable/ic_news"
             android:title="@string/news"/>
         <item
             android:id="@+id/menuItem3"
-            android:icon="@drawable/mensa_icon"
+            android:icon="@drawable/ic_mensa"
             android:title="@string/cafeteria"/>
         <item
             android:id="@+id/menuItem4"
-            android:icon="@drawable/exam_icon"
+            android:icon="@drawable/ic_exam"
             android:title="@string/exams"/>
     </group>
     <group android:id="@+id/group_2" android:checkableBehavior="none">

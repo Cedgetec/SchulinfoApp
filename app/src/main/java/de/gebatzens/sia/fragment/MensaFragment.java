@@ -149,7 +149,7 @@ public class MensaFragment extends RemoteDataFragment {
         ((TextView) mcv.findViewById(R.id.mcv_garnish)).setText(getResources().getString(R.string.garnish) + ": " + mensa_item.garnish.replace("mit ","").replace("mit",""));
         ((TextView) mcv.findViewById(R.id.mcv_dessert)).setText(getResources().getString(R.string.dessert) + ": " + mensa_item.dessert);
         ((TextView) mcv.findViewById(R.id.mcv_day)).setText(getDayByDate(mensa_item.date));
-        ((ImageView) mcv.findViewById(R.id.mcv_imgvegi)).setImageBitmap((Integer.valueOf(mensa_item.vegetarian) == 1) ? BitmapFactory.decodeResource(getResources(), R.drawable.vegetarian) : BitmapFactory.decodeResource(getResources(), R.drawable.meat));
+        ((ImageView) mcv.findViewById(R.id.mcv_imgvegi)).setImageBitmap((Integer.valueOf(mensa_item.vegetarian) == 1) ? BitmapFactory.decodeResource(getResources(), R.drawable.ic_vegetarian) : BitmapFactory.decodeResource(getResources(), R.drawable.ic_meat));
         if(screen_orientation_horizotal) {
             LinearLayout mcvImageContainer = (LinearLayout) mcv.findViewById(R.id.mcv_image_container);
             ViewGroup.LayoutParams mcvImageContainerLayoutParams = mcvImageContainer.getLayoutParams();

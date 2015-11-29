@@ -8,10 +8,10 @@
     </item>
     <item android:id="@+id/second_image">
         <inset xmlns:android="http://schemas.android.com/apk/res/android"
-        android:drawable="@drawable/ic_mail"
-        android:insetTop="12dp"
-        android:insetLeft="12dp"
-        android:insetRight="12dp"
-        android:insetBottom="12dp" />
+            android:drawable="@drawable/ic_mail"
+            android:insetTop="10dp"
+            android:insetLeft="10dp"
+            android:insetRight="10dp"
+            android:insetBottom="10dp" />
     </item>
 </layer-list>
