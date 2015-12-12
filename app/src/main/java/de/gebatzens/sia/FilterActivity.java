@@ -148,16 +148,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.action_help) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
-                    builder.setTitle(getApplication().getString(R.string.help));
-                    builder.setMessage(getApplication().getString(R.string.filter_help));
-                    builder.setPositiveButton(getApplication().getString(R.string.close), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.create().show();
+                    TextDialog.newInstance(R.string.explanation, R.string.filter_help).show(getSupportFragmentManager(), "filter_help");
                 }
                 return false;
             }
