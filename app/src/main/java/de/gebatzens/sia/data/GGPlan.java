@@ -81,6 +81,8 @@ public class GGPlan {
         public boolean load() {
             isLocal = true;
             loadDate = new Date(GGApp.GG_APP.preferences.getLong("substLoadDate", new Date().getTime()));
+            clear();
+
             try {
                 for(int i = 0; ; i++) {
                     GGPlan plan = new GGPlan();
@@ -364,7 +366,9 @@ public class GGPlan {
                     Date sdate = sdates.contains("today") ? date : parseDate(sdates);
                     String lesson = m.group(2);
 
-                    if(sdate.equals(date))
+                    if(sdate == null)
+                        comment = "";
+                    else if(sdate.equals(date))
                         comment = GGApp.GG_APP.getString(R.string.shifted_to_today) + " " + lesson + ". " + GGApp.GG_APP.getString(R.string.lhour);
                     else
                         comment = GGApp.GG_APP.getString(R.string.shifted_to) + " " + new SimpleDateFormat("EEE").format(sdate) + ", " +
@@ -380,7 +384,9 @@ public class GGPlan {
                     Date idate = idates.contains("today") ? date : parseDate(idates);
                     String lesson = m.group(2);
 
-                    if(idate.equals(date))
+                    if(idate == null)
+                        comment = "";
+                    else if(idate.equals(date))
                         comment = GGApp.GG_APP.getString(R.string.instead_of) + " " + lesson + ". " + GGApp.GG_APP.getString(R.string.lhour);
                     else
                         comment = GGApp.GG_APP.getString(R.string.instead_of) + " " + new SimpleDateFormat("EEE").format(idate) + ", " +
