@@ -91,12 +91,6 @@
         <item name="colorAccent">#8BC34A</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.LightGreen.Light</item>
     </style>
-    <style name="AppThemeLimeLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#CDDC39</item>
-        <item name="colorPrimaryDark">#AFB42B</item>
-        <item name="colorAccent">#CDDC39</item>
-        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Lime.Light</item>
-    </style>
     <style name="AppThemeAmberLight" parent="AppTheme.Base.Light">
         <item name="colorPrimary">#FFC107</item>
         <item name="colorPrimaryDark">#FFA000</item>
@@ -213,12 +207,6 @@
         <item name="colorAccent">#689F38</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.LightGreen.Dark</item>
     </style>
-    <style name="AppThemeLimeDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#AFB42B</item>
-        <item name="colorPrimaryDark">#827717</item>
-        <item name="colorAccent">#AFB42B</item>
-        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Lime.Dark</item>
-    </style>
     <style name="AppThemeAmberDark" parent="AppTheme.Base.Dark">
         <item name="colorPrimary">#FFA000</item>
         <item name="colorPrimaryDark">#FF6F00</item>
@@ -318,9 +306,6 @@
     </style>
     <style name="Theme.AlertDialog.LightGreen.Light" parent="Theme.AlertDialog.Base.Light">
         <item name="colorAccent">#8BC34A</item>
-    </style>
-    <style name="Theme.AlertDialog.Lime.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#CDDC39</item>
     </style>
     <style name="Theme.AlertDialog.Amber.Light" parent="Theme.AlertDialog.Base.Light">
         <item name="colorAccent">#FFC107</item>
