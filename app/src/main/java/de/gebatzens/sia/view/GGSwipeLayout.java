@@ -59,55 +59,52 @@ public class GGSwipeLayout extends SwipeRefreshLayout {
                 prevX = m.getX();
                 m.recycle();
                 return super.onInterceptTouchEvent(event);
-
             case MotionEvent.ACTION_MOVE:
-
-                switch(GGApp.GG_APP.getFragmentType()) {
-                    case MENSA:
-                    case EXAMS:
-                        ScrollView sv = ((ScrollView) ((MainActivity) getContext()).mContent.getView().findViewWithTag("gg_scroll"));
-
-                        if(sv != null) {
-                            int i = -sv.getScrollY();
-
-                            if (i != 0)
-                                return false;
-                        }
-
-                        break;
-                    case NEWS:
-                        ListView lv = ((NewsFragment) ((MainActivity) getContext()).mContent).lv;
-                        if(lv == null)
-                            return super.onInterceptTouchEvent(event);
-                        if(lv.getChildCount() == 0)
-                            return super.onInterceptTouchEvent(event);
-
-                        View c = lv.getChildAt(0);
-                        int i = -c.getTop() + lv.getFirstVisiblePosition() * c.getHeight();
-                        if(i != 0)
-                            return false;
-                        break;
-                    case PLAN:
+                if(GGApp.GG_APP.getFragmentType() == GGApp.FragmentType.PLAN) {
                         float xd = Math.abs(event.getX() - prevX);
                         if (xd > touchSlop)
                             return false;
-
-                        ViewPager vp = ((SubstFragment) ((MainActivity) getContext()).mContent).mViewPager;
-                        if(vp == null)
-                            return false;
-
-                        SubstPagerFragment frag = (SubstPagerFragment) vp.getAdapter().instantiateItem(vp, vp.getCurrentItem());
-                        sv = (ScrollView) frag.getView().findViewWithTag("gg_scroll");
-
-                        if (sv != null && sv.getScrollY() != 0)
-                            return false;
-
-                        break;
                 }
 
         }
 
         return super.onInterceptTouchEvent(event);
+    }
+
+    @Override
+    public boolean canChildScrollUp() {
+        switch(GGApp.GG_APP.getFragmentType()) {
+            case PLAN:
+                ViewPager vp = ((SubstFragment) ((MainActivity) getContext()).mContent).mViewPager;
+                SubstPagerFragment frag = (SubstPagerFragment) vp.getAdapter().instantiateItem(vp, vp.getCurrentItem());
+                ScrollView sv = (ScrollView) frag.getView().findViewWithTag("gg_scroll");
+
+                return sv == null || sv.getScrollY() != 0;
+            case MENSA:
+            case EXAMS:
+                sv = ((ScrollView) ((MainActivity) getContext()).mContent.getView().findViewWithTag("gg_scroll"));
+
+                if(sv != null) {
+                    int i = -sv.getScrollY();
+
+                    return i != 0;
+                }
+
+                return false;
+            case NEWS:
+                ListView lv = ((NewsFragment) ((MainActivity) getContext()).mContent).lv;
+                if(lv == null)
+                    return true;
+                if(lv.getChildCount() == 0)
+                    return true;
+
+                View c = lv.getChildAt(0);
+                int i = -c.getTop() + lv.getFirstVisiblePosition() * c.getHeight();
+
+                return i != 0;
+        }
+
+        return false;
     }
 
 }
