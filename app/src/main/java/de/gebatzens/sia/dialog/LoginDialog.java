@@ -89,20 +89,19 @@ public class LoginDialog extends DialogFragment {
                                 activity.startDownloading();
                                 break;
                             case 1:
-                                Snackbar.make(activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.username_or_password_wrong), Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), activity.getString(R.string.username_or_password_wrong), Snackbar.LENGTH_LONG).show();
                                 break;
                             case 2:
-                                Snackbar.make(activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), activity.getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
                                 break;
                             case 3:
-                                Snackbar.make(activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), activity.getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
                                 break;
                         }
                     }
 
                     @Override
                     protected Integer doInBackground(String... params) {
-
                         return GGApp.GG_APP.remote.login(params[0], params[1], params[2]);
 
                     }
