@@ -69,12 +69,14 @@ public class SubstFragment extends RemoteDataFragment {
 
     public void updateTime(Date newTime) {
         List<Fragment> frags = getChildFragmentManager().getFragments();
-        for(Fragment fr : frags) {
-            View v = fr.getView();
-            if(v != null) {
-                v = v.findViewWithTag("gg_time");
+        if(frags != null) {
+            for(Fragment fr : frags) {
+                View v = fr.getView();
                 if(v != null) {
-                    ((TextView) v).setText(SubstPagerFragment.getTimeDiff(getActivity(), newTime));
+                    v = v.findViewWithTag("gg_time");
+                    if(v != null) {
+                        ((TextView) v).setText(SubstPagerFragment.getTimeDiff(getActivity(), newTime));
+                    }
                 }
             }
         }
