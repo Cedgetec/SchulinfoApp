@@ -140,7 +140,7 @@
         <item name="colorAccent">#212121</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.DarkGrey.Light</item>
     </style>
-    <style name="AppThemeCedgetecCoporate" parent="AppTheme.Base.Light">
+    <style name="AppThemeCedgetecCorporate" parent="AppTheme.Base.Light">
         <item name="colorPrimary">#3073D4</item>
         <item name="colorPrimaryDark">#245AB8</item>
         <item name="colorAccent">#3073D4</item>

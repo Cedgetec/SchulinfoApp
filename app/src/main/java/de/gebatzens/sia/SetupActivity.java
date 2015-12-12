@@ -44,7 +44,7 @@ public class SetupActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle saved) {
-        setTheme(R.style.AppThemeCedgetecCoporate);
+        setTheme(R.style.AppThemeCedgetecCorporate);
         super.onCreate(saved);
 
         if(GGApp.GG_APP.remote.isLoggedIn()) {
