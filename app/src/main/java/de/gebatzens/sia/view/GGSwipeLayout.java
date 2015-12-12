@@ -93,6 +93,9 @@ public class GGSwipeLayout extends SwipeRefreshLayout {
                             return false;
 
                         ViewPager vp = ((SubstFragment) ((MainActivity) getContext()).mContent).mViewPager;
+                        if(vp == null)
+                            return false;
+
                         SubstPagerFragment frag = (SubstPagerFragment) vp.getAdapter().instantiateItem(vp, vp.getCurrentItem());
                         sv = (ScrollView) frag.getView().findViewWithTag("gg_scroll");
 
