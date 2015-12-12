@@ -147,6 +147,8 @@
     <string name="all_subjects_including">Hide all %s-subjects</string>
     <string name="all_subjects_including_disabled">Hide all subjects</string>
     <string name="logged_in_as">Logged in as %s</string>
+    <string name="maintenance">The server is currently being maintained</string>
+    <string name="unknown_error">Unknown error</string>
 
     <string-array name="vibration_values">
         <item>Off</item>

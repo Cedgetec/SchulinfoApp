@@ -95,6 +95,9 @@ public class LoginDialog extends DialogFragment {
                                 Snackbar.make(activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), activity.getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
                                 break;
                             case 3:
+                                Snackbar.make(activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), activity.getString(R.string.maintenance), Snackbar.LENGTH_LONG).show();
+                                break;
+                            case 4:
                                 Snackbar.make(activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), activity.getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
                                 break;
                         }

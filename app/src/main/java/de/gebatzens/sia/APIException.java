@@ -16,15 +16,25 @@
 
 package de.gebatzens.sia;
 
-public class VPLoginException extends RuntimeException {
+public class APIException extends RuntimeException {
 
-    public VPLoginException() {
+    GGRemote.APIState state;
+
+    public APIException(GGRemote.APIState state) {
         super();
+        this.state = state;
     }
 
     @Override
     public String getMessage() {
-        return "Not logged in!";
+        switch(state) {
+            case INVALID_AUTH:
+                return GGApp.GG_APP.getString(R.string.not_logged_in);
+            case MAINTENANCE:
+                return GGApp.GG_APP.getString(R.string.maintenance);
+            default:
+                return GGApp.GG_APP.getString(R.string.unknown_error);
+        }
     }
 
 }

@@ -145,6 +145,8 @@
     <string name="all_subjects_including">Alle %s-Kurse ausblenden</string>
     <string name="all_subjects_including_disabled">Alle Kurse ausblenden</string>
     <string name="logged_in_as">Eingeloggt als %s</string>
+    <string name="maintenance">Der Server wird gerade gewartet</string>
+    <string name="unknown_error">Unbekannter Fehler</string>
 
     <string-array name="vibration_values">
         <item>Aus</item>

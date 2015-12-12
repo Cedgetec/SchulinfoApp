@@ -21,6 +21,7 @@ import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -72,6 +73,14 @@ public class GGPlan {
         @Override
         public void save() {
             GGApp.GG_APP.preferences.edit().putLong("substLoadDate", loadDate.getTime()).commit();
+
+            String[] list = GGApp.GG_APP.fileList();
+
+            for(String s : list) {
+                if (s.startsWith("schedule")) {
+                    GGApp.GG_APP.deleteFile(s);
+                }
+            }
 
             for(int i = 0; i < size(); i++)
                 get(i).save("schedule" + i);

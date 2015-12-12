@@ -63,14 +63,14 @@ public class GGRemote {
 
     }
 
-    public void showReloadSnackbar() {
+    public void showReloadSnackbar(final String msg) {
         if(GGApp.GG_APP.activity == null)
             return;
 
         GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Snackbar.make(GGApp.GG_APP.activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), R.string.no_internet_connection, Snackbar.LENGTH_LONG)
+                Snackbar.make(GGApp.GG_APP.activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), msg, Snackbar.LENGTH_LONG)
                         .setAction(R.string.again, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -149,14 +149,11 @@ public class GGRemote {
                             plan.special.add(messages.getString(i));
                     }
                 }
-            } else if(re.state == APIState.INVALID_AUTH) {
-                throw new VPLoginException();
             } else {
-                throw new Exception("Received state " + re.state);
+                throw new APIException(re.state);
             }
-
         } catch(Exception e) {
-            if(e instanceof IOException || e instanceof VPLoginException)
+            if(e instanceof IOException || e instanceof APIException)
                 Log.w("ggvp", "Failed to get plans " + e.getMessage());
             else
                 e.printStackTrace();
@@ -176,7 +173,7 @@ public class GGRemote {
                 final Throwable t = plans.throwable;
                 plans.throwable = null;
                 if(toast)
-                    showReloadSnackbar();
+                    showReloadSnackbar(t instanceof IOException ? GGApp.GG_APP.getString(R.string.no_internet_connection) : t.getMessage());
             }
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
@@ -232,14 +229,13 @@ public class GGRemote {
                     e.text = cobj.getString("text");
 
                 }
-            } else if(re.state == APIState.INVALID_AUTH)
-                throw new VPLoginException();
-            else
-                throw new Exception("Received state " + re.state);
+            } else {
+                throw new APIException(re.state);
+            }
         } catch (final Exception e) {
             e.printStackTrace();
             if(toast)
-                showReloadSnackbar();
+                showReloadSnackbar(e instanceof IOException ? GGApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage());
             if(!n.load()) {
                 n.throwable = e;
             }
@@ -270,15 +266,14 @@ public class GGRemote {
                     mi.image = obj.getString("image");
 
                 }
-            } else if(re.state == APIState.INVALID_AUTH)
-                throw new VPLoginException();
-            else
-                throw new Exception("Received state " + re.state);
+            } else {
+                throw new APIException(re.state);
+            }
 
         } catch (final Exception e) {
             e.printStackTrace();
             if(toast)
-                showReloadSnackbar();
+                showReloadSnackbar(e instanceof IOException ? GGApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage());
             if(!m.load()) {
                 m.throwable = e;
             }
@@ -326,15 +321,14 @@ public class GGRemote {
 
                 }
                 exams.sort();
-            } else if(re.state == APIState.INVALID_AUTH)
-                throw new VPLoginException();
-            else
-                throw new Exception("Received state " + re.state);
+            } else {
+                throw new APIException(re.state);
+            }
 
         } catch (final Exception e) {
             e.printStackTrace();
             if(toast)
-                showReloadSnackbar();
+                showReloadSnackbar(e instanceof IOException ? GGApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage());
 
             if(!exams.load()) {
                 exams.throwable = e;
@@ -349,7 +343,7 @@ public class GGRemote {
      * Sends an authentication request
      * @param user
      * @param pass
-     * @return 0: ok, 1: invalid user/passwd, 2: no connection, 3: everything else
+     * @return 0: ok, 1: invalid user/passwd, 2: no connection, 3: maintenance, 4: everything else
      */
     public int login(String sid, String user, String pass) {
         try {
@@ -388,8 +382,10 @@ public class GGRemote {
                     edit.apply();
 
                     APIResponse resp = doRequest("/schoolInfo?token=" + data.getString("token"), null);
-                    if(resp.state != APIState.SUCCEEDED)
+                    if(resp.state == APIState.MAINTENANCE)
                         return 3;
+                    else if(resp.state != APIState.SUCCEEDED)
+                        return 4;
 
                     School.updateSchool((JSONObject) resp.data);
                     School.saveList();
@@ -399,8 +395,10 @@ public class GGRemote {
                     return 0;
                 case INVALID_AUTH:
                     return 1;
-                default:
+                case MAINTENANCE:
                     return 3;
+                default:
+                    return 4;
             }
 
         } catch (Exception e) {
@@ -409,7 +407,7 @@ public class GGRemote {
                 return 2;
             } else {
                 e.printStackTrace();
-                return 3;
+                return 4;
             }
         }
     }
@@ -487,6 +485,8 @@ public class GGRemote {
                     return new APIResponse(APIState.MISSING_PARAMETER);
                 case "succeeded":
                     return new APIResponse(APIState.SUCCEEDED, data);
+                case "maintenance":
+                    return new APIResponse(APIState.MAINTENANCE);
                 case "error":
                 default:
                     return new APIResponse(APIState.ERROR);
@@ -501,7 +501,7 @@ public class GGRemote {
     }
 
     public enum APIState {
-        SUCCEEDED, ERROR, NOT_FOUND, METHOD_NOT_ALLOWED, INVALID_JSON, INVALID_AUTH, MISSING_PARAMETER
+        SUCCEEDED, ERROR, NOT_FOUND, METHOD_NOT_ALLOWED, INVALID_JSON, INVALID_AUTH, MISSING_PARAMETER, MAINTENANCE
     }
 
     public static class APIResponse {

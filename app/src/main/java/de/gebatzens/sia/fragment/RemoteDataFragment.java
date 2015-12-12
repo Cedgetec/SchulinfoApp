@@ -39,7 +39,7 @@ import android.widget.TextView;
 
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
-import de.gebatzens.sia.VPLoginException;
+import de.gebatzens.sia.APIException;
 
 public abstract class RemoteDataFragment extends Fragment {
 
@@ -198,7 +198,7 @@ public abstract class RemoteDataFragment extends Fragment {
             setFragmentLoading();
         } else if(data.getThrowable() != null) {
             Throwable t = data.getThrowable();
-            if(t instanceof VPLoginException) {
+            if(t instanceof APIException) {
                 createMessage(vg, getResources().getString(R.string.login_required), getResources().getString(R.string.do_login), new View.OnClickListener() {
                     @Override
                     public void onClick(View c) {
