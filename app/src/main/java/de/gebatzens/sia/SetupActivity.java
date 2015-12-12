@@ -55,8 +55,15 @@ public class SetupActivity extends AppCompatActivity {
                     try {
                         GGRemote.APIResponse resp = GGApp.GG_APP.remote.doRequest("/schoolInfo?token=" + GGApp.GG_APP.remote.getToken(), null);
                         if(resp.state == GGRemote.APIState.SUCCEEDED) {
+                            String img = GGApp.GG_APP.school.image;
+
                             School.updateSchool((JSONObject) resp.data);
                             School.saveList();
+                            String newImg = ((JSONObject) resp.data).getString("image");
+                            if(!img.equals(newImg)) {
+                                Log.d("ggvp", "Trying to download new image " + newImg);
+                                School.downloadImage(newImg);
+                            }
 
                             // sid could have changed
                             GGApp.GG_APP.preferences.edit().putString("sid", ((JSONObject) resp.data).getString("sid")).apply();
@@ -201,7 +208,7 @@ public class SetupActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                if(!GGApp.GG_APP.school.downloadImage()) {
+                if(!School.downloadImage(GGApp.GG_APP.school.image)) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

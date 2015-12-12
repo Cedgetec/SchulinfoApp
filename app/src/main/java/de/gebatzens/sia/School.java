@@ -250,7 +250,7 @@ public class School {
         }
     }
 
-    public boolean downloadImage() {
+    public static boolean downloadImage(String image) {
         if(new File(image).exists())
             return true;
 
