@@ -365,9 +365,6 @@
     <style name="Theme.AlertDialog.LightGreen.Dark" parent="Theme.AlertDialog.Base.Dark">
         <item name="colorAccent">#8BC34A</item>
     </style>
-    <style name="Theme.AlertDialog.Lime.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#CDDC39</item>
-    </style>
     <style name="Theme.AlertDialog.Amber.Dark" parent="Theme.AlertDialog.Base.Dark">
         <item name="colorAccent">#FFC107</item>
     </style>

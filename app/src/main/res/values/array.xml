@@ -29,7 +29,6 @@
         <item>Teal</item>
         <item>Green</item>
         <item>LightGreen</item>
-        <!--<item>Lime</item>-->
         <item>Amber</item>
         <item>Orange</item>
         <item>DeepOrange</item>
@@ -159,17 +158,6 @@
         <item>#7CB342</item>
         <item>#33691E</item>
         <item>#558B2F</item>
-    </string-array>
-    <string-array name="CardviewColorLimeLight" translatable="false">
-        <item>#CDDC39</item>
-        <item>#AFB42B</item>
-        <item>#827717</item>
-        <item>#C0CA33</item>
-        <item>#9E9D24</item>
-        <item>#CDDC39</item>
-        <item>#C0CA33</item>
-        <item>#827717</item>
-        <item>#9E9D24</item>
     </string-array>
     <string-array name="CardviewColorAmberLight" translatable="false">
         <item>#FFC107</item>
@@ -328,14 +316,6 @@
         <item>#33691E</item>
         <item>#689F38</item>
         <item>#33691E</item>
-    </string-array>
-    <string-array name="CardviewColorLimeDark" translatable="false">
-        <item>#AFB42B</item>
-        <item>#827717</item>
-        <item>#9E9D24</item>
-        <item>#827717</item>
-        <item>#AFB42B</item>
-        <item>#827717</item>
     </string-array>
     <string-array name="CardviewColorAmberDark" translatable="false">
         <item>#FFA000</item>
