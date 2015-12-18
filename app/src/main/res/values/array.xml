@@ -18,6 +18,7 @@
     </string-array>
 
     <string-array name="theme_names" translatable="false">
+        <item>Winter</item>
         <item>Red</item>
         <item>Pink</item>
         <item>Purple</item>
@@ -38,6 +39,21 @@
         <item>DarkGrey</item>
     </string-array>
     <!-- Light Card Colors -->
+    <string-array name="CardviewColorWinterLight" translatable="false">
+        <item>#4493c1</item>
+        <item>#33759c</item>
+        <item>#1f475e</item>
+        <item>#2c80db</item>
+        <item>#1e65b1</item>
+        <item>#2d6387</item>
+        <item>#397fac</item>
+        <item>#19394e</item>
+        <item>#316d94</item>
+        <item>#5c6f87</item>
+        <item>#475568</item>
+        <item>#5e6e77</item>
+        <item>#48545b</item>
+    </string-array>
     <string-array name="CardviewColorRedLight" translatable="false">
         <item>#F44336</item>
         <item>#D32F2F</item>
@@ -229,6 +245,17 @@
         <item>#424242</item>
     </string-array>
     <!--Dark Card Colors-->
+    <string-array name="CardviewColorWinterDark" translatable="false">
+        <item>#33759c</item>
+        <item>#1f475e</item>
+        <item>#2d6387</item>
+        <item>#19394e</item>
+        <item>#316d94</item>
+        <item>#5c6f87</item>
+        <item>#475568</item>
+        <item>#5e6e77</item>
+        <item>#48545b</item>
+    </string-array>
     <string-array name="CardviewColorRedDark" translatable="false">
         <item>#D32F2F</item>
         <item>#B71C1C</item>
