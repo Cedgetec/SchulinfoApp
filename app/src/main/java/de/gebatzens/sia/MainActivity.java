@@ -390,6 +390,7 @@ public class MainActivity extends AppCompatActivity {
 
         mContent.saveInstanceState(b);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

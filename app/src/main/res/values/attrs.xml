@@ -2,4 +2,8 @@
 <resources>
     <attr name="floating_action_circle" format="reference"/>
     <attr name="colorControlNormals" format="color"/>
+
+    <declare-styleable name="SnowView">
+        <attr name="theight" format="dimension"/>
+    </declare-styleable>
 </resources>
