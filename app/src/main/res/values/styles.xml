@@ -29,7 +29,7 @@
         <item name="colorPrimary">#1973ac</item>
         <item name="colorPrimaryDark">#156191</item>
         <item name="colorAccent">#1973ac</item>
-        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Red.Light</item>
+        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Winter.Light</item>
     </style>
     <style name="AppThemeRedLight" parent="AppTheme.Base.Light">
         <item name="colorPrimary">#F44336</item>
@@ -151,7 +151,7 @@
         <item name="colorPrimary">#145c8a</item>
         <item name="colorPrimaryDark">#114e75</item>
         <item name="colorAccent">#145c8a</item>
-        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Red.Light</item>
+        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Winter.Dark</item>
     </style>
     <style name="AppThemeRedDark" parent="AppTheme.Base.Dark">
         <item name="colorPrimary">#D32F2F</item>
