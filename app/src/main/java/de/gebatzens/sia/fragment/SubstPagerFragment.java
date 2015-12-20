@@ -413,14 +413,14 @@ public class SubstPagerFragment extends RemoteDataFragment {
         long diff = new Date().getTime() - old.getTime();
         int minutes = (int) (diff / (1000 * 60));
 
-        if(minutes > 100) {
+        if(minutes > 60) {
             int hours = (int) Math.floor((float) minutes / 60.0f);
-            return ctx.getResources().getQuantityString(R.plurals.time_diff_hours, hours, hours);
+            return ctx.getResources().getString(R.string.time_diff_hours, hours);
         } else {
             if(minutes == 0)
                 return ctx.getString(R.string.just_now);
             else
-                return ctx.getResources().getQuantityString(R.plurals.time_diff, minutes, minutes);
+                return ctx.getResources().getString(R.string.time_diff, minutes);
         }
 
     }

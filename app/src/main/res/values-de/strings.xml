@@ -141,7 +141,9 @@
     <string name="no_exams_selected">Keine Klausuren ausgewählt</string>
     <string name="no_cal_avail">Kein Kalender verfügbar</string>
     <string name="cancel">Abbrechen</string>
-    <string name="just_now">Gerade aktualisiert</string>
+    <string name="just_now">Aktuell</string>
+    <string name="time_diff">%d Min. alt</string>
+    <string name="time_diff_hours">%d Std. alt</string>
     <string name="all_subjects_including">Alle %s-Kurse ausblenden</string>
     <string name="all_subjects_including_disabled">Alle Kurse ausblenden</string>
     <string name="logged_in_as">Eingeloggt als %s</string>
@@ -210,16 +212,6 @@
     <plurals name="n_events_will_be_added">
         <item quantity="one">Ein Eintrag wird zum Kalender hinzugefügt</item>
         <item quantity="other">%d Einträge werden zum Kalender hinzugefügt</item>
-    </plurals>
-
-    <plurals name="time_diff">
-        <item quantity="one">Vor einer Minute aktualisiert</item>
-        <item quantity="other">Vor %d Minuten aktualisiert</item>
-    </plurals>
-
-    <plurals name="time_diff_hours">
-        <item quantity="one">Vor einer Stunde aktualisiert</item>
-        <item quantity="other">Vor %d Stunden aktualisiert</item>
     </plurals>
 
 </resources>

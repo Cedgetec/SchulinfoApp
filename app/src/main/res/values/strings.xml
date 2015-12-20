@@ -143,7 +143,9 @@
     <string name="no_exams_selected">No exams selected</string>
     <string name="no_cal_avail">No calendar available</string>
     <string name="cancel">Cancel</string>
-    <string name="just_now">Updated: Just now</string>
+    <string name="just_now">Current</string>
+    <string name="time_diff">%d min. old</string>
+    <string name="time_diff_hours">%d hrs. old</string>
     <string name="all_subjects_including">Hide all %s-subjects</string>
     <string name="all_subjects_including_disabled">Hide all subjects</string>
     <string name="logged_in_as">Logged in as %s</string>
@@ -210,16 +212,6 @@
     <plurals name="n_events_will_be_added">
         <item quantity="one">One event will be added to your calendar</item>
         <item quantity="other">%d events will be added to your calendar</item>
-    </plurals>
-
-    <plurals name="time_diff">
-        <item quantity="one">Updated: One minute ago</item>
-        <item quantity="other">Updated: %d minutes ago</item>
-    </plurals>
-
-    <plurals name="time_diff_hours">
-        <item quantity="one">Updated: One hour ago</item>
-        <item quantity="other">Updated: %d hours ago</item>
     </plurals>
 
 </resources>
