@@ -108,12 +108,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             Preference theme_color = findPreference("theme_color");
 
-            String tn = GGApp.GG_APP.getCustomThemeName();
-            if(tn == null) {
-                tn = GGApp.GG_APP.school.themeName;
-            }
-
-            boolean winter = tn.equals("Winter");
+            boolean winter = GGApp.GG_APP.getCurrentThemeName().equals("Winter");
 
             if(winter) {
                 LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_image);

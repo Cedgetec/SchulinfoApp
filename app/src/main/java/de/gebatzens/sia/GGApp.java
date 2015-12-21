@@ -276,6 +276,11 @@ public class GGApp extends Application {
 
     }
 
+    public String getCurrentThemeName() {
+        String s = getCustomThemeName();
+        return s == null ? school.themeName : s;
+    }
+
     public String getDefaultSID() {
         return preferences.getString("sid", null);
     }

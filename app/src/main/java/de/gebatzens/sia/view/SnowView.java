@@ -26,6 +26,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
+import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
 
 public class SnowView extends View {
@@ -61,8 +62,10 @@ public class SnowView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        for(int[] obj : objs) {
-            canvas.drawBitmap(bitmaps[obj[2]], obj[0], obj[1], null);
+        if("Winter".equals(GGApp.GG_APP.getCurrentThemeName())) {
+            for (int[] obj : objs) {
+                canvas.drawBitmap(bitmaps[obj[2]], obj[0], obj[1], null);
+            }
         }
     }
 
