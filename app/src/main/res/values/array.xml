@@ -48,11 +48,7 @@
         <item>#2d6387</item>
         <item>#397fac</item>
         <item>#19394e</item>
-        <item>#316d94</item>
-        <item>#5c6f87</item>
-        <item>#475568</item>
-        <item>#5e6e77</item>
-        <item>#48545b</item>
+        <item>#006d8c</item>
     </string-array>
     <string-array name="CardviewColorRedLight" translatable="false">
         <item>#F44336</item>
