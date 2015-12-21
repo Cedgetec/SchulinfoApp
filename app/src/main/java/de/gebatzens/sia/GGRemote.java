@@ -54,7 +54,6 @@ import de.gebatzens.sia.data.News;
 public class GGRemote {
 
     public static final String PREFS_NAME = "remoteprefs";
-    public static final GGImageGetter IMAGE_GETTER = new GGImageGetter();
 
     SharedPreferences prefs;
 

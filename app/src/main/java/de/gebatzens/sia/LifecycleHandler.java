@@ -5,12 +5,8 @@ import android.app.Application;
 import android.os.Bundle;
 
 public class LifecycleHandler implements Application.ActivityLifecycleCallbacks {
-    // I use four separate variables here. You can, of course, just use two and
-    // increment/decrement them instead of using four and incrementing them all.
     private int resumed;
     private int paused;
-    private int started;
-    private int stopped;
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
