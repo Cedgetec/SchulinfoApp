@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
@@ -107,9 +108,22 @@ public class SettingsActivity extends AppCompatActivity {
 
             Preference theme_color = findPreference("theme_color");
 
-            GradientDrawable tcgd = (GradientDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle);
-            tcgd.setColor(GGApp.GG_APP.school.getColor());
-            theme_color.setIcon(tcgd);
+            String tn = GGApp.GG_APP.getCustomThemeName();
+            if(tn == null) {
+                tn = GGApp.GG_APP.school.themeName;
+            }
+
+            boolean winter = tn.equals("Winter");
+
+            if(winter) {
+                LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_image);
+                ((GradientDrawable) ld.getDrawable(0)).setColor(GGApp.GG_APP.school.getColor());
+                theme_color.setIcon(ld);
+            } else {
+                GradientDrawable tcgd = (GradientDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle);
+                tcgd.setColor(GGApp.GG_APP.school.getColor());
+                theme_color.setIcon(tcgd);
+            }
 
             final String[] themeNames = getResources().getStringArray(R.array.theme_names);
 
@@ -138,8 +152,17 @@ public class SettingsActivity extends AppCompatActivity {
                     } else {
                         holder = (ViewHolder) convertView.getTag();
                     }
-                    holder.icon.setBackgroundResource(R.drawable.colored_circle);
-                    holder.icon.getBackground().setColorFilter(loadThemeColor(themeNames[position]), PorterDuff.Mode.SRC_ATOP);
+
+                    boolean winter = themeNames[position].equals("Winter");
+
+                    holder.icon.setBackgroundResource(winter ? R.drawable.colored_circle_image : R.drawable.colored_circle);
+                    if(winter) {
+                        LayerDrawable layerDrawable = (LayerDrawable) holder.icon.getBackground();
+                        ((GradientDrawable) layerDrawable.getDrawable(0)).setColor(loadThemeColor(themeNames[position]));
+                    } else {
+                        ((GradientDrawable) holder.icon.getBackground()).setColor(loadThemeColor(themeNames[position]));
+                    }
+
                     String[] theme_color_names = getResources().getStringArray(R.array.theme_color_names);
                     holder.title.setText(theme_color_names[position]);
                     if (GGApp.GG_APP.isDarkThemeEnabled()) {
@@ -363,7 +386,10 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static int loadThemeColor(String name) {
         int theme = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "AppTheme" + name + "Dark" : "AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
-        return GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary}).getColor(0, Color.RED);
+        TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary});
+        int c = ta.getColor(0, Color.RED);
+        ta.recycle();
+        return c;
     }
 
 }
