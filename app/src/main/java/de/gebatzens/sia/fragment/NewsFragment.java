@@ -1,5 +1,6 @@
 /*
  * Copyright 2015 Fabian Schultis, Hauke Oldsen
+ * Copyright 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,15 +45,11 @@ public class NewsFragment extends RemoteDataFragment {
     private NewsFragmentListAdapter nfla;
     private NewsFragmentDatabaseHelper mDatabaseHelper;
 
-    public NewsFragment() {
-        type = GGApp.FragmentType.NEWS;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle bundle) {
         ((MainActivity) getActivity()).updateMenu(R.menu.toolbar_menu);
         ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.fragment_news, group, false);
-        if(GGApp.GG_APP.news != null)
+        if(getFragment().getData() != null)
             createRootView(inflater, vg);
         mDatabaseHelper = new NewsFragmentDatabaseHelper(getActivity().getApplicationContext());
         return vg;
@@ -83,7 +80,7 @@ public class NewsFragment extends RemoteDataFragment {
                         });
 
                     }
-                }, true, GGApp.FragmentType.NEWS);
+                }, true, getFragment());
             }
         });
         // Configure the refreshing colors
@@ -97,7 +94,7 @@ public class NewsFragment extends RemoteDataFragment {
     @Override
     public void createView(final LayoutInflater inflater, ViewGroup view) {
         LinearLayout lroot = (LinearLayout) view.findViewById(R.id.news_content);
-        if(GGApp.GG_APP.news.isEmpty()) {
+        if(((News) getFragment().getData()).isEmpty()) {
             ScrollView sv = new ScrollView(getActivity());
             sv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             sv.setTag("gg_scroll");
@@ -113,7 +110,7 @@ public class NewsFragment extends RemoteDataFragment {
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    News news = GGApp.GG_APP.news;
+                    News news = ((News) getFragment().getData());
                     String title = news.get(position).title;
                     String content = news.get(position).text;
 
@@ -138,7 +135,7 @@ public class NewsFragment extends RemoteDataFragment {
                     }
                 }
             });
-            nfla = new NewsFragmentListAdapter(getActivity(), GGApp.GG_APP.news);
+            nfla = new NewsFragmentListAdapter(getActivity(), ((News) getFragment().getData()));
             lv.setAdapter(nfla);
         }
     }

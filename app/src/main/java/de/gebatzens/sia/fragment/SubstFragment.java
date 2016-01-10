@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ import java.util.List;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
+import de.gebatzens.sia.data.GGPlan;
 
 public class SubstFragment extends RemoteDataFragment {
 
@@ -50,10 +51,6 @@ public class SubstFragment extends RemoteDataFragment {
     public SwipeRefreshLayout swipeContainer;
     public Bundle bundle;
     public TabLayout mTabLayout;
-
-    public SubstFragment() {
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -132,7 +129,7 @@ public class SubstFragment extends RemoteDataFragment {
                         });
 
                     }
-                }, true, GGApp.FragmentType.PLAN);
+                }, true, getFragment());
             }
         });
         // Configure the refreshing colors
@@ -177,7 +174,7 @@ public class SubstFragment extends RemoteDataFragment {
         //for(SubstPagerFragment frag : substAdapter.fragments)
          //   frag.spinnerPos = 0;
         if(substAdapter != null)
-            substAdapter.update(GGApp.GG_APP.plans);
+            substAdapter.update((GGPlan.GGPlans) getFragment().getData());
     }
 
     public void resetScrollPositions() {

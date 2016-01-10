@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,11 +57,6 @@ public class GGApp extends Application {
     public static final int UPDATE_DISABLE = 0, UPDATE_WLAN = 1, UPDATE_ALL = 2;
     public static GGApp GG_APP;
 
-    public GGPlan.GGPlans plans;
-    public News news;
-    public Mensa mensa;
-    public Exams exams;
-
     public MainActivity activity;
     public GGRemote remote;
     public School school;
@@ -83,37 +78,52 @@ public class GGApp extends Application {
         filters = FilterActivity.loadFilter();
         loadSubjectMap();
         School.loadList();
-        loadSavedData();
+
+        //this is required because SetupActivity might change the school in background
         school = School.getBySID(preferences.getString("sid", null));
+        if(school != null) {
+            school = new School(school);
+        }
+
+        loadSavedData();
         lifecycle = new LifecycleHandler();
         registerActivityLifecycleCallbacks(lifecycle);
 
     }
 
     private void loadSavedData() {
-        if(!(plans = new GGPlan.GGPlans()).load())
-            plans = null;
-        if(!(exams = new Exams()).load())
-            exams = null;
-        if(!(news = new News()).load())
-            news = null;
-        if(!(mensa = new Mensa()).load())
-            mensa = null;
-    }
+        if(school != null) {
+            for(FragmentData frag : school.fragments) {
 
-    public RemoteDataFragment.RemoteData getDataForFragment(FragmentType type) {
-        switch(type) {
-            case PLAN:
-                return plans;
-            case NEWS:
-                return news;
-            case MENSA:
-                return mensa;
-            case EXAMS:
-                return exams;
-            default:
-                return null;
+                RemoteDataFragment.RemoteData rd = null;
+
+                switch(frag.type) {
+                    case PLAN:
+                        rd = new GGPlan.GGPlans();
+                        break;
+                    case EXAMS:
+                        rd = new Exams();
+                        break;
+                    case NEWS:
+                        rd = new News();
+                        break;
+                    case MENSA:
+                        rd = new Mensa();
+                        break;
+                    case PDF:
+                        rd = null;
+                        break;
+                }
+
+                if(rd != null)
+                    rd.load();
+
+                frag.setData(rd);
+            }
         }
+
+
+
     }
 
     private void loadSubjectMap() {
@@ -233,12 +243,12 @@ public class GGApp extends Application {
         return preferences.getBoolean("notification_led", true);
     }
 
-    public FragmentType getFragmentType() {
-        return FragmentType.valueOf(preferences.getString("fragtype", "PLAN"));
+    public int getFragmentIndex() {
+        return preferences.getInt("fragindex", 0);
     }
 
-    public void setFragmentType(FragmentType type) {
-        preferences.edit().putString("fragtype", type.toString()).apply();
+    public void setFragmentIndex(int index) {
+        preferences.edit().putInt("fragindex", index).apply();
     }
 
     public void setDarkThemeEnabled(boolean e) {
@@ -264,6 +274,10 @@ public class GGApp extends Application {
 
         School b = school;
         school = School.getBySID(sid);
+        if(school != null) {
+            school = new School(school);
+        }
+
         if(activity != null && b != null && !b.equals(school)) {
             activity.runOnUiThread(new Runnable() {
                 @Override
@@ -289,15 +303,16 @@ public class GGApp extends Application {
         return preferences.getBoolean("autoappupdates", true);
     }
 
-    public void refreshAsync(final Runnable finished, final boolean updateFragments, final FragmentType type) {
+    public void refreshAsync(final Runnable finished, final boolean updateFragments, final FragmentData frag) {
         new Thread() {
             @Override
             public void run() {
                 boolean update = false;
-                switch(type) {
+                switch(frag.type) {
                     case PLAN:
-                        GGPlan.GGPlans oldPlans = plans;
-                        plans = remote.getPlans(updateFragments);
+                        GGPlan.GGPlans oldPlans = (GGPlan.GGPlans) frag.getData();
+                        final GGPlan.GGPlans plans = remote.getPlans(updateFragments);
+                        frag.setData(plans);
                         if(plans.throwable == null)
                             plans.save();
 
@@ -337,28 +352,34 @@ public class GGApp extends Application {
 
                         break;
                     case NEWS:
-                        News on = news;
-                        news = remote.getNews(updateFragments);
+                        News on = (News) frag.getData();
+                        News news = remote.getNews(updateFragments);
+                        frag.setData(news);
                         if(news.throwable == null)
                             on.save();
                         update = on == null || !on.equals(news);
                         break;
                     case MENSA:
-                        Mensa om = mensa;
-                        mensa = remote.getMensa(updateFragments);
+                        Mensa om = (Mensa) frag.getData();
+                        Mensa mensa = remote.getMensa(updateFragments);
+                        frag.setData(mensa);
                         if(mensa.throwable == null)
                             mensa.save();
                         update = om == null || !om.equals(mensa);
                         break;
                     case EXAMS:
                         Exams newExams = remote.getExams(updateFragments);
+                        Exams exams = (Exams) frag.getData();
                         if(exams != null) {
                             exams.reuseSelected(newExams);
                         }
                         exams = newExams;
+                        frag.setData(exams);
                         if(exams.throwable == null)
                             exams.save();
                         update = true;
+                        break;
+                    case PDF:
                         break;
                 }
 
@@ -383,9 +404,7 @@ public class GGApp extends Application {
         w.setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
     }
 
-    public enum FragmentType {
-        PLAN, NEWS, MENSA, EXAMS
-    }
+
 
 
 }

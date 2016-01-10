@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,19 +48,26 @@ public class GGBroadcast extends BroadcastReceiver {
             return;
         }
 
-        GGPlan.GGPlans newPlans = gg.remote.getPlans(false);
-        GGPlan.GGPlans oldPlans = gg.plans;
-        gg.plans = newPlans;
+        if(gg.school == null || gg.school.fragments.getData(FragmentData.FragmentType.PLAN).size() == 0) {
+            Log.i("ggvp", "school does not have a PLAN fragment");
+            return;
+        }
+
+        FragmentData planFrag = gg.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0);
+
+        final GGPlan.GGPlans newPlans = gg.remote.getPlans(false);
+        GGPlan.GGPlans oldPlans = (GGPlan.GGPlans) planFrag.getData();
+        planFrag.setData(newPlans);
 
         if(newPlans.throwable != null)
             return;
 
-        gg.plans.save();
+        newPlans.save();
 
         if(oldPlans == null || oldPlans.throwable != null)
             return;
 
-        if(gg.activity != null && oldPlans.shouldRecreateView(gg.plans) && !gg.lifecycle.isAppInForeground()) {
+        if(gg.activity != null && oldPlans.shouldRecreateView(newPlans) && !gg.lifecycle.isAppInForeground()) {
             gg.activity.finish();
         } else if(gg.activity != null && gg.activity.mContent instanceof SubstFragment) {
             gg.activity.runOnUiThread(new Runnable() {
@@ -68,7 +75,7 @@ public class GGBroadcast extends BroadcastReceiver {
                 public void run() {
                     SubstFragment frag = (SubstFragment) gg.activity.mContent;
                     if(frag != null) {
-                        frag.updateTime(gg.plans.loadDate);
+                        frag.updateTime(newPlans.loadDate);
                     }
                 }
             });

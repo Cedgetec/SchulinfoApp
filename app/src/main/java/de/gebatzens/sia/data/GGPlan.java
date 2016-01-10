@@ -21,7 +21,6 @@ import android.util.JsonReader;
 import android.util.JsonWriter;
 import android.util.Log;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

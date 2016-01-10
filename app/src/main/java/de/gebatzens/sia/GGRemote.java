@@ -82,7 +82,7 @@ public class GGRemote {
                                         ((SwipeRefreshLayout) rv.findViewById(R.id.refresh)).setRefreshing(false);
                                     }
 
-                                }, true, GGApp.GG_APP.getFragmentType());
+                                }, true, GGApp.GG_APP.school.fragments.get(GGApp.GG_APP.getFragmentIndex()));
                             }
                         }).show();
             }

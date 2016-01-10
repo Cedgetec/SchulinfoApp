@@ -179,6 +179,7 @@ public class SetupActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        adapter.list = School.LIST;
                         adapter.notifyDataSetChanged();
                         if (!b)
                             Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)

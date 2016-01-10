@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Arrays;
 import java.util.List;
 
 import de.gebatzens.sia.data.Exams;
@@ -63,10 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
     public RemoteDataFragment mContent;
     public Toolbar mToolbar;
-    Context context;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
-    String[] mStrings;
     View mNavigationHeader;
     TextView mNavigationSchoolpictureText;
     ImageView mNavigationSchoolpicture;
@@ -76,34 +73,36 @@ public class MainActivity extends AppCompatActivity {
     int selectedItem;
 
     public RemoteDataFragment createFragment() {
-        switch(GGApp.GG_APP.getFragmentType()) {
+        FragmentData frag = GGApp.GG_APP.school.fragments.get(GGApp.GG_APP.getFragmentIndex());
+
+        RemoteDataFragment fr;
+        switch(frag.type) {
             case PLAN:
-                return new SubstFragment();
+                fr = new SubstFragment();
+                break;
             case NEWS:
-                return new NewsFragment();
+                fr = new NewsFragment();
+                break;
             case MENSA:
-                return new MensaFragment();
+                fr = new MensaFragment();
+                break;
             case EXAMS:
-                return new ExamFragment();
+                fr = new ExamFragment();
+                break;
             default:
-                return null;
+                fr = null;
+                break;
         }
 
-    }
+        Bundle bundle = new Bundle();
+        bundle.putInt("fragment", GGApp.GG_APP.getFragmentIndex());
 
-    public GGApp.FragmentType menuIdToType(int id) {
-        switch(id) {
-            case R.id.menuItem1:
-                return GGApp.FragmentType.PLAN;
-            case R.id.menuItem2:
-                return GGApp.FragmentType.NEWS;
-            case R.id.menuItem3:
-                return GGApp.FragmentType.MENSA;
-            case R.id.menuItem4:
-                return GGApp.FragmentType.EXAMS;
-            default:
-                return null;
+        if(fr != null) {
+            fr.setArguments(bundle);
         }
+
+        return fr;
+
     }
 
     public void removeAllFragments() {
@@ -131,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showExamDialog() {
-        final List<Exams.ExamItem> exams = GGApp.GG_APP.exams.getSelectedItems(false);
+        final List<Exams.ExamItem> exams = ((Exams) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.EXAMS).get(0).getData()).getSelectedItems(false);
         if(exams.size() == 0) {
             Snackbar.make(findViewById(R.id.coordinator_layout), R.string.no_exams_selected, Snackbar.LENGTH_SHORT).show();
             return;
@@ -179,17 +178,16 @@ public class MainActivity extends AppCompatActivity {
         GGApp.GG_APP.activity = this;
         savedState = savedInstanceState;
 
+        final FragmentData.FragmentList fragments = GGApp.GG_APP.school.fragments;
+
         Intent intent = getIntent();
         if(intent != null && intent.getStringExtra("fragment") != null) {
-            GGApp.FragmentType type = GGApp.FragmentType.valueOf(intent.getStringExtra("fragment"));
-            GGApp.GG_APP.setFragmentType(type);
+            FragmentData frag = fragments.getData(FragmentData.FragmentType.valueOf(intent.getStringExtra("fragment"))).get(0);
+            GGApp.GG_APP.setFragmentIndex(fragments.indexOf(frag));
         }
 
         if(intent != null && intent.getBooleanExtra("reload", false))
-            GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());
-
-        mStrings = new String[] {getResources().getString(R.string.substitute_schedule), getResources().getString(R.string.news), getResources().getString(R.string.cafeteria),
-                getResources().getString(R.string.exams)};
+            GGApp.GG_APP.refreshAsync(null, true, fragments.get(GGApp.GG_APP.getFragmentIndex()));
 
 
         NotificationManager nm =
@@ -205,8 +203,8 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.content_fragment, mContent, "gg_content_fragment");
         transaction.commit();
 
-        if(GGApp.GG_APP.getDataForFragment(GGApp.GG_APP.getFragmentType()) == null)
-            GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());
+        if(fragments.get(GGApp.GG_APP.getFragmentIndex()).getData() == null)
+            GGApp.GG_APP.refreshAsync(null, true, fragments.get(GGApp.GG_APP.getFragmentIndex()));
         
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -222,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                             public void run() {
                                 ((SwipeRefreshLayout) mContent.getView().findViewById(R.id.refresh)).setRefreshing(false);
                             }
-                        }, true, GGApp.GG_APP.getFragmentType());
+                        }, true, fragments.get(GGApp.GG_APP.getFragmentIndex()));
                         return true;
                     case R.id.action_settings:
                         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
@@ -258,8 +256,8 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setSubtitleTextColor(Color.WHITE);
         mToolbar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolbar.setTitle(GGApp.GG_APP.school.name);
-        Log.d("ggvp", "fragment type " + GGApp.GG_APP.getFragmentType());
-        mToolbar.setSubtitle(mStrings[Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType())]);
+        Log.d("ggvp", "fragment type " + fragments.get(GGApp.GG_APP.getFragmentIndex()));
+        mToolbar.setSubtitle(fragments.get(GGApp.GG_APP.getFragmentIndex()).name);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             GGApp.GG_APP.setStatusBarColorTransparent(getWindow()); // because of the navigation drawer
@@ -299,27 +297,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Menu menu = navigationView.getMenu();
+        menu.clear();
+        for(int i = 0; i < fragments.size(); i++) {
+            MenuItem item = menu.add(R.id.fragments, Menu.NONE, i, fragments.get(i).name);
+            item.setIcon(fragments.get(i).getIconRes());
+        }
+
+        menu.add(R.id.settings, R.id.settings_item, fragments.size(), R.string.settings);
+        menu.setGroupCheckable(R.id.fragments, true, true);
+        menu.setGroupCheckable(R.id.settings, false, false);
+
         final Menu navMenu = navigationView.getMenu();
-        selectedItem = Arrays.asList(GGApp.FragmentType.values()).indexOf(GGApp.GG_APP.getFragmentType());
+        selectedItem = GGApp.GG_APP.getFragmentIndex();
         if(selectedItem != -1)
             navMenu.getItem(selectedItem).setChecked(true);
 
-        for(int i = 0; i < 4; i++) {
-            MenuItem item = navMenu.getItem(i);
-
-            item.setVisible(GGApp.GG_APP.school.fragments.contains(GGApp.FragmentType.values()[i]));
-        }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
-                if(menuItem.getItemId() == R.id.navigation_drawer_settings) {
+                if(menuItem.getItemId() == R.id.settings_item) {
                     mDrawerLayout.closeDrawers();
                     Intent i = new Intent(MainActivity.this, SettingsActivity.class);
                     startActivityForResult(i, 1);
                 } else {
-                    GGApp.FragmentType type = menuIdToType(menuItem.getItemId());
-                    if(GGApp.GG_APP.getFragmentType() != type) {
-                        GGApp.GG_APP.setFragmentType(type);
+                    final int index = menuItem.getOrder();
+                    if(GGApp.GG_APP.getFragmentIndex() != index) {
+                        GGApp.GG_APP.setFragmentIndex(index);
                         menuItem.setChecked(true);
                         mToolbar.setSubtitle(menuItem.getTitle());
                         mContent = createFragment();
@@ -335,8 +339,8 @@ public class MainActivity extends AppCompatActivity {
                             public void onAnimationEnd(Animation animation) {
                                 FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_fragment);
                                 contentFrame.setVisibility(View.INVISIBLE);
-                                if(GGApp.GG_APP.getDataForFragment(GGApp.GG_APP.getFragmentType()) == null)
-                                    GGApp.GG_APP.refreshAsync(null, true, GGApp.GG_APP.getFragmentType());
+                                if(fragments.get(index).getData() == null)
+                                    GGApp.GG_APP.refreshAsync(null, true, fragments.get(index));
 
                                 removeAllFragments();
 
@@ -431,9 +435,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            //GGApp.GG_APP.recreateProvider();
-            //setTheme(GGApp.GG_APP.provider.getTheme());
-            mNavigationSchoolpicture = (ImageView) mNavigationHeader.findViewById(R.id.navigation_schoolpicture);
+            /*mNavigationSchoolpicture = (ImageView) mNavigationHeader.findViewById(R.id.navigation_schoolpicture);
             mNavigationSchoolpicture.setImageBitmap(GGApp.GG_APP.school.loadImage());
             mNavigationSchoolpictureText = (TextView) mNavigationHeader.findViewById(R.id.drawer_image_text);
             mNavigationSchoolpictureText.setText(GGApp.GG_APP.school.name);
@@ -447,7 +449,7 @@ public class MainActivity extends AppCompatActivity {
                 ((SubstFragment)mContent).mTabLayout.setBackgroundColor(GGApp.GG_APP.school.getColor());
                 mContent.setFragmentLoading();
             }
-            mContent.updateFragment();
+            mContent.updateFragment();*/
         }
 
     }

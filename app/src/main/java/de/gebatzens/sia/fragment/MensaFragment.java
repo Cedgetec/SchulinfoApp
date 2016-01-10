@@ -1,5 +1,6 @@
 /*
  * Copyright 2015 Fabian Schultis, Hauke Oldsen
+ * Copyright 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,17 +48,13 @@ import de.gebatzens.sia.data.Mensa;
 public class MensaFragment extends RemoteDataFragment {
 
     SwipeRefreshLayout swipeContainer;
-    Boolean screen_orientation_horizotal = false;
-
-    public MensaFragment() {
-        type = GGApp.FragmentType.MENSA;
-    }
+    Boolean screenOrientationHorizontal = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle bundle) {
         ((MainActivity) getActivity()).updateMenu(R.menu.toolbar_menu);
         ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.fragment_mensa, group, false);
-        if(GGApp.GG_APP.mensa != null)
+        if(getFragment().getData() != null)
             createRootView(inflater, vg);
         return vg;
     }
@@ -87,7 +84,7 @@ public class MensaFragment extends RemoteDataFragment {
                         });
 
                     }
-                }, true, GGApp.FragmentType.MENSA);
+                }, true, getFragment());
             }
         });
         // Configure the refreshing colors
@@ -109,10 +106,10 @@ public class MensaFragment extends RemoteDataFragment {
         lroot.addView(sv);
         sv.addView(l);
 
-        if(GGApp.GG_APP.mensa.isEmpty()) {
+        if(((Mensa) getFragment().getData()).isEmpty()) {
             createNoEntriesCard(l, inflater);
         } else {
-            for (Mensa.MensaItem item : GGApp.GG_APP.mensa) {
+            for (Mensa.MensaItem item : ((Mensa) getFragment().getData())) {
                 if (!item.isPast()) {
                     //try {
                         l.addView(createCardItem(item, inflater));
@@ -150,7 +147,7 @@ public class MensaFragment extends RemoteDataFragment {
         ((TextView) mcv.findViewById(R.id.mcv_dessert)).setText(getResources().getString(R.string.dessert) + ": " + mensa_item.dessert);
         ((TextView) mcv.findViewById(R.id.mcv_day)).setText(getDayByDate(mensa_item.date));
         ((ImageView) mcv.findViewById(R.id.mcv_imgvegi)).setImageBitmap((Integer.valueOf(mensa_item.vegetarian) == 1) ? BitmapFactory.decodeResource(getResources(), R.drawable.ic_vegetarian) : BitmapFactory.decodeResource(getResources(), R.drawable.ic_meat));
-        if(screen_orientation_horizotal) {
+        if(screenOrientationHorizontal) {
             LinearLayout mcvImageContainer = (LinearLayout) mcv.findViewById(R.id.mcv_image_container);
             ViewGroup.LayoutParams mcvImageContainerLayoutParams = mcvImageContainer.getLayoutParams();
             mcvImageContainerLayoutParams.height = toPixels(240);

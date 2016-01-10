@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,13 +37,16 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import de.gebatzens.sia.APIException;
+import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
-import de.gebatzens.sia.APIException;
 
 public abstract class RemoteDataFragment extends Fragment {
 
-    GGApp.FragmentType type;
+    public FragmentData getFragment() {
+        return GGApp.GG_APP.school.fragments.get(getArguments().getInt("fragment"));
+    }
 
     public abstract void createView(LayoutInflater inflater, ViewGroup vg);
     public abstract ViewGroup getContentView();
@@ -193,7 +196,7 @@ public abstract class RemoteDataFragment extends Fragment {
     }
 
     public void createRootView(final LayoutInflater inflater, ViewGroup vg) {
-        RemoteData data = GGApp.GG_APP.getDataForFragment(type);
+        RemoteData data = getFragment().getData();
         if(data == null) {
             setFragmentLoading();
         } else if(data.getThrowable() != null) {
@@ -219,7 +222,7 @@ public abstract class RemoteDataFragment extends Fragment {
         LinearLayout l = new LinearLayout(getActivity());
         l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         l.setOrientation(LinearLayout.VERTICAL);
-        if(GGApp.GG_APP.getDataForFragment(type) != null)
+        if(getFragment().getData() != null)
             createRootView(inflater, l);
         return l;
     }
@@ -228,7 +231,7 @@ public abstract class RemoteDataFragment extends Fragment {
     public void onViewCreated(View v, Bundle b) {
         super.onViewCreated(v, b);
 
-        if(GGApp.GG_APP.getDataForFragment(type) == null) {
+        if(getFragment().getData() == null) {
             getContentView().addView(createLoadingView());
         }
 

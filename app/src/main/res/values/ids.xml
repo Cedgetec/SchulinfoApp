@@ -4,4 +4,9 @@
 
     <item name="reload_button" type="id"/>
 
+    <!-- ids for navigation menu -->
+    <item name="fragments" type="id"/>
+    <item name="settings" type="id"/>
+    <item name="settings_item" type="id"/>
+
 </resources>

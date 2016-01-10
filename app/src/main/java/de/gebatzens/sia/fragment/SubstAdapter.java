@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,17 +28,19 @@ public class SubstAdapter extends FragmentStatePagerAdapter {
 
     ViewPager viewPager;
     GGPlan.GGPlans plans;
+    SubstFragment fragment;
     
-    public SubstAdapter(Fragment m, Bundle savedState, ViewPager vp) {
+    public SubstAdapter(SubstFragment m, Bundle savedState, ViewPager vp) {
         super(m.getChildFragmentManager());
         this.viewPager = vp;
-        plans = GGApp.GG_APP.plans;
+        plans = (GGPlan.GGPlans) m.getFragment().getData();
         GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 notifyDataSetChanged();
             }
         });
+        this.fragment = m;
 
     }
 
@@ -70,10 +72,13 @@ public class SubstAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         SubstPagerFragment fragment = new SubstPagerFragment();
+        Bundle params = new Bundle();
+        params.putInt("fragment", GGApp.GG_APP.school.fragments.indexOf(this.fragment.getFragment()));
         if(position == 0)
-            fragment.setParams(SubstPagerFragment.INDEX_OVERVIEW);
+            params.putInt("index", SubstPagerFragment.INDEX_OVERVIEW);
         else
-            fragment.setParams(position - 1);
+            params.putInt("index", position - 1);
+        fragment.setArguments(params);
         return fragment;
     }
 

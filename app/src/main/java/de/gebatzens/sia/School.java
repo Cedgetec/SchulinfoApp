@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,8 +52,29 @@ public class School {
     public String website;
     public String city;
     public boolean loginNeeded;
-    public List<GGApp.FragmentType> fragments;
+    public FragmentData.FragmentList fragments;
     public int users;
+
+    public School() {
+
+    }
+
+    public School(School copy) {
+        this.sid = copy.sid;
+        this.name = copy.name;
+        this.color = copy.color;
+        this.darkColor = copy.darkColor;
+        this.accentColor = copy.accentColor;
+        this.theme = copy.theme;
+        this.colorArray = copy.colorArray;
+        this.themeName = copy.themeName;
+        this.image = copy.image;
+        this.website = copy.website;
+        this.city = copy.city;
+        this.loginNeeded = copy.loginNeeded;
+        this.fragments = copy.fragments;
+        this.users = copy.users;
+    }
 
     public static List<School> LIST = new ArrayList<School>();
 
@@ -129,15 +150,25 @@ public class School {
         s.users = school.optInt("users", 0);
         s.loadTheme();
 
-        s.fragments = new ArrayList<>();
+        s.fragments = new FragmentData.FragmentList();
         JSONArray frags = school.optJSONArray("fragments");
         if(frags != null) {
             for(int i = 0; i < frags.length(); i++) {
-                s.fragments.add(GGApp.FragmentType.valueOf(frags.getJSONObject(i).getString("type")));
+                JSONObject obj = frags.getJSONObject(i);
+
+                FragmentData.FragmentType type = FragmentData.FragmentType.valueOf(obj.getString("type"));
+                String data = obj.optString("data", "");
+
+                if (type == FragmentData.FragmentType.PDF) {
+                    String name = obj.optString("name", "PDF");
+                    s.fragments.add(new FragmentData(type, data, name));
+                } else {
+                    s.fragments.add(new FragmentData(type, data));
+                }
             }
 
         } else {
-            s.fragments.add(GGApp.FragmentType.PLAN);
+            s.fragments.add(new FragmentData(FragmentData.FragmentType.PLAN, ""));
         }
 
     }
@@ -152,7 +183,8 @@ public class School {
         try {
             GGRemote.APIResponse re = GGApp.GG_APP.remote.doRequest("/getSchools", null);
             if(re.state == GGRemote.APIState.SUCCEEDED) {
-                LIST.clear();
+                //LIST.clear();
+                LIST = new ArrayList<>();
                 JSONArray schools = (JSONArray) re.data;
                 for(int i = 0; i < schools.length(); i++) {
                     JSONObject school = schools.getJSONObject(i);
@@ -195,8 +227,15 @@ public class School {
                 writer.name("city").value(s.city);
                 writer.name("users").value(s.users);
                 writer.name("fragments").beginArray();
-                for(GGApp.FragmentType type : s.fragments) {
-                    writer.beginObject().name("type").value(type.toString()).endObject();
+                for(FragmentData frag : s.fragments) {
+                    writer.beginObject();
+                    writer.name("type").value(frag.type.toString());
+                    writer.name("data").value(frag.getParams());
+                    if(frag.type == FragmentData.FragmentType.PDF) {
+                        writer.name("name").value(frag.name);
+                    }
+
+                    writer.endObject();
                 }
                 writer.endArray();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  */
 package de.gebatzens.sia.fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -33,8 +31,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -55,15 +51,11 @@ public class ExamFragment extends RemoteDataFragment {
     SwipeRefreshLayout swipeContainer;
     int cardColorIndex = 0;
 
-    public ExamFragment() {
-        type = GGApp.FragmentType.EXAMS;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle b) {
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_exam, vg, false);
         ((MainActivity) getActivity()).updateMenu(R.menu.toolbar_exam_menu);
-        if(GGApp.GG_APP.exams != null)
+        if(getFragment().getData() != null)
             createRootView(inflater, v);
         return v;
     }
@@ -93,7 +85,7 @@ public class ExamFragment extends RemoteDataFragment {
                         });
 
                     }
-                }, true, GGApp.FragmentType.EXAMS);
+                }, true, getFragment());
             }
         });
         // Configure the refreshing colors
@@ -156,7 +148,7 @@ public class ExamFragment extends RemoteDataFragment {
 
         final List<String> classes = new ArrayList<>();
         classes.add(getString(R.string.overview));
-        classes.addAll(GGApp.GG_APP.exams.getAllClasses());
+        classes.addAll(((Exams) getFragment().getData()).getAllClasses());
         Spinner classSpinner = new Spinner(getActivity());
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, classes);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -191,7 +183,7 @@ public class ExamFragment extends RemoteDataFragment {
                 lcontent.addView(l);
 
                 if (position == 0) {
-                    List<Exams.ExamItem> list = GGApp.GG_APP.exams.getSelectedItems(false);
+                    List<Exams.ExamItem> list = ((Exams) getFragment().getData()).getSelectedItems(false);
                     tv5.setText(getString(R.string.entries) + " " + list.size());
                     if (list.size() == 0) {
                         createNoEntriesCard(l, inflater);
@@ -205,9 +197,9 @@ public class ExamFragment extends RemoteDataFragment {
                     list.mainFilter.type = Filter.FilterType.CLASS;
                     list.mainFilter.filter = cl;
 
-                    List<Exams.ExamItem> items = GGApp.GG_APP.exams.filter(list, false);
+                    List<Exams.ExamItem> items = ((Exams) getFragment().getData()).filter(list, false);
                     tv5.setText(getString(R.string.entries) + " " + items.size());
-                    if (GGApp.GG_APP.exams.size() != 0) {
+                    if (((Exams) getFragment().getData()).size() != 0) {
                         createContentList(items, cl, l, inflater, true);
                     } else {
                         createNoEntriesCard(l, inflater);
@@ -266,7 +258,7 @@ public class ExamFragment extends RemoteDataFragment {
                     new Thread() {
                         @Override
                         public void run() {
-                            GGApp.GG_APP.exams.save();
+                            getFragment().getData().save();
                         }
                     }.start();
 

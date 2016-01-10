@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.Html;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,18 +57,6 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     // current list for non-overview fragments
     List<GGPlan.Entry> currentList;
-
-    public SubstPagerFragment() {
-        super.type = GGApp.FragmentType.PLAN;
-    }
-
-    public void setParams(int index) {
-        this.index = index;
-        if(GGApp.GG_APP.plans != null && index >= 0) {
-            plan = GGApp.GG_APP.plans.get(index);
-        }
-
-    }
 
     /**
      * Creates cards for the given list of entries
@@ -174,10 +161,11 @@ public class SubstPagerFragment extends RemoteDataFragment {
         group.addView(sv);
 
         if(index == INDEX_INVALID) {
-            TextView tv = new TextView(getActivity());
+            /*TextView tv = new TextView(getActivity());
             tv.setText("Error: " + type);
             l.addView(tv);
-            Log.w("ggvp", "setParams not called " + type + " " + this + " " + getParentFragment());
+            Log.w("ggvp", "bundle " + type + " " + this + " " + getParentFragment());*/
+            throw new IllegalArgumentException(("index is INDEX_INVALID"));
         } else if(index == INDEX_OVERVIEW && !GGApp.GG_APP.filters.mainFilter.filter.equals("")) {
             // Overview, filter applied
 
@@ -192,7 +180,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.addView(l2);
             l0.addView(cv2);
 
-            TextView tv4 = createTextView(getTimeDiff(getActivity(), GGApp.GG_APP.plans.loadDate), 13, inflater, l2);
+            TextView tv4 = createTextView(getTimeDiff(getActivity(), ((GGPlan.GGPlans) getFragment().getData()).loadDate), 13, inflater, l2);
             tv4.setTag("gg_time");
             tv4.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
@@ -203,7 +191,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             tv2.setGravity(Gravity.END | Gravity.CENTER);
             tv2.setPadding(0,0,toPixels(16),0);
 
-            for(GGPlan plan : GGApp.GG_APP.plans) {
+            for(GGPlan plan : ((GGPlan.GGPlans) getFragment().getData())) {
                 List<GGPlan.Entry> list = plan.filter(filters);
                 TextView tv = createTextView(translateDay(plan.date), 27, inflater, l);
                 tv.setPadding(toPixels(2.8f), toPixels(20), 0, 0);
@@ -253,7 +241,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.addView(l2);
             l0.addView(cv2);
 
-            TextView tv5 = createTextView(getTimeDiff(getActivity(), GGApp.GG_APP.plans.loadDate), 13, inflater, l2);
+            TextView tv5 = createTextView(getTimeDiff(getActivity(), ((GGPlan.GGPlans) getFragment().getData()).loadDate), 13, inflater, l2);
             tv5.setTag("gg_time");
             tv5.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
@@ -382,9 +370,14 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle bundle) {
+        this.index = getArguments().getInt("index");
+        if(getFragment().getData() != null && index >= 0) {
+            plan = ((GGPlan.GGPlans) getFragment().getData()).get(index);
+        }
+
         LinearLayout l = new LinearLayout(getActivity());
         l.setOrientation(LinearLayout.VERTICAL);
-        if(GGApp.GG_APP.plans != null)
+        if(getFragment().getData() != null)
             createRootView(inflater, l);
         return l;
     }
