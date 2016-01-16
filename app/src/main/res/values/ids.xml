@@ -9,4 +9,9 @@
     <item name="settings" type="id"/>
     <item name="settings_item" type="id"/>
 
+    <item name="label" type="id"/>
+    <item name="cvroot" type="id"/>
+    <item name="messages_list" type="id"/>
+    <item name="spinner" type="id"/>
+
 </resources>

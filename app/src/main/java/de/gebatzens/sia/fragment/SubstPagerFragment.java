@@ -20,6 +20,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,6 +42,7 @@ import java.util.List;
 import java.util.Locale;
 
 import de.gebatzens.sia.FilterActivity;
+import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Filter;
@@ -56,7 +59,6 @@ public class SubstPagerFragment extends RemoteDataFragment {
     int spinnerPos = 0, modeSpinnerPos = 0;
 
     // current list for non-overview fragments
-    List<GGPlan.Entry> currentList;
 
     /**
      * Creates cards for the given list of entries
@@ -65,74 +67,53 @@ public class SubstPagerFragment extends RemoteDataFragment {
      * @param group The cards are added to this view group
      * @param inflater
      * @param type bitwise CARD_CLASS CARD_LESSON
-     * @see #createCardItem(GGPlan.Entry, android.view.LayoutInflater, int)
      */
     private void createCardItems(List<GGPlan.Entry> list, ViewGroup group, LayoutInflater inflater, int type) {
         if(list.size() == 0) {
-            FrameLayout f2 = new FrameLayout(getActivity());
-            f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
-            CardView cv = createCardView();
-            cv.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
-
-            f2.addView(cv);
-            createTextView(getResources().getString(R.string.no_entries), 20, inflater, cv);
-            group.addView(f2);
+            createNoEntriesCard(group, inflater);
+        } else {
+            for (GGPlan.Entry e : list) {
+                SubstListAdapter.SubstViewHolder cv = createCardItem(inflater, group);
+                cv.update(e, type);
+                group.addView(cv.itemView);
+            }
         }
 
-        for(GGPlan.Entry e : list) {
-            FrameLayout f2 = new FrameLayout(getActivity());
-            f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
-            f2.addView(createCardItem(e, inflater, type));
-            group.addView(f2);
-        }
     }
 
     int cardColorIndex = 0;
 
-
     /**
      * Creates a card for the given entry
      *
-     * @param entry
-     * @param i
-     * @param type
      * @return the view
      */
-    private CardView createCardItem(GGPlan.Entry entry, LayoutInflater i, int type) {
-        CardView cv = createCardView();
-        String[] colors = getActivity().getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
+    public SubstListAdapter.SubstViewHolder createCardItem(LayoutInflater i, ViewGroup parent) {
+        FrameLayout f2 = new FrameLayout(getActivity());
+        f2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        f2.setPadding(RemoteDataFragment.toPixels(1.3f), RemoteDataFragment.toPixels(0.3f), RemoteDataFragment.toPixels(1.3f), RemoteDataFragment.toPixels(0.3f));
+        CardView cv = (CardView) i.inflate(R.layout.basic_cardview, parent, false);
+        f2.addView(cv);
+        cv.setId(R.id.cvroot);
+        String[] colors = GGApp.GG_APP.getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
         cv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
         cardColorIndex++;
         if(cardColorIndex == colors.length)
             cardColorIndex = 0;
         i.inflate(R.layout.cardview_entry, cv, true);
-        ((TextView) cv.findViewById(R.id.cv_hour)).setText((type & CARD_LESSON) != 0 ? entry.lesson : entry.clazz);
-        ((TextView) cv.findViewById(R.id.cv_header)).setText(entry.type + (entry.teacher.isEmpty() ? "" : " [" + entry.teacher + "]"));
-        TextView tv = (TextView) cv.findViewById(R.id.cv_detail);
-        tv.setText(entry.comment + (entry.room.isEmpty() ? "" : (entry.comment.isEmpty() ? "" : "\n") + getResources().getString(R.string.room) + " " + entry.room));
-        if(tv.getText().toString().trim().isEmpty())
-            ((ViewGroup) tv.getParent()).removeView(tv);
 
-        String subText = ((type & (CARD_LESSON | CARD_CLASS)) == (CARD_LESSON | CARD_CLASS) ? entry.clazz + " " : "") + entry.subject;
-
-        if(subText.trim().isEmpty())
-            cv.findViewById(R.id.cv_subject).setVisibility(View.GONE);
-        else
-            ((TextView) cv.findViewById(R.id.cv_subject)).setText(Html.fromHtml(subText));
-        return cv;
+        return new SubstListAdapter.SubstViewHolder(f2);
     }
 
     /**
      * Creates TextViews containing the special messages of the given plan
      *
-     * @param plan
-     * @return
      */
-    private ArrayList<TextView> createSMViews(GGPlan plan) {
+    public static ArrayList<TextView> createSMViews(List<String> messages, ViewGroup parent) {
         ArrayList<TextView> tvl = new ArrayList<TextView>();
 
-        for(String special : plan.special) {
-            TextView tv2 = new TextView(getActivity());
+        for(String special : messages) {
+            TextView tv2 = new TextView(parent.getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(0, toPixels(2), 0, 0);
             tv2.setLayoutParams(params);
@@ -146,19 +127,58 @@ public class SubstPagerFragment extends RemoteDataFragment {
         return tvl;
     }
 
+    public SubstListAdapter.MessageViewHolder createSMCard(ViewGroup parent, LayoutInflater inflater) {
+        FrameLayout f2 = new FrameLayout(getActivity());
+        f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
+        CardView cv = (CardView) inflater.inflate(R.layout.basic_cardview, f2, false);
+        cv.setId(R.id.cvroot);
+        cv.setCardBackgroundColor(GGApp.GG_APP.school.getColor());
+        f2.addView(cv);
+        LinearLayout ls = new LinearLayout(getActivity());
+        ls.setId(R.id.messages_list);
+        ls.setOrientation(LinearLayout.VERTICAL);
+        TextView tv3 = createTextView(getResources().getString(R.string.special_messages), 19, inflater, ls);
+        tv3.setTextColor(Color.WHITE);
+        tv3.setPadding(0,0,0,toPixels(6));
+        cv.addView(ls);
+
+        return new SubstListAdapter.MessageViewHolder(f2);
+
+    }
+
+    @Override
+    public void updateFragment() {
+        switch(index) {
+            case INDEX_OVERVIEW:
+                super.updateFragment();
+                break;
+            case INDEX_INVALID:
+                return;
+            default:
+                plan = ((GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData()).get(index);
+
+                ArrayList<String> items = new ArrayList<String>();
+                items.add(getActivity().getString(R.string.all));
+                items.addAll(plan.getAllClasses());
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
+
+                Spinner spinner = (Spinner) getContentView().findViewById(R.id.spinner);
+                spinner.setAdapter(adapter);
+                spinner.getOnItemSelectedListener().onItemSelected(spinner, spinner, spinnerPos, 0);
+                break;
+
+        }
+    }
+
     @Override
     public void createView(final LayoutInflater inflater, ViewGroup group) {
 
         cardColorIndex = 0;
-        ScrollView sv = new ScrollView(getActivity());
-        sv.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
-        sv.setFillViewport(true);
-        sv.setTag("gg_scroll");
+
         LinearLayout l0 = new LinearLayout(getActivity());
         l0.setOrientation(LinearLayout.VERTICAL);
         LinearLayout l = new LinearLayout(getActivity());
         createRootLayout(l);
-        group.addView(sv);
 
         if(index == INDEX_INVALID) {
             /*TextView tv = new TextView(getActivity());
@@ -197,26 +217,20 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 tv.setPadding(toPixels(2.8f), toPixels(20), 0, 0);
                 tv.setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#a0a0a0" : "#6e6e6e"));
 
-                if (!plan.special.isEmpty()) {
-                    FrameLayout f2 = new FrameLayout(getActivity());
-                    f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
-                    CardView cv = createCardView();
-                    cv.setCardBackgroundColor(GGApp.GG_APP.school.getColor());
-                    f2.addView(cv);
-                    l.addView(f2);
-                    LinearLayout ls = new LinearLayout(getActivity());
-                    ls.setOrientation(LinearLayout.VERTICAL);
-                    TextView tv3 = createTextView(getResources().getString(R.string.special_messages), 19, inflater, ls);
-                    tv3.setTextColor(Color.WHITE);
-                    tv3.setPadding(0, 0, 0, toPixels(6));
-                    cv.addView(ls);
+                SubstListAdapter.MessageViewHolder messages = createSMCard(l, inflater);
+                messages.update(plan.special);
+                l.addView(messages.itemView);
 
-                    for (TextView tv1 : createSMViews(plan)) {
-                        ls.addView(tv1);
-                    }
-                }
                 createCardItems(list, l, inflater, filters.mainFilter.type != Filter.FilterType.CLASS ? CARD_LESSON | CARD_CLASS : CARD_LESSON);
             }
+
+            ScrollView sv = new ScrollView(getActivity());
+            sv.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
+            sv.setFillViewport(true);
+            sv.setTag("gg_scroll");
+
+            sv.addView(l0);
+            group.addView(sv);
 
         } else if(index == INDEX_OVERVIEW) {
             //Overview, no filter applied
@@ -230,6 +244,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 }
             });
 
+            ScrollView sv = new ScrollView(getActivity());
+            sv.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
+            sv.setFillViewport(true);
+            sv.setTag("gg_scroll");
+
+            sv.addView(l0);
+            group.addView(sv);
 
         } else {
             CardView cv2 = new CardView(getActivity());
@@ -247,7 +268,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
             LinearLayout l4 = new LinearLayout(getActivity());
             l4.setGravity(Gravity.END | Gravity.CENTER);
-            l4.setPadding(0,0,toPixels(16),0);
+            l4.setPadding(0, 0, toPixels(16), 0);
             
             l4.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -258,11 +279,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l4.addView(spinMode);
 
             final Spinner spin = new Spinner(getActivity());
+            spin.setId(R.id.spinner);
 
             ArrayList<String> items = new ArrayList<String>();
             items.add(getActivity().getString(R.string.all));
             items.addAll(plan.getAllClasses());
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
             spin.setAdapter(adapter);
             l4.addView(spin);
@@ -272,37 +294,33 @@ public class SubstPagerFragment extends RemoteDataFragment {
             spinMode.setSelection(modeSpinnerPos);
             spin.setSelection(spinnerPos);
 
-            if(!plan.special.isEmpty()) {
-                FrameLayout f2 = new FrameLayout(getActivity());
-                f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
-                CardView cv = createCardView();
-                cv.setCardBackgroundColor(GGApp.GG_APP.school.getColor());
-                f2.addView(cv);
-                l.addView(f2);
-                LinearLayout ls = new LinearLayout(getActivity());
-                ls.setOrientation(LinearLayout.VERTICAL);
-                TextView tv3 = createTextView(getResources().getString(R.string.special_messages), 19, inflater, ls);
-                tv3.setTextColor(Color.WHITE);
-                tv3.setPadding(0,0,0,toPixels(6));
-                cv.addView(ls);
-
-                for(TextView tv : createSMViews(plan)) {
-                    ls.addView(tv);
-                }
-            }
-
             final LinearLayout l3 = new LinearLayout(getActivity());
             l3.setOrientation(LinearLayout.VERTICAL);
             l.addView(l3);
 
+            RecyclerView recyclerView = new RecyclerView(getActivity());
+            final SubstListAdapter sla = new SubstListAdapter(this);
+            recyclerView.setAdapter(sla);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.setTag("gg_list");
+            l3.addView(recyclerView);
+
+            group.addView(l0);
+
             spinMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                boolean first = true;
+
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     modeSpinnerPos = position;
 
                     //ignore first call
-                    if(currentList != null)
+                    if(!first) {
                         spin.getOnItemSelectedListener().onItemSelected(spin, spin, spinnerPos, 0);
+                    }
+
+                    first = false;
                 }
 
                 @Override
@@ -314,29 +332,31 @@ public class SubstPagerFragment extends RemoteDataFragment {
             spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String item = adapter.getItem(position);
+                    String item = ((ArrayAdapter<String>) spin.getAdapter()).getItem(position);
 
                     spinnerPos = position;
 
-                    ((TextView) parent.getChildAt(0)).setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#e7e7e7" : "#212121"));
+                    TextView tv = (TextView) parent.getChildAt(0);
+                    if(tv != null)
+                        tv.setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#e7e7e7" : "#212121"));
 
 
                     if (!item.equals(getActivity().getString(R.string.all))) {
-                        l3.removeAllViews();
                         cardColorIndex = 0;
                         Filter.FilterList fl = new Filter.FilterList();
                         Filter main = new Filter();
                         fl.mainFilter = main;
                         main.type = Filter.FilterType.CLASS;
                         main.filter = item;
-                        createCardItems((currentList = plan.filter(fl)), l3, inflater, CARD_LESSON);
+                        //createCardItems((currentList = plan.filter(fl)), l3, inflater, CARD_LESSON);
+                        sla.updateData(plan.filter(fl), SubstListAdapter.PLAIN, true);
 
                     } else {
-                        l3.removeAllViews();
                         cardColorIndex = 0;
 
                         boolean sortByLesson = spinMode.getSelectedItemPosition() == 1;
-                        List<String> list = sortByLesson ? plan.getAllLessons() : plan.getAllClasses();
+                        sla.updateData(plan, sortByLesson ? SubstListAdapter.ALL_LESSONS : SubstListAdapter.ALL_CLASSES, true);
+                       /* List<String> list = sortByLesson ? plan.getAllLessons() : plan.getAllClasses();
                         for(String s : list) {
                             TextView tv = createTextView(sortByLesson ? (s + ". " + getResources().getString(R.string.lhour)) : s, 27, inflater, l3);
                             tv.setPadding(toPixels(2.8f), toPixels(20), 0, 0);
@@ -347,8 +367,9 @@ public class SubstPagerFragment extends RemoteDataFragment {
                             fl.mainFilter = main;
                             main.filter = s;
                             main.type = sortByLesson ? Filter.FilterType.LESSON : Filter.FilterType.CLASS;
-                            createCardItems((currentList = plan.filter(fl)), l3, inflater, sortByLesson ? CARD_CLASS : CARD_LESSON);
-                        }
+                            //createCardItems((currentList = plan.filter(fl)), l3, inflater, sortByLesson ? CARD_CLASS : CARD_LESSON);
+                            sla.updateData(plan.filter(fl), );
+                        }*/
                     }
                 }
 
@@ -359,8 +380,8 @@ public class SubstPagerFragment extends RemoteDataFragment {
             });
 
         }
+
         l0.addView(l);
-        sv.addView(l0);
     }
 
     @Override

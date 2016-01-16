@@ -48,12 +48,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
 
 import de.gebatzens.sia.data.Exams;
 import de.gebatzens.sia.fragment.ExamFragment;
 import de.gebatzens.sia.fragment.MensaFragment;
 import de.gebatzens.sia.fragment.NewsFragment;
+import de.gebatzens.sia.fragment.PDFFragment;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
 
@@ -72,10 +74,11 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     int selectedItem;
 
-    public RemoteDataFragment createFragment() {
+    public RemoteDataFragment getFragment() {
         FragmentData frag = GGApp.GG_APP.school.fragments.get(GGApp.GG_APP.getFragmentIndex());
 
-        RemoteDataFragment fr;
+        RemoteDataFragment fr = null;
+
         switch(frag.type) {
             case PLAN:
                 fr = new SubstFragment();
@@ -89,17 +92,15 @@ public class MainActivity extends AppCompatActivity {
             case EXAMS:
                 fr = new ExamFragment();
                 break;
-            default:
-                fr = null;
+            case PDF:
+                fr = new PDFFragment();
                 break;
         }
 
         Bundle bundle = new Bundle();
         bundle.putInt("fragment", GGApp.GG_APP.getFragmentIndex());
 
-        if(fr != null) {
-            fr.setArguments(bundle);
-        }
+        fr.setArguments(bundle);
 
         return fr;
 
@@ -196,10 +197,10 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        removeAllFragments();
+        //removeAllFragments();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        mContent = createFragment();
+        mContent = getFragment();
         transaction.replace(R.id.content_fragment, mContent, "gg_content_fragment");
         transaction.commit();
 
@@ -326,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
                         GGApp.GG_APP.setFragmentIndex(index);
                         menuItem.setChecked(true);
                         mToolbar.setSubtitle(menuItem.getTitle());
-                        mContent = createFragment();
+                        mContent = getFragment();
                         Animation fadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
                         fadeOut.setAnimationListener(new Animation.AnimationListener() {
 
@@ -342,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
                                 if(fragments.get(index).getData() == null)
                                     GGApp.GG_APP.refreshAsync(null, true, fragments.get(index));
 
-                                removeAllFragments();
+                                //removeAllFragments();
 
                                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.content_fragment, mContent, "gg_content_fragment");
@@ -448,8 +449,8 @@ public class MainActivity extends AppCompatActivity {
             if(GGApp.GG_APP.getFragmentType() == GGApp.FragmentType.PLAN) {
                 ((SubstFragment)mContent).mTabLayout.setBackgroundColor(GGApp.GG_APP.school.getColor());
                 mContent.setFragmentLoading();
-            }
-            mContent.updateFragment();*/
+            }*/
+            mContent.updateFragment();
         }
 
     }

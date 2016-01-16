@@ -40,6 +40,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.gebatzens.sia.data.Exams;
+
 public class School {
 
     public String sid;
@@ -151,6 +153,7 @@ public class School {
         s.loadTheme();
 
         s.fragments = new FragmentData.FragmentList();
+
         JSONArray frags = school.optJSONArray("fragments");
         if(frags != null) {
             for(int i = 0; i < frags.length(); i++) {
@@ -159,11 +162,28 @@ public class School {
                 FragmentData.FragmentType type = FragmentData.FragmentType.valueOf(obj.getString("type"));
                 String data = obj.optString("data", "");
 
-                if (type == FragmentData.FragmentType.PDF) {
-                    String name = obj.optString("name", "PDF");
-                    s.fragments.add(new FragmentData(type, data, name));
-                } else {
-                    s.fragments.add(new FragmentData(type, data));
+                FragmentData frag = new FragmentData(type, data);
+                s.fragments.add(frag);
+
+                if(obj.has("name")) {
+                    frag.setName(obj.getString("name"));
+                }
+
+                if(obj.has("icon")) {
+                    switch(obj.getString("icon")) {
+                        case "mensa":
+                            frag.setIconRes(R.drawable.ic_mensa);
+                            break;
+                        case "subst":
+                            frag.setIconRes(R.drawable.ic_substitution);
+                            break;
+                        case "exam":
+                            frag.setIconRes(R.drawable.ic_exam);
+                            break;
+                        case "news":
+                            frag.setIconRes(R.drawable.ic_news);
+                            break;
+                    }
                 }
             }
 
@@ -183,7 +203,6 @@ public class School {
         try {
             GGRemote.APIResponse re = GGApp.GG_APP.remote.doRequest("/getSchools", null);
             if(re.state == GGRemote.APIState.SUCCEEDED) {
-                //LIST.clear();
                 LIST = new ArrayList<>();
                 JSONArray schools = (JSONArray) re.data;
                 for(int i = 0; i < schools.length(); i++) {
@@ -285,6 +304,14 @@ public class School {
             return BitmapFactory.decodeStream(GGApp.GG_APP.openFileInput(image));
         } catch (Exception e) {
             Log.w("ggvp", "school image not found " + image);
+
+            new Thread() {
+                @Override
+                public void run() {
+                   School.downloadImage(image);
+                }
+            }.run();
+
             return BitmapFactory.decodeResource(GGApp.GG_APP.getResources(), R.drawable.no_content);
         }
     }

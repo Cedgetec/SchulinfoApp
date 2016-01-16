@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
@@ -37,6 +38,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -187,7 +189,7 @@ public class GGRemote {
         for(int i = 0; i < array.length(); i++) {
             GGPlan.Entry e = new GGPlan.Entry();
             e.date = p.date;
-            p.entries.add(e);
+            p.add(e);
             JSONObject entry = array.getJSONObject(i);
             e.clazz = entry.getString("class");
             e.lesson = "" + entry.getInt("lesson");
@@ -242,6 +244,25 @@ public class GGRemote {
 
         return n;
 
+    }
+
+    public byte[] downloadStaticFile(String file) {
+        try {
+            APIResponse re = doRequest("/static?token=" + getToken() + "&file=" + URLEncoder.encode(file, "UTF-8"), null);
+
+            if(re.state == APIState.SUCCEEDED) {
+                byte[] data = Base64.decode((String) re.data, Base64.DEFAULT);
+
+                return data;
+            } else {
+                throw new APIException(re.state);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+
+        }
+
+        return null;
     }
 
     public Mensa getMensa(boolean toast) {

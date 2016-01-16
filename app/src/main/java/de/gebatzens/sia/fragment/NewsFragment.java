@@ -19,9 +19,7 @@ package de.gebatzens.sia.fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -33,7 +31,6 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.NewsFragmentDatabaseHelper;
 import de.gebatzens.sia.R;
@@ -53,42 +50,6 @@ public class NewsFragment extends RemoteDataFragment {
             createRootView(inflater, vg);
         mDatabaseHelper = new NewsFragmentDatabaseHelper(getActivity().getApplicationContext());
         return vg;
-    }
-
-    @Override
-    public void onViewCreated(View v, Bundle b) {
-        super.onViewCreated(v, b);
-
-        final SwipeRefreshLayout swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
-        if (GGApp.GG_APP.isDarkThemeEnabled()) {
-            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#424242"));
-        } else{
-            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
-        }
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                GGApp.GG_APP.refreshAsync(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeContainer.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                swipeContainer.setRefreshing(false);
-                            }
-                        });
-
-                    }
-                }, true, getFragment());
-            }
-        });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(R.color.custom_material_green,
-                R.color.custom_material_red,
-                R.color.custom_material_blue,
-                R.color.custom_material_orange);
-
     }
 
     @Override

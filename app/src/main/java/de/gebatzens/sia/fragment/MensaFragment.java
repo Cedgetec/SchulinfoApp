@@ -60,42 +60,6 @@ public class MensaFragment extends RemoteDataFragment {
     }
 
     @Override
-    public void onViewCreated(View v, Bundle b) {
-        super.onViewCreated(v, b);
-
-        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
-        if (GGApp.GG_APP.isDarkThemeEnabled()) {
-            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#424242"));
-        } else{
-            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
-        }
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                GGApp.GG_APP.refreshAsync(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeContainer.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                swipeContainer.setRefreshing(false);
-                            }
-                        });
-
-                    }
-                }, true, getFragment());
-            }
-        });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(R.color.custom_material_green,
-                R.color.custom_material_red,
-                R.color.custom_material_blue,
-                R.color.custom_material_orange);
-
-    }
-
-    @Override
     public void createView(LayoutInflater inflater, ViewGroup view) {
         LinearLayout lroot = (LinearLayout) view.findViewById(R.id.mensa_content);
         ScrollView sv = new ScrollView(getActivity());
@@ -127,7 +91,7 @@ public class MensaFragment extends RemoteDataFragment {
     }
 
     private CardView createCardItem(Mensa.MensaItem mensa_item, LayoutInflater i) {
-        CardView mcv = createCardView();
+        CardView mcv = (CardView) i.inflate(R.layout.basic_cardview, null);
         if (GGApp.GG_APP.isDarkThemeEnabled()) {
             mcv.setCardBackgroundColor(Color.DKGRAY);
         } else{

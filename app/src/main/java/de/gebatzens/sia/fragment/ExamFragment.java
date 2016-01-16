@@ -60,42 +60,6 @@ public class ExamFragment extends RemoteDataFragment {
         return v;
     }
 
-    @Override
-    public void onViewCreated(View v, Bundle b) {
-        super.onViewCreated(v, b);
-
-        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
-        if (GGApp.GG_APP.isDarkThemeEnabled()) {
-            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#424242"));
-        } else{
-            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
-        }
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                GGApp.GG_APP.refreshAsync(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeContainer.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                swipeContainer.setRefreshing(false);
-                            }
-                        });
-
-                    }
-                }, true, getFragment());
-            }
-        });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(R.color.custom_material_green,
-                R.color.custom_material_red,
-                R.color.custom_material_blue,
-                R.color.custom_material_orange);
-
-    }
-
     private void createContentList(List<Exams.ExamItem> list, String title, ViewGroup l, LayoutInflater inflater, boolean checkbox) {
         TextView tv = createTextView(title, 27, inflater, l);
         tv.setPadding(toPixels(2.8f), 0, 0, 0);
@@ -222,7 +186,7 @@ public class ExamFragment extends RemoteDataFragment {
     }
 
     private CardView createCardItem(final Exams.ExamItem examItem, LayoutInflater i, boolean checkbox) {
-        CardView ecv = createCardView();
+        CardView ecv = (CardView) i.inflate(R.layout.basic_cardview, null);
         String[] colors = getActivity().getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
         ecv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
         cardColorIndex++;

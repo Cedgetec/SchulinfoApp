@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * You may obtain a copy of the License 00+3at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -22,13 +22,12 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -73,22 +72,6 @@ public abstract class RemoteDataFragment extends Fragment {
         vg.removeAllViews();
 
         createRootView(getActivity().getLayoutInflater(), vg);
-    }
-
-    /**
-     * Creates an empty card view for app-wide use
-     * @return
-     */
-    public CardView createCardView() {
-        CardView c2 = new CardView(getActivity());
-        CardView.LayoutParams c2params = new CardView.LayoutParams(
-                CardView.LayoutParams.MATCH_PARENT,
-                CardView.LayoutParams.WRAP_CONTENT
-        );
-        c2.setLayoutParams(c2params);
-        c2.setUseCompatPadding(true);
-        c2.setContentPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
-        return c2;
     }
 
     public static int toPixels(float dp) {
@@ -168,13 +151,13 @@ public abstract class RemoteDataFragment extends Fragment {
     public void createNoEntriesCard(ViewGroup vg, LayoutInflater inflater) {
         FrameLayout f2 = new FrameLayout(getActivity());
         f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
-        CardView cv = createCardView();
+        CardView cv = (CardView) inflater.inflate(R.layout.basic_cardview, f2, false);
+        f2.addView(cv);
         if (GGApp.GG_APP.isDarkThemeEnabled()) {
             cv.setCardBackgroundColor(Color.parseColor("#424242"));
         } else{
             cv.setCardBackgroundColor(Color.parseColor("#ffffff"));
         }
-        f2.addView(cv);
         createTextView(getResources().getString(R.string.no_entries), 20, inflater, cv);
         vg.addView(f2);
     }
@@ -218,16 +201,6 @@ public abstract class RemoteDataFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle bundle) {
-        LinearLayout l = new LinearLayout(getActivity());
-        l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        l.setOrientation(LinearLayout.VERTICAL);
-        if(getFragment().getData() != null)
-            createRootView(inflater, l);
-        return l;
-    }
-
-    @Override
     public void onViewCreated(View v, Bundle b) {
         super.onViewCreated(v, b);
 
@@ -237,9 +210,41 @@ public abstract class RemoteDataFragment extends Fragment {
 
         FrameLayout contentFrame = (FrameLayout) getActivity().findViewById(R.id.content_fragment);
         contentFrame.setVisibility(View.VISIBLE);
-        ViewGroup fragmentLayout = (ViewGroup) getActivity().findViewById(R.id.fragment_layout);
+        /*ViewGroup fragmentLayout = (ViewGroup) getActivity().findViewById(R.id.fragment_layout);
         Animation fadeIn = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fade_in);
-        fragmentLayout.startAnimation(fadeIn);
+        fragmentLayout.startAnimation(fadeIn);*/
+
+        final SwipeRefreshLayout swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
+        if(swipeContainer != null) {
+            if (GGApp.GG_APP.isDarkThemeEnabled()) {
+                swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#424242"));
+            } else {
+                swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
+            }
+            // Setup refresh listener which triggers new data loading
+            swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    GGApp.GG_APP.refreshAsync(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipeContainer.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    swipeContainer.setRefreshing(false);
+                                }
+                            });
+
+                        }
+                    }, true, getFragment());
+                }
+            });
+            // Configure the refreshing colors
+            swipeContainer.setColorSchemeResources(R.color.custom_material_green,
+                    R.color.custom_material_red,
+                    R.color.custom_material_blue,
+                    R.color.custom_material_orange);
+        }
 
     }
 

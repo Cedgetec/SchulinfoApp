@@ -17,7 +17,6 @@
 package de.gebatzens.sia.fragment;
 
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -28,17 +27,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.Date;
 import java.util.List;
 
-import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.GGPlan;
@@ -68,11 +63,13 @@ public class SubstFragment extends RemoteDataFragment {
         List<Fragment> frags = getChildFragmentManager().getFragments();
         if(frags != null) {
             for(Fragment fr : frags) {
-                View v = fr.getView();
-                if(v != null) {
-                    v = v.findViewWithTag("gg_time");
-                    if(v != null) {
-                        ((TextView) v).setText(SubstPagerFragment.getTimeDiff(getActivity(), newTime));
+                if(fr != null) {
+                    View v = fr.getView();
+                    if (v != null) {
+                        v = v.findViewWithTag("gg_time");
+                        if (v != null) {
+                            ((TextView) v).setText(SubstPagerFragment.getTimeDiff(getActivity(), newTime));
+                        }
                     }
                 }
             }
@@ -81,6 +78,7 @@ public class SubstFragment extends RemoteDataFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         bundle = ((MainActivity) getActivity()).savedState;
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         substAdapter = new SubstAdapter(this, savedInstanceState, mViewPager);
@@ -89,7 +87,7 @@ public class SubstFragment extends RemoteDataFragment {
                 substAdapter.fragments.get(i).spinnerPos = bundle.getInt("ggvp_frag_spinner_" + i);
         }*/
         mViewPager.setAdapter(substAdapter);
-        mViewPager.setOffscreenPageLimit(3);
+        //mViewPager.setOffscreenPageLimit(3);
         if(bundle != null)
             mViewPager.setCurrentItem(bundle.getInt("ggvp_tab"));
 
@@ -100,49 +98,18 @@ public class SubstFragment extends RemoteDataFragment {
         mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         mTabLayout.setBackgroundColor(mToolbarColorId);
         mTabLayout.setupWithViewPager(mViewPager);
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mTabLayout.setPadding(toPixels(48), 0, toPixels(48), 0);
             mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        }
-        else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+        } else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         }
 
-        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
-        if (GGApp.GG_APP.isDarkThemeEnabled()) {
-            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#424242"));
-        } else{
-            swipeContainer.setProgressBackgroundColorSchemeColor(Color.parseColor("#ffffff"));
-        }
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                GGApp.GG_APP.refreshAsync(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeContainer.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                swipeContainer.setRefreshing(false);
-                            }
-                        });
-
-                    }
-                }, true, getFragment());
-            }
-        });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(R.color.custom_material_green,
-                R.color.custom_material_red,
-                R.color.custom_material_blue,
-                R.color.custom_material_orange);
-
         FrameLayout contentFrame = (FrameLayout) getActivity().findViewById(R.id.content_fragment);
         contentFrame.setVisibility(View.VISIBLE);
-        LinearLayout fragmentLayout = (LinearLayout) getActivity().findViewById(R.id.fragment_layout);
+        /*LinearLayout fragmentLayout = (LinearLayout) getActivity().findViewById(R.id.fragment_layout);
         Animation fadeIn = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fade_in);
-        fragmentLayout.startAnimation(fadeIn);
+        fragmentLayout.startAnimation(fadeIn);*/
 
     }
 
@@ -171,8 +138,6 @@ public class SubstFragment extends RemoteDataFragment {
 
     @Override
     public void updateFragment() {
-        //for(SubstPagerFragment frag : substAdapter.fragments)
-         //   frag.spinnerPos = 0;
         if(substAdapter != null)
             substAdapter.update((GGPlan.GGPlans) getFragment().getData());
     }
@@ -181,11 +146,13 @@ public class SubstFragment extends RemoteDataFragment {
         List<Fragment> frags = getChildFragmentManager().getFragments();
         if(frags != null) {
             for (Fragment fr : frags) {
-                View v = fr.getView();
-                if (v != null) {
-                    v = v.findViewWithTag("gg_scroll");
+                if(fr != null) {
+                    View v = fr.getView();
                     if (v != null) {
-                        ((ScrollView) v).setScrollY(0);
+                        v = v.findViewWithTag("gg_scroll");
+                        if (v != null) {
+                            v.setScrollY(0);
+                        }
                     }
                 }
             }

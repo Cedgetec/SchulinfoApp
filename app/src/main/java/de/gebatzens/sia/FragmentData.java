@@ -30,35 +30,57 @@ public class FragmentData {
     String params;
     String name;
     RemoteDataFragment.RemoteData data;
+    int icon;
 
-    public FragmentData(FragmentType type, String params, String name) {
+    public FragmentData(FragmentType type, String params) {
         this.type = type;
         this.params = params;
-        this.name = name;
-    }
 
-    public FragmentData(FragmentType type, String data) {
-        this(type, data, null);
-        int name = 0;
         switch(type) {
             case PLAN:
-                name = R.string.substitute_schedule;
+                icon = R.drawable.ic_substitution;
                 break;
             case EXAMS:
-                name = R.string.exams;
+                icon = R.drawable.ic_exam;
                 break;
             case MENSA:
-                name = R.string.cafeteria;
+                icon = R.drawable.ic_mensa;
                 break;
             case NEWS:
-                name = R.string.news;
+                icon = R.drawable.ic_news;
+                break;
+            default:
+                icon = 0;
+                break;
+        }
+
+        int namer = 0;
+        switch(type) {
+            case PLAN:
+                namer = R.string.substitute_schedule;
+                break;
+            case EXAMS:
+                namer = R.string.exams;
+                break;
+            case MENSA:
+                namer = R.string.cafeteria;
+                break;
+            case NEWS:
+                namer = R.string.news;
                 break;
             default:
                 break;
         }
 
-        this.name = GGApp.GG_APP.getString(name);
+        if(namer != 0) {
+            this.name = GGApp.GG_APP.getString(namer);
+        } else {
+            this.name = "unknown";
+        }
+    }
 
+    public void setName(String name) {
+        this.name = name;
     }
 
     public RemoteDataFragment.RemoteData getData() {
@@ -78,18 +100,11 @@ public class FragmentData {
     }
 
     public int getIconRes() {
-        switch(type) {
-            case PLAN:
-                return R.drawable.ic_substitution;
-            case EXAMS:
-                return R.drawable.ic_exam;
-            case MENSA:
-                return R.drawable.ic_mensa;
-            case NEWS:
-                return R.drawable.ic_news;
-            default:
-                return 0;
-        }
+        return icon;
+    }
+
+    public void setIconRes(int res) {
+        this.icon = res;
     }
 
     @Override

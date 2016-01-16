@@ -19,6 +19,7 @@ package de.gebatzens.sia.view;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -82,7 +83,13 @@ public class GGSwipeLayout extends SwipeRefreshLayout {
                 SubstPagerFragment frag = (SubstPagerFragment) vp.getAdapter().instantiateItem(vp, vp.getCurrentItem());
                 ScrollView sv = (ScrollView) frag.getView().findViewWithTag("gg_scroll");
 
-                return sv == null || sv.getScrollY() != 0;
+                if(sv == null) {
+                    RecyclerView lv = (RecyclerView) frag.getView().findViewWithTag("gg_list");
+                    return lv == null || lv.canScrollVertically(-1);
+                } else {
+                    return sv.getScrollY() != 0;
+                }
+
             case MENSA:
             case EXAMS:
                 sv = ((ScrollView) ((MainActivity) getContext()).mContent.getView().findViewWithTag("gg_scroll"));
@@ -105,6 +112,8 @@ public class GGSwipeLayout extends SwipeRefreshLayout {
                 int i = -c.getTop() + lv.getFirstVisiblePosition() * c.getHeight();
 
                 return i != 0;
+            case PDF:
+                return true;
         }
 
         return false;

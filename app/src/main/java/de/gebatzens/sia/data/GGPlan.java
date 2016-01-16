@@ -40,9 +40,8 @@ import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 
-public class GGPlan {
+public class GGPlan extends ArrayList<GGPlan.Entry> {
 
-    public ArrayList<Entry> entries = new ArrayList<Entry>();
     public Date date;
     public List<String> special = new ArrayList<String>();
 
@@ -120,7 +119,7 @@ public class GGPlan {
 
             for (int i = 0; i < newPlans.size(); i++) {
                 if (!newPlans.get(i).date.equals(this.get(i).date) ||
-                        newPlans.get(i).entries.size() != this.get(i).entries.size() || newPlans.get(i).special.size() != this.get(i).special.size())
+                        newPlans.get(i).size() != this.get(i).size() || newPlans.get(i).special.size() != this.get(i).special.size())
                     return true;
             }
 
@@ -129,7 +128,7 @@ public class GGPlan {
     }
 
     public void load(String file) throws Exception {
-        entries.clear();
+        clear();
         special.clear();
 
         InputStream in = GGApp.GG_APP.openFileInput(file);
@@ -173,12 +172,8 @@ public class GGPlan {
                             reader.skipValue();
 
                     }
-                    //if(!e.isValid()) {
-                    //    reader.close();
-                    //    return false;
-                    //}
-                    //Log.w("ggvp", "Loaded " + e);
-                    entries.add(e);
+
+                    add(e);
                     reader.endObject();
                 }
                 reader.endArray();
@@ -206,7 +201,7 @@ public class GGPlan {
 
             writer.name("entries");
             writer.beginArray();
-            for(Entry e : entries) {
+            for(Entry e : this) {
                 writer.beginObject();
                 writer.name("class").value(e.clazz);
                 writer.name("lesson").value(e.lesson);
@@ -230,7 +225,7 @@ public class GGPlan {
     public List<String> getAllClasses() {
         ArrayList<String> list = new ArrayList<String>();
 
-        for(Entry e : entries) {
+        for(Entry e : this) {
             if(!list.contains(e.clazz)) {
                 list.add(e.clazz);
             }
@@ -241,7 +236,7 @@ public class GGPlan {
     public List<String> getAllLessons() {
         ArrayList<String> list = new ArrayList<String>();
 
-        for(Entry e : entries) {
+        for(Entry e : this) {
             if(!list.contains(e.lesson)) {
                 list.add(e.lesson);
 
@@ -271,21 +266,22 @@ public class GGPlan {
     public boolean equals(Object o) {
         if(o instanceof GGPlan) {
             GGPlan plan = (GGPlan) o;
-            return plan.entries.equals(entries) && plan.date.equals(date) && plan.special.equals(special);
+            return super.equals(plan) && plan.date.equals(date) && plan.special.equals(special);
         } else
             return false;
 
     }
 
-    public List<Entry> filter(Filter.FilterList filters) {
-        ArrayList<Entry> list = new ArrayList<Entry>();
-        for(Entry e : entries) {
+    public GGPlan filter(Filter.FilterList filters) {
+        GGPlan list = new GGPlan();
+        for(Entry e : this) {
             if(filters.mainFilter.matches(e))
                 list.add(e);
         }
 
         for(Filter f : filters) {
-            ArrayList<Entry> rlist = new ArrayList<Entry>();
+            GGPlan rlist = new GGPlan();
+            rlist.date = date;
             for(Entry e : list)
                 if(f.matches(e))
                     rlist.add(e);

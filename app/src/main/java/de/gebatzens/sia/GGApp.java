@@ -32,7 +32,6 @@ import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
@@ -295,14 +294,6 @@ public class GGApp extends Application {
         return s == null ? school.themeName : s;
     }
 
-    public String getDefaultSID() {
-        return preferences.getString("sid", null);
-    }
-
-    public boolean appUpdatesEnabled() {
-        return preferences.getBoolean("autoappupdates", true);
-    }
-
     public void refreshAsync(final Runnable finished, final boolean updateFragments, final FragmentData frag) {
         new Thread() {
             @Override
@@ -317,28 +308,29 @@ public class GGApp extends Application {
                             plans.save();
 
 
-                        boolean recreate = false;
-
                         if(activity != null && (oldPlans == null || plans.size() != oldPlans.size())) {
-                            recreate = true;
+                            update = true;
                         } else if (updateFragments) {
-                            recreate = oldPlans.shouldRecreateView(plans);
+                            update = oldPlans.shouldRecreateView(plans);
 
                         }
 
-                        if(activity != null && recreate) {
+                        update = true;
+
+                        /*if(activity != null && recreate) {
                             activity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     activity.removeAllFragments();
                                     FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-                                    activity.mContent = activity.createFragment();
+                                    activity.mContent = activity.getFragment();
                                     transaction.replace(R.id.content_fragment, activity.mContent, "gg_content_fragment");
                                     transaction.commit();
                                 }
                             });
                             Log.d("ggvp", "RECRATE FRAGMENT");
-                        } else if(activity != null) {
+                        } else */
+                        if(activity != null) {
                             activity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -380,6 +372,8 @@ public class GGApp extends Application {
                         update = true;
                         break;
                     case PDF:
+                        update = true;
+                        frag.setData(new Mensa());
                         break;
                 }
 
