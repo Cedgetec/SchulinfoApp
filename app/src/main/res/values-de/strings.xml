@@ -11,7 +11,7 @@
     <string name="no_filter_applied">Kein Filter ausgewählt</string>
     <string name="main_filter_mode">Modus</string>
     <string name="main_filter_content">Filter</string>
-    <string name="filter_help">Der Hauptfilter sorgt dafür, dass für die Klasse, die du angegeben hast, der passende Auszug des Vertretungsplans angezeigt wird.\n\nWenn du dann bestimmte Fächer/Kurse nicht in deiner Übersicht sehen willst, kannst du sie m mit dem Kursfilter ausblenden.\nDu musst aber das auf dem Vertretungsplan verwendete Kürzel, z.B. lat1 oder fra2 eintragen.\nWenn du alle Lateinkurse ausblenden möchtest, schreibe einfach "lat"</string>
+    <string name="filter_help">Der Hauptfilter sorgt dafür, dass für die Klasse, die du angegeben hast, der passende Auszug des Vertretungsplans angezeigt wird.\n\nWenn du dann bestimmte Fächer/Kurse nicht in deiner Übersicht sehen willst, kannst du sie mit dem Kursfilter ausblenden.\nDu musst aber das auf dem Vertretungsplan verwendete Kürzel, z.B. lat1 oder fra2 eintragen.\nWenn du alle Lateinkurse ausblenden möchtest, schreibe einfach "lat"</string>
     <string name="settings">Einstellungen</string>
     <string name="again">Nochmal</string>
     <string name="login_required">Anmeldung benötigt!</string>
@@ -19,7 +19,7 @@
     <string name="login">Anmeldung</string>
     <string name="do_login_submit">Einloggen</string>
     <string name="username_or_password_wrong">Benutzername oder Passwort falsch</string>
-    <string name="could_not_connect">Konnte keine Verbindung zum Anmeldeserver herstellen</string>
+    <string name="could_not_connect">Keine Verbindung zum Anmeldeserver möglich</string>
     <string name="unknown_error_login">Unbekannter Fehler bei der Anmeldung</string>
     <string name="abort">Abbrechen</string>
     <string name="overview">Übersicht</string>
@@ -53,16 +53,16 @@
     <string name="username">Benutzername</string>
     <string name="general">Allgemein</string>
     <string name="show_notifications">Benachrichtigungen anzeigen</string>
-    <string name="notify_class">Benachrichtigen, wenn für deine Klasse etwas ausfällt</string>
+    <string name="notify_class">Bei Planänderungen für deine Klasse</string>
     <string name="automatic_updates">Automatisch aktualisieren</string>
-    <string name="only_update_over_wireless_lan">Den Vertretungsplan nur über WLAN automatisch aktualisieren</string>
+    <string name="only_update_over_wireless_lan">Nur über WLAN</string>
     <string name="information">Info</string>
     <string name="developer">Entwickler</string>
     <string name="developer_info">Informationen über die Entwickler der App</string>
     <string name="github">GitHub</string>
     <string name="license">Lizenz</string>
     <string name="build_version">Build-Version</string>
-    <string name="update_always">Den Vertretungsplan jederzeit automatisch aktualisieren</string>
+    <string name="update_always">Jederzeit</string>
     <string name="as_of">Stand</string>
     <string name="refresh">Aktualisieren</string>
     <string name="hide_subject">Fach/Kurs ausblenden</string>
@@ -149,6 +149,7 @@
     <string name="logged_in_as">Eingeloggt als %s</string>
     <string name="maintenance">Der Server wird gerade gewartet</string>
     <string name="unknown_error">Unbekannter Fehler</string>
+    <string name="light_summary">Illuminiere die Welt!</string>
 
     <string-array name="vibration_values">
         <item>Aus</item>

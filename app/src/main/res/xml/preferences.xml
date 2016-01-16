@@ -15,7 +15,7 @@
             android:key="notifications"
             android:defaultValue="true" />
         <CheckBoxPreference android:title="@string/notification_led"
-            android:summary=""
+            android:summary="@string/light_summary"
             android:defaultValue="true"
             android:key="notification_led"/>
         <ListPreference android:title="@string/vibration"
