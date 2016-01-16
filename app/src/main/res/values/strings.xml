@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SchoolinfoAPP</string>
+    <string name="app_name">SchoolinfoApp</string>
     <string name="drawer_open">Open navigation</string>
     <string name="drawer_close">Close navigation</string>
     <string name="schedule_change">Substitute schedule change</string>
