@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Cedgetec/SchulinfoAPP.svg?branch=master)](https://travis-ci.org/Cedgetec/SchulinfoAPP)
+[![Build Status](https://travis-ci.org/Cedgetec/SchulinfoAPP.svg?branch=master)](https://travis-ci.org/Cedgetec/SchulinfoApp)
 # SchulinfoAPP
 Die SchulinfoAPP für das Gymnasium Glinde und die Sachsenwaldschule. Aktuelle Versionen sind [hier](https://github.com/Cedgetec/SchulinfoAPP/releases)
 
