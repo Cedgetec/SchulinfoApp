@@ -26,16 +26,16 @@
 
     <!-- Light application themes -->
 
-    <style name="AppThemeEasterLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#00830c</item>
-        <item name="colorPrimaryDark">#00700b</item>
-        <item name="colorAccent">#088614</item>
-        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Winter.Light</item>
-    </style>
     <style name="AppThemeWinterLight" parent="AppTheme.Base.Light">
         <item name="colorPrimary">#1973ac</item>
         <item name="colorPrimaryDark">#156191</item>
         <item name="colorAccent">#1973ac</item>
+        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Easter.Light</item>
+    </style>
+    <style name="AppThemeEasterLight" parent="AppTheme.Base.Light">
+        <item name="colorPrimary">#00830c</item>
+        <item name="colorPrimaryDark">#00700b</item>
+        <item name="colorAccent">#00830c</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Winter.Light</item>
     </style>
     <style name="AppThemeRedLight" parent="AppTheme.Base.Light">
@@ -165,8 +165,8 @@
     <style name="AppThemeEasterDark" parent="AppTheme.Base.Dark">
         <item name="colorPrimary">#086f00</item>
         <item name="colorPrimaryDark">#043500</item>
-        <item name="colorAccent">#0a8900</item>
-        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Winter.Dark</item>
+        <item name="colorAccent">#086f00</item>
+        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Easter.Dark</item>
     </style>
     <style name="AppThemeRedDark" parent="AppTheme.Base.Dark">
         <item name="colorPrimary">#D32F2F</item>
@@ -306,7 +306,7 @@
         <item name="colorAccent">#1973ac</item>
     </style>
     <style name="Theme.AlertDialog.Easter.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#04a30c</item>
+        <item name="colorAccent">#00830c</item>
     </style>
     <style name="Theme.AlertDialog.Red.Light" parent="Theme.AlertDialog.Base.Light">
         <item name="colorAccent">#F44336</item>
@@ -372,7 +372,7 @@
         <item name="colorAccent">#1973ac</item>
     </style>
     <style name="Theme.AlertDialog.Easter.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#047d0a</item>
+        <item name="colorAccent">#00830c</item>
     </style>
     <style name="Theme.AlertDialog.Red.Dark" parent="Theme.AlertDialog.Base.Dark">
         <item name="colorAccent">#F44336</item>
