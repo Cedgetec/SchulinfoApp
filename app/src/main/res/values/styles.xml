@@ -30,13 +30,13 @@
         <item name="colorPrimary">#1973ac</item>
         <item name="colorPrimaryDark">#156191</item>
         <item name="colorAccent">#1973ac</item>
-        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Easter.Light</item>
+        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Winter.Light</item>
     </style>
     <style name="AppThemeEasterLight" parent="AppTheme.Base.Light">
         <item name="colorPrimary">#00830c</item>
         <item name="colorPrimaryDark">#00700b</item>
         <item name="colorAccent">#00830c</item>
-        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Winter.Light</item>
+        <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Easter.Light</item>
     </style>
     <style name="AppThemeRedLight" parent="AppTheme.Base.Light">
         <item name="colorPrimary">#F44336</item>
@@ -163,9 +163,9 @@
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Winter.Dark</item>
     </style>
     <style name="AppThemeEasterDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#086f00</item>
-        <item name="colorPrimaryDark">#043500</item>
-        <item name="colorAccent">#086f00</item>
+        <item name="colorPrimary">#006109</item>
+        <item name="colorPrimaryDark">#004f08</item>
+        <item name="colorAccent">#006109</item>
         <item name="android:alertDialogTheme">@style/Theme.AlertDialog.Easter.Dark</item>
     </style>
     <style name="AppThemeRedDark" parent="AppTheme.Base.Dark">
