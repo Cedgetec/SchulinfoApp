@@ -63,13 +63,13 @@ public class FilterActivity extends AppCompatActivity {
         super.onCreate(bundle);
         setContentView(R.layout.activity_filter);
 
-        if(GGApp.GG_APP.preferences.getBoolean("first_use_filter", true)) {
+        if(GGApp.GG_APP.preferences.getBoolean("first_use_filter_2", true)) {
             TextDialog.newInstance(R.string.explanation, R.string.filter_help).show(getSupportFragmentManager(), "filter_help");
         }
 
         sv = (ScrollView) findViewById(R.id.scrollView);
 
-        GGApp.GG_APP.preferences.edit().putBoolean("first_use_filter", false).apply();
+        GGApp.GG_APP.preferences.edit().putBoolean("first_use_filter_2", false).apply();
 
         final String[] main_filterStrings = new String[] { getApplication().getString(R.string.school_class), getApplication().getString(R.string.teacher)};
 
