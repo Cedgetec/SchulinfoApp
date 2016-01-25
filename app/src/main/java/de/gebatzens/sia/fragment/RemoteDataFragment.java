@@ -204,7 +204,7 @@ public abstract class RemoteDataFragment extends Fragment {
     public void onViewCreated(View v, Bundle b) {
         super.onViewCreated(v, b);
 
-        if(getFragment().getData() == null) {
+        if(getFragment().getData() == null && getContentView() != null) {
             getContentView().addView(createLoadingView());
         }
 

@@ -47,15 +47,11 @@ public class SubstAdapter extends FragmentStatePagerAdapter {
     public void update(GGPlan.GGPlans pl) {
         final int os = plans.size() + 1;
         plans = pl;
-        GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for(int i = 0; i < os; i++) {
-                    ((SubstPagerFragment) instantiateItem(viewPager, i)).updateFragment();
-                }
-                notifyDataSetChanged();
-            }
-        });
+
+        for(int i = 0; i < os; i++) {
+            ((SubstPagerFragment) instantiateItem(viewPager, i)).updateFragment();
+        }
+        notifyDataSetChanged();
 
     }
 

@@ -36,7 +36,7 @@ import de.gebatzens.sia.fragment.SubstFragment;
 
 public class GGBroadcast extends BroadcastReceiver {
 
-    public void checkForUpdates(final GGApp gg) {
+    public void checkForSubstUpdates(final GGApp gg) {
         if(gg.getUpdateType() == GGApp.UPDATE_DISABLE) {
             Log.w("ggvp", "update disabled");
             return;
@@ -127,6 +127,30 @@ public class GGBroadcast extends BroadcastReceiver {
         am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
     }
 
+    public void updateAllFragments(GGApp gg) {
+        //update every 2 hours
+
+        int u = gg.preferences.getInt("allFragmentsUpdate", 0);
+        if(u < 8)
+            u++;
+        gg.preferences.edit().putInt("allFragmentsUpdate", u).apply();
+
+        if(gg.getUpdateType() == GGApp.UPDATE_DISABLE || !isWlanConnected(gg)) {
+            return;
+        }
+
+        if(u != 8)
+            return;
+
+        u = 0;
+        gg.preferences.edit().putInt("allFragmentsUpdate", u).apply();
+
+        for(FragmentData frag : gg.school.fragments) {
+            GGApp.GG_APP.refreshAsync(null, false, frag);
+        }
+
+    }
+
     @SuppressWarnings("deprecation")
     public static boolean isWlanConnected(Context c) {
         ConnectivityManager cm = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -156,44 +180,12 @@ public class GGBroadcast extends BroadcastReceiver {
                 @Override
                 protected Void doInBackground(GGApp... params) {
                     Log.d("ggvp", "checking for updates");
-                    checkForUpdates(params[0]);
+                    checkForSubstUpdates(params[0]);
                     return null;
                 }
             }.execute((GGApp) context.getApplicationContext());
 
-        } /*else if (intent.getAction().equals(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION)) {
-                new AsyncTask<GGApp, Void, Void>() {
-
-                    @Override
-                    protected Void doInBackground(final GGApp... params) {
-                        int s = 0;
-                        while(!isWlanConnected(params[0])) {
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            s++;
-                            if(s > 100)
-                                return null;
-                        }
-                        if(params[0].activity != null && params[0].getFragmentType() == GGApp.FragmentType.PLAN) {
-                            params[0].activity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ((SubstFragment)params[0].activity.mContent).substAdapter.setFragmentsLoading();
-                                }
-                            });
-
-                            params[0].refreshAsync(null, true, params[0].getFragmentType());
-                        } else {
-                            checkForUpdates(params[0], false);
-                        }
-                        return null;
-                    }
-                }.execute((GGApp) context.getApplicationContext());
-
-        }*/
+        }
     }
 
 }

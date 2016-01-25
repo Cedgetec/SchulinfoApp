@@ -16,6 +16,7 @@
 package de.gebatzens.sia.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,15 @@ import android.widget.LinearLayout;
 
 import com.joanzapata.pdfview.PDFView;
 
+import java.io.File;
+
 import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
+import de.gebatzens.sia.data.StaticData;
 
 public class PDFFragment extends RemoteDataFragment {
+
+    PDFView pdf;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle bundle) {
@@ -41,9 +47,14 @@ public class PDFFragment extends RemoteDataFragment {
     public void createView(LayoutInflater inflater, ViewGroup vg) {
         LinearLayout ll = (LinearLayout) vg.findViewById(R.id.pdf_content);
         ll.removeAllViews();
-        PDFView pdf = new PDFView(getContext(), null);
+        pdf = new PDFView(getContext(), null);
+        pdf.setId(R.id.pdfview);
         pdf.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        pdf.fromAsset("pdftest.pdf").enableSwipe(true).load();
+        File file = ((StaticData) getFragment().getData()).getFile();
+        if(file.exists())
+            pdf.fromFile(file).enableSwipe(true).load();
+        else
+            Log.w("ggvp", file + " does not exist");
         ll.addView(pdf);
 
     }
@@ -52,5 +63,12 @@ public class PDFFragment extends RemoteDataFragment {
     public ViewGroup getContentView() {
         return (ViewGroup) getView().findViewById(R.id.pdf_content);
     }
+
+    /*@Override
+    public void updateFragment() {
+        if(pdf != null) {
+            pdf.fromFile(((StaticData) getFragment().getData()).getFile()).enableSwipe(true).load();
+        }
+    }*/
 
 }

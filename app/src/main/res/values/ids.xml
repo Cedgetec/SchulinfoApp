@@ -13,5 +13,6 @@
     <item name="cvroot" type="id"/>
     <item name="messages_list" type="id"/>
     <item name="spinner" type="id"/>
+    <item name="pdfview" type="id"/>
 
 </resources>

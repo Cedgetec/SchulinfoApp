@@ -15,20 +15,55 @@
  */
 package de.gebatzens.sia.data;
 
+import android.content.Context;
+import android.util.Log;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 
 public class StaticData implements RemoteDataFragment.RemoteData {
 
-    public void save() {
+    public byte[] data;
+    public String name;
+    public Throwable throwable;
 
+    public void save() {
+        try {
+            OutputStream out = GGApp.GG_APP.openFileOutput("static_" + name, Context.MODE_PRIVATE);
+            out.write(data);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean load() {
-        return false;
+        try {
+            InputStream in = GGApp.GG_APP.openFileInput("static_" + name);
+            data = new byte[(int) new File("static_" + name).length()];
+            in.read(data);
+            in.close();
+
+        } catch(IOException e) {
+            Log.w("ggvp", "Failed to load static file: " + e.getMessage());
+            throwable = e;
+            return false;
+        }
+
+        return true;
+    }
+
+    public File getFile() {
+        return GGApp.GG_APP.getFileStreamPath("static_" + name);
     }
 
     public Throwable getThrowable() {
-        return null;
+        return throwable;
     }
 
 }

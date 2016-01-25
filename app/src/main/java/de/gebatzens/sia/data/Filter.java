@@ -23,32 +23,50 @@ import de.gebatzens.sia.R;
 
 public class Filter {
 
-    public FilterType type = FilterType.CLASS;
-    public String filter = "";
+    private FilterType type = FilterType.CLASS;
+    private String filter = "";
+    private String filterAN = "";
     public boolean contains = false;
 
-    private String deleteNonAlphanumeric(String s) {
-        return s.replaceAll("\\W", "").toLowerCase();
+
+    public void setType(FilterType t) {
+        type = t;
     }
+
+    public void setFilter(String filter) {
+        this.type = type;
+        this.filter = filter;
+        if(filter != null && !filter.isEmpty())
+            this.filterAN = GGApp.deleteNonAlphanumeric(filter);
+        else
+            this.filterAN = filter;
+    }
+
+    public FilterType getType() {
+        return type;
+    }
+
+    public String getFilter() {
+        return filter;
+    }
+
 
     public boolean matches(GGPlan.Entry e) {
         if(filter.isEmpty())
             return false;
 
-        String f = deleteNonAlphanumeric(filter);
-
         switch(type) {
             case CLASS:
-                return deleteNonAlphanumeric(e.clazz).equals(f);
+                return e.getClassAN().equals(filterAN);
             case TEACHER:
-                return deleteNonAlphanumeric(e.teacher).equals(f) || deleteNonAlphanumeric(e.comment).endsWith(f);
+                return e.getTeacherAN().equals(filterAN) || e.getCommentAN().endsWith(filterAN);
             case SUBJECT:
                 if (contains)
-                    return deleteNonAlphanumeric(e.subject).contains(f);
+                    return e.getSubjectAN().contains(filterAN);
                 else
-                    return deleteNonAlphanumeric(e.subject).equals(f);
+                    return e.getSubjectAN().equals(filterAN);
             case LESSON:
-                return deleteNonAlphanumeric(e.lesson).equals(f);
+                return e.getLessonAN().equals(filterAN);
         }
         return false;
     }
@@ -57,25 +75,23 @@ public class Filter {
         if(filter.isEmpty())
             return false;
 
-        String f = deleteNonAlphanumeric(filter);
-
         switch(type) {
             case CLASS:
                 String[] classes = item.clazz.split(",");
                 for (String s : classes) {
-                    if (f.equals(deleteNonAlphanumeric(s)))
+                    if (filterAN.equals(GGApp.deleteNonAlphanumeric(s)))
                         return true;
                 }
                 return false;
             case TEACHER:
-                return deleteNonAlphanumeric(item.teacher).equals(f);
+                return GGApp.deleteNonAlphanumeric(item.teacher).equals(filterAN);
             case SUBJECT:
                 if (contains)
-                    return deleteNonAlphanumeric(item.subject).contains(f);
+                    return GGApp.deleteNonAlphanumeric(item.subject).contains(filterAN);
                 else
-                    return deleteNonAlphanumeric(item.subject).equals(f);
+                    return GGApp.deleteNonAlphanumeric(item.subject).equals(filterAN);
             case LESSON:
-                return deleteNonAlphanumeric(item.lesson).equals(f);
+                return GGApp.deleteNonAlphanumeric(item.lesson).equals(filterAN);
         }
         return false;
     }

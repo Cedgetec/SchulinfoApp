@@ -27,6 +27,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -176,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         setTheme(GGApp.GG_APP.school.getTheme());
         super.onCreate(savedInstanceState);
         Log.w("ggvp", "CREATE NEW MAINACTIVITY");
+        //Debug.startMethodTracing("sia3");
         GGApp.GG_APP.activity = this;
         savedState = savedInstanceState;
 
@@ -376,6 +378,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Debug.stopMethodTracing();
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
@@ -400,6 +403,7 @@ public class MainActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         GGApp.GG_APP.activity = null;
+
     }
 
     @Override
@@ -425,31 +429,12 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == 1 && resultCode == RESULT_OK) { //Settings changed
 
-            if(data != null && data.getBooleanExtra("recreate", false)) {
-                recreate();
-                return;
-            }
-
             if(data != null && data.getBooleanExtra("setup", false)) {
                 startActivity(new Intent(this, SetupActivity.class));
                 finish();
                 return;
             }
 
-            /*mNavigationSchoolpicture = (ImageView) mNavigationHeader.findViewById(R.id.navigation_schoolpicture);
-            mNavigationSchoolpicture.setImageBitmap(GGApp.GG_APP.school.loadImage());
-            mNavigationSchoolpictureText = (TextView) mNavigationHeader.findViewById(R.id.drawer_image_text);
-            mNavigationSchoolpictureText.setText(GGApp.GG_APP.school.name);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                GGApp.GG_APP.setStatusBarColorTransparent(getWindow());
-            }
-            mToolbar.setBackgroundColor(GGApp.GG_APP.school.getColor());
-            mToolbar.setTitle(GGApp.GG_APP.school.name);
-
-            if(GGApp.GG_APP.getFragmentType() == GGApp.FragmentType.PLAN) {
-                ((SubstFragment)mContent).mTabLayout.setBackgroundColor(GGApp.GG_APP.school.getColor());
-                mContent.setFragmentLoading();
-            }*/
             mContent.updateFragment();
         }
 

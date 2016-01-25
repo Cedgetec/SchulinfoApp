@@ -89,16 +89,16 @@ public class FilterActivity extends AppCompatActivity {
 
         Filter.FilterList list = GGApp.GG_APP.filters;
         mainFilterCategory = (TextView) findViewById(R.id.filter_main_category);
-        mainFilterCategory.setText(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher));
+        mainFilterCategory.setText(list.mainFilter.getType() == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher));
         mainFilterContent = (TextView) findViewById(R.id.filter_main_content);
-        mainFilterContent.setText(list.mainFilter.filter);
+        mainFilterContent.setText(list.mainFilter.getFilter());
 
         LinearLayout l_mode = (LinearLayout) findViewById(R.id.mainfilter_mode_layout);
         l_mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
                 Filter.FilterList list = GGApp.GG_APP.filters;
-                selectedMode = list.mainFilter.type == Filter.FilterType.CLASS ? 0 : list.mainFilter.type == Filter.FilterType.TEACHER ? 1 : 2;
+                selectedMode = list.mainFilter.getType() == Filter.FilterType.CLASS ? 0 : list.mainFilter.getType() == Filter.FilterType.TEACHER ? 1 : 2;
                 AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
                 builder.setTitle(getApplication().getString(R.string.set_main_filter_mode))
                         .setSingleChoiceItems(main_filterStrings, selectedMode, new DialogInterface.OnClickListener() {
@@ -106,8 +106,8 @@ public class FilterActivity extends AppCompatActivity {
                                 changed = true;
                                 mainModePosition = which == 0 ? 0 : 1;
                                 Filter.FilterList list = GGApp.GG_APP.filters;
-                                list.mainFilter.type = Filter.FilterType.values()[mainModePosition];
-                                mainFilterCategory.setText(list.mainFilter.type == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher));
+                                list.mainFilter.setType(Filter.FilterType.values()[mainModePosition]);
+                                mainFilterCategory.setText(list.mainFilter.getType() == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher));
                                 FilterActivity.saveFilter(GGApp.GG_APP.filters);
                                 dialog.dismiss();
                             }
@@ -187,9 +187,9 @@ public class FilterActivity extends AppCompatActivity {
                 while(reader.hasNext()) {
                     String name = reader.nextName();
                     if(name.equals("type"))
-                        f.type = Filter.FilterType.valueOf(reader.nextString());
+                        f.setType(Filter.FilterType.valueOf(reader.nextString()));
                     else if(name.equals("filter"))
-                        f.filter = reader.nextString();
+                        f.setFilter(reader.nextString());
                     else if(name.equals("contains"))
                         f.contains = reader.nextBoolean();
                     else
@@ -207,8 +207,8 @@ public class FilterActivity extends AppCompatActivity {
         if(list.mainFilter == null) {
             Filter f = new Filter();
             list.mainFilter = f;
-            f.type = Filter.FilterType.CLASS;
-            f.filter = "";
+            f.setType(Filter.FilterType.CLASS);
+            f.setFilter("");
         }
 
         return list;
@@ -228,13 +228,13 @@ public class FilterActivity extends AppCompatActivity {
             writer.setIndent("  ");
             writer.beginArray();
             writer.beginObject();
-            writer.name("type").value(list.mainFilter.type.toString());
-            writer.name("filter").value(list.mainFilter.filter);
+            writer.name("type").value(list.mainFilter.getType().toString());
+            writer.name("filter").value(list.mainFilter.getFilter());
             writer.endObject();
             for(Filter f : list) {
                 writer.beginObject();
-                writer.name("type").value(f.type.toString());
-                writer.name("filter").value(f.filter);
+                writer.name("type").value(f.getType().toString());
+                writer.name("filter").value(f.getFilter());
                 writer.name("contains").value(f.contains);
                 writer.endObject();
             }

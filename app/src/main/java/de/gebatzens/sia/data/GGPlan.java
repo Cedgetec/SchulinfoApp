@@ -44,6 +44,7 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
 
     public Date date;
     public List<String> special = new ArrayList<String>();
+    private List<String> classes, lessons;
 
     public GGPlan() {
 
@@ -223,43 +224,48 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
     }
 
     public List<String> getAllClasses() {
-        ArrayList<String> list = new ArrayList<String>();
+        if(classes == null) {
+            classes = new ArrayList<String>();
 
-        for(Entry e : this) {
-            if(!list.contains(e.clazz)) {
-                list.add(e.clazz);
+            for (Entry e : this) {
+                if (!classes.contains(e.clazz)) {
+                    classes.add(e.clazz);
+                }
             }
         }
-        return list;
+
+        return classes;
     }
 
     public List<String> getAllLessons() {
-        ArrayList<String> list = new ArrayList<String>();
+        if(lessons == null) {
+            lessons = new ArrayList<String>();
 
-        for(Entry e : this) {
-            if(!list.contains(e.lesson)) {
-                list.add(e.lesson);
+            for (Entry e : this) {
+                if (!lessons.contains(e.lesson)) {
+                    lessons.add(e.lesson);
 
+                }
             }
+
+            Collections.sort(lessons, new Comparator<String>() {
+                @Override
+                public int compare(String lhs, String rhs) {
+                    try {
+                        int l1 = Integer.parseInt(lhs);
+                        int l2 = Integer.parseInt(rhs);
+
+                        return l1 - l2;
+                    } catch (Exception e) {
+                        Log.d("ggvp", "Lesson parsing failed " + e.getMessage());
+                    }
+
+                    return lhs.compareTo(rhs);
+                }
+            });
         }
 
-        Collections.sort(list, new Comparator<String>() {
-            @Override
-            public int compare(String lhs, String rhs) {
-                try {
-                    int l1 = Integer.parseInt(lhs);
-                    int l2 = Integer.parseInt(rhs);
-
-                    return l1 - l2;
-                } catch(Exception e) {
-                    Log.d("ggvp", "Lesson parsing failed " + e.getMessage());
-                }
-
-                return lhs.compareTo(rhs);
-            }
-        });
-
-        return list;
+        return lessons;
     }
 
     @Override
@@ -321,6 +327,42 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
         public String room = "";
         public Date date;
 
+        private String classAN;
+        private String teacherAN;
+        private String subjectAN;
+        private String lessonAN;
+        private String commentAN;
+
+        public String getClassAN() {
+            if(classAN == null)
+                classAN = GGApp.deleteNonAlphanumeric(clazz);
+            return classAN;
+        }
+
+        public String getTeacherAN() {
+            if(teacherAN == null)
+                teacherAN = GGApp.deleteNonAlphanumeric(teacher);
+            return teacherAN;
+        }
+
+        public String getSubjectAN() {
+            if(subjectAN == null)
+                subjectAN = GGApp.deleteNonAlphanumeric(subject);
+            return subjectAN;
+        }
+
+        public String getLessonAN() {
+            if(lessonAN == null)
+                lessonAN = GGApp.deleteNonAlphanumeric(lesson);
+            return lessonAN;
+        }
+
+        public String getCommentAN() {
+            if(commentAN == null)
+                commentAN = GGApp.deleteNonAlphanumeric(comment);
+            return commentAN;
+        }
+
         @Override
         public boolean equals(Object o) {
             if(o instanceof Entry) {
@@ -336,6 +378,7 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
         public String toString() {
             return "Entry[" + type + " " + clazz + " " + subject + " " + teacher + " " + comment + " " + lesson + " " + room + " " + repsub + "]";
         }
+
 
         public void unify() {
 

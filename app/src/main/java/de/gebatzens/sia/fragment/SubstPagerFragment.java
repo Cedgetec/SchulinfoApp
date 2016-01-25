@@ -155,7 +155,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
             case INDEX_INVALID:
                 return;
             default:
-                plan = ((GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData()).get(index);
+                GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData();
+                if(plans.size() <= index) {
+                    // This fragment will be deleted in a few seconds
+                    break;
+                }
+                plan = plans.get(index);
 
                 ArrayList<String> items = new ArrayList<String>();
                 items.add(getActivity().getString(R.string.all));
@@ -186,7 +191,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l.addView(tv);
             Log.w("ggvp", "bundle " + type + " " + this + " " + getParentFragment());*/
             throw new IllegalArgumentException(("index is INDEX_INVALID"));
-        } else if(index == INDEX_OVERVIEW && !GGApp.GG_APP.filters.mainFilter.filter.equals("")) {
+        } else if(index == INDEX_OVERVIEW && !GGApp.GG_APP.filters.mainFilter.getFilter().equals("")) {
             // Overview, filter applied
 
             Filter.FilterList filters = GGApp.GG_APP.filters;
@@ -205,8 +210,8 @@ public class SubstPagerFragment extends RemoteDataFragment {
             tv4.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
             TextView tv2 = createTextView(
-                    filters.mainFilter.type == Filter.FilterType.CLASS ? getActivity().getString(R.string.school_class) + " " + filters.mainFilter.filter :
-                    getActivity().getString(R.string.teacher) + " " + filters.mainFilter.filter, 15, inflater, l2);
+                    filters.mainFilter.getType() == Filter.FilterType.CLASS ? getActivity().getString(R.string.school_class) + " " + filters.mainFilter.getFilter() :
+                    getActivity().getString(R.string.teacher) + " " + filters.mainFilter.getFilter(), 15, inflater, l2);
             tv2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             tv2.setGravity(Gravity.END | Gravity.CENTER);
             tv2.setPadding(0,0,toPixels(16),0);
@@ -221,7 +226,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 messages.update(plan.special);
                 l.addView(messages.itemView);
 
-                createCardItems(list, l, inflater, filters.mainFilter.type != Filter.FilterType.CLASS ? CARD_LESSON | CARD_CLASS : CARD_LESSON);
+                createCardItems(list, l, inflater, filters.mainFilter.getType() != Filter.FilterType.CLASS ? CARD_LESSON | CARD_CLASS : CARD_LESSON);
             }
 
             ScrollView sv = new ScrollView(getActivity());
@@ -346,8 +351,8 @@ public class SubstPagerFragment extends RemoteDataFragment {
                         Filter.FilterList fl = new Filter.FilterList();
                         Filter main = new Filter();
                         fl.mainFilter = main;
-                        main.type = Filter.FilterType.CLASS;
-                        main.filter = item;
+                        main.setType(Filter.FilterType.CLASS);
+                        main.setFilter(item);
                         //createCardItems((currentList = plan.filter(fl)), l3, inflater, CARD_LESSON);
                         sla.updateData(plan.filter(fl), SubstListAdapter.PLAIN, true);
 

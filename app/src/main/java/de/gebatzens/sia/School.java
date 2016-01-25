@@ -170,7 +170,8 @@ public class School {
                 }
 
                 if(obj.has("icon")) {
-                    switch(obj.getString("icon")) {
+                    String icon = obj.getString("icon");
+                    switch (icon) {
                         case "mensa":
                             frag.setIconRes(R.drawable.ic_mensa);
                             break;
@@ -184,7 +185,9 @@ public class School {
                             frag.setIconRes(R.drawable.ic_news);
                             break;
                     }
+
                 }
+
             }
 
         } else {
@@ -252,6 +255,20 @@ public class School {
                     writer.name("data").value(frag.getParams());
                     if(frag.type == FragmentData.FragmentType.PDF) {
                         writer.name("name").value(frag.name);
+                        switch(frag.icon) {
+                            case R.drawable.ic_mensa:
+                                writer.name("icon").value("mensa");
+                                break;
+                            case R.drawable.ic_substitution:
+                                writer.name("icon").value("subst");
+                                break;
+                            case R.drawable.ic_exam:
+                                writer.name("icon").value("exam");
+                                break;
+                            case R.drawable.ic_news:
+                                writer.name("icon").value("news");
+                                break;
+                        }
                     }
 
                     writer.endObject();
@@ -310,7 +327,7 @@ public class School {
                 public void run() {
                    School.downloadImage(image);
                 }
-            }.run();
+            }.start();
 
             return BitmapFactory.decodeResource(GGApp.GG_APP.getResources(), R.drawable.no_content);
         }

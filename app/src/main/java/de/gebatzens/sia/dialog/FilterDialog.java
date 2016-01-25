@@ -76,8 +76,8 @@ public class FilterDialog extends DialogFragment {
                 } else {
                     if(isMainFilterDialog()) {
                         Filter.FilterList list = GGApp.GG_APP.filters;
-                        list.mainFilter.filter = filtertext;
-                        activity.mainFilterContent.setText(list.mainFilter.filter);
+                        list.mainFilter.setFilter(filtertext);
+                        activity.mainFilterContent.setText(list.mainFilter.getFilter());
                     } else {
                         Filter f;
                         if(getUpdatePosition() == -1) {
@@ -85,8 +85,8 @@ public class FilterDialog extends DialogFragment {
                         } else {
                             f = GGApp.GG_APP.filters.get(getUpdatePosition());
                         }
-                        f.type = Filter.FilterType.SUBJECT;
-                        f.filter = filtertext;
+                        f.setType(Filter.FilterType.SUBJECT);
+                        f.setFilter(filtertext);
                         f.contains = cb.isChecked();
 
                         if(getUpdatePosition() == -1) {
@@ -138,8 +138,8 @@ public class FilterDialog extends DialogFragment {
         ed.setSelectAllOnFocus(true);
 
         if(isMainFilterDialog()) {
-            ed.setHint(list.mainFilter.type == Filter.FilterType.CLASS ? getString(R.string.school_class_name) : getString(R.string.teacher_shortcut));
-            ed.setText(list.mainFilter.filter);
+            ed.setHint(list.mainFilter.getType() == Filter.FilterType.CLASS ? getString(R.string.school_class_name) : getString(R.string.teacher_shortcut));
+            ed.setText(list.mainFilter.getFilter());
 
             d.findViewById(R.id.checkbox_contains).setVisibility(View.GONE);
         } else {
@@ -178,8 +178,8 @@ public class FilterDialog extends DialogFragment {
                 Filter f = GGApp.GG_APP.filters.get(p);
 
                 cb.setChecked(f.contains);
-                cb.setText(getString(R.string.all_subjects_including, f.filter));
-                ed.setText(f.filter);
+                cb.setText(getString(R.string.all_subjects_including, f.getFilter()));
+                ed.setText(f.getFilter());
             }
         }
     }

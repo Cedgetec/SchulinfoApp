@@ -19,6 +19,7 @@ import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,8 +92,8 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
                     Filter.FilterList fl = new Filter.FilterList();
                     fl.mainFilter = new Filter();
-                    fl.mainFilter.type = Filter.FilterType.LESSON;
-                    fl.mainFilter.filter = lesson;
+                    fl.mainFilter.setType(Filter.FilterType.LESSON);
+                    fl.mainFilter.setFilter(lesson);
                     for(GGPlan.Entry e : plan.filter(fl)) {
                         ae = new AdapterEntry();
                         ae.data = e;
@@ -112,8 +113,8 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
                     Filter.FilterList fl = new Filter.FilterList();
                     fl.mainFilter = new Filter();
-                    fl.mainFilter.type = Filter.FilterType.CLASS;
-                    fl.mainFilter.filter = cl;
+                    fl.mainFilter.setType(Filter.FilterType.CLASS);
+                    fl.mainFilter.setFilter(cl);
                     for(GGPlan.Entry e : plan.filter(fl)) {
                         ae = new AdapterEntry();
                         ae.data = e;
@@ -131,6 +132,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.w("ggvp", "create view holder " + viewType);
         switch(viewType) {
             case AdapterEntry.ENTRY:
                 return frag.createCardItem(LayoutInflater.from(parent.getContext()), parent);
@@ -150,6 +152,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Log.w("ggvp", "bind view holder " + position);
         AdapterEntry ae = entries.get(position);
         switch(ae.type) {
             case AdapterEntry.ENTRY:

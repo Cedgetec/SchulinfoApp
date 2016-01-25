@@ -48,6 +48,7 @@ import de.gebatzens.sia.data.Filter;
 import de.gebatzens.sia.data.GGPlan;
 import de.gebatzens.sia.data.Mensa;
 import de.gebatzens.sia.data.News;
+import de.gebatzens.sia.data.StaticData;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
 
@@ -110,12 +111,12 @@ public class GGApp extends Application {
                         rd = new Mensa();
                         break;
                     case PDF:
-                        rd = null;
+                        rd = new StaticData();
+                        ((StaticData) rd).name = frag.params;
                         break;
                 }
 
-                if(rd != null)
-                    rd.load();
+                rd.load();
 
                 frag.setData(rd);
             }
@@ -315,21 +316,6 @@ public class GGApp extends Application {
 
                         }
 
-                        update = true;
-
-                        /*if(activity != null && recreate) {
-                            activity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    activity.removeAllFragments();
-                                    FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-                                    activity.mContent = activity.getFragment();
-                                    transaction.replace(R.id.content_fragment, activity.mContent, "gg_content_fragment");
-                                    transaction.commit();
-                                }
-                            });
-                            Log.d("ggvp", "RECRATE FRAGMENT");
-                        } else */
                         if(activity != null) {
                             activity.runOnUiThread(new Runnable() {
                                 @Override
@@ -372,8 +358,13 @@ public class GGApp extends Application {
                         update = true;
                         break;
                     case PDF:
-                        update = true;
-                        frag.setData(new Mensa());
+                        StaticData od = (StaticData) frag.getData();
+                        StaticData data = remote.downloadStaticFile(frag.getParams(), updateFragments);
+                        frag.setData(data);
+                        if(data.throwable == null)
+                            data.save();
+
+                        update = data.throwable == null;
                         break;
                 }
 
@@ -399,6 +390,8 @@ public class GGApp extends Application {
     }
 
 
-
+    public static String deleteNonAlphanumeric(String s) {
+        return s.replaceAll("\\W", "").toLowerCase();
+    }
 
 }

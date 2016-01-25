@@ -34,6 +34,7 @@ import android.widget.TextView;
 import java.util.Date;
 import java.util.List;
 
+import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.GGPlan;
@@ -87,7 +88,7 @@ public class SubstFragment extends RemoteDataFragment {
                 substAdapter.fragments.get(i).spinnerPos = bundle.getInt("ggvp_frag_spinner_" + i);
         }*/
         mViewPager.setAdapter(substAdapter);
-        //mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(2);
         if(bundle != null)
             mViewPager.setCurrentItem(bundle.getInt("ggvp_tab"));
 
@@ -138,8 +139,16 @@ public class SubstFragment extends RemoteDataFragment {
 
     @Override
     public void updateFragment() {
-        if(substAdapter != null)
-            substAdapter.update((GGPlan.GGPlans) getFragment().getData());
+        GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(substAdapter != null) {
+                    substAdapter.update((GGPlan.GGPlans) getFragment().getData());
+                    mTabLayout.setupWithViewPager(mViewPager);
+                }
+            }
+        });
+
     }
 
     public void resetScrollPositions() {

@@ -52,6 +52,7 @@ import de.gebatzens.sia.data.Filter;
 import de.gebatzens.sia.data.GGPlan;
 import de.gebatzens.sia.data.Mensa;
 import de.gebatzens.sia.data.News;
+import de.gebatzens.sia.data.StaticData;
 
 public class GGRemote {
 
@@ -246,23 +247,29 @@ public class GGRemote {
 
     }
 
-    public byte[] downloadStaticFile(String file) {
+    public StaticData downloadStaticFile(String name, boolean snack) {
+        StaticData data = new StaticData();
+        data.name = name;
+
         try {
-            APIResponse re = doRequest("/static?token=" + getToken() + "&file=" + URLEncoder.encode(file, "UTF-8"), null);
+            APIResponse re = doRequest("/static?token=" + getToken() + "&file=" + URLEncoder.encode(name, "UTF-8"), null);
 
             if(re.state == APIState.SUCCEEDED) {
-                byte[] data = Base64.decode((String) re.data, Base64.DEFAULT);
-
-                return data;
+                data.data = Base64.decode((String) re.data, Base64.DEFAULT);
             } else {
                 throw new APIException(re.state);
             }
         } catch(Exception e) {
             e.printStackTrace();
+            if(snack)
+                showReloadSnackbar(e instanceof IOException ? GGApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage());
+            if(!data.load()) {
+                data.throwable = e;
+            }
 
         }
 
-        return null;
+        return data;
     }
 
     public Mensa getMensa(boolean toast) {
@@ -383,11 +390,11 @@ public class GGRemote {
                     String group = prefs.getString("group", null);
                     Filter.FilterList filters = GGApp.GG_APP.filters;
                     if (group != null && !group.equals("lehrer")) {
-                        filters.mainFilter.type = Filter.FilterType.CLASS;
-                        filters.mainFilter.filter = group;
+                        filters.mainFilter.setType(Filter.FilterType.CLASS);
+                        filters.mainFilter.setFilter(group);
                     } else if (group != null) {
-                        filters.mainFilter.type = Filter.FilterType.TEACHER;
-                        filters.mainFilter.filter = user;
+                        filters.mainFilter.setType(Filter.FilterType.TEACHER);
+                        filters.mainFilter.setFilter(user);
                     }
                     FilterActivity.saveFilter(GGApp.GG_APP.filters);
 
