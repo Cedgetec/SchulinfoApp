@@ -1,10 +1,8 @@
 ##To-Do-Liste
 
-- [ ] Mensaplan für SWS
-  - [ ] PDF/HTML-Fragment
+- [x] Mensaplan für SWS
+  - [x] PDF/HTML-Fragment
 - [x] Klausurenplan für SWS
-- [ ] MQTT-Messages speichern
-- [ ] HiddenActivity
 - [x] GEMS Wiesenfeld
 - [ ] Mehrere Klassen auswählbar (Hauptfilter)
   - [ ] Dann sollte bei den Fachfiltern auch die Klasse ausgewählt werden
@@ -12,8 +10,7 @@
 - [x] Funktionierende Personalisierungsseite
 - [x] Ersetzen der Toasts in "GGRemote.java" mit Snackbars
 - [x] Aufleuchten der LED bei Benachrichtigungen
-- [ ] Performance im SubstFragment verbessern (Beim Drehen)
+- [x] Performance im SubstFragment verbessern (Beim Drehen)
 - [x] Dunkle Theme-Farben
-- [ ] Fragment für eigene HTML/PDF-Dateien
+- [x] Fragment für eigene HTML/PDF-Dateien
 - [x] Pläne sortierbar nach Stunden machen
-- [ ] backend: Kursliste
