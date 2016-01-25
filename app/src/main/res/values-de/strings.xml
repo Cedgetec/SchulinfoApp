@@ -11,7 +11,7 @@
     <string name="no_filter_applied">Kein Filter ausgewählt</string>
     <string name="main_filter_mode">Modus</string>
     <string name="main_filter_content">Filter</string>
-    <string name="filter_help">Im Hauptfilter kannst du die Klasse(n) eintragen, welche du in der Übersicht sehen willst.\n\nWenn du dann bestimmte Fächer/Kurse nicht in deiner Übersicht sehen willst, kannst du sie mit dem Kursfilter ausblenden.\nDu musst aber das auf dem Vertretungsplan verwendete Kürzel, z.B. "lat1" oder "fra2" eintragen.\nWenn du z.B. alle Lateinkurse ausblenden möchtest, schreibe einfach "lat"</string>
+    <string name="filter_help">Im Hauptfilter kannst du die Klasse(n) eintragen, welche du in der Übersicht sehen willst.\n\nWenn du dann bestimmte Fächer/Kurse nicht in deiner Übersicht sehen willst, kannst du sie mit dem Kursfilter ausblenden.\nDu musst aber das auf dem Vertretungsplan verwendete Kürzel, z.B. \"lat1\" oder \"fra2\" eintragen.\nWenn du z.B. alle Lateinkurse ausblenden möchtest, schreibe einfach \"lat\".</string>
     <string name="settings">Einstellungen</string>
     <string name="again">Nochmal</string>
     <string name="login_required">Anmeldung benötigt!</string>
@@ -115,7 +115,7 @@
     <string name="school_id">Schul-ID</string>
     <string name="start_now">Jetzt starten</string>
     <string name="have_fun_with_the_app">Viel Spaß mit der App!</string>
-    <string name="fu_firstpage_title">Deine SchulinfoAPP</string>
+    <string name="fu_firstpage_title">Deine SchulinfoApp</string>
     <string name="fu_firstpage_content">Nutze ab sofort einige neue Funktionen rund um deinen Vertretungsplan! </string>
     <string name="fu_secondpage_title">Planänderungen auf dich angepasst</string>
     <string name="fu_secondpage_content">Passe den Vertretungsplan auf dich und deine Klasse an.</string>
