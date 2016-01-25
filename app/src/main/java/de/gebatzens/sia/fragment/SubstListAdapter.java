@@ -63,8 +63,19 @@ public class SubstListAdapter extends RecyclerView.Adapter {
     }
 
     public void updateData(GGPlan plan, int type, boolean messages) {
+        updateData(plan, type, messages, null);
+    }
+
+    public void updateData(GGPlan plan, int type, boolean messages, String header) {
         this.type = type;
         entries.clear();
+
+        if(header != null) {
+            AdapterEntry ae = new AdapterEntry();
+            ae.data = header;
+            ae.type = AdapterEntry.LABEL;
+            entries.add(ae);
+        }
 
         if(messages) {
             AdapterEntry me = new AdapterEntry();

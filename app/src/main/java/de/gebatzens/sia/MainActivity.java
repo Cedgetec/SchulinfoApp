@@ -49,7 +49,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.HashMap;
 import java.util.List;
 
 import de.gebatzens.sia.data.Exams;

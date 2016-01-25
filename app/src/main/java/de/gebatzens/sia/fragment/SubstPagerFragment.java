@@ -354,28 +354,14 @@ public class SubstPagerFragment extends RemoteDataFragment {
                         fl.mainFilter = main;
                         main.setType(Filter.FilterType.CLASS);
                         main.setFilter(item);
-                        //createCardItems((currentList = plan.filter(fl)), l3, inflater, CARD_LESSON);
-                        sla.updateData(plan.filter(fl), SubstListAdapter.PLAIN, true);
+                        sla.updateData(plan.filter(fl), SubstListAdapter.PLAIN, true, item);
 
                     } else {
                         cardColorIndex = 0;
 
                         boolean sortByLesson = spinMode.getSelectedItemPosition() == 1;
                         sla.updateData(plan, sortByLesson ? SubstListAdapter.ALL_LESSONS : SubstListAdapter.ALL_CLASSES, true);
-                       /* List<String> list = sortByLesson ? plan.getAllLessons() : plan.getAllClasses();
-                        for(String s : list) {
-                            TextView tv = createTextView(sortByLesson ? (s + ". " + getResources().getString(R.string.lhour)) : s, 27, inflater, l3);
-                            tv.setPadding(toPixels(2.8f), toPixels(20), 0, 0);
-                            tv.setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#a0a0a0" : "#6e6e6e"));
 
-                            Filter.FilterList fl = new Filter.FilterList();
-                            Filter main = new Filter();
-                            fl.mainFilter = main;
-                            main.filter = s;
-                            main.type = sortByLesson ? Filter.FilterType.LESSON : Filter.FilterType.CLASS;
-                            //createCardItems((currentList = plan.filter(fl)), l3, inflater, sortByLesson ? CARD_CLASS : CARD_LESSON);
-                            sla.updateData(plan.filter(fl), );
-                        }*/
                     }
                 }
 

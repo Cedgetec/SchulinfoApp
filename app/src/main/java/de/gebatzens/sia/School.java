@@ -40,8 +40,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.gebatzens.sia.data.Exams;
-
 public class School {
 
     public String sid;
