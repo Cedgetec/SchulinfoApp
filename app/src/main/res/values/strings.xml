@@ -151,7 +151,7 @@
     <string name="logged_in_as">Logged in as %s</string>
     <string name="maintenance">The server is currently being maintained</string>
     <string name="unknown_error">Unknown error</string>
-    <string name="light_summary">Illuminate the world!</string>
+    <string name="disabled">Disabled</string>
 
     <string-array name="vibration_values">
         <item>Off</item>

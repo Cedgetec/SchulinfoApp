@@ -149,7 +149,7 @@
     <string name="logged_in_as">Eingeloggt als %s</string>
     <string name="maintenance">Der Server wird gerade gewartet</string>
     <string name="unknown_error">Unbekannter Fehler</string>
-    <string name="light_summary">Illuminiere die Welt!</string>
+    <string name="disabled">Deaktiviert</string>
 
     <string-array name="vibration_values">
         <item>Aus</item>

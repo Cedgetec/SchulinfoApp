@@ -46,6 +46,8 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 public class SettingsActivity extends AppCompatActivity {
 
     Toolbar mToolBar;
@@ -105,6 +107,8 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
+            final Preference notification_led = findPreference("notification_led");
+
             Preference theme_color = findPreference("theme_color");
 
             boolean winter = GGApp.GG_APP.getCurrentThemeName().equals("Winter");
@@ -119,10 +123,18 @@ public class SettingsActivity extends AppCompatActivity {
                 theme_color.setIcon(tcgd);
             }
 
-            final String[] themeNames = getResources().getStringArray(R.array.theme_names);
+            final String[] themeNames_theme_color = getResources().getStringArray(R.array.theme_names);
+            final String[] themeNames_notification_led = new String[themeNames_theme_color.length + 1];
+            themeNames_notification_led[0] = "Disabled";
+            System.arraycopy(themeNames_theme_color, 0, themeNames_notification_led, 1, themeNames_theme_color.length);
 
-            final ListAdapter adapter = new ArrayAdapter<String>(
-                    getActivity().getApplicationContext(), R.layout.custom_theme_choose_list, themeNames) {
+            final String[] theme_color_names_theme_color = getResources().getStringArray(R.array.theme_color_names);
+            final String[] theme_color_names_notification_led = new String[theme_color_names_theme_color.length + 1];
+            theme_color_names_notification_led[0] = getResources().getString(R.string.disabled);
+            System.arraycopy(theme_color_names_theme_color, 0, theme_color_names_notification_led, 1, theme_color_names_theme_color.length);
+
+            final ListAdapter adapter_notification_led = new ArrayAdapter<String>(
+                    getActivity().getApplicationContext(), R.layout.custom_theme_choose_list, themeNames_notification_led) {
 
                 ViewHolder holder;
 
@@ -147,18 +159,17 @@ public class SettingsActivity extends AppCompatActivity {
                         holder = (ViewHolder) convertView.getTag();
                     }
 
-                    boolean winter = themeNames[position].equals("Winter");
+                    boolean winter = themeNames_notification_led[position].equals("Winter");
 
                     holder.icon.setBackgroundResource(winter ? R.drawable.colored_circle_image : R.drawable.colored_circle);
                     if(winter) {
                         LayerDrawable layerDrawable = (LayerDrawable) holder.icon.getBackground();
-                        ((GradientDrawable) layerDrawable.getDrawable(0)).setColor(loadThemeColor(themeNames[position]));
+                        ((GradientDrawable) layerDrawable.getDrawable(0)).setColor(loadThemeColor(themeNames_notification_led[position]));
                     } else {
-                        ((GradientDrawable) holder.icon.getBackground()).setColor(loadThemeColor(themeNames[position]));
+                        ((GradientDrawable) holder.icon.getBackground()).setColor(loadThemeColor(themeNames_notification_led[position]));
                     }
 
-                    String[] theme_color_names = getResources().getStringArray(R.array.theme_color_names);
-                    holder.title.setText(theme_color_names[position]);
+                    holder.title.setText(theme_color_names_notification_led[position]);
                     if (GGApp.GG_APP.isDarkThemeEnabled()) {
                         holder.title.setTextColor(Color.parseColor("#fafafa"));
                     } else{
@@ -168,6 +179,79 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             };
 
+            final ListAdapter adapter_theme_color = new ArrayAdapter<String>(
+                    getActivity().getApplicationContext(), R.layout.custom_theme_choose_list, themeNames_theme_color) {
+
+                ViewHolder holder;
+
+                class ViewHolder {
+                    ImageView icon;
+                    TextView title;
+                }
+
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    final LayoutInflater inflater = (LayoutInflater) getActivity().getApplicationContext()
+                            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                    if (convertView == null) {
+                        convertView = inflater.inflate(
+                                R.layout.custom_theme_choose_list, null);
+
+                        holder = new ViewHolder();
+                        holder.icon = (ImageView) convertView.findViewById(R.id.ThemeIcon);
+                        holder.title = (TextView) convertView.findViewById(R.id.ThemeName);
+                        convertView.setTag(holder);
+                    } else {
+                        holder = (ViewHolder) convertView.getTag();
+                    }
+
+                    boolean winter = themeNames_theme_color[position].equals("Winter");
+
+                    holder.icon.setBackgroundResource(winter ? R.drawable.colored_circle_image : R.drawable.colored_circle);
+                    if(winter) {
+                        LayerDrawable layerDrawable = (LayerDrawable) holder.icon.getBackground();
+                        ((GradientDrawable) layerDrawable.getDrawable(0)).setColor(loadThemeColor(themeNames_theme_color[position]));
+                    } else {
+                        ((GradientDrawable) holder.icon.getBackground()).setColor(loadThemeColor(themeNames_theme_color[position]));
+                    }
+
+                    holder.title.setText(theme_color_names_theme_color[position]);
+                    if (GGApp.GG_APP.isDarkThemeEnabled()) {
+                        holder.title.setTextColor(Color.parseColor("#fafafa"));
+                    } else{
+                        holder.title.setTextColor(Color.parseColor("#424242"));
+                    }
+                    return convertView;
+                }
+            };
+
+            notification_led.setSummary(theme_color_names_notification_led[Arrays.asList(themeNames_notification_led).indexOf(GGApp.GG_APP.getLedColor())]);
+            notification_led.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle(getResources().getString(R.string.personalisation_pickColor));
+
+                    builder.setAdapter(adapter_notification_led, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            notification_led.setSummary(theme_color_names_notification_led[which]);
+                            GGApp.GG_APP.setLedColor(themeNames_notification_led[which]);
+                        }
+
+                    });
+                    builder.setPositiveButton(getResources().getString(R.string.abort), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //nothing
+                        }
+                    });
+                    builder.create();
+                    builder.show();
+
+                    return false;
+                }
+            });
+
             theme_color.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -175,9 +259,9 @@ public class SettingsActivity extends AppCompatActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(getResources().getString(R.string.personalisation_pickColor));
 
-                    builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                    builder.setAdapter(adapter_theme_color, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            GGApp.GG_APP.setCustomThemeName(themeNames[which]);
+                            GGApp.GG_APP.setCustomThemeName(themeNames_theme_color[which]);
                             GGApp.GG_APP.school.loadTheme();
                             recreate = true;
                             getActivity().recreate();
