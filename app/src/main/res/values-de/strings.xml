@@ -188,6 +188,7 @@
 
     <string-array name="theme_color_names">
         <item>Winter</item>
+        <item>Ostern</item>
         <item>Rot</item>
         <item>Rosa</item>
         <item>Lila</item>

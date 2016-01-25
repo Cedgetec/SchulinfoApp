@@ -183,7 +183,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
         LinearLayout l0 = new LinearLayout(getActivity());
         l0.setOrientation(LinearLayout.VERTICAL);
         LinearLayout l = new LinearLayout(getActivity());
-        createRootLayout(l);
+        l.setOrientation(LinearLayout.VERTICAL);
 
         if(index == INDEX_INVALID) {
             /*TextView tv = new TextView(getActivity());
@@ -303,11 +303,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l3.setOrientation(LinearLayout.VERTICAL);
             l.addView(l3);
 
-            RecyclerView recyclerView = new RecyclerView(getActivity());
+            RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.basic_recyclerview, null);
             final SubstListAdapter sla = new SubstListAdapter(this);
             recyclerView.setAdapter(sla);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setTag("gg_list");
+            recyclerView.setPadding(toPixels(4), toPixels(4), toPixels(4), toPixels(4));
             l3.addView(recyclerView);
 
             group.addView(l0);
