@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,37 +18,56 @@ package de.gebatzens.sia;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import de.gebatzens.sia.data.Filter;
 import de.gebatzens.sia.dialog.FilterDialog;
 
 public class FilterListAdapter extends BaseAdapter {
 
-    Filter.FilterList list;
+    ArrayList<? extends Filter> list;
     FilterActivity c;
 
-    public FilterListAdapter(FilterActivity c, Filter.FilterList filters) {
+    public FilterListAdapter(FilterActivity c, ArrayList<? extends Filter> list) {
         this.c = c;
-        list = filters;
+        this.list = list;
+    }
+
+    public void setList(ArrayList<? extends Filter> f) {
+        list = f;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final Filter filter = list.get(position);
         final ViewGroup vg = (ViewGroup) c.getLayoutInflater().inflate(R.layout.filter_item, parent, false);
-        ((TextView) vg.findViewById(R.id.filter_main_text)).setText(filter.toString(false));
+        String text = "";
+        if(filter instanceof Filter.ExcludingFilter)
+            text = ((Filter.ExcludingFilter) filter).getParentFilter() + " " + filter.getFilter();
+        else
+            text = filter.toString();
+
+        ((TextView) vg.findViewById(R.id.filter_main_text)).setText(text);
         vg.findViewById(R.id.filter_star).setVisibility(filter.contains ? View.VISIBLE : View.GONE);
 
         FrameLayout edit = (FrameLayout) vg.findViewById(R.id.filter_edit);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FilterDialog.newInstance(false, position).show(c.getSupportFragmentManager(), "edit_dialog");
+                boolean m = filter instanceof Filter.IncludingFilter;
+                int mpos = 0;
+                if(m) {
+                    mpos = GGApp.GG_APP.filters.including.indexOf(filter);
+                }
+
+                FilterDialog.newInstance(m, position, mpos).show(c.getSupportFragmentManager(), "edit_dialog");
             }
         });
 
@@ -57,12 +76,15 @@ public class FilterListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(c);
                 builder.setTitle(c.getString(R.string.delete_filter));
-                builder.setMessage(c.getString(R.string.delete_filter_message));
+                builder.setMessage(c.getString(filter instanceof Filter.IncludingFilter ? R.string.delete_main_filter_message : R.string.delete_filter_message));
                 builder.setPositiveButton(c.getString(R.string.delete), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         c.changed = true;
                         list.remove(position);
+                        if(filter instanceof Filter.ExcludingFilter)
+                            ((Filter.ExcludingFilter) filter).getParentFilter().excluding.remove(filter);
+
                         notifyDataSetChanged();
                         FilterActivity.saveFilter(GGApp.GG_APP.filters);
                         c.setListViewHeightBasedOnChildren();

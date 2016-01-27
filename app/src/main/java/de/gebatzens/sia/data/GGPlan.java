@@ -278,21 +278,13 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
 
     }
 
-    public GGPlan filter(Filter.FilterList filters) {
+    public GGPlan filter(Filter.FilterList flist) {
         GGPlan list = new GGPlan();
-        for(Entry e : this) {
-            if(filters.mainFilter.matches(e))
-                list.add(e);
-        }
+        list.date = date;
 
-        for(Filter f : filters) {
-            GGPlan rlist = new GGPlan();
-            rlist.date = date;
-            for(Entry e : list)
-                if(f.matches(e))
-                    rlist.add(e);
-            for(Entry e : rlist)
-                list.remove(e);
+        for(Entry e : this) {
+            if(flist.matches(e))
+                list.add(e);
         }
 
         Collections.sort(list, new Comparator<Entry>() {
@@ -315,7 +307,8 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
 
     }
 
-    public static class Entry {
+    public static class Entry implements Filter.Filterable {
+
         public String type;
         public String clazz;
         public String missing = "";

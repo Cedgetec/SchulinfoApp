@@ -70,8 +70,6 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".MQTTService"/>
-
     </application>
 
 </manifest>

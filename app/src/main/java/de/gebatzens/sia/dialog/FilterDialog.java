@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,8 +28,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.util.List;
 
 import de.gebatzens.sia.FilterActivity;
 import de.gebatzens.sia.GGApp;
@@ -40,10 +45,11 @@ public class FilterDialog extends DialogFragment {
 
     FilterActivity activity;
 
-    public static FilterDialog newInstance(boolean mainFilter, int position) {
+    public static FilterDialog newInstance(boolean mainFilter, int position, int mainPosition) {
         Bundle bundle = new Bundle();
         bundle.putBoolean("main_filter", mainFilter);
         bundle.putInt("update_position", position);
+        bundle.putInt("main_filter_position", mainPosition);
         FilterDialog filterDialog = new FilterDialog();
         filterDialog.setArguments(bundle);
         return filterDialog;
@@ -69,34 +75,40 @@ public class FilterDialog extends DialogFragment {
                 activity.changed = true;
                 EditText ed = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
                 CheckBox cb = (CheckBox) ((Dialog) dialog).findViewById(R.id.checkbox_contains);
+                Spinner spinner = (Spinner) ((Dialog) dialog).findViewById(R.id.filter_spinner);
 
                 String filtertext = ed.getText().toString().trim();
                 if (filtertext.isEmpty()) {
                     Snackbar.make(getActivity().getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                 } else {
                     if(isMainFilterDialog()) {
-                        Filter.FilterList list = GGApp.GG_APP.filters;
-                        list.mainFilter.setFilter(filtertext);
-                        activity.mainFilterContent.setText(list.mainFilter.getFilter());
-                    } else {
-                        Filter f;
-                        if(getUpdatePosition() == -1) {
-                            f = new Filter();
+                        Filter.IncludingFilter mainFilter = null;
+                        if(getMainFilterPosition() == -1) {
+                            mainFilter = new Filter.IncludingFilter(spinner.getSelectedItemPosition() == 0 ? Filter.FilterType.CLASS : Filter.FilterType.TEACHER, filtertext);
+                            GGApp.GG_APP.filters.including.add(mainFilter);
                         } else {
-                            f = GGApp.GG_APP.filters.get(getUpdatePosition());
+                            mainFilter = GGApp.GG_APP.filters.including.get(getMainFilterPosition());
+                            mainFilter.setFilter(filtertext);
+                            mainFilter.setType(spinner.getSelectedItemPosition() == 0 ? Filter.FilterType.CLASS : Filter.FilterType.TEACHER);
                         }
-                        f.setType(Filter.FilterType.SUBJECT);
-                        f.setFilter(filtertext);
-                        f.contains = cb.isChecked();
-
+                    } else {
+                        Filter.ExcludingFilter f;
+                        Filter.IncludingFilter inc = GGApp.GG_APP.filters.including.get(spinner.getSelectedItemPosition());
                         if(getUpdatePosition() == -1) {
-                            GGApp.GG_APP.filters.add(f);
+                            f = new Filter.ExcludingFilter(Filter.FilterType.SUBJECT, filtertext, inc);
+                            inc.excluding.add(f);
+                        } else {
+                            f = inc.excluding.get(getUpdatePosition());
                         }
 
-                        activity.adapter.notifyDataSetChanged();
-                        FilterActivity.saveFilter(GGApp.GG_APP.filters);
-                        activity.setListViewHeightBasedOnChildren();
+                        f.contains = cb.isChecked();
                     }
+
+                    (isMainFilterDialog() ? activity.incAdapter : activity.excAdapter).notifyDataSetChanged();
+                    FilterActivity.saveFilter(GGApp.GG_APP.filters);
+                    activity.excAdapter.setList(activity.generateExcFilterList());
+                    activity.setListViewHeightBasedOnChildren();
+
 
                     FilterActivity.saveFilter(GGApp.GG_APP.filters);
                 }
@@ -111,6 +123,7 @@ public class FilterDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(0, 0);
             }
         });
 
@@ -125,6 +138,10 @@ public class FilterDialog extends DialogFragment {
         return getArguments().getInt("update_position");
     }
 
+    private int getMainFilterPosition() {
+        return getArguments().getInt("main_filter_position");
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -133,37 +150,91 @@ public class FilterDialog extends DialogFragment {
 
         Dialog d = getDialog();
 
-        Filter.FilterList list = GGApp.GG_APP.filters;
-        EditText ed = (EditText) d.findViewById(R.id.filter_text);
+        final Filter.FilterList list = GGApp.GG_APP.filters;
+        final EditText ed = (EditText) d.findViewById(R.id.filter_text);
+        final Spinner spinner = (Spinner) d.findViewById(R.id.filter_spinner);
+        final CheckBox cb = (CheckBox) d.findViewById(R.id.checkbox_contains);
         ed.setSelectAllOnFocus(true);
 
         if(isMainFilterDialog()) {
-            ed.setHint(list.mainFilter.getType() == Filter.FilterType.CLASS ? getString(R.string.school_class_name) : getString(R.string.teacher_shortcut));
-            ed.setText(list.mainFilter.getFilter());
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item,  new String[] { getString(R.string.school_class), getString(R.string.teacher) });
+            spinner.setAdapter(adapter);
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    ed.setHint((String) spinner.getSelectedItem());
 
-            d.findViewById(R.id.checkbox_contains).setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            if(getMainFilterPosition() == -1) {
+                ed.setText("");
+                spinner.setSelection(0);
+            } else {
+                ed.setText(list.including.get(getMainFilterPosition()).getFilter());
+                spinner.setSelection(list.including.get(getMainFilterPosition()).getType() == Filter.FilterType.CLASS ? 0 : 1);
+            }
+
+            cb.setVisibility(View.GONE);
+
         } else {
             ed.setHint(getString(R.string.subject_course_name));
+            ArrayAdapter<Filter.IncludingFilter> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item);
+            adapter.addAll(list.including);
+            spinner.setAdapter(adapter);
 
-            final CheckBox cb = (CheckBox) d.findViewById(R.id.checkbox_contains);
             cb.setEnabled(false);
             cb.setText(getString(R.string.all_subjects_including_disabled));
 
-            ed.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            int p = getUpdatePosition();
+            if(p != -1) {
+                Filter.ExcludingFilter f = list.including.get(getMainFilterPosition()).excluding.get(getUpdatePosition());
 
+                cb.setChecked(f.contains);
+                cb.setText(getString(R.string.all_subjects_including, f.getFilter()));
+                ed.setText(f.getFilter());
+            }
+        }
+
+        ed.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String str = s.toString().trim();
+
+                int op = isMainFilterDialog() ? getMainFilterPosition() : getUpdatePosition();
+                List<? extends Filter> flist = isMainFilterDialog() ? list.including : list.including.get(getMainFilterPosition()).excluding;
+                Filter.FilterType currentType = isMainFilterDialog() ? (spinner.getSelectedItemPosition() == 0 ? Filter.FilterType.CLASS : Filter.FilterType.TEACHER) : Filter.FilterType.SUBJECT;
+
+                for(int i = 0; i < flist.size(); i++) {
+                    if(i == op) {
+                        continue;
+                    }
+
+                    Filter f = flist.get(i);
+
+                    if(f.getType() == currentType && f.getFilter().equals(str)) {
+                        ed.setError(getString(R.string.filter_exists));
+                    }
                 }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!isMainFilterDialog()) {
 
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    String str = s.toString().trim();
-                    if(str.length() == 0) {
+                    if (str.length() == 0) {
                         cb.setEnabled(false);
                         cb.setText(getString(R.string.all_subjects_including_disabled));
                     } else {
@@ -171,17 +242,8 @@ public class FilterDialog extends DialogFragment {
                         cb.setText(getString(R.string.all_subjects_including, str));
                     }
                 }
-            });
-
-            int p = getUpdatePosition();
-            if(p != -1) {
-                Filter f = GGApp.GG_APP.filters.get(p);
-
-                cb.setChecked(f.contains);
-                cb.setText(getString(R.string.all_subjects_including, f.getFilter()));
-                ed.setText(f.getFilter());
             }
-        }
+        });
     }
 
 }

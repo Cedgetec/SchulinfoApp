@@ -35,11 +35,9 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import de.gebatzens.sia.FilterActivity;
 import de.gebatzens.sia.FragmentData;
@@ -191,7 +189,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l.addView(tv);
             Log.w("ggvp", "bundle " + type + " " + this + " " + getParentFragment());*/
             throw new IllegalArgumentException(("index is INDEX_INVALID"));
-        } else if(index == INDEX_OVERVIEW && !GGApp.GG_APP.filters.mainFilter.getFilter().equals("")) {
+        } else if(index == INDEX_OVERVIEW && GGApp.GG_APP.filters.including.size() > 0) {
             // Overview, filter applied
 
             Filter.FilterList filters = GGApp.GG_APP.filters;
@@ -209,33 +207,27 @@ public class SubstPagerFragment extends RemoteDataFragment {
             tv4.setTag("gg_time");
             tv4.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
-            TextView tv2 = createTextView(
-                    filters.mainFilter.getType() == Filter.FilterType.CLASS ? getActivity().getString(R.string.school_class) + " " + filters.mainFilter.getFilter() :
-                    getActivity().getString(R.string.teacher) + " " + filters.mainFilter.getFilter(), 15, inflater, l2);
+
+
+            TextView tv2 = createTextView(filters.getSummary(), 15, inflater, l2);
             tv2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             tv2.setGravity(Gravity.END | Gravity.CENTER);
             tv2.setPadding(0,0,toPixels(16),0);
 
-            for(GGPlan plan : ((GGPlan.GGPlans) getFragment().getData())) {
-                List<GGPlan.Entry> list = plan.filter(filters);
-                TextView tv = createTextView(translateDay(plan.date), 27, inflater, l);
-                tv.setPadding(toPixels(2.8f), toPixels(20), 0, 0);
-                tv.setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#a0a0a0" : "#6e6e6e"));
+            final LinearLayout l3 = new LinearLayout(getActivity());
+            l3.setOrientation(LinearLayout.VERTICAL);
+            l.addView(l3);
 
-                SubstListAdapter.MessageViewHolder messages = createSMCard(l, inflater);
-                messages.update(plan.special);
-                l.addView(messages.itemView);
+            RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.basic_recyclerview, l3, false);
+            final SubstListAdapter sla = new SubstListAdapter(this);
+            recyclerView.setAdapter(sla);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.setTag("gg_list");
+            recyclerView.setPadding(toPixels(4), toPixels(4), toPixels(4), toPixels(4));
+            l3.addView(recyclerView);
+            sla.setToOverview();
 
-                createCardItems(list, l, inflater, filters.mainFilter.getType() != Filter.FilterType.CLASS ? CARD_LESSON | CARD_CLASS : CARD_LESSON);
-            }
-
-            ScrollView sv = new ScrollView(getActivity());
-            sv.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
-            sv.setFillViewport(true);
-            sv.setTag("gg_scroll");
-
-            sv.addView(l0);
-            group.addView(sv);
+            group.addView(l0);
 
         } else if(index == INDEX_OVERVIEW) {
             //Overview, no filter applied
@@ -350,10 +342,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
                     if (!item.equals(getActivity().getString(R.string.all))) {
                         cardColorIndex = 0;
                         Filter.FilterList fl = new Filter.FilterList();
-                        Filter main = new Filter();
-                        fl.mainFilter = main;
-                        main.setType(Filter.FilterType.CLASS);
-                        main.setFilter(item);
+                        fl.including.add(new Filter.IncludingFilter(Filter.FilterType.CLASS, item));
                         sla.updateData(plan.filter(fl), SubstListAdapter.PLAIN, true, item);
 
                     } else {
@@ -395,25 +384,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
         return l;
     }
 
-    /**
-     * Converts a date to a better readable string
-     * e.g. "Mittwoch, 08. Juli"
-     *
-     * @param date
-     * @return
-     */
-    private String translateDay(Date date) {
-        StringBuilder sb = new StringBuilder();
-        SimpleDateFormat convertedDateFormat;
-        if(Locale.getDefault().getLanguage().equals("en")) {
-            convertedDateFormat = new SimpleDateFormat("EEEE, MMM dd");
-        } else {
-            convertedDateFormat = new SimpleDateFormat("EEEE, dd. MMM");
-        }
 
-        sb.append(convertedDateFormat.format(date));
-        return sb.toString();
-    }
 
     public static String getTimeDiff(Context ctx, Date old) {
         long diff = new Date().getTime() - old.getTime();

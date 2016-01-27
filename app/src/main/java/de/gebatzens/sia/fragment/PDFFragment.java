@@ -39,7 +39,7 @@ public class PDFFragment extends RemoteDataFragment {
         ((MainActivity) getActivity()).updateMenu(R.menu.toolbar_menu);
         ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.fragment_pdf, group, false);
         if(getFragment().getData() != null)
-            createRootView(inflater, vg);
+            createRootView(inflater, (ViewGroup) vg.findViewById(R.id.pdf_content));
         return vg;
     }
 
@@ -64,11 +64,5 @@ public class PDFFragment extends RemoteDataFragment {
         return (ViewGroup) getView().findViewById(R.id.pdf_content);
     }
 
-    /*@Override
-    public void updateFragment() {
-        if(pdf != null) {
-            pdf.fromFile(((StaticData) getFragment().getData()).getFile()).enableSwipe(true).load();
-        }
-    }*/
 
 }

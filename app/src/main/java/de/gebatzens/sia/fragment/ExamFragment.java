@@ -157,9 +157,7 @@ public class ExamFragment extends RemoteDataFragment {
                 } else {
                     String cl = classes.get(position);
                     Filter.FilterList list = new Filter.FilterList();
-                    list.mainFilter = new Filter();
-                    list.mainFilter.setType(Filter.FilterType.CLASS);
-                    list.mainFilter.setFilter(cl);
+                    list.including.add(new Filter.IncludingFilter(Filter.FilterType.CLASS, cl));
 
                     List<Exams.ExamItem> items = ((Exams) getFragment().getData()).filter(list, false);
                     tv5.setText(getString(R.string.entries) + " " + items.size());

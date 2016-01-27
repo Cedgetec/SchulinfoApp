@@ -134,6 +134,7 @@
     <string name="delete">Löschen</string>
     <string name="delete_filter">Filter löschen</string>
     <string name="delete_filter_message">Fach/Kurs Filter wirklich löschen?</string>
+    <string name="delete_main_filter_message">Diesen Hauptfilter wirklich löschen?</string>
     <string name="exam_explain">Hier werden die Klausuren nach Jahrgängen angezeigt. Du kannst die Klausuren, die du schreibst, mit einem Haken versehen, um sie in deiner Übersicht anzeigen zu lassen. Wenn du willst, kannst du deine Klausuren auch in den Kalender eintragen lassen.</string>
     <string name="your_overview">Deine Übersicht</string>
     <string name="entries">Einträge:</string>
@@ -150,6 +151,8 @@
     <string name="maintenance">Der Server wird gerade gewartet</string>
     <string name="unknown_error">Unbekannter Fehler</string>
     <string name="light_summary">Illuminiere die Welt!</string>
+    <string name="filter_exists">Dieser Filter existiert bereits</string>
+    <string name="add">Hinzufügen</string>
 
     <string-array name="vibration_values">
         <item>Aus</item>

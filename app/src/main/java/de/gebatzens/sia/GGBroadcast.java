@@ -169,8 +169,6 @@ public class GGBroadcast extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent intent1 = new Intent(context, MQTTService.class);
-        context.startService(intent1);
         if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             createAlarm(context);
 

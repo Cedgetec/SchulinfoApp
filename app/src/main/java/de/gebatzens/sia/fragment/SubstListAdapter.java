@@ -19,16 +19,19 @@ import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Filter;
@@ -51,10 +54,14 @@ public class SubstListAdapter extends RecyclerView.Adapter {
      */
     public static final int ALL_LESSONS = 2;
 
+    /**
+     * Multiple lists for every day with multiple labels
+     */
+    public static final int OVERVIEW = 3;
+
     ArrayList<AdapterEntry> entries;
     int type;
     SubstPagerFragment frag;
-    int lastPosition = -1;
 
     public SubstListAdapter(SubstPagerFragment f) {
         this.frag = f;
@@ -102,12 +109,10 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                     entries.add(ae);
 
                     Filter.FilterList fl = new Filter.FilterList();
-                    fl.mainFilter = new Filter();
-                    fl.mainFilter.setType(Filter.FilterType.LESSON);
-                    fl.mainFilter.setFilter(lesson);
+                    fl.including.add(new Filter.IncludingFilter(Filter.FilterType.LESSON, lesson));
                     for(GGPlan.Entry e : plan.filter(fl)) {
                         ae = new AdapterEntry();
-                        ae.data = e;
+                        ae.data = new Object[] {e, SubstPagerFragment.CARD_CLASS};
                         ae.type = AdapterEntry.ENTRY;
                         entries.add(ae);
 
@@ -123,27 +128,61 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                     entries.add(ae);
 
                     Filter.FilterList fl = new Filter.FilterList();
-                    fl.mainFilter = new Filter();
-                    fl.mainFilter.setType(Filter.FilterType.CLASS);
-                    fl.mainFilter.setFilter(cl);
+                    fl.including.add(new Filter.IncludingFilter(Filter.FilterType.CLASS, cl));
                     for(GGPlan.Entry e : plan.filter(fl)) {
                         ae = new AdapterEntry();
-                        ae.data = e;
+                        ae.data = new Object[] {e, SubstPagerFragment.CARD_LESSON};
                         ae.type = AdapterEntry.ENTRY;
                         entries.add(ae);
 
                     }
                 }
                 break;
-
         }
 
         notifyDataSetChanged();
     }
 
+    public void setToOverview() {
+        this.type = OVERVIEW;
+        entries.clear();
+
+        GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData();
+        Filter.FilterList filter = GGApp.GG_APP.filters;
+
+        for(GGPlan pl : plans) {
+            AdapterEntry date = new AdapterEntry();
+            date.type = AdapterEntry.LABEL;
+            date.data = translateDay(pl.date);
+            entries.add(date);
+
+            AdapterEntry me = new AdapterEntry();
+            me.type = AdapterEntry.MESSAGES;
+            me.data = pl.special;
+            entries.add(me);
+
+            GGPlan filtered = pl.filter(filter);
+
+            for(Filter.IncludingFilter ifi : filter.including) {
+                AdapterEntry clLabel = new AdapterEntry();
+                clLabel.type = AdapterEntry.LABEL;
+                clLabel.data = ifi.getFilter();
+                entries.add(clLabel);
+
+                for(GGPlan.Entry e : filtered) {
+                    if (ifi.matches(e)) {
+                        AdapterEntry ae = new AdapterEntry();
+                        ae.data = new Object[] {e, ifi.getType() != Filter.FilterType.CLASS ? SubstPagerFragment.CARD_CLASS | SubstPagerFragment.CARD_LESSON : SubstPagerFragment.CARD_LESSON};
+                        ae.type = AdapterEntry.ENTRY;
+                        entries.add(ae);
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.w("ggvp", "create view holder " + viewType);
         switch(viewType) {
             case AdapterEntry.ENTRY:
                 return frag.createCardItem(LayoutInflater.from(parent.getContext()), parent);
@@ -163,11 +202,11 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Log.w("ggvp", "bind view holder " + position);
         AdapterEntry ae = entries.get(position);
         switch(ae.type) {
             case AdapterEntry.ENTRY:
-                ((SubstViewHolder) holder).update((GGPlan.Entry) ae.data, this.type == ALL_LESSONS ? SubstPagerFragment.CARD_CLASS : SubstPagerFragment.CARD_LESSON);
+                Object[] data = (Object[]) ae.data;
+                ((SubstViewHolder) holder).update((GGPlan.Entry) data[0], (int) data[1]);
                 break;
             case AdapterEntry.LABEL:
                 ((LabelViewHolder) holder).update((String) ae.data);
@@ -260,6 +299,26 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         Object data;
         int type;
 
+    }
+
+    /**
+     * Converts a date to a better readable string
+     * e.g. "Mittwoch, 08. Juli"
+     *
+     * @param date
+     * @return
+     */
+    private String translateDay(Date date) {
+        StringBuilder sb = new StringBuilder();
+        SimpleDateFormat convertedDateFormat;
+        if(Locale.getDefault().getLanguage().equals("en")) {
+            convertedDateFormat = new SimpleDateFormat("EEEE, MMM dd");
+        } else {
+            convertedDateFormat = new SimpleDateFormat("EEEE, dd. MMM");
+        }
+
+        sb.append(convertedDateFormat.format(date));
+        return sb.toString();
     }
 
 }

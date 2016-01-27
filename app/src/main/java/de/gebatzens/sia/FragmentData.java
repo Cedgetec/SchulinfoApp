@@ -111,7 +111,7 @@ public class FragmentData {
     public boolean equals(Object o) {
         if(o instanceof FragmentData) {
             FragmentData f = (FragmentData) o;
-            return f.type.equals(this.type) && this.data.equals(f.data);
+            return f.type.equals(this.type) && (this.data == null ? f.data == null : this.data.equals(f.data));
         } else {
             return false;
         }

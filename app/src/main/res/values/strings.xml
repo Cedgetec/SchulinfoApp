@@ -136,7 +136,8 @@
     <string name="explanation">Explanation</string>
     <string name="delete">Delete</string>
     <string name="delete_filter">Delete filter</string>
-    <string name="delete_filter_message">Do you really want to delete your subject/course filter/s?</string>
+    <string name="delete_filter_message">Do you really want to delete this subject/course filter?</string>
+    <string name="delete_main_filter_message">Do you really want to delete this main filter?</string>
     <string name="exam_explain">Here you can see all exams grouped by grades. You can check the exams you are going to write to make them appear in your overview. You can also add the exams from your overview to the calendar.</string>
     <string name="entries">Entries:</string>
     <string name="add_to_calendar">Add to calendar</string>
@@ -152,6 +153,8 @@
     <string name="maintenance">The server is currently being maintained</string>
     <string name="unknown_error">Unknown error</string>
     <string name="light_summary">Illuminate the world!</string>
+    <string name="filter_exists">This filter already exists</string>
+    <string name="add">Add</string>
 
     <string-array name="vibration_values">
         <item>Off</item>

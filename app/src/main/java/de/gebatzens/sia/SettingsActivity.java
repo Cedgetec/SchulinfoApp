@@ -235,9 +235,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             Preference filter = findPreference("filter");
-            filter.setSummary(GGApp.GG_APP.filters.mainFilter.getFilter().isEmpty() ? getActivity().getString(R.string.no_filter_active)
-                    : GGApp.GG_APP.filters.size() == 0 ? getActivity().getString(R.string.filter_active) :
-                    getActivity().getString(R.string.filters_active, GGApp.GG_APP.filters.size() + 1));
+            filter.setSummary(GGApp.GG_APP.filters.getSummary());
             filter.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -356,7 +354,7 @@ public class SettingsActivity extends AppCompatActivity {
         if(req == 1 && resp == RESULT_OK) {
             changed = true;
             Preference filter = frag.findPreference("filter");
-            filter.setSummary(GGApp.GG_APP.filters.mainFilter.getFilter().isEmpty() ? "Kein Filter aktiv" : (GGApp.GG_APP.filters.size() + 1) + " Filter aktiv");
+            filter.setSummary(GGApp.GG_APP.filters.getSummary());
         }
     }
 

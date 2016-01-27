@@ -17,7 +17,6 @@
 package de.gebatzens.sia;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -103,9 +102,7 @@ public class GGRemote {
         GGApp.GG_APP.deleteFile("mensa");
         GGApp.GG_APP.deleteFile("exams");
         GGApp.GG_APP.deleteFile("ggfilter");
-        GGApp.GG_APP.stopService(new Intent(GGApp.GG_APP, MQTTService.class));
         GGApp.GG_APP.filters.clear();
-        GGApp.GG_APP.filters.mainFilter = new Filter();
 
         prefs.edit().clear().apply();
 
@@ -385,16 +382,12 @@ public class GGRemote {
                 case SUCCEEDED:
                     JSONObject data = (JSONObject) re.data;
 
-                    GGApp.GG_APP.startService(new Intent(GGApp.GG_APP, MQTTService.class));
-
                     String group = prefs.getString("group", null);
                     Filter.FilterList filters = GGApp.GG_APP.filters;
                     if (group != null && !group.equals("lehrer")) {
-                        filters.mainFilter.setType(Filter.FilterType.CLASS);
-                        filters.mainFilter.setFilter(group);
+                        filters.including.add(new Filter.IncludingFilter(Filter.FilterType.CLASS, group));
                     } else if (group != null) {
-                        filters.mainFilter.setType(Filter.FilterType.TEACHER);
-                        filters.mainFilter.setFilter(user);
+                        filters.including.add(new Filter.IncludingFilter(Filter.FilterType.TEACHER, user));
                     }
                     FilterActivity.saveFilter(GGApp.GG_APP.filters);
 

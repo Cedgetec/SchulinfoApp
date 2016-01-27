@@ -23,9 +23,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp">
+                android:orientation="vertical">
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -36,70 +35,27 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
                     android:fontFamily="sans-serif-medium"
-                    android:id="@+id/filter_sep_1"
+                    android:id="@+id/filter_header_inc"
                     android:text="@string/main_filter"/>
 
-                <LinearLayout
+                <ListView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:background="?android:selectableItemBackground"
-                    android:id="@+id/mainfilter_mode_layout">
+                    android:id="@+id/filter_list_inc"
+                    android:isScrollContainer="false"
+                    android:listSelector="@android:color/transparent"/>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:fontFamily="sans-serif"
-                        android:textColor="?android:textColorPrimary"
-                        android:text="@string/main_filter_mode"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:fontFamily="sans-serif"
-                        android:textColor="?android:textColorSecondary"
-                        android:id="@+id/filter_main_category"
-                        android:hint="@string/no_filter_applied"
-                        android:text="@string/not_selected"/>
-
-                </LinearLayout>
+                <Button
+                    android:id="@+id/inc_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.7dp"
                     android:background="?android:attr/listDivider"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:background="?android:selectableItemBackground"
-                    android:id="@+id/mainfilter_content_layout">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:fontFamily="sans-serif"
-                        android:textColor="?android:textColorPrimary"
-                        android:text="@string/main_filter_content"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:fontFamily="sans-serif"
-                        android:textColor="?android:textColorSecondary"
-                        android:id="@+id/filter_main_content"
-                        android:hint="@string/no_filter_applied"
-                        android:text="@string/not_selected"/>
-
-                </LinearLayout>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,26 +65,21 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
                     android:fontFamily="sans-serif-medium"
-                    android:id="@+id/filter_sep_2"
+                    android:id="@+id/filter_header_exc"
                     android:text="@string/hidden_filters"/>
 
                 <ListView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/filter_list"
+                    android:id="@+id/filter_list_exc"
                     android:isScrollContainer="false"
                     android:listSelector="@android:color/transparent"/>
 
-                <android.support.design.widget.FloatingActionButton
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/addfilter_button"
+                <Button
+                    android:id="@+id/exc_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add"
-                    android:layout_gravity="center"
-                    android:layout_margin="16dp"
-                    app:fabSize="normal"
-                    app:borderWidth="0dp"/>
+                    android:text="@string/add"/>
 
             </LinearLayout>
 

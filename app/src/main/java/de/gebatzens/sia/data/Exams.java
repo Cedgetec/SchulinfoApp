@@ -85,15 +85,8 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
     public Exams filter(Filter.FilterList filters, boolean past) {
         Exams e = new Exams();
         for(ExamItem item : this) {
-            boolean b = filters.mainFilter.matches(item);
-            if(b) {
-                for(Filter f : filters) {
-                    if(f.matches(item))
-                        b = false;
-                }
-                if(b && (past || item.date.after(new Date(System.currentTimeMillis() - 86400000L)))) {
-                    e.add(item);
-                }
+            if(GGApp.GG_APP.filters.matches(item) && (past || item.date.after(new Date(System.currentTimeMillis() - 86400000L)))) {
+                e.add(item);
             }
         }
         return e;
@@ -176,7 +169,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
         return true;
     }
 
-    public static class ExamItem {
+    public static class ExamItem implements Filter.Filterable {
         public Date date;
         public String clazz;
         public String lesson;

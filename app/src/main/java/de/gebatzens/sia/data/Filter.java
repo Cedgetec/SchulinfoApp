@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,13 +21,26 @@ import java.util.ArrayList;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
 
-public class Filter {
+public abstract class Filter {
 
     private FilterType type = FilterType.CLASS;
     private String filter = "";
     private String filterAN = "";
+
+    /**
+     * if true, matches "lat1" for "lat"
+     */
     public boolean contains = false;
 
+
+    public Filter() {
+
+    }
+
+    public Filter(FilterType type, String filter) {
+        setType(type);
+        setFilter(filter);
+    }
 
     public void setType(FilterType t) {
         type = t;
@@ -51,7 +64,16 @@ public class Filter {
     }
 
 
-    public boolean matches(GGPlan.Entry e) {
+    public boolean matches(Filterable filterable) {
+        if(filterable instanceof GGPlan.Entry)
+            return matches((GGPlan.Entry) filterable);
+        else if(filterable instanceof Exams.ExamItem)
+            return matches((Exams.ExamItem) filterable);
+        else
+            return false;
+    }
+
+    private boolean matches(GGPlan.Entry e) {
         if(filter.isEmpty())
             return false;
 
@@ -71,7 +93,7 @@ public class Filter {
         return false;
     }
 
-    public boolean matches(Exams.ExamItem item) {
+    private boolean matches(Exams.ExamItem item) {
         if(filter.isEmpty())
             return false;
 
@@ -130,7 +152,91 @@ public class Filter {
         CLASS, TEACHER, SUBJECT, LESSON
     }
 
-    public static class FilterList extends ArrayList<Filter> {
-        public Filter mainFilter;
+    public interface Filterable {
+
+    }
+
+    public static class IncludingFilter extends Filter {
+        public ArrayList<ExcludingFilter> excluding = new ArrayList<>();
+
+        public IncludingFilter() {
+
+        }
+
+        public IncludingFilter(FilterType type, String f) {
+            super(type, f);
+        }
+
+        @Override
+        public boolean matches(Filterable f) {
+            boolean b = super.matches(f);
+            if(b) {
+                for(Filter filter : excluding) {
+                    if(filter.matches(f))
+                        b = false;
+                }
+            }
+
+            return b;
+        }
+    }
+
+    public static class ExcludingFilter extends Filter {
+        private IncludingFilter parent;
+
+        public ExcludingFilter() {
+
+        }
+
+        public ExcludingFilter(FilterType type, String f, IncludingFilter in) {
+            super(type, f);
+            this.parent = in;
+        }
+
+        public IncludingFilter getParentFilter() {
+            return parent;
+        }
+    }
+
+    public static class FilterList {
+        public ArrayList<IncludingFilter> including = new ArrayList<>();
+
+        public void clear() {
+            including.clear();
+        }
+
+        public boolean matches(Filterable entry) {
+            boolean b = false;
+            for(Filter f : including) {
+                if(f.matches(entry))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public String getSummary() {
+            String text = "";
+
+            if(including.size() == 0) {
+                text = GGApp.GG_APP.getString(R.string.no_filter_active);
+            } if(including.size() == 1) {
+                Filter f = including.get(0);
+                text = f.getType() == Filter.FilterType.CLASS ? GGApp.GG_APP.getString(R.string.school_class) + " " + f.getFilter() :
+                        GGApp.GG_APP.getString(R.string.teacher) + " " + f.getFilter();
+            } else {
+                for(Filter f : including) {
+                    text += f.getFilter() + " ";
+                }
+
+                text = text.trim();
+
+                if(text.length() > 10) {
+                    text = text.substring(0, 9) + "...";
+                }
+            }
+
+            return text;
+        }
     }
 }

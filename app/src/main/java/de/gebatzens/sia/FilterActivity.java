@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,9 @@
  */
 package de.gebatzens.sia;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.JsonReader;
@@ -28,7 +25,7 @@ import android.util.JsonWriter;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -38,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 import de.gebatzens.sia.data.Filter;
 import de.gebatzens.sia.dialog.FilterDialog;
@@ -46,16 +44,20 @@ import de.gebatzens.sia.dialog.TextDialog;
 public class FilterActivity extends AppCompatActivity {
 
     Toolbar mToolBar;
-    public FilterListAdapter adapter;
-    ListView listView;
+    public FilterListAdapter incAdapter, excAdapter;
+    ListView listViewInc, listViewExc;
 
-    TextView mainFilterCategory;
-    public TextView mainFilterContent;
-    int selectedMode;
-    int mainModePosition;
     public boolean changed = false;
-    FloatingActionButton mAddFilterButton;
     ScrollView sv;
+
+    public ArrayList<Filter.ExcludingFilter> generateExcFilterList() {
+        ArrayList<Filter.ExcludingFilter> list = new ArrayList<>();
+        for(Filter.IncludingFilter inc : GGApp.GG_APP.filters.including) {
+            list.addAll(inc.excluding);
+        }
+
+        return list;
+    }
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -71,65 +73,25 @@ public class FilterActivity extends AppCompatActivity {
 
         GGApp.GG_APP.preferences.edit().putBoolean("first_use_filter_2", false).apply();
 
-        final String[] main_filterStrings = new String[] { getApplication().getString(R.string.school_class), getApplication().getString(R.string.teacher)};
+        listViewInc = (ListView) findViewById(R.id.filter_list_inc);
+        incAdapter = new FilterListAdapter(this, GGApp.GG_APP.filters.including);
+        listViewInc.setAdapter(incAdapter);
+        listViewInc.setDrawSelectorOnTop(true);
 
-        listView = (ListView) findViewById(R.id.filter_list);
-        adapter = new FilterListAdapter(this, GGApp.GG_APP.filters);
-        listView.setAdapter(adapter);
-        listView.setDrawSelectorOnTop(true);
+        listViewExc = (ListView) findViewById(R.id.filter_list_exc);
+        excAdapter = new FilterListAdapter(this, generateExcFilterList());
+        listViewExc.setAdapter(excAdapter);
+        listViewExc.setDrawSelectorOnTop(true);
+
         setListViewHeightBasedOnChildren();
 
         if(bundle != null)
             changed = bundle.getBoolean("changed", false);
 
-        TextView tv = (TextView) findViewById(R.id.filter_sep_1);
+        TextView tv = (TextView) findViewById(R.id.filter_header_inc);
         tv.setTextColor(GGApp.GG_APP.school.getAccentColor());
-        TextView tv2 = (TextView) findViewById(R.id.filter_sep_2);
+        TextView tv2 = (TextView) findViewById(R.id.filter_header_exc);
         tv2.setTextColor(GGApp.GG_APP.school.getAccentColor());
-
-        Filter.FilterList list = GGApp.GG_APP.filters;
-        mainFilterCategory = (TextView) findViewById(R.id.filter_main_category);
-        mainFilterCategory.setText(list.mainFilter.getType() == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher));
-        mainFilterContent = (TextView) findViewById(R.id.filter_main_content);
-        mainFilterContent.setText(list.mainFilter.getFilter());
-
-        LinearLayout l_mode = (LinearLayout) findViewById(R.id.mainfilter_mode_layout);
-        l_mode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View viewIn) {
-                Filter.FilterList list = GGApp.GG_APP.filters;
-                selectedMode = list.mainFilter.getType() == Filter.FilterType.CLASS ? 0 : list.mainFilter.getType() == Filter.FilterType.TEACHER ? 1 : 2;
-                AlertDialog.Builder builder = new AlertDialog.Builder(FilterActivity.this);
-                builder.setTitle(getApplication().getString(R.string.set_main_filter_mode))
-                        .setSingleChoiceItems(main_filterStrings, selectedMode, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                changed = true;
-                                mainModePosition = which == 0 ? 0 : 1;
-                                Filter.FilterList list = GGApp.GG_APP.filters;
-                                list.mainFilter.setType(Filter.FilterType.values()[mainModePosition]);
-                                mainFilterCategory.setText(list.mainFilter.getType() == Filter.FilterType.CLASS ? getApplication().getString(R.string.school_class) : getApplication().getString(R.string.teacher));
-                                FilterActivity.saveFilter(GGApp.GG_APP.filters);
-                                dialog.dismiss();
-                            }
-                        });
-                builder.setNegativeButton(getApplication().getString(R.string.abort), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog d = builder.create();
-                d.show();
-            }
-        });
-
-        LinearLayout l_content = (LinearLayout) findViewById(R.id.mainfilter_content_layout);
-        l_content.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View viewIn) {
-                FilterDialog.newInstance(true, -1).show(getSupportFragmentManager(), "main_filter");
-            }
-        });
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mToolBar.setTitleTextColor(Color.WHITE);
@@ -154,11 +116,17 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
-        mAddFilterButton = (FloatingActionButton) findViewById(R.id.addfilter_button);
-        mAddFilterButton.setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.inc_button)).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View viewIn) {
-                FilterDialog.newInstance(false, -1).show(getSupportFragmentManager(), "add_filter");
+            public void onClick(View v) {
+                FilterDialog.newInstance(true, 0, -1).show(getSupportFragmentManager(), "add_main_filter");
+            }
+        });
+
+        ((Button) findViewById(R.id.exc_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FilterDialog.newInstance(false, -1, 0).show(getSupportFragmentManager(), "add_exc_filter");
             }
         });
 
@@ -169,21 +137,27 @@ public class FilterActivity extends AppCompatActivity {
         finish();
     }
 
-    public static Filter.FilterList loadFilter() {
+    public static Filter.FilterList loadFilterFallback() {
         Filter.FilterList list = new Filter.FilterList();
-        list.mainFilter = null;
 
         try {
             InputStream in = GGApp.GG_APP.openFileInput("ggfilter");
             JsonReader reader = new JsonReader(new InputStreamReader(in));
             reader.beginArray();
+            boolean main = true;
+
             while(reader.hasNext()) {
                 reader.beginObject();
-                Filter f = new Filter();
-                if(list.mainFilter == null)
-                    list.mainFilter = f;
-                else
-                    list.add(f);
+                Filter f = null;
+                if(main) {
+                    f = new Filter.IncludingFilter();
+                    list.including.add((Filter.IncludingFilter) f);
+                    main = false;
+                } else {
+                    f = new Filter.ExcludingFilter(Filter.FilterType.SUBJECT, "", list.including.get(0));
+                    list.including.get(0).excluding.add((Filter.ExcludingFilter) f);
+                }
+
                 while(reader.hasNext()) {
                     String name = reader.nextName();
                     if(name.equals("type"))
@@ -204,11 +178,75 @@ public class FilterActivity extends AppCompatActivity {
             list.clear();
         }
 
-        if(list.mainFilter == null) {
-            Filter f = new Filter();
-            list.mainFilter = f;
-            f.setType(Filter.FilterType.CLASS);
-            f.setFilter("");
+        return list;
+    }
+
+    public static Filter.FilterList loadFilter() {
+        Filter.FilterList list = new Filter.FilterList();
+
+        try {
+            InputStream in = GGApp.GG_APP.openFileInput("ggfilterV2");
+            JsonReader reader = new JsonReader(new InputStreamReader(in));
+            reader.beginArray();
+
+            while(reader.hasNext()) {
+                reader.beginObject();
+
+                Filter.IncludingFilter inc = new Filter.IncludingFilter();
+                list.including.add(inc);
+
+                while(reader.hasNext()) {
+                    String name = reader.nextName();
+                    switch(name) {
+                        case "type":
+                            inc.setType(Filter.FilterType.valueOf(reader.nextString()));
+                            break;
+                        case "filter":
+                            inc.setFilter(reader.nextString());
+                            break;
+                        case "excluding":
+                            reader.beginArray();
+                            while(reader.hasNext()) {
+                                reader.beginObject();
+                                Filter.ExcludingFilter exc = new Filter.ExcludingFilter(Filter.FilterType.SUBJECT, "", inc);
+                                inc.excluding.add(exc);
+
+                                while(reader.hasNext()) {
+                                    String en = reader.nextName();
+                                    switch(en) {
+                                        case "type":
+                                            exc.setType(Filter.FilterType.valueOf(reader.nextString()));
+                                            break;
+                                        case "filter":
+                                            exc.setFilter(reader.nextString());
+                                            break;
+                                        case "contains":
+                                            exc.contains = reader.nextBoolean();
+                                            break;
+                                        default:
+                                            reader.skipValue();
+                                            break;
+                                    }
+                                }
+
+                                reader.endObject();
+                            }
+                            reader.endArray();
+                            break;
+                        default:
+                            reader.skipValue();
+                            break;
+                    }
+                }
+
+                reader.endObject();
+            }
+            reader.endArray();
+            reader.close();
+        } catch(Exception e) {
+            list.clear();
+
+            return loadFilterFallback();
         }
 
         return list;
@@ -223,19 +261,23 @@ public class FilterActivity extends AppCompatActivity {
 
     public static void saveFilter(Filter.FilterList list) {
         try {
-            OutputStream out = GGApp.GG_APP.openFileOutput("ggfilter", Context.MODE_PRIVATE);
+            OutputStream out = GGApp.GG_APP.openFileOutput("ggfilterV2", Context.MODE_PRIVATE);
             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out));
             writer.setIndent("  ");
             writer.beginArray();
-            writer.beginObject();
-            writer.name("type").value(list.mainFilter.getType().toString());
-            writer.name("filter").value(list.mainFilter.getFilter());
-            writer.endObject();
-            for(Filter f : list) {
+            for(Filter.IncludingFilter inc : list.including) {
                 writer.beginObject();
-                writer.name("type").value(f.getType().toString());
-                writer.name("filter").value(f.getFilter());
-                writer.name("contains").value(f.contains);
+                writer.name("type").value(inc.getType().toString());
+                writer.name("filter").value(inc.getFilter());
+                writer.name("excluding").beginArray();
+                for (Filter.ExcludingFilter f : inc.excluding) {
+                    writer.beginObject();
+                    writer.name("type").value(f.getType().toString());
+                    writer.name("filter").value(f.getFilter());
+                    writer.name("contains").value(f.contains);
+                    writer.endObject();
+                }
+                writer.endArray();
                 writer.endObject();
             }
             writer.endArray();
@@ -263,6 +305,11 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     public void setListViewHeightBasedOnChildren() {
+        setListViewHeightBasedOnChildren(listViewInc);
+        setListViewHeightBasedOnChildren(listViewExc);
+    }
+
+    public void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null)
             return;
