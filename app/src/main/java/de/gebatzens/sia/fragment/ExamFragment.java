@@ -18,6 +18,7 @@ package de.gebatzens.sia.fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,7 +30,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -113,7 +113,7 @@ public class ExamFragment extends RemoteDataFragment {
         final List<String> classes = new ArrayList<>();
         classes.add(getString(R.string.overview));
         classes.addAll(((Exams) getFragment().getData()).getAllClasses());
-        Spinner classSpinner = new Spinner(getActivity());
+        AppCompatSpinner classSpinner = new AppCompatSpinner(getActivity());
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, classes);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         classSpinner.setAdapter(adapter);

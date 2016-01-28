@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -32,7 +33,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import java.util.List;
 
@@ -75,7 +75,7 @@ public class FilterDialog extends DialogFragment {
                 activity.changed = true;
                 EditText ed = (EditText) ((Dialog) dialog).findViewById(R.id.filter_text);
                 CheckBox cb = (CheckBox) ((Dialog) dialog).findViewById(R.id.checkbox_contains);
-                Spinner spinner = (Spinner) ((Dialog) dialog).findViewById(R.id.filter_spinner);
+                AppCompatSpinner spinner = (AppCompatSpinner) ((Dialog) dialog).findViewById(R.id.filter_spinner);
 
                 String filtertext = ed.getText().toString().trim();
                 if (filtertext.isEmpty()) {
@@ -152,7 +152,7 @@ public class FilterDialog extends DialogFragment {
 
         final Filter.FilterList list = GGApp.GG_APP.filters;
         final EditText ed = (EditText) d.findViewById(R.id.filter_text);
-        final Spinner spinner = (Spinner) d.findViewById(R.id.filter_spinner);
+        final AppCompatSpinner spinner = (AppCompatSpinner) d.findViewById(R.id.filter_spinner);
         final CheckBox cb = (CheckBox) d.findViewById(R.id.checkbox_contains);
         ed.setSelectAllOnFocus(true);
 
