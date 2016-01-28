@@ -116,14 +116,14 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
-        ((Button) findViewById(R.id.inc_button)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.inc_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FilterDialog.newInstance(true, 0, -1).show(getSupportFragmentManager(), "add_main_filter");
+                FilterDialog.newInstance(true, -1, -1).show(getSupportFragmentManager(), "add_main_filter");
             }
         });
 
-        ((Button) findViewById(R.id.exc_button)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.exc_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FilterDialog.newInstance(false, -1, 0).show(getSupportFragmentManager(), "add_exc_filter");

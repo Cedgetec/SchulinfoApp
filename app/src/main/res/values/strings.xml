@@ -82,7 +82,7 @@
     <string name="contact_us">Contact us if you have any problems or improvement suggestions for the app</string>
     <string name="ok">OK</string>
     <string name="main_filter">Main filter</string>
-    <string name="set_main_filter">Set Main filter</string>
+    <string name="add_main_filter">Add Main filter</string>
     <string name="set_main_filter_mode">Set mode</string>
     <string name="not_selected">Not selected</string>
     <string name="help">Help</string>

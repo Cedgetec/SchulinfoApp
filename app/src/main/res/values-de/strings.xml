@@ -81,7 +81,7 @@
     <string name="contact_us">Kontaktiere uns, falls du ein Problem mit der App hast</string>
     <string name="ok">OK</string>
     <string name="main_filter">Hauptfilter</string>
-    <string name="set_main_filter">Hauptfilter einstellen</string>
+    <string name="add_main_filter">Hauptfilter hinzufügen</string>
     <string name="set_main_filter_mode">Modus einstellen</string>
     <string name="not_selected">Nicht ausgewählt</string>
     <string name="help">Hilfe</string>
