@@ -30,18 +30,4 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="windowActionBar">false</item>
     </style>
-
-    <!-- Base popup themes -->
-    <style name="Theme.AlertDialog.Base.Light" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
-        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
-        <item name="android:windowIsFloating">true</item>
-    </style>
-    <style name="Theme.AlertDialog.Base.Dark" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
-        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
-        <item name="android:windowIsFloating">true</item>
-    </style>
 </resources>

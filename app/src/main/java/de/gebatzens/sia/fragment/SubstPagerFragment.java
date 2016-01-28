@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +33,6 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -166,7 +166,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 items.addAll(plan.getAllClasses());
                 final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
 
-                Spinner spinner = (Spinner) getContentView().findViewById(R.id.spinner);
+                AppCompatSpinner spinner = (AppCompatSpinner) getContentView().findViewById(R.id.spinner);
                 spinner.setAdapter(adapter);
                 spinner.getOnItemSelectedListener().onItemSelected(spinner, spinner, spinnerPos, 0);
                 break;
@@ -259,13 +259,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l3.setPadding(0, 0, toPixels(16), 0);
             l3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-            final Spinner spinMode = new Spinner(getActivity());
+            final AppCompatSpinner spinMode = new AppCompatSpinner(getActivity());
             ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, new String[] {getString(R.string.classes), getString(R.string.lessons)});
             modeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
             spinMode.setAdapter(modeAdapter);
             l3.addView(spinMode);
 
-            final Spinner spinClass = new Spinner(getActivity());
+            final AppCompatSpinner spinClass = new AppCompatSpinner(getActivity());
             spinClass.setId(R.id.spinner);
 
             ArrayList<String> items = new ArrayList<String>();
