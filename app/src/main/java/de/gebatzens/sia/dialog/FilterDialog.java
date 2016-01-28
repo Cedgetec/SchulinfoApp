@@ -65,7 +65,7 @@ public class FilterDialog extends DialogFragment {
     @NonNull
     public Dialog onCreateDialog(Bundle bundle) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(isMainFilterDialog() ? R.string.set_main_filter : (getUpdatePosition() == -1 ? R.string.hide_subject : R.string.edit_filter)));
+        builder.setTitle(getString(isMainFilterDialog() ? (getUpdatePosition() == -1 ? R.string.add_main_filter : R.string.edit_filter) : (getUpdatePosition() == -1 ? R.string.hide_subject : R.string.edit_filter)));
         builder.setView(View.inflate(getActivity(), R.layout.filter_dialog, null));
 
         builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
