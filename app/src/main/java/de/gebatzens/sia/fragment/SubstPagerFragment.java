@@ -127,6 +127,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     public SubstListAdapter.MessageViewHolder createSMCard(ViewGroup parent, LayoutInflater inflater) {
         FrameLayout f2 = new FrameLayout(getActivity());
+        f2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
         CardView cv = (CardView) inflater.inflate(R.layout.basic_cardview, f2, false);
         cv.setId(R.id.cvroot);
