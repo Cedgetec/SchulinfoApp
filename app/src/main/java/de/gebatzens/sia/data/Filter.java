@@ -220,7 +220,8 @@ public abstract class Filter {
 
             if(including.size() == 0) {
                 text = GGApp.GG_APP.getString(R.string.no_filter_active);
-            } if(including.size() == 1) {
+            }
+            else if(including.size() == 1) {
                 Filter f = including.get(0);
                 text = f.getType() == Filter.FilterType.CLASS ? GGApp.GG_APP.getString(R.string.school_class) + " " + f.getFilter() :
                         GGApp.GG_APP.getString(R.string.teacher) + " " + f.getFilter();
