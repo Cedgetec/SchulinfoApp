@@ -155,6 +155,7 @@
     <string name="light_summary">Illuminate the world!</string>
     <string name="filter_exists">This filter already exists</string>
     <string name="add">Add</string>
+    <string name="no_main_filter">No main filter available</string>
 
     <string-array name="vibration_values">
         <item>Off</item>
@@ -193,7 +194,6 @@
 
     <string-array name="theme_color_names">
         <item>Winter</item>
-        <item>Easter</item>
         <item>Red</item>
         <item>Pink</item>
         <item>Purple</item>

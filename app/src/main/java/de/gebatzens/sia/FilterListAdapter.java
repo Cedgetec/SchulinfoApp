@@ -49,7 +49,7 @@ public class FilterListAdapter extends BaseAdapter {
         final ViewGroup vg = (ViewGroup) c.getLayoutInflater().inflate(R.layout.filter_item, parent, false);
         String text = "";
         if(filter instanceof Filter.ExcludingFilter)
-            text = ((Filter.ExcludingFilter) filter).getParentFilter() + ": " + filter.getFilter();
+            text = ((Filter.ExcludingFilter) filter).getParentFilter().getFilter() + " " + filter.getFilter();
         else
             text = filter.toString();
 
@@ -84,9 +84,8 @@ public class FilterListAdapter extends BaseAdapter {
                         if(filter instanceof Filter.ExcludingFilter)
                             ((Filter.ExcludingFilter) filter).getParentFilter().excluding.remove(filter);
 
-                        notifyDataSetChanged();
+                        c.updateData();
                         FilterActivity.saveFilter(GGApp.GG_APP.filters);
-                        c.setListViewHeightBasedOnChildren();
                         dialog.dismiss();
                     }
                 });

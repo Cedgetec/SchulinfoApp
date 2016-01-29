@@ -175,19 +175,23 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 clLabel.data = ifi.getFilter();
                 entries.add(clLabel);
 
-                if(filtered.size() == 0) {
+                Filter.FilterList clist = new Filter.FilterList();
+                clist.including.add(ifi);
+
+                GGPlan cf = filtered.filter(clist);
+
+                if(cf.size() == 0) {
                     AdapterEntry ne = new AdapterEntry();
                     ne.type = AdapterEntry.NO_ENTRIES;
                     entries.add(ne);
                 }
 
-                for(GGPlan.Entry e : filtered) {
-                    if (ifi.matches(e)) {
-                        AdapterEntry ae = new AdapterEntry();
-                        ae.data = new Object[] {e, ifi.getType() != Filter.FilterType.CLASS ? SubstPagerFragment.CARD_CLASS | SubstPagerFragment.CARD_LESSON : SubstPagerFragment.CARD_LESSON};
-                        ae.type = AdapterEntry.ENTRY;
-                        entries.add(ae);
-                    }
+                for(GGPlan.Entry e : cf) {
+                    AdapterEntry ae = new AdapterEntry();
+                    ae.data = new Object[] {e, ifi.getType() != Filter.FilterType.CLASS ? SubstPagerFragment.CARD_CLASS | SubstPagerFragment.CARD_LESSON : SubstPagerFragment.CARD_LESSON};
+                    ae.type = AdapterEntry.ENTRY;
+                    entries.add(ae);
+
                 }
             }
         }

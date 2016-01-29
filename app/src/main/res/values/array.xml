@@ -19,7 +19,6 @@
 
     <string-array name="theme_names" translatable="false">
         <item>Winter</item>
-        <item>Easter</item>
         <item>Red</item>
         <item>Pink</item>
         <item>Purple</item>

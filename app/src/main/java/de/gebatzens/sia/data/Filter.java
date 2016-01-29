@@ -215,25 +215,28 @@ public abstract class Filter {
             return false;
         }
 
-        public String getSummary() {
+        public String getSummary(boolean pre) {
             String text = "";
 
             if(including.size() == 0) {
                 text = GGApp.GG_APP.getString(R.string.no_filter_active);
-            }
-            else if(including.size() == 1) {
+            } else if(including.size() == 1) {
                 Filter f = including.get(0);
                 text = f.getType() == Filter.FilterType.CLASS ? GGApp.GG_APP.getString(R.string.school_class) + " " + f.getFilter() :
                         GGApp.GG_APP.getString(R.string.teacher) + " " + f.getFilter();
             } else {
                 for(Filter f : including) {
-                    text += f.getFilter() + " ";
+                    text += f.getFilter() + ", ";
                 }
 
-                text = text.trim();
+                text = text.substring(0, text.length() - 2);
 
-                if(text.length() > 10) {
-                    text = text.substring(0, 9) + "...";
+                if(text.length() > 20) {
+                    text = text.substring(0, 19) + "...";
+                }
+
+                if(pre) {
+                    text = GGApp.GG_APP.getString(R.string.main_filter) + ": " + text;
                 }
             }
 

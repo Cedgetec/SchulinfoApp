@@ -18,6 +18,7 @@ package de.gebatzens.sia;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.JsonReader;
@@ -46,6 +47,7 @@ public class FilterActivity extends AppCompatActivity {
     Toolbar mToolBar;
     public FilterListAdapter incAdapter, excAdapter;
     ListView listViewInc, listViewExc;
+    TextView textInc, textExc;
 
     public boolean changed = false;
     ScrollView sv;
@@ -57,6 +59,16 @@ public class FilterActivity extends AppCompatActivity {
         }
 
         return list;
+    }
+
+    public void updateData() {
+        excAdapter.setList(generateExcFilterList());
+        excAdapter.notifyDataSetChanged();
+        incAdapter.notifyDataSetChanged();
+        setListViewHeightBasedOnChildren();
+
+        textExc.setVisibility(excAdapter.getCount() != 0 ? View.GONE : View.VISIBLE);
+        textInc.setVisibility(incAdapter.getCount() != 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -73,13 +85,18 @@ public class FilterActivity extends AppCompatActivity {
 
         GGApp.GG_APP.preferences.edit().putBoolean("first_use_filter_2", false).apply();
 
+        textInc = (TextView) findViewById(R.id.no_entries_inc);
+        textExc = (TextView) findViewById(R.id.no_entries_exc);
+
         listViewInc = (ListView) findViewById(R.id.filter_list_inc);
         incAdapter = new FilterListAdapter(this, GGApp.GG_APP.filters.including);
+        textInc.setVisibility(incAdapter.getCount() != 0 ? View.GONE : View.VISIBLE);
         listViewInc.setAdapter(incAdapter);
         listViewInc.setDrawSelectorOnTop(true);
 
         listViewExc = (ListView) findViewById(R.id.filter_list_exc);
         excAdapter = new FilterListAdapter(this, generateExcFilterList());
+        textExc.setVisibility(excAdapter.getCount() != 0 ? View.GONE : View.VISIBLE);
         listViewExc.setAdapter(excAdapter);
         listViewExc.setDrawSelectorOnTop(true);
 
@@ -126,7 +143,11 @@ public class FilterActivity extends AppCompatActivity {
         findViewById(R.id.exc_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FilterDialog.newInstance(false, -1, 0).show(getSupportFragmentManager(), "add_exc_filter");
+                if(GGApp.GG_APP.filters.including.size() == 0) {
+                    Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_main_filter), Snackbar.LENGTH_LONG).show();
+                } else {
+                    FilterDialog.newInstance(false, -1, 0).show(getSupportFragmentManager(), "add_exc_filter");
+                }
             }
         });
 

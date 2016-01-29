@@ -104,12 +104,7 @@ public class FilterDialog extends DialogFragment {
                         f.contains = cb.isChecked();
                     }
 
-                    (isMainFilterDialog() ? activity.incAdapter : activity.excAdapter).notifyDataSetChanged();
-                    FilterActivity.saveFilter(GGApp.GG_APP.filters);
-                    activity.excAdapter.setList(activity.generateExcFilterList());
-                    activity.setListViewHeightBasedOnChildren();
-
-
+                    activity.updateData();
                     FilterActivity.saveFilter(GGApp.GG_APP.filters);
                 }
 

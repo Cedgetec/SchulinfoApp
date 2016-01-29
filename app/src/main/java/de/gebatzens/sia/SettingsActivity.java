@@ -235,7 +235,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             Preference filter = findPreference("filter");
-            filter.setSummary(GGApp.GG_APP.filters.getSummary());
+            filter.setSummary(GGApp.GG_APP.filters.getSummary(true));
             filter.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -353,7 +353,7 @@ public class SettingsActivity extends AppCompatActivity {
         if(req == 1 && resp == RESULT_OK) {
             changed = true;
             Preference filter = frag.findPreference("filter");
-            filter.setSummary(GGApp.GG_APP.filters.getSummary());
+            filter.setSummary(GGApp.GG_APP.filters.getSummary(true));
         }
     }
 
