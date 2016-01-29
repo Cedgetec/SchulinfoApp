@@ -277,7 +277,6 @@ public class SettingsActivity extends AppCompatActivity {
                 if(b != GGApp.GG_APP.isDarkThemeEnabled()) {
                     GGApp.GG_APP.setDarkThemeEnabled(b);
                     GGApp.GG_APP.school.loadTheme();
-                    recreate = true;
                     getActivity().recreate();
                 }
             }
@@ -371,6 +370,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void finish() {
         Intent i = new Intent();
+        i.putExtra("recreate", recreate);
         setResult(changed ? RESULT_OK : RESULT_CANCELED, i);
         super.finish();
     }

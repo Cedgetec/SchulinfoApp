@@ -56,29 +56,6 @@ public class SubstPagerFragment extends RemoteDataFragment {
     int index = INDEX_INVALID;
     int spinnerPos = 0, modeSpinnerPos = 0;
 
-    // current list for non-overview fragments
-
-    /**
-     * Creates cards for the given list of entries
-     *
-     * @param list
-     * @param group The cards are added to this view group
-     * @param inflater
-     * @param type bitwise CARD_CLASS CARD_LESSON
-     */
-    private void createCardItems(List<GGPlan.Entry> list, ViewGroup group, LayoutInflater inflater, int type) {
-        if(list.size() == 0) {
-            createNoEntriesCard(group, inflater);
-        } else {
-            for (GGPlan.Entry e : list) {
-                SubstListAdapter.SubstViewHolder cv = createCardItem(inflater, group);
-                cv.update(e, type);
-                group.addView(cv.itemView);
-            }
-        }
-
-    }
-
     int cardColorIndex = 0;
 
     /**

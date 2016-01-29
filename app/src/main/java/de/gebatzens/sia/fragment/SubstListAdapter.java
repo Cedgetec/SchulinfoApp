@@ -91,6 +91,12 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             entries.add(me);
         }
 
+        if(plan.size() == 0) {
+            AdapterEntry ne = new AdapterEntry();
+            ne.type = AdapterEntry.NO_ENTRIES;
+            entries.add(ne);
+        }
+
         switch(type) {
             case PLAIN:
                 for(GGPlan.Entry e : plan) {
@@ -169,6 +175,12 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 clLabel.data = ifi.getFilter();
                 entries.add(clLabel);
 
+                if(filtered.size() == 0) {
+                    AdapterEntry ne = new AdapterEntry();
+                    ne.type = AdapterEntry.NO_ENTRIES;
+                    entries.add(ne);
+                }
+
                 for(GGPlan.Entry e : filtered) {
                     if (ifi.matches(e)) {
                         AdapterEntry ae = new AdapterEntry();
@@ -195,6 +207,11 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 return new LabelViewHolder(wrapper);
             case AdapterEntry.MESSAGES:
                 return frag.createSMCard(parent, LayoutInflater.from(parent.getContext()));
+            case AdapterEntry.NO_ENTRIES:
+                LinearLayout wr = new LinearLayout(frag.getActivity());
+                wr.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                frag.createNoEntriesCard(wr, LayoutInflater.from(frag.getActivity()));
+                return new RecyclerView.ViewHolder(wr) {};
             default:
                 return null;
         }
@@ -213,6 +230,8 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 break;
             case AdapterEntry.MESSAGES:
                 ((MessageViewHolder) holder).update((List<String>) ae.data);
+                break;
+            case AdapterEntry.NO_ENTRIES:
                 break;
         }
 
@@ -294,7 +313,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
     private class AdapterEntry {
 
-        public static final int LABEL = 0, ENTRY = 1, MESSAGES = 2;
+        public static final int LABEL = 0, ENTRY = 1, MESSAGES = 2, NO_ENTRIES = 3;
 
         Object data;
         int type;

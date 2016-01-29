@@ -434,6 +434,11 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
+            if(data != null && data.getBooleanExtra("recreate", false)) {
+                recreate();
+                return;
+            }
+
             mContent.updateFragment();
         }
 

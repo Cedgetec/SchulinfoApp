@@ -81,18 +81,12 @@ public class GGSwipeLayout extends SwipeRefreshLayout {
                 if(vp == null)
                     return false;
                 SubstPagerFragment frag = (SubstPagerFragment) vp.getAdapter().instantiateItem(vp, vp.getCurrentItem());
-                ScrollView sv = (ScrollView) frag.getView().findViewWithTag("gg_scroll");
-
-                if(sv == null) {
-                    RecyclerView lv = (RecyclerView) frag.getView().findViewWithTag("gg_list");
-                    return lv == null || lv.canScrollVertically(-1);
-                } else {
-                    return sv.getScrollY() != 0;
-                }
+                RecyclerView lv = (RecyclerView) frag.getView().findViewWithTag("gg_list");
+                return lv == null || lv.canScrollVertically(-1);
 
             case MENSA:
             case EXAMS:
-                sv = ((ScrollView) ((MainActivity) getContext()).mContent.getView().findViewWithTag("gg_scroll"));
+                ScrollView sv = ((ScrollView) ((MainActivity) getContext()).mContent.getView().findViewWithTag("gg_scroll"));
 
                 if(sv != null) {
                     int i = -sv.getScrollY();
@@ -102,14 +96,14 @@ public class GGSwipeLayout extends SwipeRefreshLayout {
 
                 return false;
             case NEWS:
-                ListView lv = ((NewsFragment) ((MainActivity) getContext()).mContent).lv;
-                if(lv == null)
+                ListView lv2 = ((NewsFragment) ((MainActivity) getContext()).mContent).lv;
+                if(lv2 == null)
                     return true;
-                if(lv.getChildCount() == 0)
+                if(lv2.getChildCount() == 0)
                     return true;
 
-                View c = lv.getChildAt(0);
-                int i = -c.getTop() + lv.getFirstVisiblePosition() * c.getHeight();
+                View c = lv2.getChildAt(0);
+                int i = -c.getTop() + lv2.getFirstVisiblePosition() * c.getHeight();
 
                 return i != 0;
             case PDF:
