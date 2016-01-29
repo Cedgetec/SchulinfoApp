@@ -101,7 +101,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             case PLAIN:
                 for(GGPlan.Entry e : plan) {
                     AdapterEntry ae = new AdapterEntry();
-                    ae.data = e;
+                    ae.data = new Object[] {e, SubstPagerFragment.CARD_LESSON};
                     ae.type = AdapterEntry.ENTRY;
                     entries.add(ae);
                 }
