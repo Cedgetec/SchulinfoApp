@@ -181,11 +181,16 @@ public class SubstPagerFragment extends RemoteDataFragment {
             tv4.setTag("gg_time");
             tv4.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
 
-            TextView tv2 = createTextView(filters.getSummary(false), 15, inflater, l2);
-            tv2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            tv2.setGravity(Gravity.END | Gravity.CENTER);
-            tv2.setPadding(0,0,toPixels(16),0);
+            LinearLayout l3 = new LinearLayout(getActivity());
+            l3.setGravity(Gravity.END | Gravity.CENTER);
+            l3.setPadding(0, 0, toPixels(16), 0);
+            l3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
+            TextView tv2 = createTextView(filters.getSummary(false), 15, inflater, l3);
+            tv2.setIncludeFontPadding(false);
+            tv2.setBackgroundResource(R.drawable.chip_background);
+
+            l2.addView(l3);
             cv2.addView(l2);
             l.addView(cv2);
 
