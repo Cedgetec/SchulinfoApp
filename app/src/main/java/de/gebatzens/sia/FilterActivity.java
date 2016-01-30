@@ -132,18 +132,25 @@ public class FilterActivity extends AppCompatActivity {
                 return false;
             }
         });
+        Button bt1 = (Button) findViewById(R.id.inc_button);
+        Button bt2 = (Button) findViewById(R.id.exc_button);
 
-        findViewById(R.id.inc_button).setOnClickListener(new View.OnClickListener() {
+        if(GGApp.GG_APP.isDarkThemeEnabled()){
+            bt1.setTextColor(Color.WHITE);
+            bt2.setTextColor(Color.WHITE);
+        }
+
+        bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FilterDialog.newInstance(true, -1, -1).show(getSupportFragmentManager(), "add_main_filter");
             }
         });
 
-        findViewById(R.id.exc_button).setOnClickListener(new View.OnClickListener() {
+        bt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(GGApp.GG_APP.filters.including.size() == 0) {
+                if (GGApp.GG_APP.filters.including.size() == 0) {
                     Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_main_filter), Snackbar.LENGTH_LONG).show();
                 } else {
                     FilterDialog.newInstance(false, -1, 0).show(getSupportFragmentManager(), "add_exc_filter");

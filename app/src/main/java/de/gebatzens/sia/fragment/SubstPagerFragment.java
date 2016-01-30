@@ -198,7 +198,10 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 tv2.setLayoutParams(pa);
                 tv2.setIncludeFontPadding(false);
                 if (chars <= 8) {
-                    tv2.setBackgroundResource(R.drawable.chip_background);
+                    if(GGApp.GG_APP.isDarkThemeEnabled())
+                        tv2.setBackgroundResource(R.drawable.chip_background_dark);
+                    else
+                        tv2.setBackgroundResource(R.drawable.chip_background_light);
                 } else {
                     tv2.setTextColor(Color.parseColor("#A0A0A0"));
                    // tv2.setText(Html.fromHtml(text));
