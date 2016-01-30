@@ -186,9 +186,37 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l3.setPadding(0, 0, toPixels(16), 0);
             l3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-            TextView tv2 = createTextView(filters.getSummary(false), 15, inflater, l3);
-            tv2.setIncludeFontPadding(false);
-            tv2.setBackgroundResource(R.drawable.chip_background);
+            int chars = 0;
+            int chips = 0;
+
+            for(Filter.IncludingFilter inc : filters.including) {
+                String text = chars > 8 ? "+" + (filters.including.size() - chips) + "" : inc.getFilter();
+
+                TextView tv2 = createTextView(text, chars > 8 ? 20 : 15, inflater, l3);
+                LinearLayout.LayoutParams pa = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                pa.setMargins(toPixels(chars > 8 ? 10 : 5), 0, chars > 8 ? toPixels(-20) : 0, 0);
+                tv2.setLayoutParams(pa);
+                tv2.setIncludeFontPadding(false);
+                if (chars <= 8) {
+                    tv2.setBackgroundResource(R.drawable.chip_background);
+                } else {
+                    tv2.setTextColor(Color.parseColor("#A0A0A0"));
+                   // tv2.setText(Html.fromHtml(text));
+                    tv2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(getContext(), FilterActivity.class));
+                        }
+                    });
+                }
+
+                if(chars > 8)
+                    break;
+
+                chars += inc.getFilter().length();
+                chips++;
+
+            }
 
             l2.addView(l3);
             cv2.addView(l2);

@@ -29,10 +29,13 @@ import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -125,6 +128,17 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
             }
 
             return false;
+        }
+
+        public List<String> getAllClasses() {
+            Set<String> cl = new HashSet<>();
+            for(GGPlan plan : this) {
+                cl.addAll(plan.getAllClasses());
+            }
+
+            ArrayList<String> list = new ArrayList<>();
+            list.addAll(cl);
+            return list;
         }
     }
 

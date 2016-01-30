@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -38,9 +39,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.gebatzens.sia.FilterActivity;
+import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Filter;
+import de.gebatzens.sia.data.GGPlan;
 
 public class FilterDialog extends DialogFragment {
 
@@ -148,7 +151,7 @@ public class FilterDialog extends DialogFragment {
         Dialog d = getDialog();
 
         final Filter.FilterList list = GGApp.GG_APP.filters;
-        final EditText ed = (EditText) d.findViewById(R.id.filter_text);
+        final AutoCompleteTextView ed = (AutoCompleteTextView) d.findViewById(R.id.filter_text);
         final AppCompatSpinner spinner = (AppCompatSpinner) d.findViewById(R.id.filter_spinner);
         final CheckBox cb = (CheckBox) d.findViewById(R.id.checkbox_contains);
         final TextView label = (TextView) d.findViewById(R.id.filter_label);
@@ -172,6 +175,13 @@ public class FilterDialog extends DialogFragment {
 
             if(getMainFilterPosition() == -1) {
                 ed.setText("");
+                GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData();
+
+                //could confuse people
+                /*if(plans != null) {
+                    ed.setAdapter(new ArrayAdapter<String>(ed.getContext(), android.R.layout.simple_dropdown_item_1line, plans.getAllClasses()));
+                }*/
+
                 spinner.setSelection(0);
             } else {
                 ed.setText(list.including.get(getMainFilterPosition()).getFilter());

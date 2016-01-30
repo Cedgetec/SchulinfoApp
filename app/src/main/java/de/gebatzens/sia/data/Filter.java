@@ -18,6 +18,7 @@ package de.gebatzens.sia.data;
 
 import java.util.ArrayList;
 
+import de.gebatzens.sia.FilterActivity;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
 
@@ -171,6 +172,13 @@ public abstract class Filter {
         public boolean matches(Filterable f) {
             boolean b = super.matches(f);
             if(b) {
+                if(f instanceof GGPlan.Entry && getType() == FilterType.CLASS) {
+                    if(!((GGPlan.Entry) f).clazz.equals(getFilter())) {
+                        setFilter(((GGPlan.Entry) f).clazz);
+                        FilterActivity.saveFilter(GGApp.GG_APP.filters);
+                    }
+                }
+
                 for(Filter filter : excluding) {
                     if(filter.matches(f))
                         b = false;
