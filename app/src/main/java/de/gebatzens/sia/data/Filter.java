@@ -224,6 +224,8 @@ public abstract class Filter {
                 Filter f = including.get(0);
                 text = f.getType() == Filter.FilterType.CLASS ? GGApp.GG_APP.getString(R.string.school_class) + " " + f.getFilter() :
                         GGApp.GG_APP.getString(R.string.teacher) + " " + f.getFilter();
+            } else if(pre) {
+                text = GGApp.GG_APP.getString(R.string.filters_active, including.size());
             } else {
                 for(Filter f : including) {
                     text += f.getFilter() + ", ";
@@ -233,10 +235,6 @@ public abstract class Filter {
 
                 if(text.length() > 20) {
                     text = text.substring(0, 19) + "...";
-                }
-
-                if(pre) {
-                    text = GGApp.GG_APP.getString(R.string.main_filter) + ": " + text;
                 }
             }
 
