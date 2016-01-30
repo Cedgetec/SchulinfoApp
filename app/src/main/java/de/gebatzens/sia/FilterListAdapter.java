@@ -61,12 +61,14 @@ public class FilterListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 boolean m = filter instanceof Filter.IncludingFilter;
-                int mpos = 0;
-                if(m) {
-                    mpos = GGApp.GG_APP.filters.including.indexOf(filter);
+                int mpos = GGApp.GG_APP.filters.including.indexOf(m ? filter : ((Filter.ExcludingFilter) filter).getParentFilter());
+
+                int upos = position;
+                if(!m) {
+                    upos = ((Filter.ExcludingFilter) filter).getParentFilter().excluding.indexOf(filter);
                 }
 
-                FilterDialog.newInstance(m, position, mpos).show(c.getSupportFragmentManager(), "edit_dialog");
+                FilterDialog.newInstance(m, upos, mpos).show(c.getSupportFragmentManager(), "edit_dialog");
             }
         });
 

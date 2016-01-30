@@ -33,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -99,6 +100,7 @@ public class FilterDialog extends DialogFragment {
                             inc.excluding.add(f);
                         } else {
                             f = inc.excluding.get(getUpdatePosition());
+                            f.setFilter(filtertext);
                         }
 
                         f.contains = cb.isChecked();
@@ -149,6 +151,7 @@ public class FilterDialog extends DialogFragment {
         final EditText ed = (EditText) d.findViewById(R.id.filter_text);
         final AppCompatSpinner spinner = (AppCompatSpinner) d.findViewById(R.id.filter_spinner);
         final CheckBox cb = (CheckBox) d.findViewById(R.id.checkbox_contains);
+        final TextView label = (TextView) d.findViewById(R.id.filter_label);
         ed.setSelectAllOnFocus(true);
 
         if(isMainFilterDialog()) {
@@ -176,6 +179,7 @@ public class FilterDialog extends DialogFragment {
             }
 
             cb.setVisibility(View.GONE);
+            label.setVisibility(View.GONE);
 
         } else {
             ed.setHint(getString(R.string.subject_course_name));
@@ -193,6 +197,12 @@ public class FilterDialog extends DialogFragment {
                 cb.setChecked(f.contains);
                 cb.setText(getString(R.string.all_subjects_including, f.getFilter()));
                 ed.setText(f.getFilter());
+
+                label.setText(f.getParentFilter().toString());
+                label.setVisibility(View.VISIBLE);
+                spinner.setVisibility(View.GONE);
+            } else {
+                label.setVisibility(View.GONE);
             }
         }
 
