@@ -170,10 +170,12 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             GGPlan filtered = pl.filter(filter);
 
             for(Filter.IncludingFilter ifi : filter.including) {
-                AdapterEntry clLabel = new AdapterEntry();
-                clLabel.type = AdapterEntry.LABEL;
-                clLabel.data = ifi.getFilter();
-                entries.add(clLabel);
+                if(filter.including.size() > 1) {
+                    AdapterEntry clLabel = new AdapterEntry();
+                    clLabel.type = AdapterEntry.LABEL;
+                    clLabel.data = ifi.getFilter();
+                    entries.add(clLabel);
+                }
 
                 Filter.FilterList clist = new Filter.FilterList();
                 clist.including.add(ifi);

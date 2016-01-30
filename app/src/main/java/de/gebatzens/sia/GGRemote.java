@@ -126,6 +126,8 @@ public class GGRemote {
 
         GGPlan.GGPlans plans = new GGPlan.GGPlans();
 
+        String snackMessage = "";
+
         try {
             APIResponse re = doRequest("/subst?token=" + getToken(), null);
 
@@ -152,10 +154,13 @@ public class GGRemote {
                 throw new APIException(re.state);
             }
         } catch(Exception e) {
-            if(e instanceof IOException || e instanceof APIException)
+            if(e instanceof IOException || e instanceof APIException) {
                 Log.w("ggvp", "Failed to get plans " + e.getMessage());
-            else
+                snackMessage = e instanceof IOException ? GGApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage();
+            } else {
+                snackMessage = GGApp.GG_APP.getString(R.string.unknown_error);
                 e.printStackTrace();
+            }
             plans.throwable = e;
 
         }
@@ -172,7 +177,7 @@ public class GGRemote {
                 final Throwable t = plans.throwable;
                 plans.throwable = null;
                 if(toast)
-                    showReloadSnackbar(t instanceof IOException ? GGApp.GG_APP.getString(R.string.no_internet_connection) : t.getMessage());
+                    showReloadSnackbar(snackMessage);
             }
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
