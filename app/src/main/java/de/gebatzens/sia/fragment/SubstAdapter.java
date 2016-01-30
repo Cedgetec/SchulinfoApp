@@ -45,7 +45,7 @@ public class SubstAdapter extends FragmentStatePagerAdapter {
     }
 
     public void update(GGPlan.GGPlans pl) {
-        final int os = plans.size() + 1;
+        final int os = plans == null ? 1 : plans.size() + 1;
         plans = pl;
 
         for(int i = 0; i < os; i++) {
