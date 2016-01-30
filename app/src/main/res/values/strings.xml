@@ -156,6 +156,7 @@
     <string name="filter_exists">This filter already exists</string>
     <string name="add">Add</string>
     <string name="no_main_filter">No main filter available</string>
+    <string name="disabled">Disabled</string>
 
     <string-array name="vibration_values">
         <item>Off</item>

@@ -251,6 +251,14 @@ public class GGApp extends Application {
         preferences.edit().putInt("fragindex", index).apply();
     }
 
+    public String getLedColor() {
+        return preferences.getString("notification_led_color", school.themeName);
+    }
+
+    public void setLedColor(String ledColor) {
+        preferences.edit().putString("notification_led_color", ledColor).apply();
+    }
+
     public void setDarkThemeEnabled(boolean e) {
         preferences.edit().putBoolean("darkTheme", e).apply();
     }
