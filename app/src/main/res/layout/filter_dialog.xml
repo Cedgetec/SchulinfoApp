@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Spinner
+        <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/filter_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -20,7 +20,9 @@
         <TextView
             android:id="@+id/filter_label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="test"/>
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
