@@ -124,8 +124,8 @@ public class GGBroadcast extends BroadcastReceiver {
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pi);
-        //am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
-        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 10000, 20000, pi);
+        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
+        //am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 10000, 20000, pi);
     }
 
     public void updateAllFragments(GGApp gg) {
