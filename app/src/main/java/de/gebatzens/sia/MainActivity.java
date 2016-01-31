@@ -52,6 +52,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.gebatzens.sia.data.Exams;
+import de.gebatzens.sia.data.GGPlan;
+import de.gebatzens.sia.dialog.TextDialog;
 import de.gebatzens.sia.fragment.ExamFragment;
 import de.gebatzens.sia.fragment.MensaFragment;
 import de.gebatzens.sia.fragment.NewsFragment;
@@ -315,7 +317,6 @@ public class MainActivity extends AppCompatActivity {
         if(selectedItem != -1)
             navMenu.getItem(selectedItem).setChecked(true);
 
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
                 if(menuItem.getItemId() == R.id.settings_item) {
@@ -366,6 +367,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        if(GGApp.GG_APP.preferences.getBoolean("app_130_upgrade", true)) {
+            if (!GGApp.GG_APP.preferences.getBoolean("first_use_filter", true)) {
+                TextDialog.newInstance(R.string.upgrade1_3title, R.string.upgrade1_3).show(getSupportFragmentManager(), "upgrade_dialog");
+            }
+
+            GGApp.GG_APP.preferences.edit().putBoolean("app_130_upgrade", false).apply();
+        }
     }
 
     @Override
