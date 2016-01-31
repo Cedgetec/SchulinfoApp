@@ -77,13 +77,13 @@ public class FilterActivity extends AppCompatActivity {
         super.onCreate(bundle);
         setContentView(R.layout.activity_filter);
 
-        if(GGApp.GG_APP.preferences.getBoolean("first_use_filter_2", true)) {
+        if(GGApp.GG_APP.preferences.getBoolean("first_use_filter", true)) {
             TextDialog.newInstance(R.string.explanation, R.string.filter_help).show(getSupportFragmentManager(), "filter_help");
         }
 
         sv = (ScrollView) findViewById(R.id.scrollView);
 
-        GGApp.GG_APP.preferences.edit().putBoolean("first_use_filter_2", false).apply();
+        GGApp.GG_APP.preferences.edit().putBoolean("first_use_filter", false).apply();
 
         textInc = (TextView) findViewById(R.id.no_entries_inc);
         textExc = (TextView) findViewById(R.id.no_entries_exc);
