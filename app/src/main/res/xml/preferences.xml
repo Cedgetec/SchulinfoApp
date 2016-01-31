@@ -14,9 +14,12 @@
             android:summary="@string/notify_class"
             android:key="notifications"
             android:defaultValue="true" />
-        <Preference android:title="@string/notification_led"
-            android:summary=""
-            android:key="notification_led"/>
+        <ListPreference android:title="@string/notification_led"
+            android:summary="%s"
+            android:key="notification_led_color"
+            android:entries="@array/notification_color_names"
+            android:defaultValue="#2196F3"
+            android:entryValues="@array/notification_colors"/>
         <ListPreference android:title="@string/vibration"
             android:key="vibration"
             android:entryValues="@array/vibration_keys"
@@ -52,7 +55,7 @@
             android:key="terms">
         </Preference>
         <Preference android:title="@string/github"
-            android:summary="https://github.com/Cedgetec/SchulinfoAPP"
+            android:summary="https://github.com/Cedgetec/SchulinfoApp"
             android:key="githublink"/>
         <Preference android:title="@string/license"
             android:summary="Apache License 2.0"

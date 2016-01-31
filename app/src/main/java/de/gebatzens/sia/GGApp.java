@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
@@ -88,6 +89,11 @@ public class GGApp extends Application {
         loadSavedData();
         lifecycle = new LifecycleHandler();
         registerActivityLifecycleCallbacks(lifecycle);
+
+        //1.3 upgrade
+        if(preferences.contains("notification_led")) {
+            preferences.edit().putString("notification_led_color", preferences.getBoolean("notification_led", true) ? "#2196F3" : "#000000").remove("notification_led").apply();
+        }
 
     }
 
@@ -159,8 +165,8 @@ public class GGApp extends Application {
             mBuilder.setStyle(inboxStyle);
         }
         mBuilder.setColor(GGApp.GG_APP.school.getDarkColor());
-        if (nlightEnabled()) {
-            mBuilder.setLights(school.getColor(), 1000, 1000);
+        if (getLedColor() != Color.BLACK) {
+            mBuilder.setLights(getLedColor(), 1000, 1000);
         }
 
         String vibration = preferences.getString("vibration", "off");
@@ -234,13 +240,9 @@ public class GGApp extends Application {
 
     public int getUpdateType() {
         if(preferences.getBoolean("notifications", true))
-            return translateUpdateType(preferences.getString("appupdates", "all"));
+            return translateUpdateType(preferences.getString("background_updates", "all"));
         else
             return UPDATE_DISABLE;
-    }
-
-    public boolean nlightEnabled() {
-        return preferences.getBoolean("notification_led", true);
     }
 
     public int getFragmentIndex() {
@@ -251,12 +253,8 @@ public class GGApp extends Application {
         preferences.edit().putInt("fragindex", index).apply();
     }
 
-    public String getLedColor() {
-        return preferences.getString("notification_led_color", school.themeName);
-    }
-
-    public void setLedColor(String ledColor) {
-        preferences.edit().putString("notification_led_color", ledColor).apply();
+    public int getLedColor() {
+        return Color.parseColor(preferences.getString("notification_led_color", "#2196F3"));
     }
 
     public void setDarkThemeEnabled(boolean e) {

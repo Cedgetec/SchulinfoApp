@@ -215,6 +215,20 @@
         <item>Dark Grey</item>
     </string-array>
 
+    <string-array name="notification_color_names">
+        <item>Disabled</item>
+        <item>White</item>
+        <item>Red</item>
+        <item>Pink</item>
+        <item>Indigo</item>
+        <item>Blue</item>
+        <item>Cyan</item>
+        <item>Green</item>
+        <item>Orange</item>
+        <item>Purple</item>
+        <item>Yellow</item>
+    </string-array>
+
     <plurals name="n_events_will_be_added">
         <item quantity="one">One event will be added to your calendar</item>
         <item quantity="other">%d events will be added to your calendar</item>

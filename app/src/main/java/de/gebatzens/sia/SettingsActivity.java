@@ -29,6 +29,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
@@ -71,7 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
             CheckBoxPreference notifications = (CheckBoxPreference) findPreference("notifications");
 
             findPreference("background_updates").setEnabled(notifications.isChecked());
-            findPreference("notification_led").setEnabled(notifications.isChecked());
+            findPreference("notification_led_color").setEnabled(notifications.isChecked());
             findPreference("vibration").setEnabled(notifications.isChecked());
 
             Preference pref_buildversion = findPreference("buildversion");
@@ -109,8 +110,6 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-            final Preference notification_led = findPreference("notification_led");
-
             Preference theme_color = findPreference("theme_color");
 
             boolean winter = GGApp.GG_APP.getCurrentThemeName().equals("Winter");
@@ -126,60 +125,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             final List<String> themeIds = Arrays.asList(getResources().getStringArray(R.array.theme_names));
-            final List<String> notificationColorIds = new ArrayList<>();
-            notificationColorIds.add("Disabled");
-            notificationColorIds.addAll(themeIds);
-
             final List<String> themeNames = Arrays.asList(getResources().getStringArray(R.array.theme_color_names));
-            final List<String> notificationColorNames = new ArrayList<>();
-            notificationColorNames.add(getResources().getString(R.string.disabled));
-            notificationColorNames.addAll(themeNames);
-
-            final ListAdapter adapter_notification_led = new ArrayAdapter<String>(
-                    getActivity().getApplicationContext(), R.layout.custom_theme_choose_list, notificationColorIds) {
-
-                ViewHolder holder;
-
-                class ViewHolder {
-                    ImageView icon;
-                    TextView title;
-                }
-
-                public View getView(int position, View convertView, ViewGroup parent) {
-                    final LayoutInflater inflater = (LayoutInflater) getActivity().getApplicationContext()
-                            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                    if (convertView == null) {
-                        convertView = inflater.inflate(
-                                R.layout.custom_theme_choose_list, null);
-
-                        holder = new ViewHolder();
-                        holder.icon = (ImageView) convertView.findViewById(R.id.ThemeIcon);
-                        holder.title = (TextView) convertView.findViewById(R.id.ThemeName);
-                        convertView.setTag(holder);
-                    } else {
-                        holder = (ViewHolder) convertView.getTag();
-                    }
-
-                    boolean winter = notificationColorIds.get(position).equals("Winter");
-
-                    holder.icon.setBackgroundResource(winter ? R.drawable.colored_circle_image : R.drawable.colored_circle);
-                    if(winter) {
-                        LayerDrawable layerDrawable = (LayerDrawable) holder.icon.getBackground();
-                        ((GradientDrawable) layerDrawable.getDrawable(0)).setColor(loadThemeColor(notificationColorIds.get(position)));
-                    } else {
-                        ((GradientDrawable) holder.icon.getBackground()).setColor(loadThemeColor(notificationColorIds.get(position)));
-                    }
-
-                    holder.title.setText(notificationColorNames.get(position));
-                    if (GGApp.GG_APP.isDarkThemeEnabled()) {
-                        holder.title.setTextColor(Color.parseColor("#fafafa"));
-                    } else{
-                        holder.title.setTextColor(Color.parseColor("#424242"));
-                    }
-                    return convertView;
-                }
-            };
 
             final ListAdapter adapter_theme_color = new ArrayAdapter<String>(
                     getActivity().getApplicationContext(), R.layout.custom_theme_choose_list, themeIds) {
@@ -226,33 +172,6 @@ public class SettingsActivity extends AppCompatActivity {
                     return convertView;
                 }
             };
-
-            notification_led.setSummary(notificationColorNames.get(notificationColorIds.indexOf(GGApp.GG_APP.getLedColor())));
-            notification_led.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle(getResources().getString(R.string.personalisation_pickColor));
-
-                    builder.setAdapter(adapter_notification_led, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            notification_led.setSummary(notificationColorNames.get(which));
-                            GGApp.GG_APP.setLedColor(notificationColorIds.get(which));
-                        }
-
-                    });
-                    builder.setPositiveButton(getResources().getString(R.string.abort), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            //nothing
-                        }
-                    });
-                    builder.create();
-                    builder.show();
-
-                    return false;
-                }
-            });
 
             theme_color.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
@@ -366,13 +285,11 @@ public class SettingsActivity extends AppCompatActivity {
                     recreate = true;
                     getActivity().recreate();
                 }
-            }
-
-            if(key.equals("notifications")) {
+            } else if(key.equals("notifications")) {
                 CheckBoxPreference no = (CheckBoxPreference) pref;
 
                 findPreference("background_updates").setEnabled(no.isChecked());
-                findPreference("notification_led").setEnabled(no.isChecked());
+                findPreference("notification_led_color").setEnabled(no.isChecked());
                 findPreference("vibration").setEnabled(no.isChecked());
             }
 

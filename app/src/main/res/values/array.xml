@@ -39,6 +39,21 @@
         <item>DarkGrey</item>
     </string-array>
 
+    <string-array name="notification_colors" translateable="false">
+        <item>#000000</item>
+        <item>#ffffff</item>
+        <item>#F44336</item>
+        <item>#E91E63</item>
+        <item>#3F51B5</item>
+        <item>#2196F3</item>
+        <item>#00BCD4</item>
+        <item>#4CAF50</item>
+        <item>#FF9800</item>
+        <item>#9C27B0</item>
+        <item>#FFFF00</item>
+    </string-array>
+
+
     <!-- Light Card Colors -->
     
     <string-array name="CardviewColorWinterLight" translatable="false">
