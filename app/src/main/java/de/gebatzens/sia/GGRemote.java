@@ -103,8 +103,10 @@ public class GGRemote {
         GGApp.GG_APP.deleteFile("exams");
         GGApp.GG_APP.deleteFile("ggfilter");
         GGApp.GG_APP.filters.clear();
+        GGApp.GG_APP.school = null;
 
         prefs.edit().clear().apply();
+        GGApp.GG_APP.preferences.edit().remove("customTheme").apply();
 
         new Thread() {
             @Override
