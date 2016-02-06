@@ -36,7 +36,7 @@ public class PDFFragment extends RemoteDataFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle bundle) {
-        ((MainActivity) getActivity()).updateMenu(R.menu.toolbar_menu);
+        ((MainActivity) getActivity()).updateMenu(R.menu.toolbar_pdf_menu);
         ViewGroup vg = (ViewGroup) inflater.inflate(R.layout.fragment_pdf, group, false);
         if(getFragment().getData() != null)
             createRootView(inflater, (ViewGroup) vg.findViewById(R.id.pdf_content));

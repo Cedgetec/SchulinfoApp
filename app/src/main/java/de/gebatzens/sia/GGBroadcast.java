@@ -180,6 +180,7 @@ public class GGBroadcast extends BroadcastReceiver {
                 protected Void doInBackground(GGApp... params) {
                     Log.d("ggvp", "checking for updates");
                     checkForSubstUpdates(params[0]);
+                    updateAllFragments(params[0]);
                     return null;
                 }
             }.execute((GGApp) context.getApplicationContext());

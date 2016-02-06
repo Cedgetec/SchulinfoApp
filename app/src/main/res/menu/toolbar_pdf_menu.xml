@@ -4,19 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="de.gebatzens.sia.MainActivity" >
 
+
     <item android:id="@+id/action_refresh"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:title="@string/refresh"
         android:orderInCategory="100"
         android:icon="@drawable/ic_action_navigation_refresh"
-        app:showAsAction="never" />
-
-    <item android:id="@+id/action_help"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:title="@string/help"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_help"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
     <item android:id="@+id/action_settings"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -29,12 +23,5 @@
         android:title="@string/night_mode"
         android:orderInCategory="100"
         app:showAsAction="never"/>
-
-    <item android:id="@+id/action_addToCalendar"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:title="@string/add_to_calendar"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_action_event"
-        app:showAsAction="ifRoom"/>
 
 </menu>
