@@ -166,15 +166,15 @@ public class LoginDialog extends DialogFragment {
 
         TextView acceptTermsLink = (TextView) dialog.findViewById(R.id.acceptTermsLink);
         acceptTermsLink.setText(Html.fromHtml("<a href=\"\"> " + getString(R.string.terms_title) + "</a>"));
-        acceptTermsLink.setMovementMethod(LinkMovementMethod.getInstance());
+        //acceptTermsLink.setMovementMethod(LinkMovementMethod.getInstance());
 
         acceptTermsLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View widget) {
-                Intent i = new Intent(getActivity(), TextActivity.class);
+                Intent i = new Intent(activity, TextActivity.class);
                 i.putExtra("title", R.string.terms_title);
                 i.putExtra("text", R.array.terms);
-                startActivity(i);
+                activity.startActivity(i);
             }
         });
 
@@ -182,7 +182,7 @@ public class LoginDialog extends DialogFragment {
 
         acceptTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged (CompoundButton buttonView,boolean isChecked){
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
                 dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(isChecked);
             }
         });

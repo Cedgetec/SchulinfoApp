@@ -51,13 +51,6 @@
 
         <activity android:name=".TextActivity"
             android:label="Textactivity">
-
-            <intent-filter>
-                <data android:host="text" android:scheme="ggactivity" />
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
         </activity>
 
         <receiver android:enabled="true" android:name=".GGBroadcast"
