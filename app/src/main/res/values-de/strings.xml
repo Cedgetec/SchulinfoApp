@@ -155,7 +155,7 @@
     <string name="no_main_filter">Kein Hauptfilter verfügbar</string>
     <string name="disabled">Deaktiviert</string>
     <string name="upgrade1.3title">Achtung: Wichtige Änderung im Update 1.3</string>
-    <string name="upgrade1.3">Wenn ihr zwei oder mehr Klassen in eurer Übersicht sehen wollt, könnt ihr nun mehrere Hauptfilter im Filtermenü eintragen.\n\nAußerdem gibt es nun den Mensaplan, ihr könnt endlich die Farbe des Benachrichtigungslichts wählen und noch einiges mehr!\n\nEuer SchulinfoApp Team</string>
+    <string name="upgrade1.3">Wenn ihr zwei oder mehr Klassen in eurer Übersicht sehen wollt, könnt ihr nun mehrere Hauptfilter im Filtermenü eintragen.\n\nAußerdem gibt es nun den Mensaplan (nach App-Neustart), ihr könnt endlich die Farbe des Benachrichtigungslichts wählen und noch einiges mehr!\n\nEuer SchulinfoApp Team</string>
 
     <string-array name="vibration_values">
         <item>Aus</item>

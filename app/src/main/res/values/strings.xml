@@ -158,7 +158,7 @@
     <string name="no_main_filter">No main filter available</string>
     <string name="disabled">Disabled</string>
     <string name="upgrade1.3title">Attention! Very important changes in version 1.3</string>
-    <string name="upgrade1.3">The new version 1.3 includes a big change in the filter menu:\nIf you want more than one class to appear in the overview, you can now enter multiple classes in the main filter.\n\nIn addition you can now check on the cafeteria schedule, choose the color of the notification light and enjoy a couple more new features.\n\nYour SchoolinfoApp Team</string>
+    <string name="upgrade1.3">The new version 1.3 includes a big change in the filter menu:\nIf you want more than one class to appear in the overview, you can now enter multiple classes in the main filter.\n\nIn addition you can now check on the cafeteria schedule (after app restart), choose the color of the notification light and enjoy a couple more new features.\n\nYour SchoolinfoApp Team</string>
 
 
     <string-array name="vibration_values">
