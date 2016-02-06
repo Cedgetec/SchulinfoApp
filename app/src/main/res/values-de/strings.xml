@@ -142,8 +142,8 @@
     <string name="no_cal_avail">Kein Kalender verfügbar</string>
     <string name="cancel">Abbrechen</string>
     <string name="just_now">Aktuell</string>
-    <string name="time_diff">%d Min. alt</string>
-    <string name="time_diff_hours">%d Std. alt</string>
+    <string name="time_diff">Vor %d Min.\naktualisiert</string>
+    <string name="time_diff_hours">Vor %d Std.\naktualisiert</string>
     <string name="all_subjects_including">Alle %s-Kurse ausblenden</string>
     <string name="all_subjects_including_disabled">Alle Kurse ausblenden</string>
     <string name="logged_in_as">Eingeloggt als %s</string>

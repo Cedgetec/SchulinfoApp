@@ -185,10 +185,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
 
             LinearLayout l2 = new LinearLayout(getActivity());
+            l2.setMinimumHeight(toPixels(50));
+            l2.setGravity(Gravity.CENTER_VERTICAL);
 
-            TextView tv4 = createTextView(getTimeDiff(getActivity(), ((GGPlan.GGPlans) getFragment().getData()).loadDate), 13, inflater, l2);
+            String diff = getTimeDiff(getActivity(), ((GGPlan.GGPlans) getFragment().getData()).loadDate);
+            TextView tv4 = createTextView(diff, 13, inflater, l2);
             tv4.setTag("gg_time");
-            tv4.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
+            tv4.setPadding(toPixels(16), toPixels(0), toPixels(16), toPixels(0));
 
             LinearLayout l3 = new LinearLayout(getActivity());
             l3.setGravity(Gravity.END | Gravity.CENTER);
@@ -272,10 +275,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
 
             LinearLayout l2 = new LinearLayout(getActivity());
+            l2.setMinimumHeight(toPixels(50));
+            l2.setGravity(Gravity.CENTER_VERTICAL);
 
-            TextView tv5 = createTextView(getTimeDiff(getActivity(), ((GGPlan.GGPlans) getFragment().getData()).loadDate), 13, inflater, l2);
+            String diff = getTimeDiff(getActivity(), ((GGPlan.GGPlans) getFragment().getData()).loadDate);
+            TextView tv5 = createTextView(diff, 13, inflater, l2);
             tv5.setTag("gg_time");
-            tv5.setPadding(toPixels(16), toPixels(16), toPixels(16), toPixels(16));
+            tv5.setPadding(toPixels(16), toPixels(0), toPixels(16), toPixels(0));
 
             LinearLayout l3 = new LinearLayout(getActivity());
             l3.setGravity(Gravity.END | Gravity.CENTER);

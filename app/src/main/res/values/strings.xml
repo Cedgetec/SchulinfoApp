@@ -145,8 +145,8 @@
     <string name="no_cal_avail">No calendar available</string>
     <string name="cancel">Cancel</string>
     <string name="just_now">Current</string>
-    <string name="time_diff">%d min. old</string>
-    <string name="time_diff_hours">%d hrs. old</string>
+    <string name="time_diff">Updated\n%d min. ago</string>
+    <string name="time_diff_hours">Updated\n%d hrs. ago</string>
     <string name="all_subjects_including">Hide all %s-subjects</string>
     <string name="all_subjects_including_disabled">Hide all subjects</string>
     <string name="logged_in_as">Logged in as %s</string>

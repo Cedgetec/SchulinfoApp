@@ -68,7 +68,9 @@ public class SubstFragment extends RemoteDataFragment {
                     if (v != null) {
                         v = v.findViewWithTag("gg_time");
                         if (v != null) {
-                            ((TextView) v).setText(SubstPagerFragment.getTimeDiff(getActivity(), newTime));
+                            String diff = SubstPagerFragment.getTimeDiff(getActivity(), newTime);
+                            TextView tv = (TextView) v;
+                            tv.setText(diff);
                         }
                     }
                 }
