@@ -20,6 +20,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,6 +41,7 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
@@ -162,44 +164,30 @@ public class LoginDialog extends DialogFragment {
             dialog.findViewById(R.id.sidInput).setVisibility(View.GONE);
         }
 
+        TextView acceptTermsLink = (TextView) dialog.findViewById(R.id.acceptTermsLink);
+        acceptTermsLink.setText(Html.fromHtml("<a href=\"\"> " + getString(R.string.terms_title) + "</a>"));
+        acceptTermsLink.setMovementMethod(LinkMovementMethod.getInstance());
+
+        acceptTermsLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View widget) {
+                Intent i = new Intent(getActivity(), TextActivity.class);
+                i.putExtra("title", R.string.terms_title);
+                i.putExtra("text", R.array.terms);
+                startActivity(i);
+            }
+        });
+
         final CheckBox acceptTerms = (CheckBox) dialog.findViewById(R.id.acceptTerms);
-        acceptTerms.setMovementMethod(LinkMovementMethod.getInstance());
-        acceptTerms.setClickable(true);
-
-        CharSequence link = Html.fromHtml(getString(R.string.i_accept) +
-                " <a href=\"\">" + getString(R.string.terms_title) + "</a>");
-        SpannableStringBuilder strBuilder = new SpannableStringBuilder(link);
-
-        for(URLSpan span : strBuilder.getSpans(0, strBuilder.length(), URLSpan.class)) {
-            int start = strBuilder.getSpanStart(span);
-            int end = strBuilder.getSpanEnd(span);
-
-            ClickableSpan c = new ClickableSpan() {
-
-                @Override
-                public void onClick(View widget) {
-                    Intent i = new Intent(getActivity(), TextActivity.class);
-                    i.putExtra("title", R.string.terms_title);
-                    i.putExtra("text", R.array.terms);
-                    startActivityForResult(i, acceptTerms.isChecked() ? 1 : 0);
-                }
-
-            };
-
-            strBuilder.setSpan(c, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            strBuilder.removeSpan(span);
-        }
-
-        acceptTerms.setText(strBuilder);
 
         acceptTerms.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onCheckedChanged (CompoundButton buttonView,boolean isChecked){
                 dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(isChecked);
             }
         });
 
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(acceptTerms.isChecked());
 
     }
 
