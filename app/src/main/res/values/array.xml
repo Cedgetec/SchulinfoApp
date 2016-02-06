@@ -38,7 +38,7 @@
         <item>DarkGrey</item>
     </string-array>
 
-    <string-array name="notification_colors" translateable="false">
+    <string-array name="notification_colors" translatable="false">
         <item>#000000</item>
         <item>#ffffff</item>
         <item>#F44336</item>
