@@ -17,6 +17,7 @@ package de.gebatzens.sia.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
@@ -57,6 +58,14 @@ public class SubstPagerFragment extends RemoteDataFragment {
     int spinnerPos = 0, modeSpinnerPos = 0;
 
     int cardColorIndex = 0;
+
+    public void setOrientationPadding(View v) {
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            v.setPadding(toPixels(55), toPixels(4), toPixels(55), toPixels(4));
+        } else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            v.setPadding(toPixels(4), toPixels(4), toPixels(4), toPixels(4));
+        }
+    }
 
     /**
      * Creates a card for the given entry
@@ -231,6 +240,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setTag("gg_list");
             recyclerView.setPadding(toPixels(4), toPixels(4), toPixels(4), toPixels(4));
+            setOrientationPadding(recyclerView);
             l.addView(recyclerView);
             sla.setToOverview();
 
@@ -306,6 +316,8 @@ public class SubstPagerFragment extends RemoteDataFragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setTag("gg_list");
             recyclerView.setPadding(toPixels(4), toPixels(4), toPixels(4), toPixels(4));
+            setOrientationPadding(recyclerView);
+
             l4.addView(recyclerView);
 
             group.addView(l);

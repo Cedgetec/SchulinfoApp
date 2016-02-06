@@ -123,7 +123,8 @@ public class GGApp extends Application {
                         break;
                 }
 
-                rd.load();
+                if(!rd.load())
+                    rd = null;
 
                 frag.setData(rd);
             }

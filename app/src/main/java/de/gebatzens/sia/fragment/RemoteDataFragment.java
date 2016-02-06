@@ -167,7 +167,7 @@ public abstract class RemoteDataFragment extends Fragment {
      *
      * @return horizontal screen orientation
      */
-    protected boolean createRootLayout(LinearLayout l) {
+    public boolean createRootLayout(LinearLayout l) {
         l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         l.setOrientation(LinearLayout.VERTICAL);
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {

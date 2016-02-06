@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.content_fragment, mContent, "gg_content_fragment");
         transaction.commit();
 
+        Log.d("ggvp", "DATA: " + fragments.get(GGApp.GG_APP.getFragmentIndex()).getData());
         if(fragments.get(GGApp.GG_APP.getFragmentIndex()).getData() == null)
             GGApp.GG_APP.refreshAsync(null, true, fragments.get(GGApp.GG_APP.getFragmentIndex()));
         

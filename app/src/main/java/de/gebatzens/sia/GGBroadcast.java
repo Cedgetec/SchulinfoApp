@@ -37,17 +37,6 @@ import de.gebatzens.sia.fragment.SubstFragment;
 public class GGBroadcast extends BroadcastReceiver {
 
     public void checkForSubstUpdates(final GGApp gg) {
-        if(gg.getUpdateType() == GGApp.UPDATE_DISABLE) {
-            Log.w("ggvp", "update disabled");
-            return;
-        }
-
-        boolean w = isWlanConnected(gg);
-        if(!w && gg.getUpdateType() == GGApp.UPDATE_WLAN ) {
-            Log.w("ggvp", "wlan not conected");
-            return;
-        }
-
         if(gg.school == null || gg.school.fragments.getData(FragmentData.FragmentType.PLAN).size() == 0) {
             Log.i("ggvp", "school does not have a PLAN fragment");
             return;
@@ -129,16 +118,12 @@ public class GGBroadcast extends BroadcastReceiver {
     }
 
     public void updateAllFragments(GGApp gg) {
-        //update every 2 hours
+        //update every 6 hours
 
         int u = gg.preferences.getInt("allFragmentsUpdate", 0);
-        if(u < 8)
+        if(u < 24)
             u++;
         gg.preferences.edit().putInt("allFragmentsUpdate", u).apply();
-
-        if(gg.getUpdateType() == GGApp.UPDATE_DISABLE || !isWlanConnected(gg)) {
-            return;
-        }
 
         if(u != 8)
             return;
@@ -147,7 +132,9 @@ public class GGBroadcast extends BroadcastReceiver {
         gg.preferences.edit().putInt("allFragmentsUpdate", u).apply();
 
         for(FragmentData frag : gg.school.fragments) {
-            GGApp.GG_APP.refreshAsync(null, false, frag);
+            if(frag.getType() != FragmentData.FragmentType.PLAN) {
+                GGApp.GG_APP.refreshAsync(null, false, frag);
+            }
         }
 
     }
@@ -179,8 +166,21 @@ public class GGBroadcast extends BroadcastReceiver {
                 @Override
                 protected Void doInBackground(GGApp... params) {
                     Log.d("ggvp", "checking for updates");
-                    checkForSubstUpdates(params[0]);
-                    updateAllFragments(params[0]);
+                    GGApp gg = params[0];
+
+                    if(gg.getUpdateType() == GGApp.UPDATE_DISABLE) {
+                        Log.w("ggvp", "update disabled");
+                        return null;
+                    }
+
+                    boolean w = isWlanConnected(gg);
+                    if(!w && gg.getUpdateType() == GGApp.UPDATE_WLAN ) {
+                        Log.w("ggvp", "wlan not conected");
+                        return null;
+                    }
+
+                    checkForSubstUpdates(gg);
+                    updateAllFragments(gg);
                     return null;
                 }
             }.execute((GGApp) context.getApplicationContext());
