@@ -176,28 +176,37 @@ public class FilterActivity extends AppCompatActivity {
 
             while(reader.hasNext()) {
                 reader.beginObject();
-                Filter f = null;
-                if(main) {
-                    f = new Filter.IncludingFilter();
-                    list.including.add((Filter.IncludingFilter) f);
-                    main = false;
-                } else {
-                    f = new Filter.ExcludingFilter(Filter.FilterType.SUBJECT, "", list.including.get(0));
-                    list.including.get(0).excluding.add((Filter.ExcludingFilter) f);
-                }
+
+                String filter = "";
+                Filter.FilterType type = null;
+                boolean contains = false;
 
                 while(reader.hasNext()) {
                     String name = reader.nextName();
+
                     if(name.equals("type"))
-                        f.setType(Filter.FilterType.valueOf(reader.nextString()));
+                        type = Filter.FilterType.valueOf(reader.nextString());
                     else if(name.equals("filter"))
-                        f.setFilter(reader.nextString());
+                        filter = reader.nextString();
                     else if(name.equals("contains"))
-                        f.contains = reader.nextBoolean();
+                        contains = reader.nextBoolean();
                     else
                         reader.skipValue();
 
                 }
+                
+                if(!filter.isEmpty()) {
+                    if (main) {
+                        Filter.IncludingFilter f = new Filter.IncludingFilter(type, filter);
+                        list.including.add(f);
+                        main = false;
+                    } else {
+                        Filter.ExcludingFilter f = new Filter.ExcludingFilter(type, filter, list.including.get(0));
+                        f.contains = contains;
+                        list.including.get(0).excluding.add(f);
+                    }
+                }
+
                 reader.endObject();
             }
             reader.endArray();

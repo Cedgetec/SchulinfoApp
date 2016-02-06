@@ -48,7 +48,6 @@ public abstract class Filter {
     }
 
     public void setFilter(String filter) {
-        this.type = type;
         this.filter = filter;
         if(filter != null && !filter.isEmpty())
             this.filterAN = GGApp.deleteNonAlphanumeric(filter);
