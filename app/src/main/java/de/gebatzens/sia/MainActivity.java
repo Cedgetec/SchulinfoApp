@@ -75,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     int selectedItem;
 
+    public void updateToolbar(String s, String st) {
+        mToolbar.setTitle(s);
+        mToolbar.setSubtitle(st);
+    }
+
     public RemoteDataFragment getFragment() {
         FragmentData frag = GGApp.GG_APP.school.fragments.get(GGApp.GG_APP.getFragmentIndex());
 
@@ -259,9 +264,7 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setSubtitleTextColor(Color.WHITE);
         mToolbar.setBackgroundColor(GGApp.GG_APP.school.getColor());
-        mToolbar.setTitle(GGApp.GG_APP.school.name);
-        Log.d("ggvp", "fragment type " + fragments.get(GGApp.GG_APP.getFragmentIndex()));
-        mToolbar.setSubtitle(fragments.get(GGApp.GG_APP.getFragmentIndex()).name);
+        updateToolbar(GGApp.GG_APP.school.name, fragments.get(GGApp.GG_APP.getFragmentIndex()).name);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             GGApp.GG_APP.setStatusBarColorTransparent(getWindow()); // because of the navigation drawer
@@ -301,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Menu menu = navigationView.getMenu();
+        final Menu menu = navigationView.getMenu();
         menu.clear();
         for(int i = 0; i < fragments.size(); i++) {
             MenuItem item = menu.add(R.id.fragments, Menu.NONE, i, fragments.get(i).name);
@@ -328,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
                     if(GGApp.GG_APP.getFragmentIndex() != index) {
                         GGApp.GG_APP.setFragmentIndex(index);
                         menuItem.setChecked(true);
-                        mToolbar.setSubtitle(menuItem.getTitle());
+                        updateToolbar(GGApp.GG_APP.school.name, menuItem.getTitle().toString());
                         mContent = getFragment();
                         Animation fadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
                         fadeOut.setAnimationListener(new Animation.AnimationListener() {
