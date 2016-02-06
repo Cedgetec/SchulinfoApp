@@ -197,7 +197,6 @@
     </string-array>
 
     <string-array name="theme_color_names">
-        <item>Winter</item>
         <item>Red</item>
         <item>Pink</item>
         <item>Purple</item>
@@ -217,6 +216,7 @@
         <item>Blue Grey</item>
         <item>Dark Grey</item>
     </string-array>
+    <string name="winter">Winter</string>
 
     <string-array name="notification_color_names">
         <item>Disabled</item>

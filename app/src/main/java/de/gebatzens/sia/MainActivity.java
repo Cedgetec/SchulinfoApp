@@ -52,7 +52,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.gebatzens.sia.data.Exams;
-import de.gebatzens.sia.data.GGPlan;
 import de.gebatzens.sia.dialog.TextDialog;
 import de.gebatzens.sia.fragment.ExamFragment;
 import de.gebatzens.sia.fragment.MensaFragment;

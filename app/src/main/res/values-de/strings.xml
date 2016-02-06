@@ -193,7 +193,6 @@
     </string-array>
 
     <string-array name="theme_color_names">
-        <item>Winter</item>
         <item>Rot</item>
         <item>Rosa</item>
         <item>Lila</item>
@@ -213,6 +212,7 @@
         <item>Blau Grau</item>
         <item>Dunkelgrau</item>
     </string-array>
+    <string name="winter">Winter</string>
 
     <string-array name="notification_color_names">
         <item>Deaktiviert</item>

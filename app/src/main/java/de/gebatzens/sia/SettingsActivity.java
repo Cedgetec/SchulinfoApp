@@ -28,7 +28,6 @@ import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
@@ -49,6 +48,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -124,8 +125,19 @@ public class SettingsActivity extends AppCompatActivity {
                 theme_color.setIcon(tcgd);
             }
 
-            final List<String> themeIds = Arrays.asList(getResources().getStringArray(R.array.theme_names));
-            final List<String> themeNames = Arrays.asList(getResources().getStringArray(R.array.theme_color_names));
+            final List<String> themeIds = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.theme_names)));
+            final List<String> themeNames = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.theme_color_names)));
+
+            String st = GGApp.GG_APP.getSeasonTheme();
+            if(st != null) {
+                switch (st) {
+                    case "Winter":
+                        themeIds.add(0, st);
+                        themeNames.add(0, getString(R.string.winter));
+                        break;
+                }
+            }
+
 
             final ListAdapter adapter_theme_color = new ArrayAdapter<String>(
                     getActivity().getApplicationContext(), R.layout.custom_theme_choose_list, themeIds) {

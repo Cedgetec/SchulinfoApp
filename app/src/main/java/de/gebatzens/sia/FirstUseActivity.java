@@ -37,6 +37,11 @@ public class FirstUseActivity extends FragmentActivity {
 
         super.onCreate(bundle);
 
+        if(("Winter".equals(GGApp.GG_APP.getCustomThemeName())) && !GGApp.GG_APP.getCustomThemeName().equals(GGApp.GG_APP.getSeasonTheme())) {
+            GGApp.GG_APP.setCustomThemeName("Blue");
+            GGApp.GG_APP.school.loadTheme();
+        }
+
         if(GGApp.GG_APP.preferences.getBoolean("first_use", false)) {
             startActivity(new Intent(this, SetupActivity.class));
             finish();

@@ -40,6 +40,7 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
@@ -386,6 +387,18 @@ public class GGApp extends Application {
                     activity.runOnUiThread(finished);
             }
         }.start();
+    }
+
+    public String getSeasonTheme() {
+        int m = Calendar.getInstance().get(Calendar.MONTH);
+        switch(m) {
+            case Calendar.JANUARY:
+            case Calendar.DECEMBER:
+            case Calendar.FEBRUARY:
+                return "Winter";
+            default:
+                return null;
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
