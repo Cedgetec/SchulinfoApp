@@ -49,7 +49,7 @@ public class FilterListAdapter extends BaseAdapter {
         final ViewGroup vg = (ViewGroup) c.getLayoutInflater().inflate(R.layout.filter_item, parent, false);
         String text = "";
         if(filter instanceof Filter.ExcludingFilter)
-            text = ((Filter.ExcludingFilter) filter).getParentFilter().getFilter() + " " + filter.getFilter();
+            text = ((Filter.ExcludingFilter) filter).getParentFilter().getFilter() + "     " + filter.getFilter();
         else
             text = filter.toString();
 

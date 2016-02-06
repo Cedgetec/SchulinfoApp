@@ -82,7 +82,7 @@ public class FilterDialog extends DialogFragment {
                 AppCompatSpinner spinner = (AppCompatSpinner) ((Dialog) dialog).findViewById(R.id.filter_spinner);
 
                 String filtertext = ed.getText().toString().trim();
-                if (filtertext.isEmpty()) {
+                if (filtertext.isEmpty() || ed.getError() != null) {
                     Snackbar.make(getActivity().getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                 } else {
                     if(isMainFilterDialog()) {
@@ -148,30 +148,19 @@ public class FilterDialog extends DialogFragment {
 
         ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
-        Dialog d = getDialog();
+        final AlertDialog d = (AlertDialog) getDialog();
 
         final Filter.FilterList list = GGApp.GG_APP.filters;
         final AutoCompleteTextView ed = (AutoCompleteTextView) d.findViewById(R.id.filter_text);
         final AppCompatSpinner spinner = (AppCompatSpinner) d.findViewById(R.id.filter_spinner);
         final CheckBox cb = (CheckBox) d.findViewById(R.id.checkbox_contains);
         final TextView label = (TextView) d.findViewById(R.id.filter_label);
+        final TextWatcher watcher;
         ed.setSelectAllOnFocus(true);
 
         if(isMainFilterDialog()) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item,  new String[] { getString(R.string.school_class), getString(R.string.teacher) });
             spinner.setAdapter(adapter);
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    ed.setHint((String) spinner.getSelectedItem());
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
 
             if(getMainFilterPosition() == -1) {
                 ed.setText("");
@@ -216,7 +205,7 @@ public class FilterDialog extends DialogFragment {
             }
         }
 
-        ed.addTextChangedListener(new TextWatcher() {
+        ed.addTextChangedListener(watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -232,22 +221,26 @@ public class FilterDialog extends DialogFragment {
                 String str = s.toString().trim();
 
                 int op = isMainFilterDialog() ? getMainFilterPosition() : getUpdatePosition();
-                List<? extends Filter> flist = isMainFilterDialog() ? list.including : list.including.get(getMainFilterPosition()).excluding;
+                List<? extends Filter> flist = isMainFilterDialog() ? list.including : list.including.get(spinner.getSelectedItemPosition()).excluding;
                 Filter.FilterType currentType = isMainFilterDialog() ? (spinner.getSelectedItemPosition() == 0 ? Filter.FilterType.CLASS : Filter.FilterType.TEACHER) : Filter.FilterType.SUBJECT;
 
-                for(int i = 0; i < flist.size(); i++) {
-                    if(i == op) {
+                for (int i = 0; i < flist.size(); i++) {
+                    if (i == op && (!isMainFilterDialog() || getUpdatePosition() == spinner.getSelectedItemPosition())) {
                         continue;
                     }
 
                     Filter f = flist.get(i);
 
-                    if(f.getType() == currentType && f.getFilter().equals(str)) {
+                    if (f.getType() == currentType && f.getFilter().equals(str)) {
                         ed.setError(getString(R.string.filter_exists));
+                        d.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+                    } else {
+                        //ed.setError(null);
+                        d.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
                     }
                 }
 
-                if(!isMainFilterDialog()) {
+                if (!isMainFilterDialog()) {
 
                     if (str.length() == 0) {
                         cb.setEnabled(false);
@@ -257,6 +250,26 @@ public class FilterDialog extends DialogFragment {
                         cb.setText(getString(R.string.all_subjects_including, str));
                     }
                 }
+            }
+        });
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (isMainFilterDialog()) {
+                    ed.setHint((String) spinner.getSelectedItem());
+                }
+
+                watcher.afterTextChanged(ed.getText());
+                //ed.setError(null);
+                //ed.setText(ed.getText());
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
