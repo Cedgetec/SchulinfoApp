@@ -125,7 +125,7 @@ public class GGBroadcast extends BroadcastReceiver {
             u++;
         gg.preferences.edit().putInt("allFragmentsUpdate", u).apply();
 
-        if(u != 8)
+        if(u != 24)
             return;
 
         u = 0;
