@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Hauke Oldsen
+ * Copyright 2015 - 2016 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,7 +85,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
     public Exams filter(Filter.FilterList filters, boolean past) {
         Exams e = new Exams();
         for(ExamItem item : this) {
-            if(GGApp.GG_APP.filters.matches(item) && (past || item.date.after(new Date(System.currentTimeMillis() - 86400000L)))) {
+            if(filters.matches(item) && (past || item.date.after(new Date(System.currentTimeMillis() - 86400000L)))) {
                 e.add(item);
             }
         }

@@ -48,7 +48,6 @@ import de.gebatzens.sia.dialog.TextDialog;
 
 public class ExamFragment extends RemoteDataFragment {
 
-    SwipeRefreshLayout swipeContainer;
     int cardColorIndex = 0;
 
     @Override
