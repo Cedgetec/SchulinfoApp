@@ -121,8 +121,7 @@ public abstract class RemoteDataFragment extends Fragment {
         l2.setGravity(Gravity.CENTER_HORIZONTAL);
 
         TextView tv = new TextView(getActivity());
-        LinearLayout.LayoutParams tvparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams tvparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         tv.setLayoutParams(tvparams);
         tv.setText(text);
         tv.setTextSize(23);
@@ -131,8 +130,8 @@ public abstract class RemoteDataFragment extends Fragment {
 
         if(button != null) {
             Button b = new Button(getActivity());
-            LinearLayout.LayoutParams bparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams bparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            bparams.setMargins(toPixels(4), toPixels(0), toPixels(4), toPixels(4));
             b.setLayoutParams(bparams);
             b.setId(R.id.reload_button);
             b.setText(button);
@@ -141,7 +140,6 @@ public abstract class RemoteDataFragment extends Fragment {
             b.setTypeface(null, Typeface.NORMAL);
             b.setOnClickListener(onclick);
             l2.addView(b);
-
         }
 
         r.addView(l2);
