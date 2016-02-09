@@ -8,8 +8,8 @@ android {
         applicationId "de.gebatzens.sia"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 131
-        versionName "1.3.1"
+        versionCode 132
+        versionName "1.3.2"
 
     }
     

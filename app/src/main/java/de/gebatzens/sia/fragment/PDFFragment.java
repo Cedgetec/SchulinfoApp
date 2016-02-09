@@ -51,7 +51,7 @@ public class PDFFragment extends RemoteDataFragment {
         pdf.setId(R.id.pdfview);
         pdf.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         File file = ((StaticData) getFragment().getData()).getFile();
-        if(file.exists())
+        if(file.exists() && file.length() > 0)
             pdf.fromFile(file).enableSwipe(true).load();
         else
             Log.w("ggvp", file + " does not exist");

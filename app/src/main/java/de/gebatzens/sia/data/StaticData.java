@@ -55,7 +55,7 @@ public class StaticData implements RemoteDataFragment.RemoteData {
             return false;
         }
 
-        return true;
+        return data.length > 0;
     }
 
     public File getFile() {
