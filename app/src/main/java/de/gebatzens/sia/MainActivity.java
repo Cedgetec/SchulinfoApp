@@ -61,11 +61,6 @@ import de.gebatzens.sia.fragment.PDFFragment;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
 
-static {
-        AppCompatDelegate.setDefaultNightMode(
-        AppCompatDelegate.MODE_NIGHT_...);
-        }
-
 public class MainActivity extends AppCompatActivity {
 
     public RemoteDataFragment mContent;
