@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 public class TextActivity extends AppCompatActivity {
 
+    Toolbar mToolBar;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -36,10 +37,13 @@ public class TextActivity extends AppCompatActivity {
         super.onCreate(bundle);
         setContentView(R.layout.activity_text);
 
-        Toolbar mToolBar = (Toolbar) findViewById(R.id.toolbar);
+        mToolBar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolBar);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         mToolBar.setTitleTextColor(Color.WHITE);
         mToolBar.setBackgroundColor(GGApp.GG_APP.school == null ? ContextCompat.getColor(this, R.color.setupColor) : GGApp.GG_APP.school.getColor());
-        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

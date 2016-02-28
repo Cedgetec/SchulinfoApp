@@ -111,9 +111,13 @@ public class FilterActivity extends AppCompatActivity {
         tv2.setTextColor(GGApp.GG_APP.school.getAccentColor());
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolBar);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         mToolBar.setTitleTextColor(Color.WHITE);
         mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
-        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

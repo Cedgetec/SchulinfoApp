@@ -38,6 +38,7 @@ import de.gebatzens.sia.dialog.LoginDialog;
 
 public class SetupActivity extends AppCompatActivity {
 
+    Toolbar mToolBar;
     SchoolListAdapter adapter;
     ListView list;
     public Dialog currentLoginDialog;
@@ -86,13 +87,13 @@ public class SetupActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_setup);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setTitle(getString(R.string.supported_schools));
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.cedgetec_light));
-        toolbar.inflateMenu(R.menu.setup_menu);
+        mToolBar = (Toolbar) findViewById(R.id.toolbar);
+        mToolBar.setTitle(getString(R.string.supported_schools));
+        mToolBar.setTitleTextColor(Color.WHITE);
+        mToolBar.setBackgroundColor(ContextCompat.getColor(this, R.color.cedgetec_light));
+        mToolBar.inflateMenu(R.menu.setup_menu);
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.setup_refresh) {

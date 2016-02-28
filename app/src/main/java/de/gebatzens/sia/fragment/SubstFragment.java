@@ -93,7 +93,7 @@ public class SubstFragment extends RemoteDataFragment {
         if(bundle != null)
             mViewPager.setCurrentItem(bundle.getInt("ggvp_tab"));
 
-        mToolbar = ((MainActivity) this.getActivity()).mToolbar;
+        mToolbar = ((MainActivity) this.getActivity()).mToolBar;
         ColorDrawable mToolbarColor = (ColorDrawable) mToolbar.getBackground();
         int mToolbarColorId = mToolbarColor.getColor();
 

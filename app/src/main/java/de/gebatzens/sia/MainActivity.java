@@ -38,6 +38,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -60,11 +61,15 @@ import de.gebatzens.sia.fragment.PDFFragment;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
 
+static {
+        AppCompatDelegate.setDefaultNightMode(
+        AppCompatDelegate.MODE_NIGHT_...);
+        }
 
 public class MainActivity extends AppCompatActivity {
 
     public RemoteDataFragment mContent;
-    public Toolbar mToolbar;
+    public Toolbar mToolBar;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
     View mNavigationHeader;
@@ -76,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
     int selectedItem;
 
     public void updateToolbar(String s, String st) {
-        mToolbar.setTitle(s);
-        mToolbar.setSubtitle(st);
+        mToolBar.setTitle(s);
+        mToolBar.setSubtitle(st);
     }
 
     public RemoteDataFragment getFragment() {
@@ -214,10 +219,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("ggvp", "DATA: " + fragments.get(GGApp.GG_APP.getFragmentIndex()).getData());
         if(fragments.get(GGApp.GG_APP.getFragmentIndex()).getData() == null)
             GGApp.GG_APP.refreshAsync(null, true, fragments.get(GGApp.GG_APP.getFragmentIndex()));
-        
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+        mToolBar = (Toolbar) findViewById(R.id.toolbar);
+        mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
 
@@ -261,9 +266,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mToolbar.setTitleTextColor(Color.WHITE);
-        mToolbar.setSubtitleTextColor(Color.WHITE);
-        mToolbar.setBackgroundColor(GGApp.GG_APP.school.getColor());
+        mToolBar.setSubtitleTextColor(Color.WHITE);
+        mToolBar.setTitleTextColor(Color.WHITE);
+        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         updateToolbar(GGApp.GG_APP.school.name, fragments.get(GGApp.GG_APP.getFragmentIndex()).name);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -272,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                mToolbar, R.string.drawer_open, R.string.drawer_close) {
+                mToolBar, R.string.drawer_open, R.string.drawer_close) {
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
@@ -428,9 +433,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateMenu(int menu) {
-        mToolbar.getMenu().clear();
-        mToolbar.inflateMenu(menu);
-        mToolbar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources()
+        mToolBar.getMenu().clear();
+        mToolBar.inflateMenu(menu);
+        mToolBar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources()
                 .getString(GGApp.GG_APP.isDarkThemeEnabled() ? R.string.day_mode : R.string.night_mode));
     }
 

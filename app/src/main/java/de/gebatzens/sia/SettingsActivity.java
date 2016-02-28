@@ -336,9 +336,12 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         mToolBar = (Toolbar) contentView.findViewById(R.id.toolbar);
+        setSupportActionBar(mToolBar);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         mToolBar.setTitleTextColor(Color.WHITE);
         mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
-        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
