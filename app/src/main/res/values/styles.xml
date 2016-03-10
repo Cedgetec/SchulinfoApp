@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ToolBarStyle" parent="Widget.AppCompat.ActionBar">
-        <item name="android:textColorSecondary">@android:color/white</item>
+    <style name="ToolBarTheme" parent="Widget.AppCompat.ActionBar">
+        <item name="colorControlNormal">@android:color/white</item> <!-- White toolbar icons on pre lollipop devices -->
     </style>
 
-    <!-- Start application themes -->
-    <style name="AppTheme.StartTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">#c9c9c9</item>
+    <style name="CheckBoxTheme" parent="AppTheme.Base.Light">
+        <item name="colorAccent">#fff</item>
+        <item name="android:textColorSecondary">#fff</item>
     </style>
 
     <!-- Base application themes -->
@@ -20,12 +20,14 @@
 
     <!-- Setup application themes -->
     <style name="FirstUseTheme" parent="AppTheme.Base.Light">
-        <item name="colorButtonNormal">#fff</item>
+        <item name="colorButtonNormal">@android:color/white</item>
         <!-- api 21 and higher -->
     </style>
 
     <!-- Light application themes -->
-
+    <style name="AppTheme.StartTheme.Light" parent="AppTheme.Base.Light">
+        <item name="colorPrimaryDark">#c9c9c9</item>
+    </style>
     <style name="AppThemeWinterLight" parent="AppTheme.Base.Light">
         <item name="colorPrimary">#1973ac</item>
         <item name="colorPrimaryDark">#156191</item>
@@ -114,7 +116,6 @@
         <item name="colorPrimary">#FF9800</item>
         <item name="colorPrimaryDark">#F57C00</item>
         <item name="colorAccent">#FF9800</item>
-
         <item name="alertDialogTheme">@style/Theme.AlertDialog.Orange.Light</item>
     </style>
     <style name="AppThemeDeepOrangeLight" parent="AppTheme.Base.Light">
@@ -147,15 +148,17 @@
         <item name="colorAccent">#212121</item>
         <item name="alertDialogTheme">@style/Theme.AlertDialog.DarkGrey.Light</item>
     </style>
-    <style name="AppThemeCedgetecCorporate" parent="AppTheme.Base.Light">
+    <style name="AppThemeSetupLight" parent="AppTheme.Base.Light">
         <item name="colorPrimary">#3073D4</item>
         <item name="colorPrimaryDark">#245AB8</item>
         <item name="colorAccent">#3073D4</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.CedgetecCoporate</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Setup.Light</item>
     </style>
 
     <!-- Dark application themes -->
-
+    <style name="AppTheme.StartTheme.Dark" parent="AppTheme.Base.Dark">
+        <item name="colorPrimaryDark">#141414</item>
+    </style>
     <style name="AppThemeWinterDark" parent="AppTheme.Base.Dark">
         <item name="colorPrimary">#145c8a</item>
         <item name="colorPrimaryDark">#114e75</item>
@@ -276,11 +279,11 @@
         <item name="colorAccent">#F5F5F5</item>
         <item name="alertDialogTheme">@style/Theme.AlertDialog.DarkGrey.Dark</item>
     </style>
-
-    <!-- Checkbox theme -->
-    <style name="CheckBoxTheme" parent="AppTheme.Base.Light">
-        <item name="colorAccent">#fff</item>
-        <item name="android:textColorSecondary">#fff</item>
+    <style name="AppThemeSetupDark" parent="AppTheme.Base.Dark">
+        <item name="colorPrimary">#3073D4</item>
+        <item name="colorPrimaryDark">#245AB8</item>
+        <item name="colorAccent">#3073D4</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Setup.Dark</item>
     </style>
 
 
@@ -299,7 +302,6 @@
     </style>
 
     <!-- Light popup themes -->
-
     <style name="Theme.AlertDialog.Winter.Light" parent="Theme.AlertDialog.Base.Light">
         <item name="colorAccent">#1973ac</item>
     </style>
@@ -360,12 +362,11 @@
     <style name="Theme.AlertDialog.DarkGrey.Light" parent="Theme.AlertDialog.Base.Light">
         <item name="colorAccent">#212121</item>
     </style>
-    <style name="Theme.AlertDialog.CedgetecCoporate" parent="Theme.AlertDialog.Base.Light">
+    <style name="Theme.AlertDialog.Setup.Light" parent="Theme.AlertDialog.Base.Light">
         <item name="colorAccent">#3073D4</item>
     </style>
 
     <!-- Dark popup themes -->
-
     <style name="Theme.AlertDialog.Winter.Dark" parent="Theme.AlertDialog.Base.Dark">
         <item name="colorAccent">#1973ac</item>
     </style>
@@ -425,6 +426,9 @@
     </style>
     <style name="Theme.AlertDialog.DarkGrey.Dark" parent="Theme.AlertDialog.Base.Dark">
         <item name="colorAccent">#F5F5F5</item>
+    </style>
+    <style name="Theme.AlertDialog.Setup.Dark" parent="Theme.AlertDialog.Base.Dark">
+        <item name="colorAccent">#3073D4</item>
     </style>
 </resources>
 

@@ -93,12 +93,7 @@ public class SubstFragment extends RemoteDataFragment {
         if(bundle != null)
             mViewPager.setCurrentItem(bundle.getInt("ggvp_tab"));
 
-        mToolbar = ((MainActivity) this.getActivity()).mToolBar;
-        ColorDrawable mToolbarColor = (ColorDrawable) mToolbar.getBackground();
-        int mToolbarColorId = mToolbarColor.getColor();
-
         mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
-        mTabLayout.setBackgroundColor(mToolbarColorId);
         mTabLayout.setupWithViewPager(mViewPager);
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mTabLayout.setPadding(toPixels(48), 0, toPixels(48), 0);

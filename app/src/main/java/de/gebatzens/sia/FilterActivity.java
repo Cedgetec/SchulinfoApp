@@ -111,13 +111,11 @@ public class FilterActivity extends AppCompatActivity {
         tv2.setTextColor(GGApp.GG_APP.school.getAccentColor());
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
+        mToolBar.setTitle(getTitle());
         setSupportActionBar(mToolBar);
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        mToolBar.setTitleTextColor(Color.WHITE);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
-
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +123,6 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
         mToolBar.inflateMenu(R.menu.filter_menu);
-        mToolBar.setTitle(getTitle());
 
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

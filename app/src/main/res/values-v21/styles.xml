@@ -26,7 +26,7 @@
 
     <!-- Setup application themes -->
     <style name="FirstUseTheme" parent="AppTheme.Base.Light">
-        <item name="android:colorButtonNormal">#fff</item>
+        <item name="android:colorButtonNormal">@android:color/white</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="windowActionBar">false</item>
     </style>

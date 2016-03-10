@@ -19,7 +19,6 @@ package de.gebatzens.sia;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -33,23 +32,9 @@ public class TextActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle bundle) {
-        setTheme(GGApp.GG_APP.school == null ? R.style.AppThemeCedgetecCorporate : GGApp.GG_APP.school.getTheme());
+        setTheme(GGApp.GG_APP.school == null ? R.style.AppThemeSetupLight : GGApp.GG_APP.school.getTheme());
         super.onCreate(bundle);
         setContentView(R.layout.activity_text);
-
-        mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolBar);
-        if(getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        mToolBar.setTitleTextColor(Color.WHITE);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.school == null ? ContextCompat.getColor(this, R.color.setupColor) : GGApp.GG_APP.school.getColor());
-        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         Intent intent = getIntent();
 
@@ -61,7 +46,18 @@ public class TextActivity extends AppCompatActivity {
             textRes = Integer.parseInt(intent.getData().getQueryParameter("text"));
         }
 
-        mToolBar.setTitle(getString(titleRes));
+        mToolBar = (Toolbar) findViewById(R.id.toolbar);
+        mToolBar.setTitle(getResources().getString(titleRes));
+        setSupportActionBar(mToolBar);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         LinearLayout lcontent = (LinearLayout) findViewById(R.id.textactivityContent);
 

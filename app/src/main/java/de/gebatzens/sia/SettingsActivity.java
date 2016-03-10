@@ -336,19 +336,17 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         mToolBar = (Toolbar) contentView.findViewById(R.id.toolbar);
+        mToolBar.setTitle(getTitle());
         setSupportActionBar(mToolBar);
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        mToolBar.setTitleTextColor(Color.WHITE);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        mToolBar.setTitle(getTitle());
 
         frag = new GGPFragment();
         getFragmentManager().beginTransaction().replace(R.id.content_wrapper, frag, "gg_settings_frag").commit();
