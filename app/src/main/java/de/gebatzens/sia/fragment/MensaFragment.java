@@ -92,15 +92,8 @@ public class MensaFragment extends RemoteDataFragment {
 
     private CardView createCardItem(Mensa.MensaItem mensa_item, LayoutInflater i) {
         CardView mcv = (CardView) i.inflate(R.layout.basic_cardview, null);
-        if (GGApp.GG_APP.isDarkThemeEnabled()) {
-            mcv.setCardBackgroundColor(Color.DKGRAY);
-        } else{
-            mcv.setCardBackgroundColor(Color.WHITE);
-        }
+        mcv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mcv.setContentPadding(0, 0, 0, 0);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0, 0, 0, toPixels(6));
-        mcv.setLayoutParams(params);
         i.inflate(R.layout.mensa_cardview_entry, mcv, true);
         if(mensa_item.isPast())
             mcv.setAlpha(0.65f);

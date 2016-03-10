@@ -87,10 +87,9 @@ public class ExamAdapter extends RecyclerView.Adapter {
 
         switch(viewType) {
             case 0:
-                CardView cv2 = new CardView(frag.getContext());
+                CardView cv2 = (CardView) frag.getActivity().getLayoutInflater().inflate(R.layout.fragment_header_cardview, null);
                 cv2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 cv2.setRadius(0);
-                cv2.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
                 LinearLayout l2 = new LinearLayout(frag.getContext());
                 cv2.addView(l2);
 

@@ -64,8 +64,7 @@ public class TextActivity extends AppCompatActivity {
         String[] terms = getResources().getStringArray(textRes);
 
         for (int i = 0; i < terms.length; i++){
-            CardView cv = (CardView) getLayoutInflater().inflate(R.layout.textactivity_cards, null);
-            cv.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
+            CardView cv = (CardView) getLayoutInflater().inflate(R.layout.basic_cardview, null);
             LinearLayout l = new LinearLayout(this);
             l.setOrientation(LinearLayout.HORIZONTAL);
             TextView tv = new TextView(this);

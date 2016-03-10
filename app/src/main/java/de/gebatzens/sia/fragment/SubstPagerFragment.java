@@ -180,9 +180,9 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
             Filter.FilterList filters = GGApp.GG_APP.filters;
 
-            CardView cv2 = new CardView(getActivity());
+            CardView cv2 = (CardView) getActivity().getLayoutInflater().inflate(R.layout.fragment_header_cardview, null);
+            cv2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             cv2.setRadius(0);
-            cv2.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
 
             LinearLayout l2 = new LinearLayout(getActivity());
             l2.setMinimumHeight(toPixels(50));
@@ -270,9 +270,9 @@ public class SubstPagerFragment extends RemoteDataFragment {
             group.addView(sv);
 
         } else {
-            CardView cv2 = new CardView(getActivity());
+            CardView cv2 = (CardView) getActivity().getLayoutInflater().inflate(R.layout.fragment_header_cardview, null);
+            cv2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             cv2.setRadius(0);
-            cv2.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
 
             LinearLayout l2 = new LinearLayout(getActivity());
             l2.setMinimumHeight(toPixels(50));

@@ -152,11 +152,6 @@ public abstract class RemoteDataFragment extends Fragment {
         f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
         CardView cv = (CardView) inflater.inflate(R.layout.basic_cardview, f2, false);
         f2.addView(cv);
-        if (GGApp.GG_APP.isDarkThemeEnabled()) {
-            cv.setCardBackgroundColor(Color.parseColor("#424242"));
-        } else{
-            cv.setCardBackgroundColor(Color.parseColor("#ffffff"));
-        }
         createTextView(getResources().getString(R.string.no_entries), 20, inflater, cv);
         vg.addView(f2);
     }

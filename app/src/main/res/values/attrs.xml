@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="floating_action_circle" format="reference"/>
-    <attr name="colorControlNormals" format="color"/>
+    <attr name="cardViewStyle" format="reference"/>
 
     <declare-styleable name="SnowView">
         <attr name="theight" format="dimension"/>
