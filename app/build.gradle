@@ -10,7 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 132
         versionName "1.3.2"
-
+        generatedDensities = []
     }
     
     buildTypes {
@@ -32,6 +32,10 @@ android {
     lintOptions {
         disable 'SimpleDateFormat', 'DefaultLocale', 'HardcodedText'
         abortOnError false
+    }
+
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
     }
 }
 
