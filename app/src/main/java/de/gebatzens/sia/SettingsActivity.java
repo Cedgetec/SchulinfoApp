@@ -174,11 +174,6 @@ public class SettingsActivity extends AppCompatActivity {
                     }
 
                     holder.title.setText(themeNames.get(position));
-                    if (GGApp.GG_APP.isDarkThemeEnabled()) {
-                        holder.title.setTextColor(Color.parseColor("#fafafa"));
-                    } else{
-                        holder.title.setTextColor(Color.parseColor("#424242"));
-                    }
                     return convertView;
                 }
             };

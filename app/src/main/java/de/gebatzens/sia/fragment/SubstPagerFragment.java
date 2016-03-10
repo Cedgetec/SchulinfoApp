@@ -122,7 +122,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
         LinearLayout ls = new LinearLayout(getActivity());
         ls.setId(R.id.messages_list);
         ls.setOrientation(LinearLayout.VERTICAL);
-        TextView tv3 = createTextView(getResources().getString(R.string.special_messages), 19, inflater, ls);
+        TextView tv3 = createPrimaryTextView(getResources().getString(R.string.special_messages), 19, inflater, ls);
         tv3.setTextColor(Color.WHITE);
         tv3.setPadding(0,0,0,toPixels(6));
         cv.addView(ls);
@@ -189,7 +189,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l2.setGravity(Gravity.CENTER_VERTICAL);
 
             String diff = getTimeDiff(getActivity(), ((GGPlan.GGPlans) getFragment().getData()).loadDate);
-            TextView tv4 = createTextView(diff, 13, inflater, l2);
+            TextView tv4 = createPrimaryTextView(diff, 13, inflater, l2);
             tv4.setTag("gg_time");
             tv4.setPadding(toPixels(16), toPixels(0), toPixels(16), toPixels(0));
 
@@ -204,7 +204,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             for(Filter.IncludingFilter inc : filters.including) {
                 String text = chars > 8 ? "+" + (filters.including.size() - chips) + "" : inc.getFilter();
 
-                TextView tv2 = createTextView(text, chars > 8 ? 20 : 15, inflater, l3);
+                TextView tv2 = createPrimaryTextView(text, chars > 8 ? 20 : 15, inflater, l3);
                 LinearLayout.LayoutParams pa = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 pa.setMargins(toPixels(chars > 8 ? 10 : 5), 0, chars > 8 ? toPixels(-20) : 0, 0);
                 tv2.setLayoutParams(pa);
@@ -279,7 +279,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l2.setGravity(Gravity.CENTER_VERTICAL);
 
             String diff = getTimeDiff(getActivity(), ((GGPlan.GGPlans) getFragment().getData()).loadDate);
-            TextView tv5 = createTextView(diff, 13, inflater, l2);
+            TextView tv5 = createPrimaryTextView(diff, 13, inflater, l2);
             tv5.setTag("gg_time");
             tv5.setPadding(toPixels(16), toPixels(0), toPixels(16), toPixels(0));
 
@@ -356,11 +356,6 @@ public class SubstPagerFragment extends RemoteDataFragment {
                     String item = ((ArrayAdapter<String>) spinClass.getAdapter()).getItem(position);
 
                     spinnerPos = position;
-
-                    TextView tv = (TextView) parent.getChildAt(0);
-                    if(tv != null)
-                        tv.setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#e7e7e7" : "#212121"));
-
 
                     if (!item.equals(getActivity().getString(R.string.all))) {
                         cardColorIndex = 0;

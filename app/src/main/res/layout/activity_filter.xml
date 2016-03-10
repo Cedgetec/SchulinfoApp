@@ -28,7 +28,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
                     android:fontFamily="sans-serif-medium"
-                    android:id="@+id/filter_header_inc"
+                    android:textColor="?attr/colorAccent"
                     android:text="@string/main_filter"/>
 
                 <ListView
@@ -41,7 +41,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#888"
+                    android:textAppearance="?android:attr/textAppearance"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="18sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
@@ -54,6 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
+                    android:textColor="#fff"
                     android:text="@string/add_main_filter"/>
 
                 <TextView
@@ -65,7 +67,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
                     android:fontFamily="sans-serif-medium"
-                    android:id="@+id/filter_header_exc"
+                    android:textColor="?attr/colorAccent"
                     android:text="@string/hidden_filters"/>
 
                 <ListView
@@ -78,7 +80,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#888"
+                    android:textAppearance="?android:attr/textAppearance"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="18sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
@@ -91,6 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
+                    android:textColor="#fff"
                     android:text="@string/hide_subject"/>
 
             </LinearLayout>

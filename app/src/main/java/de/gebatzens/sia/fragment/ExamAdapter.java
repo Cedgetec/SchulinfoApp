@@ -93,7 +93,7 @@ public class ExamAdapter extends RecyclerView.Adapter {
                 LinearLayout l2 = new LinearLayout(frag.getContext());
                 cv2.addView(l2);
 
-                final TextView tv5 = frag.createTextView("", 15, inflater, l2);
+                final TextView tv5 = frag.createPrimaryTextView("", 15, inflater, l2);
                 tv5.setPadding(RemoteDataFragment.toPixels(16), RemoteDataFragment.toPixels(16), RemoteDataFragment.toPixels(16), RemoteDataFragment.toPixels(16));
 
                 LinearLayout l4 = new LinearLayout(frag.getContext());
@@ -160,13 +160,8 @@ public class ExamAdapter extends RecyclerView.Adapter {
                 params.setMargins(0, RemoteDataFragment.toPixels(20), 0, 0);
                 wrapper.setLayoutParams(params);
                 setOrientationPadding(wrapper);
-                TextView tv = frag.createTextView("", 27, inflater, wrapper);
+                TextView tv = frag.createSecondaryTextView("", 27, inflater, wrapper);
                 tv.setPadding(RemoteDataFragment.toPixels(3), 0, 0, 0);
-                if (GGApp.GG_APP.isDarkThemeEnabled()) {
-                    tv.setTextColor(Color.parseColor("#a0a0a0"));
-                } else {
-                    tv.setTextColor(Color.parseColor("#6e6e6e"));
-                }
                 return new LabelViewHolder(wrapper);
             default:
                 return null;

@@ -206,10 +206,9 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 return frag.createCardItem(LayoutInflater.from(parent.getContext()), parent);
             case AdapterEntry.LABEL:
                 LinearLayout wrapper = new LinearLayout(frag.getActivity());
-                TextView tv = frag.createTextView("", 27, LayoutInflater.from(parent.getContext()), wrapper);
+                TextView tv = frag.createSecondaryTextView("", 27, LayoutInflater.from(parent.getContext()), wrapper);
                 tv.setId(R.id.label);
                 tv.setPadding(RemoteDataFragment.toPixels(2.8f), RemoteDataFragment.toPixels(20), 0, 0);
-                tv.setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#a0a0a0" : "#6e6e6e"));
                 return new LabelViewHolder(wrapper);
             case AdapterEntry.MESSAGES:
                 return frag.createSMCard(parent, LayoutInflater.from(parent.getContext()));

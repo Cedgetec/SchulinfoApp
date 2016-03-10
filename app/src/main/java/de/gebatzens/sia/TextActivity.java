@@ -17,12 +17,12 @@
 package de.gebatzens.sia;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -65,12 +65,12 @@ public class TextActivity extends AppCompatActivity {
 
         for (int i = 0; i < terms.length; i++){
             CardView cv = (CardView) getLayoutInflater().inflate(R.layout.basic_cardview, null);
+            cv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             LinearLayout l = new LinearLayout(this);
             l.setOrientation(LinearLayout.HORIZONTAL);
-            TextView tv = new TextView(this);
+            TextView tv = (TextView) getLayoutInflater().inflate(R.layout.basic_textview_primary, null);
             tv.setText(terms[i]);
-            tv.setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#ffffff" : "#212121"));
-            TextView tv2 = new TextView(this);
+            TextView tv2 = (TextView) getLayoutInflater().inflate(R.layout.basic_textview_secondary, null);
             tv2.setText(i+1 + ". ");
             l.addView(tv2);
             l.addView(tv);

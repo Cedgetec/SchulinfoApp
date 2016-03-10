@@ -79,13 +79,20 @@ public abstract class RemoteDataFragment extends Fragment {
         return (int) (dp * scale);
     }
 
-    public TextView createTextView(String text, int size, LayoutInflater inflater, ViewGroup group) {
-        TextView t = new TextView(getActivity());
+    public TextView createPrimaryTextView(String text, int size, LayoutInflater inflater, ViewGroup group) {
+        TextView t = (TextView) inflater.inflate(R.layout.basic_textview_primary, null);
         t.setText(text);
         t.setPadding(0, 0, toPixels(20), 0);
         t.setTextSize(size);
-        t.setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#e7e7e7" : "#212121"));
+        group.addView(t);
+        return t;
+    }
 
+    public TextView createSecondaryTextView(String text, int size, LayoutInflater inflater, ViewGroup group) {
+        TextView t = (TextView) inflater.inflate(R.layout.basic_textview_secondary, null);
+        t.setText(text);
+        t.setPadding(0, 0, toPixels(20), 0);
+        t.setTextSize(size);
         group.addView(t);
         return t;
     }
@@ -152,7 +159,7 @@ public abstract class RemoteDataFragment extends Fragment {
         f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
         CardView cv = (CardView) inflater.inflate(R.layout.basic_cardview, f2, false);
         f2.addView(cv);
-        createTextView(getResources().getString(R.string.no_entries), 20, inflater, cv);
+        createPrimaryTextView(getResources().getString(R.string.no_entries), 20, inflater, cv);
         vg.addView(f2);
     }
 

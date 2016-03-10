@@ -105,11 +105,6 @@ public class FilterActivity extends AppCompatActivity {
         if(bundle != null)
             changed = bundle.getBoolean("changed", false);
 
-        TextView tv = (TextView) findViewById(R.id.filter_header_inc);
-        tv.setTextColor(GGApp.GG_APP.school.getAccentColor());
-        TextView tv2 = (TextView) findViewById(R.id.filter_header_exc);
-        tv2.setTextColor(GGApp.GG_APP.school.getAccentColor());
-
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mToolBar.setTitle(getTitle());
         setSupportActionBar(mToolBar);
@@ -135,11 +130,6 @@ public class FilterActivity extends AppCompatActivity {
         });
         Button bt1 = (Button) findViewById(R.id.inc_button);
         Button bt2 = (Button) findViewById(R.id.exc_button);
-
-        if(GGApp.GG_APP.isDarkThemeEnabled()){
-            bt1.setTextColor(Color.WHITE);
-            bt2.setTextColor(Color.WHITE);
-        }
 
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
