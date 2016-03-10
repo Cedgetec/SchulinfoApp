@@ -26,11 +26,20 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import de.gebatzens.sia.data.Filter;
 
 public class SchoolListAdapter extends BaseAdapter {
 
-    List<School> list = School.LIST;
+    List<School> list;
+    SetupActivity c;
+
+    public SchoolListAdapter(SetupActivity c, List<School> list) {
+        this.c = c;
+        this.list = list;
+    }
 
     @Override
     public int getCount() {
@@ -49,7 +58,7 @@ public class SchoolListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView == null ? ((LayoutInflater) GGApp.GG_APP.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.school_item, parent, false) : convertView;
+        View v = convertView == null ? (ViewGroup) c.getLayoutInflater().inflate(R.layout.school_item, parent, false) : convertView;
 
         School school = list.get(position);
 

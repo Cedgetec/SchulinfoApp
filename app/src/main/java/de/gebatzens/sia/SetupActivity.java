@@ -102,7 +102,7 @@ public class SetupActivity extends AppCompatActivity {
         });
 
         list = (ListView) findViewById(R.id.setup_list);
-        adapter = new SchoolListAdapter();
+        adapter = new SchoolListAdapter(this, School.LIST);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
