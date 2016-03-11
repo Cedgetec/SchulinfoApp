@@ -36,6 +36,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -259,10 +260,6 @@ public class GGApp extends Application {
         return Color.parseColor(preferences.getString("notification_led_color", "#2196F3"));
     }
 
-    public void setDarkThemeEnabled(boolean e) {
-        preferences.edit().putBoolean("darkTheme", e).apply();
-    }
-
     public String getCustomThemeName() {
         return preferences.getString("customTheme", null);
     }
@@ -271,8 +268,13 @@ public class GGApp extends Application {
         preferences.edit().putString("customTheme", customTheme).apply();
     }
 
-    public boolean isDarkThemeEnabled() {
-        return preferences.getBoolean("darkTheme", false);
+    public int getThemeMode() {
+        return preferences.getInt("themeMode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+    }
+
+    public void setThemeMode(int e) {
+        preferences.edit().putInt("themeMode", e).apply();
+        AppCompatDelegate.setDefaultNightMode(e);
     }
 
     public void setSchool(String sid) {

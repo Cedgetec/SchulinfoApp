@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="chip_background">#707070</color>
+    <color name="SwipeRefreshLayout_background">#424242</color>
+
+    <!-- Theme colors -->
+    <color name="ThemeStartAppColorPrimaryDark">#141414</color>
+
+    <color name="ThemeWinterColorPrimary">#145c8a</color>
+    <color name="ThemeWinterColorPrimaryDark">#114e75</color>
+    <color name="ThemeWinterColorAccent">#145c8a</color>
+
+    <color name="ThemeRedColorPrimary">#D32F2F</color>
+    <color name="ThemeRedColorPrimaryDark">#B71C1C</color>
+    <color name="ThemeRedColorAccent">#D32F2F</color>
+
+    <color name="ThemePinkColorPrimary">#C2185B</color>
+    <color name="ThemePinkColorPrimaryDark">#880E4F</color>
+    <color name="ThemePinkColorAccent">#C2185B</color>
+
+    <color name="ThemePurpleColorPrimary">#7B1FA2</color>
+    <color name="ThemePurpleColorPrimaryDark">#4A148C</color>
+    <color name="ThemePurpleColorAccent">#7B1FA2</color>
+
+    <color name="ThemeDeepPurpleColorPrimary">#512DA8</color>
+    <color name="ThemeDeepPurpleColorPrimaryDark">#311B92</color>
+    <color name="ThemeDeepPurpleColorAccent">#512DA8</color>
+
+    <color name="ThemeIndigoColorPrimary">#303F9F</color>
+    <color name="ThemeIndigoColorPrimaryDark">#1A237E</color>
+    <color name="ThemeIndigoColorAccent">#303F9F</color>
+
+    <color name="ThemeBlueColorPrimary">#1976D2</color>
+    <color name="ThemeBlueColorPrimaryDark">#0D47A1</color>
+    <color name="ThemeBlueColorAccent">#1976D2</color>
+
+    <color name="ThemeLightBlueColorPrimary">#0288D1</color>
+    <color name="ThemeLightBlueColorPrimaryDark">#01579B</color>
+    <color name="ThemeLightBlueColorAccent">#0288D1</color>
+
+    <color name="ThemeCyanColorPrimary">#0097A7</color>
+    <color name="ThemeCyanColorPrimaryDark">#006064</color>
+    <color name="ThemeCyanColorAccent">#0097A7</color>
+
+    <color name="ThemeTealColorPrimary">#00796B</color>
+    <color name="ThemeTealColorPrimaryDark">#004D40</color>
+    <color name="ThemeTealColorAccent">#00796B</color>
+
+    <color name="ThemeGreenColorPrimary">#388E3C</color>
+    <color name="ThemeGreenColorPrimaryDark">#1B5E20</color>
+    <color name="ThemeGreenColorAccent">#388E3C</color>
+
+    <color name="ThemeLightGreenColorPrimary">#689F38</color>
+    <color name="ThemeLightGreenColorPrimaryDark">#33691E</color>
+    <color name="ThemeLightGreenColorAccent">#689F38</color>
+
+    <color name="ThemeAmberColorPrimary">#FFA000</color>
+    <color name="ThemeAmberColorPrimaryDark">#FF6F00</color>
+    <color name="ThemeAmberColorAccent">#FFA000</color>
+
+    <color name="ThemeOrangeColorPrimary">#F57C00</color>
+    <color name="ThemeOrangeColorPrimaryDark">#E65100</color>
+    <color name="ThemeOrangeColorAccent">#F57C00</color>
+
+    <color name="ThemeDeepOrangeColorPrimary">#E64A19</color>
+    <color name="ThemeDeepOrangeColorPrimaryDark">#BF360C</color>
+    <color name="ThemeDeepOrangeColorAccent">#E64A19</color>
+
+    <color name="ThemeBrownColorPrimary">#5D4037</color>
+    <color name="ThemeBrownColorPrimaryDark">#3E2723</color>
+    <color name="ThemeBrownColorAccent">#5D4037</color>
+
+    <color name="ThemeGreyColorPrimary">#616161</color>
+    <color name="ThemeGreyColorPrimaryDark">#212121</color>
+    <color name="ThemeGreyColorAccent">#616161</color>
+
+    <color name="ThemeBlueGreyColorPrimary">#455A64</color>
+    <color name="ThemeBlueGreyColorPrimaryDark">#263238</color>
+    <color name="ThemeBlueGreyColorAccent">#455A64</color>
+
+    <color name="ThemeDarkGreyColorPrimary">#212121</color>
+    <color name="ThemeDarkGreyColorPrimaryDark">#000000</color>
+    <color name="ThemeDarkGreyColorAccent">#F5F5F5</color>
+
+    <color name="ThemeSetupColorPrimary">#3073D4</color>
+    <color name="ThemeSetupColorPrimaryDark">#245AB8</color>
+    <color name="ThemeSetupColorAccent">#3073D4</color>
+
+    <!-- Custom card colors -->
+    <string-array name="CardviewColorWinter" translatable="false">
+        <item>#33759c</item>
+        <item>#1f475e</item>
+        <item>#2d6387</item>
+        <item>#19394e</item>
+        <item>#316d94</item>
+        <item>#004c62</item>
+    </string-array>
+    <string-array name="CardviewColorEaster" translatable="false">
+        <item>#447d00</item>
+        <item>#0b7500</item>
+        <item>#156405</item>
+        <item>#005a0d</item>
+        <item>#377000</item>
+        <item>#3b8011</item>
+    </string-array>
+    <string-array name="CardviewColorRed" translatable="false">
+        <item>#D32F2F</item>
+        <item>#B71C1C</item>
+        <item>#C62828</item>
+        <item>#B71C1C</item>
+        <item>#D32F2F</item>
+        <item>#B71C1C</item>
+    </string-array>
+    <string-array name="CardviewColorPink" translatable="false">
+        <item>#C2185B</item>
+        <item>#880E4F</item>
+        <item>#AD1457</item>
+        <item>#880E4F</item>
+        <item>#C2185B</item>
+        <item>#880E4F</item>
+    </string-array>
+    <string-array name="CardviewColorPurple" translatable="false">
+        <item>#7B1FA2</item>
+        <item>#4A148C</item>
+        <item>#6A1B9A</item>
+        <item>#4A148C</item>
+        <item>#7B1FA2</item>
+        <item>#4A148C</item>
+    </string-array>
+    <string-array name="CardviewColorDeepPurple" translatable="false">
+        <item>#512DA8</item>
+        <item>#311B92</item>
+        <item>#4527A0</item>
+        <item>#311B92</item>
+        <item>#512DA8</item>
+        <item>#311B92</item>
+    </string-array>
+    <string-array name="CardviewColorIndigo" translatable="false">
+        <item>#303F9F</item>
+        <item>#1A237E</item>
+        <item>#283593</item>
+        <item>#1A237E</item>
+        <item>#303F9F</item>
+        <item>#1A237E</item>
+    </string-array>
+    <string-array name="CardviewColorBlue" translatable="false">
+        <item>#1976D2</item>
+        <item>#0D47A1</item>
+        <item>#1565C0</item>
+        <item>#0D47A1</item>
+        <item>#1976D2</item>
+        <item>#0D47A1</item>
+    </string-array>
+    <string-array name="CardviewColorLightBlue" translatable="false">
+        <item>#0288D1</item>
+        <item>#01579B</item>
+        <item>#0277BD</item>
+        <item>#01579B</item>
+        <item>#0288D1</item>
+        <item>#01579B</item>
+    </string-array>
+    <string-array name="CardviewColorCyan" translatable="false">
+        <item>#0097A7</item>
+        <item>#006064</item>
+        <item>#00838F</item>
+        <item>#006064</item>
+        <item>#0097A7</item>
+        <item>#006064</item>
+    </string-array>
+    <string-array name="CardviewColorTeal" translatable="false">
+        <item>#00796B</item>
+        <item>#004D40</item>
+        <item>#00695C</item>
+        <item>#004D40</item>
+        <item>#00796B</item>
+        <item>#004D40</item>
+    </string-array>
+    <string-array name="CardviewColorGreen" translatable="false">
+        <item>#388E3C</item>
+        <item>#1B5E20</item>
+        <item>#2E7D32</item>
+        <item>#1B5E20</item>
+        <item>#388E3C</item>
+        <item>#1B5E20</item>
+    </string-array>
+    <string-array name="CardviewColorLightGreen" translatable="false">
+        <item>#689F38</item>
+        <item>#33691E</item>
+        <item>#558B2F</item>
+        <item>#33691E</item>
+        <item>#689F38</item>
+        <item>#33691E</item>
+    </string-array>
+    <string-array name="CardviewColorAmber" translatable="false">
+        <item>#FFA000</item>
+        <item>#FF6F00</item>
+        <item>#FF8F00</item>
+        <item>#FF6F00</item>
+        <item>#FFA000</item>
+        <item>#FF6F00</item>
+    </string-array>
+    <string-array name="CardviewColorOrange" translatable="false">
+        <item>#F57C00</item>
+        <item>#E65100</item>
+        <item>#EF6C00</item>
+        <item>#E65100</item>
+        <item>#F57C00</item>
+        <item>#E65100</item>
+    </string-array>
+    <string-array name="CardviewColorDeepOrange" translatable="false">
+        <item>#E64A19</item>
+        <item>#BF360C</item>
+        <item>#D84315</item>
+        <item>#BF360C</item>
+        <item>#E64A19</item>
+        <item>#BF360C</item>
+    </string-array>
+    <string-array name="CardviewColorBrown" translatable="false">
+        <item>#5D4037</item>
+        <item>#3E2723</item>
+        <item>#4E342E</item>
+        <item>#3E2723</item>
+        <item>#5D4037</item>
+        <item>#3E2723</item>
+    </string-array>
+    <string-array name="CardviewColorGrey" translatable="false">
+        <item>#616161</item>
+        <item>#212121</item>
+        <item>#424242</item>
+        <item>#212121</item>
+        <item>#616161</item>
+        <item>#212121</item>
+    </string-array>
+    <string-array name="CardviewColorBlueGrey" translatable="false">
+        <item>#455A64</item>
+        <item>#263238</item>
+        <item>#37474F</item>
+        <item>#263238</item>
+        <item>#455A64</item>
+        <item>#263238</item>
+    </string-array>
+    <string-array name="CardviewColorDarkGrey" translatable="false">
+        <item>#424242</item>
+    </string-array>
+</resources>

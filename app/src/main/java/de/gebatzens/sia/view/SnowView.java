@@ -47,7 +47,7 @@ public class SnowView extends View {
             bitmaps[3] = BitmapFactory.decodeResource(getResources(), R.drawable.snow_4);
             bitmaps[4] = BitmapFactory.decodeResource(getResources(), R.drawable.snow_5);
             generate();
-        } else if("Easter".equals(GGApp.GG_APP.getCurrentThemeName())){
+        } else if("Summer".equals(GGApp.GG_APP.getCurrentThemeName())){
             bitmaps = new Bitmap[5];
             bitmaps[0] = BitmapFactory.decodeResource(getResources(), R.drawable.snow_1);
             bitmaps[1] = BitmapFactory.decodeResource(getResources(), R.drawable.snow_2);
@@ -76,7 +76,7 @@ public class SnowView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if(bitmaps != null && ("Winter".equals(GGApp.GG_APP.getCurrentThemeName())  || "Easter".equals(GGApp.GG_APP.getCurrentThemeName()))) {
+        if(bitmaps != null && ("Winter".equals(GGApp.GG_APP.getCurrentThemeName())  || "Summer".equals(GGApp.GG_APP.getCurrentThemeName()))) {
             for (int[] obj : objs) {
                 canvas.drawBitmap(bitmaps[obj[2]], obj[0], obj[1], null);
             }

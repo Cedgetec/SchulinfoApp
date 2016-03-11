@@ -37,6 +37,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -233,11 +234,6 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
                         startActivityForResult(i, 1);
                         return true;
-                    case R.id.action_changeThemeMode:
-                        GGApp.GG_APP.setDarkThemeEnabled(!GGApp.GG_APP.isDarkThemeEnabled());
-                        GGApp.GG_APP.school.loadTheme();
-                        recreate();
-                        return true;
                     case R.id.action_addToCalendar:
                         showExamDialog();
                         return true;
@@ -425,8 +421,6 @@ public class MainActivity extends AppCompatActivity {
     public void updateMenu(int menu) {
         mToolBar.getMenu().clear();
         mToolBar.inflateMenu(menu);
-        mToolBar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources()
-                .getString(GGApp.GG_APP.isDarkThemeEnabled() ? R.string.day_mode : R.string.night_mode));
     }
 
     @Override

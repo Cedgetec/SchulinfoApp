@@ -168,6 +168,13 @@
         <item>Long</item>
     </string-array>
 
+    <string-array name="theme_mode_values">
+        <item>Follow system</item>
+        <item>Automatically</item>
+        <item>Enabled</item>
+        <item>Disabled</item>
+    </string-array>
+
     <string name="terms_title">Terms of use</string>
     <string-array name="terms">
         <item>The content shown in the app is preliminary. We cannot guarantee integrity.</item>

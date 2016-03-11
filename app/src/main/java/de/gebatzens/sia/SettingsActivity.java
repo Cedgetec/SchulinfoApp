@@ -17,7 +17,6 @@
 package de.gebatzens.sia;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,11 +30,11 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
-import android.preference.SwitchPreference;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -148,7 +147,8 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 public View getView(int position, View convertView, ViewGroup parent) {
-                    View v = convertView == null ? (ViewGroup) getActivity().getLayoutInflater().inflate(R.layout.custom_theme_choose_list, parent, false) : convertView;
+                    View v = convertView == null ? (View) getActivity().getLayoutInflater().inflate(R.layout.custom_theme_choose_list, parent, false) : convertView;
+                    v.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                     holder = new ViewHolder();
                     holder.icon = (ImageView) v.findViewById(R.id.ThemeIcon);
@@ -263,9 +263,6 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-            SwitchPreference darkMode = (SwitchPreference) findPreference("toggleThemeMode");
-            darkMode.setChecked(GGApp.GG_APP.isDarkThemeEnabled());
-
         }
 
         @Override
@@ -274,14 +271,23 @@ public class SettingsActivity extends AppCompatActivity {
 
             changed = true;
 
-            if(key.equals("toggleThemeMode")) {
-                boolean b = sharedPreferences.getBoolean(key, true);
-                if(b != GGApp.GG_APP.isDarkThemeEnabled()) {
-                    GGApp.GG_APP.setDarkThemeEnabled(b);
-                    GGApp.GG_APP.school.loadTheme();
-                    recreate = true;
-                    getActivity().recreate();
+            if(key.equals("theme_mode")) {
+                String b = sharedPreferences.getString(key, "nightfollowsystem");
+                switch (b){
+                    case "nightauto":
+                        GGApp.GG_APP.setThemeMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+                        break;
+                    case "nightyes":
+                        GGApp.GG_APP.setThemeMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        break;
+                    case "nightno":
+                        GGApp.GG_APP.setThemeMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        break;
+                    default:
+                        GGApp.GG_APP.setThemeMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 }
+                recreate = true;
+                getActivity().recreate();
             } else if(key.equals("notifications")) {
                 CheckBoxPreference no = (CheckBoxPreference) pref;
 
@@ -378,7 +384,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public static int loadThemeColor(String name) {
-        int theme = GGApp.GG_APP.getResources().getIdentifier(GGApp.GG_APP.isDarkThemeEnabled() ? "AppTheme" + name + "Dark" : "AppTheme" + name + "Light", "style", GGApp.GG_APP.getPackageName());
+        int theme = GGApp.GG_APP.getResources().getIdentifier("AppTheme" + name, "style", GGApp.GG_APP.getPackageName());
         TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary});
         int c = ta.getColor(0, Color.RED);
         ta.recycle();

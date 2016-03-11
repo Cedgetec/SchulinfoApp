@@ -164,6 +164,13 @@
         <item>Lang</item>
     </string-array>
 
+    <string-array name="theme_mode_values">
+        <item>Systemeinstellung</item>
+        <item>Automatisch</item>
+        <item>Aktiviert</item>
+        <item>Deaktiviert</item>
+    </string-array>
+
     <string name="terms_title">Nutzungshinweise</string>
     <string-array name="terms">
         <item>Diese App gibt lediglich einen vorläufigen Planungsstand der Schule wieder. Deshalb können wir keine Haftung für die Richtigkeit und Aktualität der Informationen übernehmen.</item>
