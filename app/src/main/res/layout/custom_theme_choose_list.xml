@@ -14,9 +14,9 @@
         android:id="@+id/ThemeIcon"/>
     <TextView
         android:textAppearance="?android:attr/textAppearance"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="?android:textColorPrimary"
         android:gravity="center_vertical"
         android:id="@+id/ThemeName"/>
 </LinearLayout>

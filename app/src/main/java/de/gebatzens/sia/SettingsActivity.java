@@ -148,20 +148,12 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 public View getView(int position, View convertView, ViewGroup parent) {
-                    final LayoutInflater inflater = (LayoutInflater) getActivity().getApplicationContext()
-                            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View v = convertView == null ? (ViewGroup) getActivity().getLayoutInflater().inflate(R.layout.custom_theme_choose_list, parent, false) : convertView;
 
-                    if (convertView == null) {
-                        convertView = inflater.inflate(
-                                R.layout.custom_theme_choose_list, null);
-
-                        holder = new ViewHolder();
-                        holder.icon = (ImageView) convertView.findViewById(R.id.ThemeIcon);
-                        holder.title = (TextView) convertView.findViewById(R.id.ThemeName);
-                        convertView.setTag(holder);
-                    } else {
-                        holder = (ViewHolder) convertView.getTag();
-                    }
+                    holder = new ViewHolder();
+                    holder.icon = (ImageView) v.findViewById(R.id.ThemeIcon);
+                    holder.title = (TextView) v.findViewById(R.id.ThemeName);
+                    v.setTag(holder);
 
                     boolean winter = themeIds.get(position).equals("Winter");
 
@@ -174,7 +166,7 @@ public class SettingsActivity extends AppCompatActivity {
                     }
 
                     holder.title.setText(themeNames.get(position));
-                    return convertView;
+                    return v;
                 }
             };
 
