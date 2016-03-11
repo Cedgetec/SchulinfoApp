@@ -180,7 +180,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
             Filter.FilterList filters = GGApp.GG_APP.filters;
 
-            CardView cv2 = (CardView) getActivity().getLayoutInflater().inflate(R.layout.fragment_header_cardview, null);
+            CardView cv2 = new CardView(getActivity());
             cv2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             cv2.setRadius(0);
 
@@ -270,7 +270,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             group.addView(sv);
 
         } else {
-            CardView cv2 = (CardView) getActivity().getLayoutInflater().inflate(R.layout.fragment_header_cardview, null);
+            CardView cv2 = new CardView(getActivity());
             cv2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             cv2.setRadius(0);
 

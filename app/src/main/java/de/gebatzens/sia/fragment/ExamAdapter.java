@@ -87,7 +87,7 @@ public class ExamAdapter extends RecyclerView.Adapter {
 
         switch(viewType) {
             case 0:
-                CardView cv2 = (CardView) frag.getActivity().getLayoutInflater().inflate(R.layout.fragment_header_cardview, null);
+                CardView cv2 = new CardView(frag.getContext());
                 cv2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 cv2.setRadius(0);
                 LinearLayout l2 = new LinearLayout(frag.getContext());
