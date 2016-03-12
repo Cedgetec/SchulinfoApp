@@ -80,20 +80,29 @@ public class News extends ArrayList<News.Entry> implements RemoteDataFragment.Re
 
                 while(reader.hasNext()) {
                     String name = reader.nextName();
-                    if(name.equals("id"))
-                        s.id = reader.nextString();
-                    else if(name.equals("date"))
-                        s.date = new Date(reader.nextLong());
-                    else if(name.equals("topic"))
-                        s.topic = reader.nextString();
-                    else if(name.equals("source"))
-                        s.source = reader.nextString();
-                    else if(name.equals("title"))
-                        s.title = reader.nextString();
-                    else if(name.equals("text"))
-                        s.text = reader.nextString();
-                    else
-                        reader.skipValue();
+                    switch (name) {
+                        case "id":
+                            s.id = reader.nextString();
+                            break;
+                        case "date":
+                            s.date = new Date(reader.nextLong());
+                            break;
+                        case "topic":
+                            s.topic = reader.nextString();
+                            break;
+                        case "source":
+                            s.source = reader.nextString();
+                            break;
+                        case "title":
+                            s.title = reader.nextString();
+                            break;
+                        case "text":
+                            s.text = reader.nextString();
+                            break;
+                        default:
+                            reader.skipValue();
+                            break;
+                    }
                 }
                 reader.endObject();
                 add(s);

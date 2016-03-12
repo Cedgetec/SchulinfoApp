@@ -148,7 +148,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 public View getView(int position, View convertView, ViewGroup parent) {
-                    View v = convertView == null ? (View) getActivity().getLayoutInflater().inflate(R.layout.custom_theme_choose_list, parent, false) : convertView;
+                    View v = convertView == null ? getActivity().getLayoutInflater().inflate(R.layout.custom_theme_choose_list, parent, false) : convertView;
                     v.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                     holder = new ViewHolder();

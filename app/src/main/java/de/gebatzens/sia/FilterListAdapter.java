@@ -46,7 +46,7 @@ public class FilterListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final Filter filter = list.get(position);
-        final View vg = convertView == null ? (View) c.getLayoutInflater().inflate(R.layout.filter_item, parent, false) : convertView;
+        final View vg = convertView == null ? c.getLayoutInflater().inflate(R.layout.filter_item, parent, false) : convertView;
         String text = "";
         if(filter instanceof Filter.ExcludingFilter)
             text = ((Filter.ExcludingFilter) filter).getParentFilter().getFilter() + "     " + filter.getFilter();

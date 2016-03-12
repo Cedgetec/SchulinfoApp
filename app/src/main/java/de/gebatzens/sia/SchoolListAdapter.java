@@ -52,7 +52,7 @@ public class SchoolListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView == null ? (View) c.getLayoutInflater().inflate(R.layout.school_item, parent, false) : convertView;
+        View v = convertView == null ? c.getLayoutInflater().inflate(R.layout.school_item, parent, false) : convertView;
 
         School school = list.get(position);
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- DayNight colors -->
     <color name="chip_background">#707070</color>
     <color name="SwipeRefreshLayout_background">#424242</color>
@@ -88,7 +88,7 @@
     <color name="ThemeSetupColorAccent">#3073D4</color>
 
     <!-- Custom card colors -->
-    <string-array name="CardviewColorWinter" translatable="false">
+    <string-array name="CardviewColorWinter" translatable="false" tools:ignore="UnusedResources">
         <item>#33759c</item>
         <item>#1f475e</item>
         <item>#2d6387</item>
@@ -96,7 +96,7 @@
         <item>#316d94</item>
         <item>#004c62</item>
     </string-array>
-    <string-array name="CardviewColorEaster" translatable="false">
+    <string-array name="CardviewColorEaster" translatable="false" tools:ignore="UnusedResources">
         <item>#447d00</item>
         <item>#0b7500</item>
         <item>#156405</item>
@@ -104,7 +104,7 @@
         <item>#377000</item>
         <item>#3b8011</item>
     </string-array>
-    <string-array name="CardviewColorRed" translatable="false">
+    <string-array name="CardviewColorRed" translatable="false" tools:ignore="UnusedResources">
         <item>#D32F2F</item>
         <item>#B71C1C</item>
         <item>#C62828</item>
@@ -112,7 +112,7 @@
         <item>#D32F2F</item>
         <item>#B71C1C</item>
     </string-array>
-    <string-array name="CardviewColorPink" translatable="false">
+    <string-array name="CardviewColorPink" translatable="false" tools:ignore="UnusedResources">
         <item>#C2185B</item>
         <item>#880E4F</item>
         <item>#AD1457</item>
@@ -120,7 +120,7 @@
         <item>#C2185B</item>
         <item>#880E4F</item>
     </string-array>
-    <string-array name="CardviewColorPurple" translatable="false">
+    <string-array name="CardviewColorPurple" translatable="false" tools:ignore="UnusedResources">
         <item>#7B1FA2</item>
         <item>#4A148C</item>
         <item>#6A1B9A</item>
@@ -128,7 +128,7 @@
         <item>#7B1FA2</item>
         <item>#4A148C</item>
     </string-array>
-    <string-array name="CardviewColorDeepPurple" translatable="false">
+    <string-array name="CardviewColorDeepPurple" translatable="false" tools:ignore="UnusedResources">
         <item>#512DA8</item>
         <item>#311B92</item>
         <item>#4527A0</item>
@@ -136,7 +136,7 @@
         <item>#512DA8</item>
         <item>#311B92</item>
     </string-array>
-    <string-array name="CardviewColorIndigo" translatable="false">
+    <string-array name="CardviewColorIndigo" translatable="false" tools:ignore="UnusedResources">
         <item>#303F9F</item>
         <item>#1A237E</item>
         <item>#283593</item>
@@ -144,7 +144,7 @@
         <item>#303F9F</item>
         <item>#1A237E</item>
     </string-array>
-    <string-array name="CardviewColorBlue" translatable="false">
+    <string-array name="CardviewColorBlue" translatable="false" tools:ignore="UnusedResources">
         <item>#1976D2</item>
         <item>#0D47A1</item>
         <item>#1565C0</item>
@@ -152,7 +152,7 @@
         <item>#1976D2</item>
         <item>#0D47A1</item>
     </string-array>
-    <string-array name="CardviewColorLightBlue" translatable="false">
+    <string-array name="CardviewColorLightBlue" translatable="false" tools:ignore="UnusedResources">
         <item>#0288D1</item>
         <item>#01579B</item>
         <item>#0277BD</item>
@@ -160,7 +160,7 @@
         <item>#0288D1</item>
         <item>#01579B</item>
     </string-array>
-    <string-array name="CardviewColorCyan" translatable="false">
+    <string-array name="CardviewColorCyan" translatable="false" tools:ignore="UnusedResources">
         <item>#0097A7</item>
         <item>#006064</item>
         <item>#00838F</item>
@@ -168,7 +168,7 @@
         <item>#0097A7</item>
         <item>#006064</item>
     </string-array>
-    <string-array name="CardviewColorTeal" translatable="false">
+    <string-array name="CardviewColorTeal" translatable="false" tools:ignore="UnusedResources">
         <item>#00796B</item>
         <item>#004D40</item>
         <item>#00695C</item>
@@ -176,7 +176,7 @@
         <item>#00796B</item>
         <item>#004D40</item>
     </string-array>
-    <string-array name="CardviewColorGreen" translatable="false">
+    <string-array name="CardviewColorGreen" translatable="false" tools:ignore="UnusedResources">
         <item>#388E3C</item>
         <item>#1B5E20</item>
         <item>#2E7D32</item>
@@ -184,7 +184,7 @@
         <item>#388E3C</item>
         <item>#1B5E20</item>
     </string-array>
-    <string-array name="CardviewColorLightGreen" translatable="false">
+    <string-array name="CardviewColorLightGreen" translatable="false" tools:ignore="UnusedResources">
         <item>#689F38</item>
         <item>#33691E</item>
         <item>#558B2F</item>
@@ -192,7 +192,7 @@
         <item>#689F38</item>
         <item>#33691E</item>
     </string-array>
-    <string-array name="CardviewColorAmber" translatable="false">
+    <string-array name="CardviewColorAmber" translatable="false" tools:ignore="UnusedResources">
         <item>#FFA000</item>
         <item>#FF6F00</item>
         <item>#FF8F00</item>
@@ -200,7 +200,7 @@
         <item>#FFA000</item>
         <item>#FF6F00</item>
     </string-array>
-    <string-array name="CardviewColorOrange" translatable="false">
+    <string-array name="CardviewColorOrange" translatable="false" tools:ignore="UnusedResources">
         <item>#F57C00</item>
         <item>#E65100</item>
         <item>#EF6C00</item>
@@ -208,7 +208,7 @@
         <item>#F57C00</item>
         <item>#E65100</item>
     </string-array>
-    <string-array name="CardviewColorDeepOrange" translatable="false">
+    <string-array name="CardviewColorDeepOrange" translatable="false" tools:ignore="UnusedResources">
         <item>#E64A19</item>
         <item>#BF360C</item>
         <item>#D84315</item>
@@ -216,7 +216,7 @@
         <item>#E64A19</item>
         <item>#BF360C</item>
     </string-array>
-    <string-array name="CardviewColorBrown" translatable="false">
+    <string-array name="CardviewColorBrown" translatable="false" tools:ignore="UnusedResources">
         <item>#5D4037</item>
         <item>#3E2723</item>
         <item>#4E342E</item>
@@ -224,7 +224,7 @@
         <item>#5D4037</item>
         <item>#3E2723</item>
     </string-array>
-    <string-array name="CardviewColorGrey" translatable="false">
+    <string-array name="CardviewColorGrey" translatable="false" tools:ignore="UnusedResources">
         <item>#616161</item>
         <item>#212121</item>
         <item>#424242</item>
@@ -232,7 +232,7 @@
         <item>#616161</item>
         <item>#212121</item>
     </string-array>
-    <string-array name="CardviewColorBlueGrey" translatable="false">
+    <string-array name="CardviewColorBlueGrey" translatable="false" tools:ignore="UnusedResources">
         <item>#455A64</item>
         <item>#263238</item>
         <item>#37474F</item>
@@ -240,7 +240,7 @@
         <item>#455A64</item>
         <item>#263238</item>
     </string-array>
-    <string-array name="CardviewColorDarkGrey" translatable="false">
+    <string-array name="CardviewColorDarkGrey" translatable="false" tools:ignore="UnusedResources">
         <item>#424242</item>
     </string-array>
 </resources>

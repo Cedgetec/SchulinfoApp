@@ -16,7 +16,6 @@
 package de.gebatzens.sia;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -172,14 +171,20 @@ public class FilterActivity extends AppCompatActivity {
                 while(reader.hasNext()) {
                     String name = reader.nextName();
 
-                    if(name.equals("type"))
-                        type = Filter.FilterType.valueOf(reader.nextString());
-                    else if(name.equals("filter"))
-                        filter = reader.nextString();
-                    else if(name.equals("contains"))
-                        contains = reader.nextBoolean();
-                    else
-                        reader.skipValue();
+                    switch (name) {
+                        case "type":
+                            type = Filter.FilterType.valueOf(reader.nextString());
+                            break;
+                        case "filter":
+                            filter = reader.nextString();
+                            break;
+                        case "contains":
+                            contains = reader.nextBoolean();
+                            break;
+                        default:
+                            reader.skipValue();
+                            break;
+                    }
 
                 }
                 

@@ -15,7 +15,6 @@
  */
 package de.gebatzens.sia.fragment;
 
-import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;

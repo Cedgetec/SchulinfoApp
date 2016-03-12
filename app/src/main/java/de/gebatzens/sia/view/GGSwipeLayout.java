@@ -30,7 +30,6 @@ import android.widget.ScrollView;
 import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.MainActivity;
-import de.gebatzens.sia.R;
 import de.gebatzens.sia.fragment.NewsFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
 import de.gebatzens.sia.fragment.SubstPagerFragment;

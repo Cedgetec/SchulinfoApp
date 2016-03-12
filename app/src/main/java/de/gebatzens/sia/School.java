@@ -76,7 +76,7 @@ public class School {
         this.users = copy.users;
     }
 
-    public static List<School> LIST = new ArrayList<School>();
+    public static List<School> LIST = new ArrayList<>();
 
     public int getTheme() {
         return theme;
@@ -199,7 +199,7 @@ public class School {
 
         GGApp.GG_APP.getResources().getIdentifier("asd", "styles", GGApp.GG_APP.getPackageName());
 
-        List<School> newList = new ArrayList<School>();
+        List<School> newList = new ArrayList<>();
 
         try {
             GGRemote.APIResponse re = GGApp.GG_APP.remote.doRequest("/getSchools", null);

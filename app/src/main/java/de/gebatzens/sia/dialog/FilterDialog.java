@@ -159,7 +159,7 @@ public class FilterDialog extends DialogFragment {
         ed.setSelectAllOnFocus(true);
 
         if(isMainFilterDialog()) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item,  new String[] { getString(R.string.school_class), getString(R.string.teacher) });
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, new String[]{getString(R.string.school_class), getString(R.string.teacher)});
             spinner.setAdapter(adapter);
 
             if(getMainFilterPosition() == -1) {

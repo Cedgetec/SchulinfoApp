@@ -67,7 +67,7 @@ public class GGApp extends Application {
     public SharedPreferences preferences;
 
     public Filter.FilterList filters = new Filter.FilterList();
-    public HashMap<String, String> subjects = new HashMap<String, String>();
+    public HashMap<String, String> subjects = new HashMap<>();
 
     public LifecycleHandler lifecycle;
 
@@ -173,12 +173,17 @@ public class GGApp extends Application {
         }
 
         String vibration = preferences.getString("vibration", "off");
-        if(vibration.equals("short"))
-            mBuilder.setVibrate(new long[] {0, 500});
-        else if(vibration.equals("default"))
-            mBuilder.setVibrate(new long[] {0, 200, 200, 200, 200, 200});
-        else if(vibration.equals("long"))
-            mBuilder.setVibrate(new long[] {0, 200, 100, 400, 200, 800, 300, 1000, 1200, 200});
+        switch (vibration) {
+            case "short":
+                mBuilder.setVibrate(new long[]{0, 500});
+                break;
+            case "default":
+                mBuilder.setVibrate(new long[]{0, 200, 200, 200, 200, 200});
+                break;
+            case "long":
+                mBuilder.setVibrate(new long[]{0, 200, 100, 400, 200, 800, 300, 1000, 1200, 200});
+                break;
+        }
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addParentStack(MainActivity.class);
@@ -232,12 +237,14 @@ public class GGApp extends Application {
     }
 
     public int translateUpdateType(String s) {
-        if(s.equals("disable"))
-            return UPDATE_DISABLE;
-        else if(s.equals("wifi"))
-            return UPDATE_WLAN;
-        else if(s.equals("all"))
-            return UPDATE_ALL;
+        switch (s) {
+            case "disable":
+                return UPDATE_DISABLE;
+            case "wifi":
+                return UPDATE_WLAN;
+            case "all":
+                return UPDATE_ALL;
+        }
         return UPDATE_DISABLE;
     }
 

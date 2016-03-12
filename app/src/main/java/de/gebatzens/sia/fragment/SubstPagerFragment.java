@@ -94,7 +94,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
      *
      */
     public static ArrayList<TextView> createSMViews(List<String> messages, ViewGroup parent) {
-        ArrayList<TextView> tvl = new ArrayList<TextView>();
+        ArrayList<TextView> tvl = new ArrayList<>();
 
         for(String special : messages) {
             TextView tv2 = new TextView(parent.getContext());
@@ -147,10 +147,10 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 }
                 plan = plans.get(index);
 
-                ArrayList<String> items = new ArrayList<String>();
+                ArrayList<String> items = new ArrayList<>();
                 items.add(getActivity().getString(R.string.all));
                 items.addAll(plan.getAllClasses());
-                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, items);
 
                 AppCompatSpinner spinner = (AppCompatSpinner) getContentView().findViewById(R.id.spinner);
                 spinner.setAdapter(adapter);
@@ -286,7 +286,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
             final AppCompatSpinner spinMode = new AppCompatSpinner(getActivity());
-            ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, new String[] {getString(R.string.classes), getString(R.string.lessons)});
+            ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, new String[]{getString(R.string.classes), getString(R.string.lessons)});
             modeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
             spinMode.setAdapter(modeAdapter);
             l3.addView(spinMode);
@@ -294,10 +294,10 @@ public class SubstPagerFragment extends RemoteDataFragment {
             final AppCompatSpinner spinClass = new AppCompatSpinner(getActivity());
             spinClass.setId(R.id.spinner);
 
-            ArrayList<String> items = new ArrayList<String>();
+            ArrayList<String> items = new ArrayList<>();
             items.add(getActivity().getString(R.string.all));
             items.addAll(plan.getAllClasses());
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, items);
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
             spinClass.setAdapter(adapter);
             l3.addView(spinClass);

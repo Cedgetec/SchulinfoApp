@@ -281,12 +281,16 @@ public class ExamAdapter extends RecyclerView.Adapter {
 
     private String getFormattedDate(Date date) {
         DateFormat dateFormatter;
-        if(Locale.getDefault().getLanguage().equals("de")) {
-            dateFormatter = new SimpleDateFormat("d. MMM");
-        } else if(Locale.getDefault().getLanguage().equals("en")) {
-            dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
-        } else {
-            dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        switch (Locale.getDefault().getLanguage()) {
+            case "de":
+                dateFormatter = new SimpleDateFormat("d. MMM");
+                break;
+            case "en":
+                dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
+                break;
+            default:
+                dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+                break;
         }
 
         return dateFormatter.format(date);

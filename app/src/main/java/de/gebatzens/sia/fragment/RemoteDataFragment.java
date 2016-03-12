@@ -17,7 +17,6 @@
 package de.gebatzens.sia.fragment;
 
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;

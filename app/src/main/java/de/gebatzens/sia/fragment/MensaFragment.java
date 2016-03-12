@@ -19,10 +19,8 @@ package de.gebatzens.sia.fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +45,6 @@ import de.gebatzens.sia.data.Mensa;
 
 public class MensaFragment extends RemoteDataFragment {
 
-    SwipeRefreshLayout swipeContainer;
     Boolean screenOrientationHorizontal = false;
 
     @Override
@@ -173,12 +170,16 @@ public class MensaFragment extends RemoteDataFragment {
         String formattedDate;
         DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat dateFormatter;
-        if(Locale.getDefault().getLanguage().equals("de")) {
-            dateFormatter = new SimpleDateFormat("d. MMM");
-        } else if(Locale.getDefault().getLanguage().equals("en")) {
-            dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
-        } else {
-            dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        switch (Locale.getDefault().getLanguage()) {
+            case "de":
+                dateFormatter = new SimpleDateFormat("d. MMM");
+                break;
+            case "en":
+                dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
+                break;
+            default:
+                dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+                break;
         }
         try
         {
