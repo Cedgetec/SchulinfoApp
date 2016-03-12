@@ -39,6 +39,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -148,7 +149,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 public View getView(int position, View convertView, ViewGroup parent) {
                     View v = convertView == null ? (View) getActivity().getLayoutInflater().inflate(R.layout.custom_theme_choose_list, parent, false) : convertView;
-                    v.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    v.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                     holder = new ViewHolder();
                     holder.icon = (ImageView) v.findViewById(R.id.ThemeIcon);
@@ -330,10 +331,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         mToolBar = (Toolbar) contentView.findViewById(R.id.toolbar);
         mToolBar.setTitle(getTitle());
-        setSupportActionBar(mToolBar);
-        if(getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        mToolBar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

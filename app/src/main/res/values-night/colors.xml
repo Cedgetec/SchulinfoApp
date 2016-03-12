@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- DayNight colors -->
     <color name="chip_background">#707070</color>
     <color name="SwipeRefreshLayout_background">#424242</color>
 
