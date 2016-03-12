@@ -24,12 +24,6 @@
         android:orderInCategory="100"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/action_changeThemeMode"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:title="@string/night_mode"
-        android:orderInCategory="100"
-        app:showAsAction="never"/>
-
     <item android:id="@+id/action_addToCalendar"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:title="@string/add_to_calendar"
