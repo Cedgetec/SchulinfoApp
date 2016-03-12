@@ -31,6 +31,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:tint="@color/filterEditButton_background"
                 android:src="@drawable/ic_star"/>
         </FrameLayout>
         <FrameLayout
@@ -42,6 +43,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:tint="@color/filterEditButton_background"
                 android:src="@drawable/ic_edit"/>
         </FrameLayout>
         <FrameLayout
@@ -53,6 +55,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:tint="@color/filterEditButton_background"
                 android:src="@drawable/ic_delete"/>
         </FrameLayout>
     </LinearLayout>
