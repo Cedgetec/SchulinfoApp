@@ -15,7 +15,6 @@
  */
 package de.gebatzens.sia.fragment;
 
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.CardView;
@@ -60,14 +59,6 @@ public class ExamAdapter extends RecyclerView.Adapter {
         this.label = label;
         this.overview = overview;
         notifyDataSetChanged();
-    }
-
-    public void setOrientationPadding(View v) {
-        if(frag.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            v.setPadding(RemoteDataFragment.toPixels(55), 0, RemoteDataFragment.toPixels(55), 0);
-        } else if(frag.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            v.setPadding(RemoteDataFragment.toPixels(4), 0, RemoteDataFragment.toPixels(4), 0);
-        }
     }
 
     @Override
@@ -148,20 +139,15 @@ public class ExamAdapter extends RecyclerView.Adapter {
             case 3:
                 LinearLayout wrapper = new LinearLayout(frag.getContext());
                 wrapper.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                setOrientationPadding(wrapper);
-
                 frag.createNoEntriesCard(wrapper, inflater);
                 return new ViewHolder(wrapper);
             case 2:
-                return createCardItem(inflater);
+                return createCardItem(inflater, parent);
             case 1:
                 wrapper = new LinearLayout(frag.getContext());
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0, RemoteDataFragment.toPixels(20), 0, 0);
-                wrapper.setLayoutParams(params);
-                setOrientationPadding(wrapper);
+                frag.setOrientationPadding(wrapper);
                 TextView tv = frag.createSecondaryTextView("", 27, inflater, wrapper);
-                tv.setPadding(RemoteDataFragment.toPixels(3), 0, 0, 0);
+                tv.setPadding(RemoteDataFragment.toPixels(2.8f), RemoteDataFragment.toPixels(20), 0, 0);
                 return new LabelViewHolder(wrapper);
             default:
                 return null;
@@ -259,19 +245,18 @@ public class ExamAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private CardViewHolder createCardItem(LayoutInflater i) {
-        LinearLayout wrapper = new LinearLayout(frag.getContext());
+    private CardViewHolder createCardItem(LayoutInflater i, ViewGroup parent) {
+        LinearLayout wrapper = new LinearLayout(parent.getContext());
         wrapper.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        setOrientationPadding(wrapper);
+        frag.setOrientationPadding(wrapper);
 
-        CardView ecv = (CardView) i.inflate(R.layout.basic_cardview, null);
+        CardView ecv = (CardView) i.inflate(R.layout.basic_cardview, wrapper, false);
         String[] colors = frag.getContext().getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
         ecv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
         cardColorIndex++;
         if(cardColorIndex == colors.length)
             cardColorIndex = 0;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(RemoteDataFragment.toPixels(3), 0, RemoteDataFragment.toPixels(3), RemoteDataFragment.toPixels(3));
         ecv.setLayoutParams(params);
         i.inflate(R.layout.exam_cardview_entry, ecv, true);
         wrapper.addView(ecv);

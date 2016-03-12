@@ -79,8 +79,16 @@ public abstract class RemoteDataFragment extends Fragment {
         return (int) (dp * scale);
     }
 
+    public void setOrientationPadding(View v) {
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            v.setPadding(toPixels(55), toPixels(0), toPixels(55), toPixels(0));
+        } else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            v.setPadding(toPixels(5), toPixels(0), toPixels(5), toPixels(0));
+        }
+    }
+
     public TextView createPrimaryTextView(String text, int size, LayoutInflater inflater, ViewGroup group) {
-        TextView t = (TextView) inflater.inflate(R.layout.basic_textview_primary, null);
+        TextView t = (TextView) inflater.inflate(R.layout.basic_textview_primary, group, false);
         t.setText(text);
         t.setPadding(0, 0, toPixels(20), 0);
         t.setTextSize(size);
@@ -89,7 +97,7 @@ public abstract class RemoteDataFragment extends Fragment {
     }
 
     public TextView createSecondaryTextView(String text, int size, LayoutInflater inflater, ViewGroup group) {
-        TextView t = (TextView) inflater.inflate(R.layout.basic_textview_secondary, null);
+        TextView t = (TextView) inflater.inflate(R.layout.basic_textview_secondary, group, false);
         t.setText(text);
         t.setPadding(0, 0, toPixels(20), 0);
         t.setTextSize(size);
@@ -153,14 +161,15 @@ public abstract class RemoteDataFragment extends Fragment {
         l.addView(r);
     }
 
-    public void createNoEntriesCard(ViewGroup vg, LayoutInflater inflater) {
-        FrameLayout f2 = new FrameLayout(getActivity());
-        f2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        f2.setPadding(toPixels(1.3f),toPixels(0.3f),toPixels(1.3f),toPixels(0.3f));
-        CardView cv = (CardView) inflater.inflate(R.layout.basic_cardview, f2, false);
-        f2.addView(cv);
+    public void createNoEntriesCard(ViewGroup parent, LayoutInflater inflater) {
+        LinearLayout wrapper = new LinearLayout(parent.getContext());
+        wrapper.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        setOrientationPadding(wrapper);
+
+        CardView cv = (CardView) inflater.inflate(R.layout.basic_cardview, wrapper, false);
         createPrimaryTextView(getResources().getString(R.string.no_entries), 20, inflater, cv);
-        vg.addView(f2);
+        wrapper.addView(cv);
+        parent.addView(wrapper);
     }
 
     /**
@@ -238,10 +247,10 @@ public abstract class RemoteDataFragment extends Fragment {
                 }
             });
             // Configure the refreshing colors
-            swipeContainer.setColorSchemeResources(R.color.custom_material_green,
-                    R.color.custom_material_red,
-                    R.color.custom_material_blue,
-                    R.color.custom_material_orange);
+            swipeContainer.setColorSchemeResources(R.color.SwipeRefreshProgressGreen,
+                    R.color.SwipeRefreshProgressRed,
+                    R.color.SwipeRefreshProgressBlue,
+                    R.color.SwipeRefreshProgressOrange);
         }
 
     }

@@ -15,6 +15,7 @@
  */
 package de.gebatzens.sia.fragment;
 
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -61,6 +62,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
     ArrayList<AdapterEntry> entries;
     int type;
     SubstPagerFragment frag;
+    int cardColorIndex = 0;
 
     public SubstListAdapter(SubstPagerFragment f) {
         this.frag = f;
@@ -202,20 +204,21 @@ public class SubstListAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch(viewType) {
             case AdapterEntry.ENTRY:
-                return frag.createCardItem(LayoutInflater.from(parent.getContext()), parent);
+                return createCardItem(LayoutInflater.from(parent.getContext()), parent);
             case AdapterEntry.LABEL:
                 LinearLayout wrapper = new LinearLayout(frag.getActivity());
+                frag.setOrientationPadding(wrapper);
                 TextView tv = frag.createSecondaryTextView("", 27, LayoutInflater.from(parent.getContext()), wrapper);
                 tv.setId(R.id.label);
                 tv.setPadding(RemoteDataFragment.toPixels(2.8f), RemoteDataFragment.toPixels(20), 0, 0);
                 return new LabelViewHolder(wrapper);
             case AdapterEntry.MESSAGES:
-                return frag.createSMCard(parent, LayoutInflater.from(parent.getContext()));
+                return createSMCard(parent, LayoutInflater.from(parent.getContext()));
             case AdapterEntry.NO_ENTRIES:
-                LinearLayout wr = new LinearLayout(frag.getActivity());
-                wr.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                frag.createNoEntriesCard(wr, LayoutInflater.from(frag.getActivity()));
-                return new RecyclerView.ViewHolder(wr) {};
+                wrapper = new LinearLayout(frag.getActivity());
+                wrapper.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                frag.createNoEntriesCard(wrapper, LayoutInflater.from(frag.getActivity()));
+                return new RecyclerView.ViewHolder(wrapper) {};
             default:
                 return null;
         }
@@ -307,7 +310,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
         public void update(List<String> messages) {
             linearLayout.removeAllViews();
-            for(TextView tv : SubstPagerFragment.createSMViews(messages, linearLayout)) {
+            for(TextView tv : createSMViews(messages, linearLayout)) {
                 linearLayout.addView(tv);
             }
 
@@ -321,6 +324,62 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
         Object data;
         int type;
+
+    }
+
+    public SubstListAdapter.SubstViewHolder createCardItem(LayoutInflater i, ViewGroup parent) {
+        LinearLayout wrapper = new LinearLayout(parent.getContext());
+        wrapper.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        frag.setOrientationPadding(wrapper);
+
+        CardView cv = (CardView) i.inflate(R.layout.basic_cardview, wrapper, false);
+        String[] colors = GGApp.GG_APP.getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
+        cv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
+        cardColorIndex++;
+        if(cardColorIndex == colors.length)
+            cardColorIndex = 0;
+        i.inflate(R.layout.cardview_entry, cv, true);
+        wrapper.addView(cv);
+
+        return new SubstListAdapter.SubstViewHolder(wrapper);
+    }
+
+    public static ArrayList<TextView> createSMViews(List<String> messages, ViewGroup parent) {
+        ArrayList<TextView> tvl = new ArrayList<>();
+
+        for(String special : messages) {
+            TextView tv2 = new TextView(parent.getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, RemoteDataFragment.toPixels(2), 0, 0);
+            tv2.setLayoutParams(params);
+            tv2.setText(Html.fromHtml(special));
+            tv2.setTextSize(15);
+            tv2.setTextColor(Color.WHITE);
+            tvl.add(tv2);
+
+        }
+
+        return tvl;
+    }
+
+    public SubstListAdapter.MessageViewHolder createSMCard(ViewGroup parent, LayoutInflater inflater) {
+        LinearLayout wrapper = new LinearLayout(parent.getContext());
+        wrapper.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        frag.setOrientationPadding(wrapper);
+
+        CardView cv = (CardView) inflater.inflate(R.layout.basic_cardview, wrapper, false);
+        cv.setId(R.id.cvroot);
+        cv.setCardBackgroundColor(GGApp.GG_APP.school.getColor());
+        LinearLayout ls = new LinearLayout(frag.getActivity());
+        ls.setId(R.id.messages_list);
+        ls.setOrientation(LinearLayout.VERTICAL);
+        TextView tv3 = frag.createPrimaryTextView(frag.getResources().getString(R.string.special_messages), 19, inflater, ls);
+        tv3.setTextColor(Color.WHITE);
+        tv3.setPadding(0, 0, 0, RemoteDataFragment.toPixels(6));
+        cv.addView(ls);
+        wrapper.addView(cv);
+
+        return new SubstListAdapter.MessageViewHolder(wrapper);
 
     }
 
