@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/filter_list_inc"
                     android:isScrollContainer="false"
-                    android:listSelector="@android:color/transparent"/>
+                    android:listSelector="@color/transparent"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/filter_list_exc"
                     android:isScrollContainer="false"
-                    android:listSelector="@android:color/transparent"/>
+                    android:listSelector="@color/transparent"/>
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -7,6 +7,25 @@
     <color name="custom_material_orange">#f4b400</color>
     <color name="transparent">#00000000</color>
 
+    <color name="toolbarText">#ffffff</color>
+
+    <color name="schoolListIconText">#ffffff</color>
+
+    <color name="firstuseTabView_background">#19000000</color>
+    <color name="firstuseText">#ffffff</color>
+    <color name="firstuseButtonText">#ffffff</color>
+    <color name="firstuseTab_background">#77000000</color>
+    <color name="firstuseSelectedTab_background">#77ffffff</color>
+
+    <color name="navigationViewPictureOverlay">#50000000</color>
+    <color name="navigationViewPictureText">#ffffff</color>
+
+    <color name="TabIndicator">#ffffff</color>
+    <color name="TabText">#b3ffffff</color>
+    <color name="TabSelectedText">#ffffff</color>
+
+    <color name="coloredCardViewText">#ffffff</color>
+
     <string-array name="notification_colors" translatable="false">
         <item>#000000</item>
         <item>#ffffff</item>

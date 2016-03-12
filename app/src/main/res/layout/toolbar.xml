@@ -6,5 +6,5 @@
     android:layout_width="match_parent"
     android:background="?attr/colorPrimary"
     app:theme="@style/ToolBarTheme"
-    app:titleTextColor="@android:color/white"
-    app:subtitleTextColor="@android:color/white"/>
+    app:titleTextColor="@color/toolbarText"
+    app:subtitleTextColor="@color/toolbarText"/>

@@ -4,14 +4,14 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
             <size android:width="8dp" android:height="8dp"/>
 
-            <solid android:color="#77ffffff"/>
+            <solid android:color="@color/firstuseSelectedTab_background"/>
         </shape>
     </item>
     <item android:state_selected="false">
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
             <size android:width="8dp" android:height="8dp"/>
 
-            <solid android:color="#77000000"/>
+            <solid android:color="@color/firstuseTab_background"/>
         </shape>
     </item>
 </selector>

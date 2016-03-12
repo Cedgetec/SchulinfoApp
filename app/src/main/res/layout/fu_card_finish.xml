@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:textColor="#fff"
+            android:textColor="@color/firstuseText"
             android:gravity="center_horizontal"
             android:text="@string/have_fun_with_the_app"/>
 
@@ -47,7 +47,7 @@
             android:paddingBottom="20dp"
             android:layout_marginTop="17dp"
             android:layout_gravity="center_horizontal"
-            app:backgroundTint="#fff"/>
+            app:backgroundTint="@color/firstuseButtonText"/>
 
     </LinearLayout>
 

@@ -13,7 +13,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:textAppearance="?android:attr/textAppearance"
-        android:textColor="?android:textColorSecondary"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="15sp"
         android:id="@+id/filter_main_text"
         android:text="@string/app_name"
@@ -37,7 +37,7 @@
         <FrameLayout
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:background="?android:selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
             android:id="@+id/filter_edit"
             android:padding="12dp">
             <ImageView
@@ -49,7 +49,7 @@
         <FrameLayout
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:background="?android:selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
             android:id="@+id/filter_delete"
             android:padding="12dp">
             <ImageView
