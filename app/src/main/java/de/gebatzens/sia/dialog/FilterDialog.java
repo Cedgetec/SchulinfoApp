@@ -17,7 +17,6 @@ package de.gebatzens.sia.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,7 +27,7 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -85,9 +84,9 @@ public class FilterDialog extends DialogFragment {
                 if (filtertext.isEmpty() || ed.getError() != null) {
                     Snackbar.make(getActivity().getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                 } else {
-                    if(isMainFilterDialog()) {
+                    if (isMainFilterDialog()) {
                         Filter.IncludingFilter mainFilter = null;
-                        if(getMainFilterPosition() == -1) {
+                        if (getMainFilterPosition() == -1) {
                             mainFilter = new Filter.IncludingFilter(spinner.getSelectedItemPosition() == 0 ? Filter.FilterType.CLASS : Filter.FilterType.TEACHER, filtertext);
                             GGApp.GG_APP.filters.including.add(mainFilter);
                         } else {
@@ -98,7 +97,7 @@ public class FilterDialog extends DialogFragment {
                     } else {
                         Filter.ExcludingFilter f;
                         Filter.IncludingFilter inc = GGApp.GG_APP.filters.including.get(spinner.getSelectedItemPosition());
-                        if(getUpdatePosition() == -1) {
+                        if (getUpdatePosition() == -1) {
                             f = new Filter.ExcludingFilter(Filter.FilterType.SUBJECT, filtertext, inc);
                             inc.excluding.add(f);
                         } else {
@@ -112,8 +111,6 @@ public class FilterDialog extends DialogFragment {
                     activity.updateData();
                     FilterActivity.saveFilter(GGApp.GG_APP.filters);
                 }
-
-                ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(0, 0);
                 dialog.dismiss();
             }
 
@@ -123,11 +120,11 @@ public class FilterDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(0, 0);
             }
         });
-
-        return builder.create();
+        Dialog d = builder.create();
+        d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        return d;
     }
 
     private boolean isMainFilterDialog() {
@@ -146,7 +143,6 @@ public class FilterDialog extends DialogFragment {
     public void onResume() {
         super.onResume();
 
-        ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
         final AlertDialog d = (AlertDialog) getDialog();
 
