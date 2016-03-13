@@ -16,20 +16,29 @@
 
 package de.gebatzens.sia;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.media.audiofx.BassBoost;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -81,9 +90,7 @@ public class SettingsActivity extends AppCompatActivity {
             Preference prefGithub = findPreference("githublink");
             prefGithub.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    Intent linkIntent = new Intent(Intent.ACTION_VIEW);
-                    linkIntent.setData(Uri.parse("https://github.com/Cedgetec/SchulinfoAPP"));
-                    startActivity(linkIntent);
+                    createCustomTab(getActivity(), "https://github.com/Cedgetec/SchulinfoAPP");
                     return true;
                 }
             });
@@ -91,9 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
             Preference license = findPreference("license");
             license.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    Intent linkIntent = new Intent(Intent.ACTION_VIEW);
-                    linkIntent.setData(Uri.parse("http://www.apache.org/licenses/LICENSE-2.0"));
-                    startActivity(linkIntent);
+                    createCustomTab(getActivity(), "http://www.apache.org/licenses/LICENSE-2.0");
                     return true;
                 }
             });
@@ -346,6 +351,21 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    public static CustomTabsIntent createCustomTab(Activity activity, String url){
+        Drawable d = ContextCompat.getDrawable(activity, R.drawable.ic_arrow_back);
+        Bitmap bitmap = Bitmap.createBitmap(d.getIntrinsicWidth(), d.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        d.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        d.draw(canvas);
+        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
+                .setToolbarColor(GGApp.GG_APP.school.getColor())
+                .setSecondaryToolbarColor(GGApp.GG_APP.school.getColor())
+                .setCloseButtonIcon(bitmap)
+                .setShowTitle(true)
+                .build();
+        customTabsIntent.launchUrl(activity, Uri.parse(url));
+        return customTabsIntent;
+    }
 
     @Override
     public void onSaveInstanceState(Bundle b) {
