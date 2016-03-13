@@ -18,20 +18,16 @@ package de.gebatzens.sia;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
-import android.media.audiofx.BassBoost;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -359,7 +355,7 @@ public class SettingsActivity extends AppCompatActivity {
         d.draw(canvas);
         CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
                 .setToolbarColor(GGApp.GG_APP.school.getColor())
-                .setSecondaryToolbarColor(GGApp.GG_APP.school.getColor())
+                .setSecondaryToolbarColor(Color.RED)
                 .setCloseButtonIcon(bitmap)
                 .setShowTitle(true)
                 .build();
