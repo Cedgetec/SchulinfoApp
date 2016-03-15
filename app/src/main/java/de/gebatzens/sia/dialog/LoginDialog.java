@@ -117,8 +117,10 @@ public class LoginDialog extends DialogFragment {
                 dialog.dismiss();
             }
         });
-
-        return builder.create();
+        Dialog d = builder.create();
+        if(auth)
+            d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        return d;
     }
 
     @Override
@@ -132,7 +134,6 @@ public class LoginDialog extends DialogFragment {
         ((SetupActivity) getActivity()).currentLoginDialog = dialog;
 
         if(auth) {
-            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
             final EditText passwordInput = (EditText) dialog.findViewById(R.id.passwordInput);
             final CheckBox passwordToggle = (CheckBox) dialog.findViewById(R.id.passwordToggle);

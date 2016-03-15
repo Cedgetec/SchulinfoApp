@@ -93,7 +93,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
     }
 
     public List<String> getAllClasses() {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
 
         for(ExamItem e : this) {
             if(!list.contains(e.clazz)) {
@@ -139,22 +139,32 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
 
                 while(reader.hasNext()) {
                     String name = reader.nextName();
-                    if(name.equals("date"))
-                        s.date = new Date(reader.nextLong());
-                    else if(name.equals("clazz"))
-                        s.clazz = reader.nextString();
-                    else if(name.equals("lesson"))
-                        s.lesson = reader.nextString();
-                    else if(name.equals("length"))
-                        s.length = reader.nextString();
-                    else if(name.equals("subject"))
-                        s.subject = reader.nextString();
-                    else if(name.equals("teacher"))
-                        s.teacher = reader.nextString();
-                    else if(name.equals("selected"))
-                        s.selected = reader.nextBoolean();
-                    else
-                        reader.skipValue();
+                    switch (name) {
+                        case "date":
+                            s.date = new Date(reader.nextLong());
+                            break;
+                        case "clazz":
+                            s.clazz = reader.nextString();
+                            break;
+                        case "lesson":
+                            s.lesson = reader.nextString();
+                            break;
+                        case "length":
+                            s.length = reader.nextString();
+                            break;
+                        case "subject":
+                            s.subject = reader.nextString();
+                            break;
+                        case "teacher":
+                            s.teacher = reader.nextString();
+                            break;
+                        case "selected":
+                            s.selected = reader.nextBoolean();
+                            break;
+                        default:
+                            reader.skipValue();
+                            break;
+                    }
                 }
                 reader.endObject();
                 add(s);

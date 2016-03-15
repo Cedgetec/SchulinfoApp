@@ -19,10 +19,8 @@ package de.gebatzens.sia.fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +45,6 @@ import de.gebatzens.sia.data.Mensa;
 
 public class MensaFragment extends RemoteDataFragment {
 
-    SwipeRefreshLayout swipeContainer;
     Boolean screenOrientationHorizontal = false;
 
     @Override
@@ -92,15 +89,8 @@ public class MensaFragment extends RemoteDataFragment {
 
     private CardView createCardItem(Mensa.MensaItem mensa_item, LayoutInflater i) {
         CardView mcv = (CardView) i.inflate(R.layout.basic_cardview, null);
-        if (GGApp.GG_APP.isDarkThemeEnabled()) {
-            mcv.setCardBackgroundColor(Color.DKGRAY);
-        } else{
-            mcv.setCardBackgroundColor(Color.WHITE);
-        }
+        mcv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mcv.setContentPadding(0, 0, 0, 0);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0, 0, 0, toPixels(6));
-        mcv.setLayoutParams(params);
         i.inflate(R.layout.mensa_cardview_entry, mcv, true);
         if(mensa_item.isPast())
             mcv.setAlpha(0.65f);
@@ -180,12 +170,16 @@ public class MensaFragment extends RemoteDataFragment {
         String formattedDate;
         DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat dateFormatter;
-        if(Locale.getDefault().getLanguage().equals("de")) {
-            dateFormatter = new SimpleDateFormat("d. MMM");
-        } else if(Locale.getDefault().getLanguage().equals("en")) {
-            dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
-        } else {
-            dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        switch (Locale.getDefault().getLanguage()) {
+            case "de":
+                dateFormatter = new SimpleDateFormat("d. MMM");
+                break;
+            case "en":
+                dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
+                break;
+            default:
+                dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+                break;
         }
         try
         {

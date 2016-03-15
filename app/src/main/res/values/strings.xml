@@ -6,11 +6,8 @@
     <string name="drawer_close">Close navigation</string>
     <string name="schedule_change">Substitute schedule change</string>
     <string name="new_entries">New entries</string>
-    <string name="no_entries_schedule">No entries in schedule</string>
     <string name="special_messages">Special messages</string>
     <string name="no_filter_applied">No filter applied</string>
-    <string name="main_filter_mode">Mode</string>
-    <string name="main_filter_content">Filter</string>
     <string name="filter_help">You can add the classes you want to appear in the overview to the main filter.\n\nThe subjects/courses filter excludes the content you don\'t want to appear in your overview, for example French or Latin. To make sure the filter recognizes your subject you have to type in the shortcut used in the substitute schedule, i.e. \"fra1\" or \"lat2\". If you want to hide every Latin subject you can simply write \"lat\."</string>
     <string name="settings">Settings</string>
     <string name="again">Try again</string>
@@ -45,12 +42,10 @@
     <string name="no">No</string>
     <string name="logout">Log out</string>
     <string name="logout_confirm">Are you sure you want to log out?</string>
-    <string name="logout_on_all_devices">Logout on all devices</string>
     <string name="not_logged_in">You are not logged in</string>
     <string name="touch_to_logout">Touch to log out</string>
     <string name="school_settings">School settings</string>
     <string name="school_class">Class</string>
-    <string name="school_class_name">Classname</string>
     <string name="username">Username</string>
     <string name="general">General</string>
     <string name="show_notifications">Show notifications</string>
@@ -64,33 +59,25 @@
     <string name="license">License</string>
     <string name="build_version">Build version</string>
     <string name="update_always">Update always</string>
-    <string name="as_of">Last updated</string>
     <string name="refresh">Refresh</string>
     <string name="filter">Filter</string>
     <string name="hidden_filters">Hidden subjects/courses</string>
     <string name="teacher">Teacher</string>
-    <string name="teacher_shortcut">Teacher shortcut</string>
     <string name="subject_course_name">Subject-/coursename</string>
     <string name="invalid_filter">Invalid filter</string>
     <string name="hide_subject">Hide subject/course</string>
-    <string name="hide">Hide</string>
     <string name="edit_filter">Edit filter</string>
     <string name="all">All</string>
     <string name="filters_active">%d filters active</string>
-    <string name="filter_active">1 filter active</string>
     <string name="no_filter_active">No filter active</string>
     <string name="contact_us">Contact us if you have any problems or improvement suggestions for the app</string>
     <string name="ok">OK</string>
     <string name="main_filter">Main filter</string>
     <string name="add_main_filter">Add Main filter</string>
-    <string name="set_main_filter_mode">Set mode</string>
-    <string name="not_selected">Not selected</string>
     <string name="help">Help</string>
     <string name="password">Password</string>
     <string name="garnish">Garnish</string>
     <string name="exams">Exams</string>
-    <string name="my_exams">My exams</string>
-    <string name="all_exams">All exams</string>
     <string name="lhour">Lesson</string>
     <string name="lessons">Lessons</string>
     <string name="no_entries">No entries</string>
@@ -100,14 +87,10 @@
     <string name="developer_dialog">Your substitute schedule. Built by \n\nHauke Oldsen\nLasse Rosenow\nLennart Schmidt\nFabian Schultis</string>
     <string name="dessert">Dessert</string>
     <string name="design">Design</string>
-    <string name="personalize_your_theme">Customize the design of the App</string>
-    <string name="dark_theme_description">Sets the app in dark colors</string>
     <string name="dark_theme">Dark theme</string>
     <string name="personalisation_changeColor">Change color</string>
     <string name="personalisation_changeColor_description">Main color of the app</string>
     <string name="show_pwd">Show password</string>
-    <string name="night_mode">Night mode</string>
-    <string name="day_mode">Day mode</string>
     <string name="personalisation_pickColor">Pick color</string>
     <string name="download_schools">Downloading school list</string>
     <string name="room">Room</string>
@@ -152,11 +135,8 @@
     <string name="logged_in_as">Logged in as %s</string>
     <string name="maintenance">The server is currently being maintained</string>
     <string name="unknown_error">Unknown error</string>
-    <string name="light_summary">Illuminate the world!</string>
     <string name="filter_exists">This filter already exists</string>
-    <string name="add">Add</string>
     <string name="no_main_filter">No main filter available</string>
-    <string name="disabled">Disabled</string>
     <string name="upgrade1.3title">Attention! Very important changes in version 1.3</string>
     <string name="upgrade1.3">The new version 1.3 includes a big change in the filter menu:\nIf you want more than one class to appear in the overview, you can now enter multiple classes in the main filter.\n\nIn addition you can now check on the cafeteria schedule (after app restart), choose the color of the notification light and enjoy a couple more new features.\n\nYour SchoolinfoApp Team</string>
 
@@ -166,6 +146,13 @@
         <item>Short</item>
         <item>Default</item>
         <item>Long</item>
+    </string-array>
+
+    <string-array name="theme_mode_values">
+        <item>Follow system</item>
+        <item>Automatically</item>
+        <item>Enabled</item>
+        <item>Disabled</item>
     </string-array>
 
     <string name="terms_title">Terms of use</string>

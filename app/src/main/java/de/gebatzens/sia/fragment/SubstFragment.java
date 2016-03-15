@@ -17,13 +17,10 @@
 package de.gebatzens.sia.fragment;
 
 import android.content.res.Configuration;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,10 +37,8 @@ import de.gebatzens.sia.data.GGPlan;
 
 public class SubstFragment extends RemoteDataFragment {
 
-    public Toolbar mToolbar;
     public ViewPager mViewPager;
     public SubstAdapter substAdapter;
-    public SwipeRefreshLayout swipeContainer;
     public Bundle bundle;
     public TabLayout mTabLayout;
 
@@ -93,12 +88,7 @@ public class SubstFragment extends RemoteDataFragment {
         if(bundle != null)
             mViewPager.setCurrentItem(bundle.getInt("ggvp_tab"));
 
-        mToolbar = ((MainActivity) this.getActivity()).mToolBar;
-        ColorDrawable mToolbarColor = (ColorDrawable) mToolbar.getBackground();
-        int mToolbarColorId = mToolbarColor.getColor();
-
         mTabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
-        mTabLayout.setBackgroundColor(mToolbarColorId);
         mTabLayout.setupWithViewPager(mViewPager);
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mTabLayout.setPadding(toPixels(48), 0, toPixels(48), 0);

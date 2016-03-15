@@ -33,6 +33,7 @@ import de.gebatzens.sia.dialog.TextDialog;
 
 public class ExamFragment extends RemoteDataFragment {
 
+    public RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle b) {
@@ -52,13 +53,11 @@ public class ExamFragment extends RemoteDataFragment {
         }
         GGApp.GG_APP.preferences.edit().putBoolean("first_use_exam_filter", false).apply();
 
-        RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.basic_recyclerview, null);
-        recyclerView.setPadding(0, 0, 0, 0);
+        recyclerView = (RecyclerView) inflater.inflate(R.layout.basic_recyclerview, lroot, false);
+        recyclerView.setPadding(0,0,0,toPixels(5));
         ExamAdapter sla = new ExamAdapter(this);
         recyclerView.setAdapter(sla);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setTag("gg_list");
-        //recyclerView.setPadding(toPixels(4), toPixels(4), toPixels(4), toPixels(4));
         lroot.addView(recyclerView);
 
         sla.update(getString(R.string.your_overview), new ArrayList<Exams.ExamItem>(), true);

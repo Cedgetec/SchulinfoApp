@@ -25,12 +25,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.ListView;
-import android.widget.ScrollView;
 
 import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.MainActivity;
-import de.gebatzens.sia.R;
+import de.gebatzens.sia.fragment.ExamFragment;
 import de.gebatzens.sia.fragment.NewsFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
 import de.gebatzens.sia.fragment.SubstPagerFragment;
@@ -44,12 +43,6 @@ public class GGSwipeLayout extends SwipeRefreshLayout {
         super(context, attrs);
 
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-
-        setColorSchemeColors(GGApp.GG_APP.school.getColor(),
-                            R.color.custom_material_green,
-                            R.color.custom_material_red,
-                            R.color.custom_material_blue,
-                            R.color.custom_material_orange);
 
     }
 
@@ -81,20 +74,12 @@ public class GGSwipeLayout extends SwipeRefreshLayout {
                 if(vp == null)
                     return false;
                 SubstPagerFragment frag = (SubstPagerFragment) vp.getAdapter().instantiateItem(vp, vp.getCurrentItem());
-                RecyclerView lv = (RecyclerView) frag.getView().findViewWithTag("gg_list");
-                return lv == null || lv.canScrollVertically(-1);
-
+                RecyclerView rv1 = frag.recyclerView;
+                return rv1 == null || rv1.canScrollVertically(-1);
             case MENSA:
             case EXAMS:
-                ScrollView sv = ((ScrollView) ((MainActivity) getContext()).mContent.getView().findViewWithTag("gg_scroll"));
-
-                if(sv != null) {
-                    int i = -sv.getScrollY();
-
-                    return i != 0;
-                }
-
-                return false;
+                RecyclerView rv2 = ((ExamFragment) ((MainActivity) getContext()).mContent).recyclerView;
+                return rv2 == null || rv2.canScrollVertically(-1);
             case NEWS:
                 ListView lv2 = ((NewsFragment) ((MainActivity) getContext()).mContent).lv;
                 if(lv2 == null)

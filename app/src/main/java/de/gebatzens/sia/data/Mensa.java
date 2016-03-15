@@ -92,22 +92,32 @@ public class Mensa extends ArrayList<Mensa.MensaItem> implements RemoteDataFragm
 
                 while(reader.hasNext()) {
                     String name = reader.nextName();
-                    if(name.equals("id"))
-                        item.id = reader.nextString();
-                    else if(name.equals("date"))
-                        item.date = reader.nextString();
-                    else if(name.equals("meal"))
-                        item.meal = reader.nextString();
-                    else if(name.equals("garnish"))
-                        item.garnish = reader.nextString();
-                    else if(name.equals("dessert"))
-                        item.dessert = reader.nextString();
-                    else if(name.equals("vegetarian"))
-                        item.vegetarian = reader.nextString();
-                    else if(name.equals("image"))
-                        item.image = reader.nextString();
-                    else
-                        reader.skipValue();
+                    switch (name) {
+                        case "id":
+                            item.id = reader.nextString();
+                            break;
+                        case "date":
+                            item.date = reader.nextString();
+                            break;
+                        case "meal":
+                            item.meal = reader.nextString();
+                            break;
+                        case "garnish":
+                            item.garnish = reader.nextString();
+                            break;
+                        case "dessert":
+                            item.dessert = reader.nextString();
+                            break;
+                        case "vegetarian":
+                            item.vegetarian = reader.nextString();
+                            break;
+                        case "image":
+                            item.image = reader.nextString();
+                            break;
+                        default:
+                            reader.skipValue();
+                            break;
+                    }
                 }
                 reader.endObject();
                 add(item);

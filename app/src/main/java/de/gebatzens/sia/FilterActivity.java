@@ -16,7 +16,6 @@
 package de.gebatzens.sia;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -105,19 +104,9 @@ public class FilterActivity extends AppCompatActivity {
         if(bundle != null)
             changed = bundle.getBoolean("changed", false);
 
-        TextView tv = (TextView) findViewById(R.id.filter_header_inc);
-        tv.setTextColor(GGApp.GG_APP.school.getAccentColor());
-        TextView tv2 = (TextView) findViewById(R.id.filter_header_exc);
-        tv2.setTextColor(GGApp.GG_APP.school.getAccentColor());
-
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolBar);
-        if(getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        mToolBar.setTitleTextColor(Color.WHITE);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
-
+        mToolBar.setTitle(getTitle());
+        mToolBar.setNavigationIcon(R.drawable.ic_arrow_back);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +114,6 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
         mToolBar.inflateMenu(R.menu.filter_menu);
-        mToolBar.setTitle(getTitle());
 
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -138,11 +126,6 @@ public class FilterActivity extends AppCompatActivity {
         });
         Button bt1 = (Button) findViewById(R.id.inc_button);
         Button bt2 = (Button) findViewById(R.id.exc_button);
-
-        if(GGApp.GG_APP.isDarkThemeEnabled()){
-            bt1.setTextColor(Color.WHITE);
-            bt2.setTextColor(Color.WHITE);
-        }
 
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,14 +171,20 @@ public class FilterActivity extends AppCompatActivity {
                 while(reader.hasNext()) {
                     String name = reader.nextName();
 
-                    if(name.equals("type"))
-                        type = Filter.FilterType.valueOf(reader.nextString());
-                    else if(name.equals("filter"))
-                        filter = reader.nextString();
-                    else if(name.equals("contains"))
-                        contains = reader.nextBoolean();
-                    else
-                        reader.skipValue();
+                    switch (name) {
+                        case "type":
+                            type = Filter.FilterType.valueOf(reader.nextString());
+                            break;
+                        case "filter":
+                            filter = reader.nextString();
+                            break;
+                        case "contains":
+                            contains = reader.nextBoolean();
+                            break;
+                        default:
+                            reader.skipValue();
+                            break;
+                    }
 
                 }
                 

@@ -16,21 +16,24 @@
 
 package de.gebatzens.sia;
 
-import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.List;
 
 public class SchoolListAdapter extends BaseAdapter {
 
-    List<School> list = School.LIST;
+    List<School> list;
+    SetupActivity c;
+
+    public SchoolListAdapter(SetupActivity c, List<School> list) {
+        this.c = c;
+        this.list = list;
+    }
 
     @Override
     public int getCount() {
@@ -49,7 +52,7 @@ public class SchoolListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView == null ? ((LayoutInflater) GGApp.GG_APP.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.school_item, parent, false) : convertView;
+        View v = convertView == null ? c.getLayoutInflater().inflate(R.layout.school_item, parent, false) : convertView;
 
         School school = list.get(position);
 

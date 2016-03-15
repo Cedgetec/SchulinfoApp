@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Start application themes -->
-    <style name="AppTheme.StartTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorPrimaryDark">#c9c9c9</item>
-    </style>
-
     <!-- Base application themes -->
-    <style name="AppTheme.Base.Light" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowAllowEnterTransitionOverlap">true</item>
-        <item name="android:windowAllowReturnTransitionOverlap">true</item>
-        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
-        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
-    </style>
-    <style name="AppTheme.Base.Dark" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.Base" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
@@ -25,8 +12,8 @@
     </style>
 
     <!-- Setup application themes -->
-    <style name="FirstUseTheme" parent="AppTheme.Base.Light">
-        <item name="android:colorButtonNormal">#fff</item>
+    <style name="FirstUseTheme" parent="AppTheme.Base">
+        <item name="android:colorButtonNormal">@android:color/white</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="windowActionBar">false</item>
     </style>

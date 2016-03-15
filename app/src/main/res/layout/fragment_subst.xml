@@ -9,10 +9,11 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
         app:tabIndicatorHeight="2dp"
-        app:tabIndicatorColor="#ffffffff"
-        app:tabTextColor="#b3ffffff"
-        app:tabSelectedTextColor="#ffffff"/>
+        app:tabIndicatorColor="@color/TabIndicator"
+        app:tabTextColor="@color/TabText"
+        app:tabSelectedTextColor="@color/TabSelectedText"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

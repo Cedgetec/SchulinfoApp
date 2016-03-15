@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatDelegate;
 
 import de.gebatzens.sia.fragment.FirstUseAdapter;
 import de.gebatzens.sia.fragment.FirstUseFragment;
@@ -32,6 +33,7 @@ public class FirstUseActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle bundle) {
+        AppCompatDelegate.setDefaultNightMode(GGApp.GG_APP.getThemeMode());
         setTheme(R.style.FirstUseTheme);
         adapter = new FirstUseAdapter(getSupportFragmentManager(), FirstUseActivity.this);
 

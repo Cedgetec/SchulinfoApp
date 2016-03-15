@@ -17,28 +17,24 @@ package de.gebatzens.sia.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import de.gebatzens.sia.FilterActivity;
 import de.gebatzens.sia.FragmentData;
@@ -57,79 +53,18 @@ public class SubstPagerFragment extends RemoteDataFragment {
     int index = INDEX_INVALID;
     int spinnerPos = 0, modeSpinnerPos = 0;
 
-    int cardColorIndex = 0;
-
-    public void setOrientationPadding(View v) {
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            v.setPadding(toPixels(55), toPixels(4), toPixels(55), toPixels(4));
-        } else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            v.setPadding(toPixels(4), toPixels(4), toPixels(4), toPixels(4));
-        }
-    }
+    public RecyclerView recyclerView;
 
     /**
      * Creates a card for the given entry
      *
      * @return the view
      */
-    public SubstListAdapter.SubstViewHolder createCardItem(LayoutInflater i, ViewGroup parent) {
-        FrameLayout f2 = new FrameLayout(getActivity());
-        f2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        f2.setPadding(RemoteDataFragment.toPixels(1.3f), RemoteDataFragment.toPixels(0.3f), RemoteDataFragment.toPixels(1.3f), RemoteDataFragment.toPixels(0.3f));
-        CardView cv = (CardView) i.inflate(R.layout.basic_cardview, parent, false);
-        f2.addView(cv);
-        cv.setId(R.id.cvroot);
-        String[] colors = GGApp.GG_APP.getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
-        cv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
-        cardColorIndex++;
-        if(cardColorIndex == colors.length)
-            cardColorIndex = 0;
-        i.inflate(R.layout.cardview_entry, cv, true);
-
-        return new SubstListAdapter.SubstViewHolder(f2);
-    }
 
     /**
      * Creates TextViews containing the special messages of the given plan
      *
      */
-    public static ArrayList<TextView> createSMViews(List<String> messages, ViewGroup parent) {
-        ArrayList<TextView> tvl = new ArrayList<TextView>();
-
-        for(String special : messages) {
-            TextView tv2 = new TextView(parent.getContext());
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, toPixels(2), 0, 0);
-            tv2.setLayoutParams(params);
-            tv2.setText(Html.fromHtml(special));
-            tv2.setTextSize(15);
-            tv2.setTextColor(Color.WHITE);
-            tvl.add(tv2);
-
-        }
-
-        return tvl;
-    }
-
-    public SubstListAdapter.MessageViewHolder createSMCard(ViewGroup parent, LayoutInflater inflater) {
-        FrameLayout f2 = new FrameLayout(getActivity());
-        f2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        f2.setPadding(toPixels(1.3f), toPixels(0.3f), toPixels(1.3f), toPixels(0.3f));
-        CardView cv = (CardView) inflater.inflate(R.layout.basic_cardview, f2, false);
-        cv.setId(R.id.cvroot);
-        cv.setCardBackgroundColor(GGApp.GG_APP.school.getColor());
-        f2.addView(cv);
-        LinearLayout ls = new LinearLayout(getActivity());
-        ls.setId(R.id.messages_list);
-        ls.setOrientation(LinearLayout.VERTICAL);
-        TextView tv3 = createTextView(getResources().getString(R.string.special_messages), 19, inflater, ls);
-        tv3.setTextColor(Color.WHITE);
-        tv3.setPadding(0,0,0,toPixels(6));
-        cv.addView(ls);
-
-        return new SubstListAdapter.MessageViewHolder(f2);
-
-    }
 
     @Override
     public void updateFragment() {
@@ -147,10 +82,10 @@ public class SubstPagerFragment extends RemoteDataFragment {
                 }
                 plan = plans.get(index);
 
-                ArrayList<String> items = new ArrayList<String>();
+                ArrayList<String> items = new ArrayList<>();
                 items.add(getActivity().getString(R.string.all));
                 items.addAll(plan.getAllClasses());
-                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, items);
 
                 AppCompatSpinner spinner = (AppCompatSpinner) getContentView().findViewById(R.id.spinner);
                 spinner.setAdapter(adapter);
@@ -162,9 +97,6 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     @Override
     public void createView(final LayoutInflater inflater, ViewGroup group) {
-
-        cardColorIndex = 0;
-
         LinearLayout l = new LinearLayout(getActivity());
         l.setOrientation(LinearLayout.VERTICAL);
         l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -181,15 +113,15 @@ public class SubstPagerFragment extends RemoteDataFragment {
             Filter.FilterList filters = GGApp.GG_APP.filters;
 
             CardView cv2 = new CardView(getActivity());
+            cv2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             cv2.setRadius(0);
-            cv2.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
 
             LinearLayout l2 = new LinearLayout(getActivity());
             l2.setMinimumHeight(toPixels(50));
             l2.setGravity(Gravity.CENTER_VERTICAL);
 
             String diff = getTimeDiff(getActivity(), ((GGPlan.GGPlans) getFragment().getData()).loadDate);
-            TextView tv4 = createTextView(diff, 13, inflater, l2);
+            TextView tv4 = createPrimaryTextView(diff, 13, inflater, l2);
             tv4.setTag("gg_time");
             tv4.setPadding(toPixels(16), toPixels(0), toPixels(16), toPixels(0));
 
@@ -204,16 +136,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
             for(Filter.IncludingFilter inc : filters.including) {
                 String text = chars > 8 ? "+" + (filters.including.size() - chips) + "" : inc.getFilter();
 
-                TextView tv2 = createTextView(text, chars > 8 ? 20 : 15, inflater, l3);
+                TextView tv2 = createPrimaryTextView(text, chars > 8 ? 20 : 15, inflater, l3);
                 LinearLayout.LayoutParams pa = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 pa.setMargins(toPixels(chars > 8 ? 10 : 5), 0, chars > 8 ? toPixels(-20) : 0, 0);
                 tv2.setLayoutParams(pa);
                 tv2.setIncludeFontPadding(false);
                 if (chars <= 8) {
-                    if(GGApp.GG_APP.isDarkThemeEnabled())
-                        tv2.setBackgroundResource(R.drawable.chip_background_dark);
-                    else
-                        tv2.setBackgroundResource(R.drawable.chip_background_light);
+                    tv2.setBackgroundResource(R.drawable.chip_background);
                 } else {
                     tv2.setTextColor(Color.parseColor("#A0A0A0"));
                    // tv2.setText(Html.fromHtml(text));
@@ -237,13 +166,11 @@ public class SubstPagerFragment extends RemoteDataFragment {
             cv2.addView(l2);
             l.addView(cv2);
 
-            RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.basic_recyclerview, l, false);
+            recyclerView = (RecyclerView) inflater.inflate(R.layout.basic_recyclerview, l, false);
+            recyclerView.setPadding(0,0,0,toPixels(5));
             final SubstListAdapter sla = new SubstListAdapter(this);
             recyclerView.setAdapter(sla);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.setTag("gg_list");
-            recyclerView.setPadding(toPixels(4), toPixels(4), toPixels(4), toPixels(4));
-            setOrientationPadding(recyclerView);
             l.addView(recyclerView);
             sla.setToOverview();
 
@@ -264,22 +191,21 @@ public class SubstPagerFragment extends RemoteDataFragment {
             ScrollView sv = new ScrollView(getActivity());
             sv.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
             sv.setFillViewport(true);
-            sv.setTag("gg_scroll");
 
             sv.addView(l);
             group.addView(sv);
 
         } else {
             CardView cv2 = new CardView(getActivity());
+            cv2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             cv2.setRadius(0);
-            cv2.setCardBackgroundColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#424242" : "#ffffff"));
 
             LinearLayout l2 = new LinearLayout(getActivity());
             l2.setMinimumHeight(toPixels(50));
             l2.setGravity(Gravity.CENTER_VERTICAL);
 
             String diff = getTimeDiff(getActivity(), ((GGPlan.GGPlans) getFragment().getData()).loadDate);
-            TextView tv5 = createTextView(diff, 13, inflater, l2);
+            TextView tv5 = createPrimaryTextView(diff, 13, inflater, l2);
             tv5.setTag("gg_time");
             tv5.setPadding(toPixels(16), toPixels(0), toPixels(16), toPixels(0));
 
@@ -289,7 +215,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
             final AppCompatSpinner spinMode = new AppCompatSpinner(getActivity());
-            ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, new String[] {getString(R.string.classes), getString(R.string.lessons)});
+            ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, new String[]{getString(R.string.classes), getString(R.string.lessons)});
             modeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
             spinMode.setAdapter(modeAdapter);
             l3.addView(spinMode);
@@ -297,10 +223,10 @@ public class SubstPagerFragment extends RemoteDataFragment {
             final AppCompatSpinner spinClass = new AppCompatSpinner(getActivity());
             spinClass.setId(R.id.spinner);
 
-            ArrayList<String> items = new ArrayList<String>();
+            ArrayList<String> items = new ArrayList<>();
             items.add(getActivity().getString(R.string.all));
             items.addAll(plan.getAllClasses());
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, items);
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
             spinClass.setAdapter(adapter);
             l3.addView(spinClass);
@@ -316,13 +242,11 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l4.setOrientation(LinearLayout.VERTICAL);
             l.addView(l4);
 
-            RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.basic_recyclerview, null);
+            recyclerView = (RecyclerView) inflater.inflate(R.layout.basic_recyclerview, l4, false);
+            recyclerView.setPadding(0,0,0,toPixels(5));
             final SubstListAdapter sla = new SubstListAdapter(this);
             recyclerView.setAdapter(sla);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.setTag("gg_list");
-            recyclerView.setPadding(toPixels(4), toPixels(4), toPixels(4), toPixels(4));
-            setOrientationPadding(recyclerView);
 
             l4.addView(recyclerView);
 
@@ -357,20 +281,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
                     spinnerPos = position;
 
-                    TextView tv = (TextView) parent.getChildAt(0);
-                    if(tv != null)
-                        tv.setTextColor(Color.parseColor(GGApp.GG_APP.isDarkThemeEnabled() ? "#e7e7e7" : "#212121"));
-
-
                     if (!item.equals(getActivity().getString(R.string.all))) {
-                        cardColorIndex = 0;
                         Filter.FilterList fl = new Filter.FilterList();
                         fl.including.add(new Filter.IncludingFilter(Filter.FilterType.CLASS, item));
                         sla.updateData(plan.filter(fl), SubstListAdapter.PLAIN, true, item);
 
                     } else {
-                        cardColorIndex = 0;
-
                         boolean sortByLesson = spinMode.getSelectedItemPosition() == 1;
                         sla.updateData(plan, sortByLesson ? SubstListAdapter.ALL_LESSONS : SubstListAdapter.ALL_CLASSES, true);
 

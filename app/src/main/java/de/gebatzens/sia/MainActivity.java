@@ -22,7 +22,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,7 +37,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -235,11 +233,6 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
                         startActivityForResult(i, 1);
                         return true;
-                    case R.id.action_changeThemeMode:
-                        GGApp.GG_APP.setDarkThemeEnabled(!GGApp.GG_APP.isDarkThemeEnabled());
-                        GGApp.GG_APP.school.loadTheme();
-                        recreate();
-                        return true;
                     case R.id.action_addToCalendar:
                         showExamDialog();
                         return true;
@@ -261,9 +254,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mToolBar.setSubtitleTextColor(Color.WHITE);
-        mToolBar.setTitleTextColor(Color.WHITE);
-        mToolBar.setBackgroundColor(GGApp.GG_APP.school.getColor());
         updateToolbar(GGApp.GG_APP.school.name, fragments.get(GGApp.GG_APP.getFragmentIndex()).name);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -286,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationHeader = navigationView.getHeaderView(0);
         mNavigationSchoolpictureText = (TextView) mNavigationHeader.findViewById(R.id.drawer_image_text);
@@ -430,8 +420,6 @@ public class MainActivity extends AppCompatActivity {
     public void updateMenu(int menu) {
         mToolBar.getMenu().clear();
         mToolBar.inflateMenu(menu);
-        mToolBar.getMenu().findItem(R.id.action_changeThemeMode).setTitle(getResources()
-                .getString(GGApp.GG_APP.isDarkThemeEnabled() ? R.string.day_mode : R.string.night_mode));
     }
 
     @Override

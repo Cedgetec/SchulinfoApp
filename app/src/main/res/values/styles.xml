@@ -1,430 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ToolBarStyle" parent="Widget.AppCompat.ActionBar">
-        <item name="android:textColorSecondary">@android:color/white</item>
+    <style name="ToolBarTheme" parent="Widget.AppCompat.ActionBar">
+        <item name="colorControlNormal">@android:color/white</item> <!-- White toolbar icons on pre lollipop devices -->
     </style>
 
-    <!-- Start application themes -->
-    <style name="AppTheme.StartTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">#c9c9c9</item>
-    </style>
-
-    <!-- Base application themes -->
-    <style name="AppTheme.Base.Light" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowActionModeOverlay">true</item>
-    </style>
-    <style name="AppTheme.Base.Dark" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowActionModeOverlay">true</item>
-    </style>
-
-    <!-- Setup application themes -->
-    <style name="FirstUseTheme" parent="AppTheme.Base.Light">
-        <item name="colorButtonNormal">#fff</item>
-        <!-- api 21 and higher -->
-    </style>
-
-    <!-- Light application themes -->
-
-    <style name="AppThemeWinterLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#1973ac</item>
-        <item name="colorPrimaryDark">#156191</item>
-        <item name="colorAccent">#1973ac</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Winter.Light</item>
-    </style>
-    <style name="AppThemeEasterLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#00830c</item>
-        <item name="colorPrimaryDark">#00700b</item>
-        <item name="colorAccent">#00830c</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Easter.Light</item>
-    </style>
-    <style name="AppThemeRedLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#F44336</item>
-        <item name="colorPrimaryDark">#D32F2F</item>
-        <item name="colorAccent">#F44336</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Red.Light</item>
-    </style>
-    <style name="AppThemePinkLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#E91E63</item>
-        <item name="colorPrimaryDark">#C2185B</item>
-        <item name="colorAccent">#E91E63</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Pink.Light</item>
-    </style>
-    <style name="AppThemePurpleLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#9C27B0</item>
-        <item name="colorPrimaryDark">#7B1FA2</item>
-        <item name="colorAccent">#9C27B0</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Purple.Light</item>
-    </style>
-    <style name="AppThemeDeepPurpleLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#673AB7</item>
-        <item name="colorPrimaryDark">#512DA8</item>
-        <item name="colorAccent">#673AB7</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.DeepPurple.Light</item>
-    </style>
-    <style name="AppThemeIndigoLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#3F51B5</item>
-        <item name="colorPrimaryDark">#303F9F</item>
-        <item name="colorAccent">#3F51B5</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Indigo.Light</item>
-    </style>
-    <style name="AppThemeBlueLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#2196F3</item>
-        <item name="colorPrimaryDark">#1976D2</item>
-        <item name="colorAccent">#2196F3</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Blue.Light</item>
-    </style>
-    <style name="AppThemeLightBlueLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#03A9F4</item>
-        <item name="colorPrimaryDark">#0288D1</item>
-        <item name="colorAccent">#03A9F4</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.LightBlue.Light</item>
-    </style>
-    <style name="AppThemeCyanLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#00BCD4</item>
-        <item name="colorPrimaryDark">#0097A7</item>
-        <item name="colorAccent">#00BCD4</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Cyan.Light</item>
-    </style>
-    <style name="AppThemeTealLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#009688</item>
-        <item name="colorPrimaryDark">#00796B</item>
-        <item name="colorAccent">#009688</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Teal.Light</item>
-    </style>
-    <style name="AppThemeGreenLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#4CAF50</item>
-        <item name="colorPrimaryDark">#388E3C</item>
-        <item name="colorAccent">#4CAF50</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Green.Light</item>
-    </style>
-    <style name="AppThemeLightGreenLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#8BC34A</item>
-        <item name="colorPrimaryDark">#689F38</item>
-        <item name="colorAccent">#8BC34A</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.LightGreen.Light</item>
-    </style>
-    <style name="AppThemeAmberLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#FFC107</item>
-        <item name="colorPrimaryDark">#FFA000</item>
-        <item name="colorAccent">#FFC107</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Amber.Light</item>
-    </style>
-    <style name="AppThemeOrangeLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#FF9800</item>
-        <item name="colorPrimaryDark">#F57C00</item>
-        <item name="colorAccent">#FF9800</item>
-
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Orange.Light</item>
-    </style>
-    <style name="AppThemeDeepOrangeLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#FF5722</item>
-        <item name="colorPrimaryDark">#E64A19</item>
-        <item name="colorAccent">#FF5722</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.DeepOrange.Light</item>
-    </style>
-    <style name="AppThemeBrownLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#795548</item>
-        <item name="colorPrimaryDark">#5D4037</item>
-        <item name="colorAccent">#795548</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Brown.Light</item>
-    </style>
-    <style name="AppThemeGreyLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#9E9E9E</item>
-        <item name="colorPrimaryDark">#616161</item>
-        <item name="colorAccent">#9E9E9E</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Grey.Light</item>
-    </style>
-    <style name="AppThemeBlueGreyLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#607D8B</item>
-        <item name="colorPrimaryDark">#455A64</item>
-        <item name="colorAccent">#607D8B</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.BlueGrey.Light</item>
-    </style>
-    <style name="AppThemeDarkGreyLight" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#212121</item>
-        <item name="colorPrimaryDark">#000000</item>
-        <item name="colorAccent">#212121</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.DarkGrey.Light</item>
-    </style>
-    <style name="AppThemeCedgetecCorporate" parent="AppTheme.Base.Light">
-        <item name="colorPrimary">#3073D4</item>
-        <item name="colorPrimaryDark">#245AB8</item>
-        <item name="colorAccent">#3073D4</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.CedgetecCoporate</item>
-    </style>
-
-    <!-- Dark application themes -->
-
-    <style name="AppThemeWinterDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#145c8a</item>
-        <item name="colorPrimaryDark">#114e75</item>
-        <item name="colorAccent">#145c8a</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Winter.Dark</item>
-    </style>
-    <style name="AppThemeEasterDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#006109</item>
-        <item name="colorPrimaryDark">#004f08</item>
-        <item name="colorAccent">#006109</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Easter.Dark</item>
-    </style>
-    <style name="AppThemeRedDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#D32F2F</item>
-        <item name="colorPrimaryDark">#B71C1C</item>
-        <item name="colorAccent">#D32F2F</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Red.Dark</item>
-    </style>
-    <style name="AppThemePinkDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#C2185B</item>
-        <item name="colorPrimaryDark">#880E4F</item>
-        <item name="colorAccent">#C2185B</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Pink.Dark</item>
-    </style>
-    <style name="AppThemePurpleDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#7B1FA2</item>
-        <item name="colorPrimaryDark">#4A148C</item>
-        <item name="colorAccent">#7B1FA2</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Purple.Dark</item>
-    </style>
-    <style name="AppThemeDeepPurpleDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#512DA8</item>
-        <item name="colorPrimaryDark">#311B92</item>
-        <item name="colorAccent">#512DA8</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.DeepPurple.Dark</item>
-    </style>
-    <style name="AppThemeIndigoDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#303F9F</item>
-        <item name="colorPrimaryDark">#1A237E</item>
-        <item name="colorAccent">#303F9F</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Indigo.Dark</item>
-    </style>
-    <style name="AppThemeBlueDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#1976D2</item>
-        <item name="colorPrimaryDark">#0D47A1</item>
-        <item name="colorAccent">#1976D2</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Blue.Dark</item>
-    </style>
-    <style name="AppThemeLightBlueDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#0288D1</item>
-        <item name="colorPrimaryDark">#01579B</item>
-        <item name="colorAccent">#0288D1</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.LightBlue.Dark</item>
-    </style>
-    <style name="AppThemeCyanDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#0097A7</item>
-        <item name="colorPrimaryDark">#006064</item>
-        <item name="colorAccent">#0097A7</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Cyan.Dark</item>
-    </style>
-    <style name="AppThemeTealDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#00796B</item>
-        <item name="colorPrimaryDark">#004D40</item>
-        <item name="colorAccent">#00796B</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Teal.Dark</item>
-    </style>
-    <style name="AppThemeGreenDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#388E3C</item>
-        <item name="colorPrimaryDark">#1B5E20</item>
-        <item name="colorAccent">#388E3C</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Green.Dark</item>
-    </style>
-    <style name="AppThemeLightGreenDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#689F38</item>
-        <item name="colorPrimaryDark">#33691E</item>
-        <item name="colorAccent">#689F38</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.LightGreen.Dark</item>
-    </style>
-    <style name="AppThemeAmberDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#FFA000</item>
-        <item name="colorPrimaryDark">#FF6F00</item>
-        <item name="colorAccent">#FFA000</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Amber.Dark</item>
-    </style>
-    <style name="AppThemeOrangeDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#F57C00</item>
-        <item name="colorPrimaryDark">#E65100</item>
-        <item name="colorAccent">#F57C00</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Orange.Dark</item>
-    </style>
-    <style name="AppThemeDeepOrangeDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#E64A19</item>
-        <item name="colorPrimaryDark">#BF360C</item>
-        <item name="colorAccent">#E64A19</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.DeepOrange.Dark</item>
-    </style>
-    <style name="AppThemeBrownDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#5D4037</item>
-        <item name="colorPrimaryDark">#3E2723</item>
-        <item name="colorAccent">#5D4037</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Brown.Dark</item>
-    </style>
-    <style name="AppThemeGreyDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#616161</item>
-        <item name="colorPrimaryDark">#212121</item>
-        <item name="colorAccent">#616161</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.Grey.Dark</item>
-    </style>
-    <style name="AppThemeBlueGreyDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#455A64</item>
-        <item name="colorPrimaryDark">#263238</item>
-        <item name="colorAccent">#455A64</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.BlueGrey.Dark</item>
-    </style>
-    <style name="AppThemeDarkGreyDark" parent="AppTheme.Base.Dark">
-        <item name="colorPrimary">#212121</item>
-        <item name="colorPrimaryDark">#000000</item>
-        <item name="colorAccent">#F5F5F5</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog.DarkGrey.Dark</item>
-    </style>
-
-    <!-- Checkbox theme -->
-    <style name="CheckBoxTheme" parent="AppTheme.Base.Light">
+    <style name="CheckBoxTheme" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="colorAccent">#fff</item>
         <item name="android:textColorSecondary">#fff</item>
     </style>
 
+    <!-- Base application themes -->
+    <style name="AppTheme.Base" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+
+    <!-- Setup application themes -->
+    <style name="FirstUseTheme" parent="AppTheme.Base">
+        <item name="colorButtonNormal">@android:color/white</item>
+        <!-- api 21 and higher -->
+    </style>
+
+    <!-- Start application themes -->
+    <style name="AppTheme.StartTheme" parent="AppTheme.Base">
+        <item name="colorPrimaryDark">@color/ThemeStartAppColorPrimaryDark</item>
+    </style>
+
+    <!-- Custom application themes -->
+    <style name="AppThemeWinter" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeWinterColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeWinterColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeWinterColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Winter</item>
+    </style>
+    <style name="AppThemeRed" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeRedColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeRedColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeRedColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Red</item>
+    </style>
+    <style name="AppThemePink" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemePinkColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemePinkColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemePinkColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Pink</item>
+    </style>
+    <style name="AppThemePurple" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemePurpleColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemePurpleColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemePurpleColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Purple</item>
+    </style>
+    <style name="AppThemeDeepPurple" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeDeepPurpleColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeDeepPurpleColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeDeepPurpleColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.DeepPurple</item>
+    </style>
+    <style name="AppThemeIndigo" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeIndigoColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeIndigoColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeIndigoColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Indigo</item>
+    </style>
+    <style name="AppThemeBlue" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeBlueColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeBlueColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeBlueColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Blue</item>
+    </style>
+    <style name="AppThemeLightBlue" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeLightBlueColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeLightBlueColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeLightBlueColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.LightBlue</item>
+    </style>
+    <style name="AppThemeCyan" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeCyanColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeCyanColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeCyanColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Cyan</item>
+    </style>
+    <style name="AppThemeTeal" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeTealColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeTealColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeTealColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Teal</item>
+    </style>
+    <style name="AppThemeGreen" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeGreenColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeGreenColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeGreenColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Green</item>
+    </style>
+    <style name="AppThemeLightGreen" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeLightGreenColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeLightGreenColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeLightGreenColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.LightGreen</item>
+    </style>
+    <style name="AppThemeAmber" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeAmberColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeAmberColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeAmberColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Amber</item>
+    </style>
+    <style name="AppThemeOrange" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeOrangeColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeOrangeColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeOrangeColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Orange</item>
+    </style>
+    <style name="AppThemeDeepOrange" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeDeepOrangeColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeDeepOrangeColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeDeepOrangeColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.DeepOrange</item>
+    </style>
+    <style name="AppThemeBrown" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeBrownColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeBrownColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeBrownColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Brown</item>
+    </style>
+    <style name="AppThemeGrey" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeGreyColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeGreyColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeGreyColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Grey</item>
+    </style>
+    <style name="AppThemeBlueGrey" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeBlueGreyColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeBlueGreyColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeBlueGreyColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.BlueGrey</item>
+    </style>
+    <style name="AppThemeDarkGrey" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeDarkGreyColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeDarkGreyColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeDarkGreyColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.DarkGrey</item>
+    </style>
+    <style name="AppThemeSetup" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeSetupColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeSetupColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeSetupColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Setup</item>
+    </style>
 
     <!-- Base popup themes -->
-    <style name="Theme.AlertDialog.Base.Light" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
-        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
-        <item name="android:windowIsFloating">true</item>
-    </style>
-    <style name="Theme.AlertDialog.Base.Dark" parent="Theme.AppCompat.Dialog">
+    <style name="Theme.AlertDialog.Base" parent="Theme.AppCompat.DayNight.Dialog">
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
         <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
         <item name="android:windowIsFloating">true</item>
     </style>
 
-    <!-- Light popup themes -->
-
-    <style name="Theme.AlertDialog.Winter.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#1973ac</item>
+    <!-- Custom popup themes -->
+    <style name="Theme.AlertDialog.Winter" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeWinterColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Easter.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#00830c</item>
+    <style name="Theme.AlertDialog.Red" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeRedColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Red.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#F44336</item>
+    <style name="Theme.AlertDialog.Pink" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemePinkColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Pink.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#E91E63</item>
+    <style name="Theme.AlertDialog.Purple" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemePurpleColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Purple.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#9C27B0</item>
+    <style name="Theme.AlertDialog.DeepPurple" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeDeepPurpleColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.DeepPurple.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#673AB7</item>
+    <style name="Theme.AlertDialog.Indigo" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeIndigoColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Indigo.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#3F51B5</item>
+    <style name="Theme.AlertDialog.Blue" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeBlueColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Blue.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#2196F3</item>
+    <style name="Theme.AlertDialog.LightBlue" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeLightBlueColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.LightBlue.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#03A9F4</item>
+    <style name="Theme.AlertDialog.Cyan" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeCyanColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Cyan.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#03A9F4</item>
+    <style name="Theme.AlertDialog.Teal" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeTealColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Teal.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#009688</item>
+    <style name="Theme.AlertDialog.Green" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeGreenColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Green.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#4CAF50</item>
+    <style name="Theme.AlertDialog.LightGreen" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeLightGreenColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.LightGreen.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#8BC34A</item>
+    <style name="Theme.AlertDialog.Amber" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeAmberColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Amber.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#FFC107</item>
+    <style name="Theme.AlertDialog.Orange" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeOrangeColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Orange.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#FF9800</item>
+    <style name="Theme.AlertDialog.DeepOrange" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeDeepOrangeColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.DeepOrange.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#FF5722</item>
+    <style name="Theme.AlertDialog.Brown" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeBrownColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Brown.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#795548</item>
+    <style name="Theme.AlertDialog.Grey" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeGreyColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.Grey.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#9E9E9E</item>
+    <style name="Theme.AlertDialog.BlueGrey" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeBlueGreyColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.BlueGrey.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#607D8B</item>
+    <style name="Theme.AlertDialog.DarkGrey" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeDarkGreyColorAccent</item>
     </style>
-    <style name="Theme.AlertDialog.DarkGrey.Light" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#212121</item>
-    </style>
-    <style name="Theme.AlertDialog.CedgetecCoporate" parent="Theme.AlertDialog.Base.Light">
-        <item name="colorAccent">#3073D4</item>
-    </style>
-
-    <!-- Dark popup themes -->
-
-    <style name="Theme.AlertDialog.Winter.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#1973ac</item>
-    </style>
-    <style name="Theme.AlertDialog.Easter.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#00830c</item>
-    </style>
-    <style name="Theme.AlertDialog.Red.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#F44336</item>
-    </style>
-    <style name="Theme.AlertDialog.Pink.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#E91E63</item>
-    </style>
-    <style name="Theme.AlertDialog.Purple.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#9C27B0</item>
-    </style>
-    <style name="Theme.AlertDialog.DeepPurple.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#673AB7</item>
-    </style>
-    <style name="Theme.AlertDialog.Indigo.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#3F51B5</item>
-    </style>
-    <style name="Theme.AlertDialog.Blue.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#2196F3</item>
-    </style>
-    <style name="Theme.AlertDialog.LightBlue.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#03A9F4</item>
-    </style>
-    <style name="Theme.AlertDialog.Cyan.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#03A9F4</item>
-    </style>
-    <style name="Theme.AlertDialog.Teal.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#009688</item>
-    </style>
-    <style name="Theme.AlertDialog.Green.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#4CAF50</item>
-    </style>
-    <style name="Theme.AlertDialog.LightGreen.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#8BC34A</item>
-    </style>
-    <style name="Theme.AlertDialog.Amber.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#FFC107</item>
-    </style>
-    <style name="Theme.AlertDialog.Orange.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#FF9800</item>
-    </style>
-    <style name="Theme.AlertDialog.DeepOrange.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#FF5722</item>
-    </style>
-    <style name="Theme.AlertDialog.Brown.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#795548</item>
-    </style>
-    <style name="Theme.AlertDialog.Grey.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#9E9E9E</item>
-    </style>
-    <style name="Theme.AlertDialog.BlueGrey.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#607D8B</item>
-    </style>
-    <style name="Theme.AlertDialog.DarkGrey.Dark" parent="Theme.AlertDialog.Base.Dark">
-        <item name="colorAccent">#F5F5F5</item>
+    <style name="Theme.AlertDialog.Setup" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeSetupColorAccent</item>
     </style>
 </resources>
 

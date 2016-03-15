@@ -19,10 +19,8 @@ package de.gebatzens.sia;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -45,7 +43,7 @@ public class SetupActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle saved) {
-        setTheme(R.style.AppThemeCedgetecCorporate);
+        setTheme(R.style.AppThemeSetup);
         super.onCreate(saved);
 
         if(GGApp.GG_APP.remote.isLoggedIn()) {
@@ -88,9 +86,7 @@ public class SetupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setup);
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        mToolBar.setTitle(getString(R.string.supported_schools));
-        mToolBar.setTitleTextColor(Color.WHITE);
-        mToolBar.setBackgroundColor(ContextCompat.getColor(this, R.color.cedgetec_light));
+        mToolBar.setTitle(getTitle());
         mToolBar.inflateMenu(R.menu.setup_menu);
 
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -106,14 +102,13 @@ public class SetupActivity extends AppCompatActivity {
         });
 
         list = (ListView) findViewById(R.id.setup_list);
-        adapter = new SchoolListAdapter();
+        adapter = new SchoolListAdapter(this, School.LIST);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 School s = School.LIST.get(position);
-
                 showLoginDialog(s.sid, s.loginNeeded);
             }
         });

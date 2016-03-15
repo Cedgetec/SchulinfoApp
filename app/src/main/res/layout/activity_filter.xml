@@ -3,13 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_width="match_parent"
-        android:title="@string/filter"
-        app:theme="@style/ToolBarStyle"/>
+    <include layout="@layout/toolbar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -34,7 +28,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
                     android:fontFamily="sans-serif-medium"
-                    android:id="@+id/filter_header_inc"
+                    android:textColor="?attr/colorAccent"
                     android:text="@string/main_filter"/>
 
                 <ListView
@@ -42,12 +36,13 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/filter_list_inc"
                     android:isScrollContainer="false"
-                    android:listSelector="@android:color/transparent"/>
+                    android:listSelector="@color/transparent"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#888"
+                    android:textAppearance="?android:attr/textAppearance"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="18sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
@@ -60,6 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
+                    android:textColor="#fff"
                     android:text="@string/add_main_filter"/>
 
                 <TextView
@@ -71,7 +67,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
                     android:fontFamily="sans-serif-medium"
-                    android:id="@+id/filter_header_exc"
+                    android:textColor="?attr/colorAccent"
                     android:text="@string/hidden_filters"/>
 
                 <ListView
@@ -79,12 +75,13 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/filter_list_exc"
                     android:isScrollContainer="false"
-                    android:listSelector="@android:color/transparent"/>
+                    android:listSelector="@color/transparent"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#888"
+                    android:textAppearance="?android:attr/textAppearance"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="18sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
@@ -97,6 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
+                    android:textColor="#fff"
                     android:text="@string/hide_subject"/>
 
             </LinearLayout>

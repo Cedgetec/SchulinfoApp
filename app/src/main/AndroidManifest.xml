@@ -41,16 +41,17 @@
         </activity>
 
         <activity android:name=".FilterActivity"
-            android:label="Filter"
+            android:label="@string/filter"
             android:windowSoftInputMode="adjustNothing">
         </activity>
 
         <activity android:name=".SetupActivity"
-            android:label="Setup">
+            android:label="@string/supported_schools"
+            android:windowSoftInputMode="adjustNothing">
         </activity>
 
         <activity android:name=".TextActivity"
-            android:label="Textactivity">
+            android:windowSoftInputMode="adjustNothing">
         </activity>
 
         <receiver android:enabled="true" android:name=".GGBroadcast"

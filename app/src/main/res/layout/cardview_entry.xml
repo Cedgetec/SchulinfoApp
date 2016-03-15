@@ -17,7 +17,7 @@
             android:id="@+id/cv_hour"
             android:textSize="35sp"
             android:layout_centerHorizontal="true"
-            android:textColor="#fff"/>
+            android:textColor="@color/coloredCardViewText"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
             android:maxLength="20"
             android:layout_centerHorizontal="true"
             android:textSize="15sp"
-            android:textColor="#fff"/>
+            android:textColor="@color/coloredCardViewText"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -42,14 +42,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
+            android:textColor="@color/coloredCardViewText"
             android:textSize="20sp"
             android:id="@+id/cv_header"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
+            android:textColor="@color/coloredCardViewText"
             android:textSize="15sp"
             android:layout_below="@id/cv_header"
             android:id="@+id/cv_detail"/>
