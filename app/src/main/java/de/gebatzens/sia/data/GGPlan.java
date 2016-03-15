@@ -106,6 +106,7 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
             } catch(Exception e) {
                 e.printStackTrace();
             }
+
             return size() > 0;
         }
 
