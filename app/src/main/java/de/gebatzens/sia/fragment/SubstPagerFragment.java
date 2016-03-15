@@ -55,22 +55,13 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     public RecyclerView recyclerView;
 
-    /**
-     * Creates a card for the given entry
-     *
-     * @return the view
-     */
-
-    /**
-     * Creates TextViews containing the special messages of the given plan
-     *
-     */
-
     @Override
     public void updateFragment() {
         switch(index) {
             case INDEX_OVERVIEW:
-                super.updateFragment();
+                if(recyclerView != null) {
+                    ((SubstListAdapter) recyclerView.getAdapter()).setToOverview();
+                }
                 break;
             case INDEX_INVALID:
                 return;
@@ -80,18 +71,14 @@ public class SubstPagerFragment extends RemoteDataFragment {
                     // This fragment will be deleted in a few seconds
                     break;
                 }
+
                 plan = plans.get(index);
 
-                ArrayList<String> items = new ArrayList<>();
-                items.add(getActivity().getString(R.string.all));
-                items.addAll(plan.getAllClasses());
-                final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, items);
+                if(recyclerView != null) {
+                    ((SubstListAdapter) recyclerView.getAdapter()).updateData(plan, SubstListAdapter.ALL_CLASSES, true);
+                }
 
-                AppCompatSpinner spinner = (AppCompatSpinner) getContentView().findViewById(R.id.spinner);
-                spinner.setAdapter(adapter);
-                spinner.getOnItemSelectedListener().onItemSelected(spinner, spinner, spinnerPos, 0);
                 break;
-
         }
     }
 
@@ -109,62 +96,6 @@ public class SubstPagerFragment extends RemoteDataFragment {
             throw new IllegalArgumentException(("index is INDEX_INVALID"));
         } else if(index == INDEX_OVERVIEW && GGApp.GG_APP.filters.including.size() > 0) {
             // Overview, filter applied
-
-            Filter.FilterList filters = GGApp.GG_APP.filters;
-
-            CardView cv2 = new CardView(getActivity());
-            cv2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            cv2.setRadius(0);
-
-            LinearLayout l2 = new LinearLayout(getActivity());
-            l2.setMinimumHeight(toPixels(50));
-            l2.setGravity(Gravity.CENTER_VERTICAL);
-
-            String diff = getTimeDiff(getActivity(), ((GGPlan.GGPlans) getFragment().getData()).loadDate);
-            TextView tv4 = createPrimaryTextView(diff, 13, inflater, l2);
-            tv4.setTag("gg_time");
-            tv4.setPadding(toPixels(16), toPixels(0), toPixels(16), toPixels(0));
-
-            LinearLayout l3 = new LinearLayout(getActivity());
-            l3.setGravity(Gravity.END | Gravity.CENTER);
-            l3.setPadding(0, 0, toPixels(16), 0);
-            l3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-            int chars = 0;
-            int chips = 0;
-
-            for(Filter.IncludingFilter inc : filters.including) {
-                String text = chars > 8 ? "+" + (filters.including.size() - chips) + "" : inc.getFilter();
-
-                TextView tv2 = createPrimaryTextView(text, chars > 8 ? 20 : 15, inflater, l3);
-                LinearLayout.LayoutParams pa = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                pa.setMargins(toPixels(chars > 8 ? 10 : 5), 0, chars > 8 ? toPixels(-20) : 0, 0);
-                tv2.setLayoutParams(pa);
-                tv2.setIncludeFontPadding(false);
-                if (chars <= 8) {
-                    tv2.setBackgroundResource(R.drawable.chip_background);
-                } else {
-                    tv2.setTextColor(Color.parseColor("#A0A0A0"));
-                   // tv2.setText(Html.fromHtml(text));
-                    tv2.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(getContext(), FilterActivity.class));
-                        }
-                    });
-                }
-
-                if(chars > 8)
-                    break;
-
-                chars += inc.getFilter().length();
-                chips++;
-
-            }
-
-            l2.addView(l3);
-            cv2.addView(l2);
-            l.addView(cv2);
 
             recyclerView = (RecyclerView) inflater.inflate(R.layout.basic_recyclerview, l, false);
             recyclerView.setPadding(0,0,0,toPixels(5));
@@ -196,48 +127,6 @@ public class SubstPagerFragment extends RemoteDataFragment {
             group.addView(sv);
 
         } else {
-            CardView cv2 = new CardView(getActivity());
-            cv2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            cv2.setRadius(0);
-
-            LinearLayout l2 = new LinearLayout(getActivity());
-            l2.setMinimumHeight(toPixels(50));
-            l2.setGravity(Gravity.CENTER_VERTICAL);
-
-            String diff = getTimeDiff(getActivity(), ((GGPlan.GGPlans) getFragment().getData()).loadDate);
-            TextView tv5 = createPrimaryTextView(diff, 13, inflater, l2);
-            tv5.setTag("gg_time");
-            tv5.setPadding(toPixels(16), toPixels(0), toPixels(16), toPixels(0));
-
-            LinearLayout l3 = new LinearLayout(getActivity());
-            l3.setGravity(Gravity.END | Gravity.CENTER);
-            l3.setPadding(0, 0, toPixels(16), 0);
-            l3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-            final AppCompatSpinner spinMode = new AppCompatSpinner(getActivity());
-            ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, new String[]{getString(R.string.classes), getString(R.string.lessons)});
-            modeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-            spinMode.setAdapter(modeAdapter);
-            l3.addView(spinMode);
-
-            final AppCompatSpinner spinClass = new AppCompatSpinner(getActivity());
-            spinClass.setId(R.id.spinner);
-
-            ArrayList<String> items = new ArrayList<>();
-            items.add(getActivity().getString(R.string.all));
-            items.addAll(plan.getAllClasses());
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, items);
-            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-            spinClass.setAdapter(adapter);
-            l3.addView(spinClass);
-
-            spinMode.setSelection(modeSpinnerPos);
-            spinClass.setSelection(spinnerPos);
-
-            l2.addView(l3);
-            cv2.addView(l2);
-            l.addView(cv2);
-
             final LinearLayout l4 = new LinearLayout(getActivity());
             l4.setOrientation(LinearLayout.VERTICAL);
             l.addView(l4);
@@ -247,58 +136,11 @@ public class SubstPagerFragment extends RemoteDataFragment {
             final SubstListAdapter sla = new SubstListAdapter(this);
             recyclerView.setAdapter(sla);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            sla.updateData(plan, SubstListAdapter.ALL_CLASSES, true);
 
             l4.addView(recyclerView);
 
             group.addView(l);
-
-            spinMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                boolean first = true;
-
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    modeSpinnerPos = position;
-
-                    //ignore first call
-                    if(!first) {
-                        spinClass.getOnItemSelectedListener().onItemSelected(spinClass, spinClass, spinnerPos, 0);
-                    }
-
-                    first = false;
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
-            spinClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String item = ((ArrayAdapter<String>) spinClass.getAdapter()).getItem(position);
-
-                    spinnerPos = position;
-
-                    if (!item.equals(getActivity().getString(R.string.all))) {
-                        Filter.FilterList fl = new Filter.FilterList();
-                        fl.including.add(new Filter.IncludingFilter(Filter.FilterType.CLASS, item));
-                        sla.updateData(plan.filter(fl), SubstListAdapter.PLAIN, true, item);
-
-                    } else {
-                        boolean sortByLesson = spinMode.getSelectedItemPosition() == 1;
-                        sla.updateData(plan, sortByLesson ? SubstListAdapter.ALL_LESSONS : SubstListAdapter.ALL_CLASSES, true);
-
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                    l4.removeAllViews();
-                }
-            });
-
         }
     }
 

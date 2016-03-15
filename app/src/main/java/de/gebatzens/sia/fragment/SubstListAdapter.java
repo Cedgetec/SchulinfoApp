@@ -15,13 +15,18 @@
  */
 package de.gebatzens.sia.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +36,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import de.gebatzens.sia.FilterActivity;
 import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
@@ -77,6 +83,10 @@ public class SubstListAdapter extends RecyclerView.Adapter {
     public void updateData(GGPlan plan, int type, boolean messages, String header) {
         this.type = type;
         entries.clear();
+
+        AdapterEntry hc = new AdapterEntry();
+        hc.type = AdapterEntry.HEADER_SPINNER;
+        entries.add(hc);
 
         if(header != null) {
             AdapterEntry ae = new AdapterEntry();
@@ -154,6 +164,10 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         this.type = OVERVIEW;
         entries.clear();
 
+        AdapterEntry header = new AdapterEntry();
+        header.type = AdapterEntry.HEADER;
+        entries.add(header);
+
         GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData();
         Filter.FilterList filter = GGApp.GG_APP.filters;
 
@@ -198,6 +212,8 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 }
             }
         }
+
+        notifyDataSetChanged();
     }
 
     @Override
@@ -219,6 +235,10 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 wrapper.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 frag.createNoEntriesCard(wrapper, LayoutInflater.from(frag.getActivity()));
                 return new RecyclerView.ViewHolder(wrapper) {};
+            case AdapterEntry.HEADER:
+                return createHeader(LayoutInflater.from(parent.getContext()));
+            case AdapterEntry.HEADER_SPINNER:
+                return createSpinnerHeader(LayoutInflater.from(parent.getContext()));
             default:
                 return null;
         }
@@ -320,7 +340,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
     private class AdapterEntry {
 
-        public static final int LABEL = 0, ENTRY = 1, MESSAGES = 2, NO_ENTRIES = 3;
+        public static final int LABEL = 0, ENTRY = 1, MESSAGES = 2, NO_ENTRIES = 3, HEADER = 4, HEADER_SPINNER = 5;
 
         Object data;
         int type;
@@ -401,6 +421,165 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
         sb.append(convertedDateFormat.format(date));
         return sb.toString();
+    }
+
+    public static class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    public HeaderViewHolder createHeader(LayoutInflater inflater) {
+        Filter.FilterList filters = GGApp.GG_APP.filters;
+
+        CardView cv2 = new CardView(frag.getActivity());
+        cv2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        cv2.setRadius(0);
+
+        LinearLayout l2 = new LinearLayout(frag.getActivity());
+        l2.setMinimumHeight(RemoteDataFragment.toPixels(50));
+        l2.setGravity(Gravity.CENTER_VERTICAL);
+
+        String diff = SubstPagerFragment.getTimeDiff(frag.getActivity(), ((GGPlan.GGPlans) frag.getFragment().getData()).loadDate);
+        TextView tv4 = frag.createPrimaryTextView(diff, 13, inflater, l2);
+        tv4.setTag("gg_time");
+        tv4.setPadding(RemoteDataFragment.toPixels(16), RemoteDataFragment.toPixels(0), RemoteDataFragment.toPixels(16), RemoteDataFragment.toPixels(0));
+
+        LinearLayout l3 = new LinearLayout(frag.getActivity());
+        l3.setGravity(Gravity.END | Gravity.CENTER);
+        l3.setPadding(0, 0, RemoteDataFragment.toPixels(16), 0);
+        l3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        int chars = 0;
+        int chips = 0;
+
+        for(Filter.IncludingFilter inc : filters.including) {
+            String text = chars > 8 ? "+" + (filters.including.size() - chips) + "" : inc.getFilter();
+
+            TextView tv2 = frag.createPrimaryTextView(text, chars > 8 ? 20 : 15, inflater, l3);
+            LinearLayout.LayoutParams pa = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            pa.setMargins(SubstPagerFragment.toPixels(chars > 8 ? 10 : 5), 0, chars > 8 ? SubstPagerFragment.toPixels(-20) : 0, 0);
+            tv2.setLayoutParams(pa);
+            tv2.setIncludeFontPadding(false);
+            if (chars <= 8) {
+                tv2.setBackgroundResource(R.drawable.chip_background);
+            } else {
+                tv2.setTextColor(Color.parseColor("#A0A0A0"));
+                // tv2.setText(Html.fromHtml(text));
+                tv2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        frag.startActivity(new Intent(frag.getContext(), FilterActivity.class));
+                    }
+                });
+            }
+
+            if(chars > 8)
+                break;
+
+            chars += inc.getFilter().length();
+            chips++;
+
+        }
+
+        l2.addView(l3);
+        cv2.addView(l2);
+
+        return new HeaderViewHolder(cv2);
+    }
+
+    public HeaderViewHolder createSpinnerHeader(LayoutInflater inflater) {
+        CardView cv2 = new CardView(frag.getActivity());
+        cv2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        cv2.setRadius(0);
+
+        LinearLayout l2 = new LinearLayout(frag.getActivity());
+        l2.setMinimumHeight(RemoteDataFragment.toPixels(50));
+        l2.setGravity(Gravity.CENTER_VERTICAL);
+
+        String diff = SubstPagerFragment.getTimeDiff(frag.getActivity(), ((GGPlan.GGPlans) frag.getFragment().getData()).loadDate);
+        TextView tv5 = frag.createPrimaryTextView(diff, 13, inflater, l2);
+        tv5.setTag("gg_time");
+        tv5.setPadding(RemoteDataFragment.toPixels(16), RemoteDataFragment.toPixels(0), RemoteDataFragment.toPixels(16), RemoteDataFragment.toPixels(0));
+
+        LinearLayout l3 = new LinearLayout(frag.getActivity());
+        l3.setGravity(Gravity.END | Gravity.CENTER);
+        l3.setPadding(0, 0, RemoteDataFragment.toPixels(16), 0);
+        l3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        final AppCompatSpinner spinMode = new AppCompatSpinner(frag.getActivity());
+        ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(frag.getActivity(), android.R.layout.simple_spinner_item, new String[]{ frag.getString(R.string.classes), frag.getString(R.string.lessons)});
+        modeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinMode.setAdapter(modeAdapter);
+        l3.addView(spinMode);
+
+        final AppCompatSpinner spinClass = new AppCompatSpinner(frag.getActivity());
+        spinClass.setId(R.id.spinner);
+
+        ArrayList<String> items = new ArrayList<>();
+        items.add(frag.getActivity().getString(R.string.all));
+        items.addAll(frag.plan.getAllClasses());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(frag.getActivity(), android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinClass.setAdapter(adapter);
+        l3.addView(spinClass);
+
+        spinMode.setSelection(frag.modeSpinnerPos);
+        spinClass.setSelection(frag.spinnerPos);
+
+        l2.addView(l3);
+        cv2.addView(l2);
+
+        spinMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            boolean first = true;
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                frag.modeSpinnerPos = position;
+
+                //ignore first call
+                if(!first) {
+                    spinClass.getOnItemSelectedListener().onItemSelected(spinClass, spinClass, frag.spinnerPos, 0);
+                }
+
+                first = false;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = ((ArrayAdapter<String>) spinClass.getAdapter()).getItem(position);
+
+                frag.spinnerPos = position;
+
+                if (!item.equals(frag.getActivity().getString(R.string.all))) {
+                    Filter.FilterList fl = new Filter.FilterList();
+                    fl.including.add(new Filter.IncludingFilter(Filter.FilterType.CLASS, item));
+                    updateData(frag.plan.filter(fl), SubstListAdapter.PLAIN, true, item);
+
+                } else {
+                    boolean sortByLesson = spinMode.getSelectedItemPosition() == 1;
+                    updateData(frag.plan, sortByLesson ? SubstListAdapter.ALL_LESSONS : SubstListAdapter.ALL_CLASSES, true);
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Is this possible?
+                //l4.removeAllViews();
+            }
+        });
+
+        return new HeaderViewHolder(cv2);
     }
 
 }
