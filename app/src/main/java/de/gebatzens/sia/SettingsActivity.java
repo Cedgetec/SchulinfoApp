@@ -145,6 +145,7 @@ public class SettingsActivity extends AppCompatActivity {
                 class ViewHolder {
                     ImageView icon;
                     TextView title;
+                    ImageView selectionIcon;
                 }
 
                 public View getView(int position, View convertView, ViewGroup parent) {
@@ -154,6 +155,7 @@ public class SettingsActivity extends AppCompatActivity {
                     holder = new ViewHolder();
                     holder.icon = (ImageView) v.findViewById(R.id.ThemeIcon);
                     holder.title = (TextView) v.findViewById(R.id.ThemeName);
+                    holder.selectionIcon = (ImageView) v.findViewById(R.id.SelectedThemeIcon);
                     v.setTag(holder);
 
                     boolean winter = themeIds.get(position).equals("Winter");
@@ -167,6 +169,13 @@ public class SettingsActivity extends AppCompatActivity {
                     }
 
                     holder.title.setText(themeNames.get(position));
+
+                    if(GGApp.GG_APP.school.getColor() != loadThemeColor(themeIds.get(position))) {
+                        holder.selectionIcon.setVisibility(View.GONE);
+                    }
+                    else{
+                        holder.selectionIcon.setVisibility(View.VISIBLE);
+                    }
                     return v;
                 }
             };
