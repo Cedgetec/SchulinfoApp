@@ -168,8 +168,8 @@ public class GGApp extends Application {
             mBuilder.setStyle(inboxStyle);
         }
         mBuilder.setColor(GGApp.GG_APP.school.getDarkColor());
-        if (getLedColor() != Color.BLACK) {
-            mBuilder.setLights(getLedColor(), 1000, 1000);
+        if (Color.parseColor(getLedColor()) != Color.BLACK) {
+            mBuilder.setLights(Color.parseColor(getLedColor()), 1000, 1000);
         }
 
         String vibration = preferences.getString("vibration", "off");
@@ -263,8 +263,12 @@ public class GGApp extends Application {
         preferences.edit().putInt("fragindex", index).apply();
     }
 
-    public int getLedColor() {
-        return Color.parseColor(preferences.getString("notification_led_color", "#2196F3"));
+    public String getLedColor() {
+        return preferences.getString("notification_led_color", "#2196F3");
+    }
+
+    public void setLedColor(String ledColor) {
+        preferences.edit().putString("notification_led_color", ledColor).apply();
     }
 
     public String getCustomThemeName() {

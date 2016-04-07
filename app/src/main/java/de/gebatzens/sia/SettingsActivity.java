@@ -25,6 +25,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -39,7 +40,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.support.v7.preference.DialogPreference;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,6 +109,77 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
+            final Preference notification_led_color = findPreference("notification_led_color");
+
+            final List<String> ledColors = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.notification_colors)));
+            final List<String> ledNames = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.notification_color_names)));
+
+            notification_led_color.setSummary(ledNames.get(ledColors.indexOf(GGApp.GG_APP.getLedColor())));
+
+            final ListAdapter adapter_notification_led_color = new ArrayAdapter<String>(
+                    getActivity().getApplicationContext(), R.layout.settings_custom_list_preference, ledColors) {
+
+                ViewHolder holder;
+
+                class ViewHolder {
+                    ImageView icon;
+                    TextView title;
+                    ImageView selectionIcon;
+                }
+
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    View v = convertView == null ? getActivity().getLayoutInflater().inflate(R.layout.settings_custom_list_preference, parent, false) : convertView;
+                    v.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                    holder = new ViewHolder();
+                    holder.icon = (ImageView) v.findViewById(R.id.ThemeIcon);
+                    holder.title = (TextView) v.findViewById(R.id.ThemeName);
+                    holder.selectionIcon = (ImageView) v.findViewById(R.id.SelectedThemeIcon);
+                    v.setTag(holder);
+
+                    holder.icon.setBackgroundResource(R.drawable.colored_circle);
+                    ((GradientDrawable) holder.icon.getBackground()).setColor(Color.parseColor(ledColors.get(position)));
+
+                    holder.title.setText(ledNames.get(position));
+
+                    holder.selectionIcon.setColorFilter(GGApp.GG_APP.school.getAccentColor() ,PorterDuff.Mode.SRC_ATOP);
+
+                    if(GGApp.GG_APP.getLedColor().equals(ledColors.get(position))) {
+                        holder.selectionIcon.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        holder.selectionIcon.setVisibility(View.GONE);
+                    }
+                    return v;
+                }
+            };
+
+            notification_led_color.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle(getResources().getString(R.string.personalisation_pickColor));
+
+                    builder.setAdapter(adapter_notification_led_color, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            notification_led_color.setSummary(ledNames.get(which));
+                            GGApp.GG_APP.setLedColor(ledColors.get(which));
+                        }
+
+                    });
+                    builder.setPositiveButton(getResources().getString(R.string.abort), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //nothing
+                        }
+                    });
+                    builder.create();
+                    builder.show();
+
+                    return false;
+                }
+            });
+
             Preference theme_color = findPreference("theme_color");
 
             boolean winter = GGApp.GG_APP.getCurrentThemeName().equals("Winter");
@@ -138,7 +209,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
             final ListAdapter adapter_theme_color = new ArrayAdapter<String>(
-                    getActivity().getApplicationContext(), R.layout.settings_theme_choose_list, themeIds) {
+                    getActivity().getApplicationContext(), R.layout.settings_custom_list_preference, themeIds) {
 
                 ViewHolder holder;
 
@@ -149,7 +220,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 public View getView(int position, View convertView, ViewGroup parent) {
-                    View v = convertView == null ? getActivity().getLayoutInflater().inflate(R.layout.settings_theme_choose_list, parent, false) : convertView;
+                    View v = convertView == null ? getActivity().getLayoutInflater().inflate(R.layout.settings_custom_list_preference, parent, false) : convertView;
                     v.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                     holder = new ViewHolder();
@@ -169,6 +240,8 @@ public class SettingsActivity extends AppCompatActivity {
                     }
 
                     holder.title.setText(themeNames.get(position));
+
+                    holder.selectionIcon.setColorFilter(GGApp.GG_APP.school.getAccentColor() ,PorterDuff.Mode.SRC_ATOP);
 
                     if(GGApp.GG_APP.school.getColor() != loadThemeColor(themeIds.get(position))) {
                         holder.selectionIcon.setVisibility(View.GONE);
