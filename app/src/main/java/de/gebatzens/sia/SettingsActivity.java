@@ -30,16 +30,16 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceFragment;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.preference.CheckBoxPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
+import android.support.v7.preference.DialogPreference;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,11 +62,10 @@ public class SettingsActivity extends AppCompatActivity {
     static String version;
     GGPFragment frag;
 
-    public static class GGPFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+    public static class GGPFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         @Override
-        public void onCreate(Bundle s) {
-            super.onCreate(s);
+        public void onCreatePreferences(Bundle s, String str) {
             final GGApp gg = GGApp.GG_APP;
 
             addPreferencesFromResource(R.xml.preferences);
@@ -84,7 +83,7 @@ public class SettingsActivity extends AppCompatActivity {
             pref_buildversion.setSummary("Version: " + versionName + " (" + BuildConfig.BUILD_TYPE + ")");
 
             Preference prefGithub = findPreference("githublink");
-            prefGithub.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            prefGithub.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     createCustomTab(getActivity(), "https://github.com/Cedgetec/SchulinfoAPP");
                     return true;
@@ -92,7 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             Preference license = findPreference("license");
-            license.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            license.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     createCustomTab(getActivity(), "http://www.apache.org/licenses/LICENSE-2.0");
                     return true;
@@ -100,7 +99,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             Preference prefTerms = findPreference("terms");
-            prefTerms.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            prefTerms.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     Intent intent = new Intent(getActivity(), TextActivity.class);
                     intent.putExtra("title", R.string.terms_title);
@@ -172,7 +171,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             };
 
-            theme_color.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            theme_color.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
@@ -206,7 +205,7 @@ public class SettingsActivity extends AppCompatActivity {
                 pref_username.setSummary(getString(R.string.logged_in_as, GGApp.GG_APP.remote.getUsername()));
             }
 
-            pref_username.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            pref_username.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     if(gg.remote.isLoggedIn()) {
@@ -238,9 +237,32 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
+            final Preference pref_developers = findPreference("developers");
+
+            if(GGApp.GG_APP.school.loginNeeded) {
+                pref_developers.setSummary(getString(R.string.logged_in_as, GGApp.GG_APP.remote.getUsername()));
+            }
+
+            pref_developers.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle(getResources().getString(R.string.developer));
+                    builder.setMessage(getResources().getString(R.string.developer_dialog));
+                    builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+                    return false;
+                }
+            });
+
             Preference filter = findPreference("filter");
             filter.setSummary(GGApp.GG_APP.filters.getSummary(true));
-            filter.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            filter.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent i = new Intent(getActivity(), FilterActivity.class);
@@ -254,7 +276,7 @@ public class SettingsActivity extends AppCompatActivity {
             GradientDrawable gd = (GradientDrawable) ld.findDrawableByLayerId(R.id.first_image);
             gd.setColor(GGApp.GG_APP.school.getColor());
             helpdesk.setIcon(ld);
-            helpdesk.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            helpdesk.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
@@ -341,7 +363,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         frag = new GGPFragment();
-        getFragmentManager().beginTransaction().replace(R.id.content_wrapper, frag, "gg_settings_frag").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_wrapper, frag, "gg_settings_frag").commit();
 
         setContentView(contentView);
 

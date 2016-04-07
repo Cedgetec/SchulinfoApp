@@ -1,74 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/school_settings">
-        <Preference android:title="Filter"
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.preference.PreferenceCategory android:title="@string/school_settings">
+        <android.support.v7.preference.Preference android:title="Filter"
             android:key="filter"
             android:summary="@string/no_filter_active" />
-        <Preference android:title="@string/logout"
+        <android.support.v7.preference.Preference android:title="@string/logout"
             android:key="authentication_username"
-            android:summary="@string/touch_to_logout">
-        </Preference>
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/general">
-        <CheckBoxPreference android:title="@string/show_notifications"
+            android:summary="@string/touch_to_logout" />
+    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.PreferenceCategory android:title="@string/general">
+        <android.support.v7.preference.CheckBoxPreference android:title="@string/show_notifications"
             android:summary="@string/notify_class"
             android:key="notifications"
             android:defaultValue="true" />
-        <ListPreference android:title="@string/notification_led"
+        <android.support.v7.preference.ListPreference android:title="@string/notification_led"
             android:summary="%s"
             android:key="notification_led_color"
             android:entries="@array/notification_color_names"
             android:defaultValue="#2196F3"
             android:entryValues="@array/notification_colors"/>
-        <ListPreference android:title="@string/vibration"
+        <android.support.v7.preference.ListPreference android:title="@string/vibration"
             android:key="vibration"
             android:entryValues="@array/vibration_keys"
             android:entries="@array/vibration_values"
             android:summary="%s"
             android:defaultValue="off"/>
-        <ListPreference android:title="@string/automatic_updates"
+        <android.support.v7.preference.ListPreference android:title="@string/automatic_updates"
             android:summary="%s"
             android:key="background_updates"
             android:entries="@array/data_updates_keys"
             android:entryValues="@array/data_updates_values"
             android:defaultValue="all" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/design">
-        <ListPreference android:title="@string/dark_theme"
+    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.PreferenceCategory android:title="@string/design">
+        <android.support.v7.preference.ListPreference android:title="@string/dark_theme"
             android:key="theme_mode"
             android:entryValues="@array/theme_mode_keys"
             android:entries="@array/theme_mode_values"
             android:summary="%s"
             android:defaultValue="nightfollowsystem"/>
-        <Preference android:title="@string/personalisation_changeColor"
+        <android.support.v7.preference.Preference android:title="@string/personalisation_changeColor"
             android:summary="@string/personalisation_changeColor_description"
             android:key="theme_color"
             android:icon="@drawable/settings_circle"/>
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/information">
-        <de.gebatzens.sia.GGDialogPreference
+    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.PreferenceCategory android:title="@string/information">
+        <!--TODO: DialogPreference anstatt von Preference (aktuell buggy (Stand: Library 23.3.0))-->
+        <android.support.v7.preference.Preference
             android:title="@string/developer"
             android:summary="@string/developer_info"
-            android:key="developers"
-            android:dialogMessage="@string/developer_dialog"
-            android:negativeButtonText=""/>
-        <Preference android:title="@string/terms_title"
+            android:key="developers"/>
+        <android.support.v7.preference.Preference android:title="@string/terms_title"
             android:summary="@string/please_read"
-            android:key="terms">
-        </Preference>
-        <Preference android:title="@string/github"
+            android:key="terms"/>
+        <android.support.v7.preference.Preference android:title="@string/github"
             android:summary="https://github.com/Cedgetec/SchulinfoApp"
             android:key="githublink"/>
-        <Preference android:title="@string/license"
+        <android.support.v7.preference.Preference android:title="@string/license"
             android:summary="Apache License 2.0"
             android:key="license"/>
-        <Preference android:title="@string/build_version"
+        <android.support.v7.preference.Preference android:title="@string/build_version"
             android:summary="Version: x.x.x"
             android:key="buildversion"/>
-        <Preference android:title="@string/contact"
+        <android.support.v7.preference.Preference android:title="@string/contact"
             android:summary="@string/contact_us"
-            android:key="helpdesk"
-            android:icon="@drawable/settings_circle_with_mail_icon"/>
-    </PreferenceCategory>
+            android:key="helpdesk"/>
+    </android.support.v7.preference.PreferenceCategory>
 
-</PreferenceScreen>
+</android.support.v7.preference.PreferenceScreen>
