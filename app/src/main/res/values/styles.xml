@@ -5,7 +5,7 @@
         <item name="colorControlNormal">@android:color/white</item> <!-- White toolbar icons on pre lollipop devices -->
     </style>
 
-    <style name="CheckBoxTheme" parent="Widget.AppCompat.CompoundButton.CheckBox">
+    <style name="CheckBoxTheme" parent="AppTheme.Base">
         <item name="colorAccent">#fff</item>
         <item name="android:textColorSecondary">#fff</item>
     </style>

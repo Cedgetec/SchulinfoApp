@@ -80,7 +80,7 @@ public class ExamAdapter extends RecyclerView.Adapter {
             case 0:
                 CardView cv2 = new CardView(frag.getContext());
                 CardView.LayoutParams params = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0, 0, 0, frag.toPixels(5));
+                params.setMargins(0, 0, 0, RemoteDataFragment.toPixels(5));
                 cv2.setLayoutParams(params);
                 cv2.setRadius(0);
                 LinearLayout l2 = new LinearLayout(frag.getContext());

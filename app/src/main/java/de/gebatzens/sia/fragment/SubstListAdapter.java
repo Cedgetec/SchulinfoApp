@@ -435,7 +435,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
         CardView cv2 = new CardView(frag.getActivity());
         CardView.LayoutParams params = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0, 0, 0, frag.toPixels(5));
+        params.setMargins(0, 0, 0, RemoteDataFragment.toPixels(5));
         cv2.setLayoutParams(params);
         cv2.setRadius(0);
 
@@ -494,7 +494,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
     public HeaderViewHolder createSpinnerHeader(LayoutInflater inflater) {
         CardView cv2 = new CardView(frag.getActivity());
         CardView.LayoutParams params = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0, 0, 0, frag.toPixels(5));
+        params.setMargins(0, 0, 0, RemoteDataFragment.toPixels(5));
         cv2.setLayoutParams(params);
         cv2.setRadius(0);
 
