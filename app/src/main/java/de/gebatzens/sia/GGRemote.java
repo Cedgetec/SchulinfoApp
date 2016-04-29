@@ -102,6 +102,7 @@ public class GGRemote {
         GGApp.GG_APP.deleteFile("mensa");
         GGApp.GG_APP.deleteFile("exams");
         GGApp.GG_APP.deleteFile("ggfilter");
+        GGApp.GG_APP.deleteFile("ggfilterV2");
         GGApp.GG_APP.filters.clear();
         GGApp.GG_APP.school = null;
 

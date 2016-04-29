@@ -54,6 +54,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
     int spinnerPos = 0, modeSpinnerPos = 0;
 
     public RecyclerView recyclerView;
+    ViewGroup vg;
 
     @Override
     public void updateFragment() {
@@ -61,6 +62,11 @@ public class SubstPagerFragment extends RemoteDataFragment {
             case INDEX_OVERVIEW:
                 if(recyclerView != null) {
                     ((SubstListAdapter) recyclerView.getAdapter()).setToOverview();
+                } else {
+                    if(vg != null) {
+                        vg.removeAllViews();
+                        createView(LayoutInflater.from(getContext()), vg);
+                    }
                 }
                 break;
             case INDEX_INVALID:
@@ -84,6 +90,8 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     @Override
     public void createView(final LayoutInflater inflater, ViewGroup group) {
+        vg = group;
+
         LinearLayout l = new LinearLayout(getActivity());
         l.setOrientation(LinearLayout.VERTICAL);
         l.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
