@@ -321,10 +321,6 @@ public class SettingsActivity extends AppCompatActivity {
 
             final Preference pref_developers = findPreference("developers");
 
-            if(GGApp.GG_APP.school.loginNeeded) {
-                pref_developers.setSummary(getString(R.string.logged_in_as, GGApp.GG_APP.remote.getUsername()));
-            }
-
             pref_developers.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
