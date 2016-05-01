@@ -4,6 +4,7 @@
     <color name="chip_background">#707070</color>
     <color name="SwipeRefreshLayout_background">#424242</color>
     <color name="filterEditButton_background">#c1c1c1</color>
+    <color name="textColorDayNight">#fff</color>
 
     <!-- Theme colors -->
     <color name="ThemeStartAppColorPrimaryDark">#141414</color>
