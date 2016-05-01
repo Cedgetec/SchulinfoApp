@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -236,9 +237,13 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 frag.createNoEntriesCard(wrapper, LayoutInflater.from(frag.getActivity()));
                 return new RecyclerView.ViewHolder(wrapper) {};
             case AdapterEntry.HEADER:
-                return createHeader(LayoutInflater.from(parent.getContext()));
+                HeaderViewHolder hv = createHeader(LayoutInflater.from(parent.getContext()));
+                hv.update();
+                return hv;
             case AdapterEntry.HEADER_SPINNER:
-                return createSpinnerHeader(LayoutInflater.from(parent.getContext()));
+                SpinnerHeaderViewHolder shv = createSpinnerHeader(LayoutInflater.from(parent.getContext()));
+                shv.update();
+                return shv;
             default:
                 return null;
         }
@@ -423,10 +428,83 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         return sb.toString();
     }
 
+    public static class SpinnerHeaderViewHolder extends RecyclerView.ViewHolder {
+
+        SubstPagerFragment frag;
+        AppCompatSpinner spinner;
+
+        public SpinnerHeaderViewHolder(View itemView, SubstPagerFragment frag) {
+            super(itemView);
+            this.frag = frag;
+            spinner = (AppCompatSpinner) itemView.findViewById(R.id.spinner);
+        }
+
+        public void update() {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(frag.getActivity().getString(R.string.all));
+            list.addAll(frag.plan.getAllClasses());
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(frag.getActivity(), android.R.layout.simple_spinner_item, list);
+            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+
+        }
+
+    }
+
     public static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-        public HeaderViewHolder(View itemView) {
+        LinearLayout l3;
+        SubstPagerFragment frag;
+
+        public HeaderViewHolder(View itemView, SubstPagerFragment frag) {
             super(itemView);
+            this.frag = frag;
+            l3 = (LinearLayout) itemView.findViewById(R.id.header_chips);
+
+        }
+
+        /**
+         * This method is quite expensive. It should not be called on every RecyclerView bind.
+         */
+        public void update() {
+            l3.removeAllViews();
+
+            Filter.FilterList filters = GGApp.GG_APP.filters;
+            LayoutInflater inflater = LayoutInflater.from(GGApp.GG_APP);
+            int chars = 0;
+            int chips = 0;
+
+            for(Filter.IncludingFilter inc : filters.including) {
+                String text = chars > 8 ? "+" + (filters.including.size() - chips) + "" : inc.getFilter();
+
+                TextView tv2 = frag.createPrimaryTextView(text, chars > 8 ? 20 : 15, inflater, l3);
+                LinearLayout.LayoutParams pa = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                pa.setMargins(SubstPagerFragment.toPixels(chars > 8 ? 10 : 5), 0, chars > 8 ? SubstPagerFragment.toPixels(-20) : 0, 0);
+                tv2.setLayoutParams(pa);
+                tv2.setIncludeFontPadding(false);
+                if (chars <= 8) {
+                    tv2.setBackgroundResource(R.drawable.chip_background);
+                } else {
+                    tv2.setTextColor(Color.parseColor("#A0A0A0"));
+                    // tv2.setText(Html.fromHtml(text));
+                    tv2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            frag.startActivity(new Intent(frag.getContext(), FilterActivity.class));
+                        }
+                    });
+                }
+
+                if(chars > 8)
+                    break;
+
+                chars += inc.getFilter().length();
+                chips++;
+
+            }
+
+
         }
     }
 
@@ -452,46 +530,16 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         l3.setGravity(Gravity.END | Gravity.CENTER);
         l3.setPadding(0, 0, RemoteDataFragment.toPixels(16), 0);
         l3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        l3.setId(R.id.header_chips);
 
-        int chars = 0;
-        int chips = 0;
-
-        for(Filter.IncludingFilter inc : filters.including) {
-            String text = chars > 8 ? "+" + (filters.including.size() - chips) + "" : inc.getFilter();
-
-            TextView tv2 = frag.createPrimaryTextView(text, chars > 8 ? 20 : 15, inflater, l3);
-            LinearLayout.LayoutParams pa = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            pa.setMargins(SubstPagerFragment.toPixels(chars > 8 ? 10 : 5), 0, chars > 8 ? SubstPagerFragment.toPixels(-20) : 0, 0);
-            tv2.setLayoutParams(pa);
-            tv2.setIncludeFontPadding(false);
-            if (chars <= 8) {
-                tv2.setBackgroundResource(R.drawable.chip_background);
-            } else {
-                tv2.setTextColor(Color.parseColor("#A0A0A0"));
-                // tv2.setText(Html.fromHtml(text));
-                tv2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        frag.startActivity(new Intent(frag.getContext(), FilterActivity.class));
-                    }
-                });
-            }
-
-            if(chars > 8)
-                break;
-
-            chars += inc.getFilter().length();
-            chips++;
-
-        }
 
         l2.addView(l3);
         cv2.addView(l2);
 
-        return new HeaderViewHolder(cv2);
+        return new HeaderViewHolder(cv2, frag);
     }
 
-    public HeaderViewHolder createSpinnerHeader(LayoutInflater inflater) {
+    public SpinnerHeaderViewHolder createSpinnerHeader(LayoutInflater inflater) {
         CardView cv2 = new CardView(frag.getActivity());
         CardView.LayoutParams params = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(0, 0, 0, RemoteDataFragment.toPixels(5));
@@ -521,12 +569,8 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         final AppCompatSpinner spinClass = new AppCompatSpinner(frag.getActivity());
         spinClass.setId(R.id.spinner);
 
-        ArrayList<String> items = new ArrayList<>();
-        items.add(frag.getActivity().getString(R.string.all));
-        items.addAll(frag.plan.getAllClasses());
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(frag.getActivity(), android.R.layout.simple_spinner_item, items);
-        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinClass.setAdapter(adapter);
+
+
         l3.addView(spinClass);
 
         spinMode.setSelection(frag.modeSpinnerPos);
@@ -583,7 +627,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             }
         });
 
-        return new HeaderViewHolder(cv2);
+        return new SpinnerHeaderViewHolder(cv2, frag);
     }
 
 }

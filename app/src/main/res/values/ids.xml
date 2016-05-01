@@ -14,5 +14,6 @@
     <item name="messages_list" type="id"/>
     <item name="spinner" type="id"/>
     <item name="pdfview" type="id"/>
+    <item name="header_chips" type="id"/>
 
 </resources>
