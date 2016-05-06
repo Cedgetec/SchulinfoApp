@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fu_card"
-    android:paddingBottom="48dp">
+    android:paddingBottom="@dimen/fu_tab_height">
 
     <ImageView
         android:layout_width="0dp"

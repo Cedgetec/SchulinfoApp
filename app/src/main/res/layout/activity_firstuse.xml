@@ -10,15 +10,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <RelativeLayout
+        android:layout_width="@dimen/fu_tab_height"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/fu_button_left_parent"
+        android:layout_alignTop="@+id/sliding_tabs">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_done"
+            android:background="@drawable/fu_button_circle"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:padding="8dp"
+            android:id="@+id/fu_button_left"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
     <de.gebatzens.sia.view.FUTabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/fu_tab_height"
         app:tabMode="fixed"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
-        app:paddingEnd="0dp"
         app:paddingStart="0dp"
+        app:paddingEnd="0dp"
         app:tabPadding="0dp"
         app:tabPaddingBottom="0dp"
         app:tabPaddingEnd="0dp"
@@ -26,6 +50,34 @@
         app:tabPaddingTop="0dp"
         app:tabMaxWidth="0dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/firstuseTabView_background"/>
+        android:layout_toEndOf="@+id/fu_button_left_parent"
+        android:layout_toRightOf="@+id/fu_button_left_parent"
+        android:layout_toStartOf="@+id/fu_button_right_parent"
+        android:layout_toLeftOf="@+id/fu_button_right_parent" />
+
+    <RelativeLayout
+        android:layout_width="@dimen/fu_tab_height"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/fu_button_right_parent"
+        android:layout_alignTop="@+id/sliding_tabs">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_arrow_forward"
+            android:background="@drawable/fu_button_circle"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:padding="8dp"
+            android:id="@+id/fu_button_right"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

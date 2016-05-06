@@ -11,11 +11,11 @@
 
     <color name="schoolListIconText">#ffffff</color>
 
-    <color name="firstuseTabView_background">#19000000</color>
     <color name="firstuseText">#ffffff</color>
     <color name="firstuseButtonText">#ffffff</color>
-    <color name="firstuseTab_background">#77000000</color>
-    <color name="firstuseSelectedTab_background">#77ffffff</color>
+    <color name="firstuseButton_background">#42000000</color>
+    <color name="firstuseTab_background">#8a000000</color>
+    <color name="firstuseSelectedTab_background">#ffffff</color>
 
     <color name="navigationViewPictureOverlay">#50000000</color>
     <color name="navigationViewPictureText">#ffffff</color>

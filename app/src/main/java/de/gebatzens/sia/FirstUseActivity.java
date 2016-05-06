@@ -23,13 +23,18 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatDelegate;
+import android.view.View;
+import android.widget.ImageView;
 
+import de.gebatzens.sia.dialog.FilterDialog;
 import de.gebatzens.sia.fragment.FirstUseAdapter;
 import de.gebatzens.sia.fragment.FirstUseFragment;
 
 public class FirstUseActivity extends FragmentActivity {
 
     public FirstUseAdapter adapter;
+    private ImageView iv_left;
+    private ImageView iv_right;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -61,6 +66,25 @@ public class FirstUseActivity extends FragmentActivity {
 
         tabLayout.getTabAt(0).getCustomView().setSelected(true);
 
+        iv_left = (ImageView) findViewById(R.id.fu_button_left);
+        iv_right = (ImageView) findViewById(R.id.fu_button_right);
+
+        iv_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GGApp.GG_APP.preferences.edit().putBoolean("first_use", true).apply();
+                startActivity(new Intent(v.getContext(), SetupActivity.class));
+                finish();
+            }
+        });
+
+        iv_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(1);
+            }
+        });
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -87,7 +111,32 @@ public class FirstUseActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int i) {
+                if(i > 0)
+                    iv_left.setVisibility(View.GONE);
+                else
+                    iv_left.setVisibility(View.VISIBLE);
 
+                final int i2 = i;
+                if(i == 5) {
+                    iv_right.setImageResource(R.drawable.ic_done);
+                    iv_right.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            GGApp.GG_APP.preferences.edit().putBoolean("first_use", true).apply();
+                            startActivity(new Intent(v.getContext(), SetupActivity.class));
+                            finish();
+                        }
+                    });
+                }
+                else {
+                    iv_right.setImageResource(R.drawable.ic_arrow_forward);
+                    iv_right.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            viewPager.setCurrentItem(i2 + 1);
+                        }
+                    });
+                }
             }
 
             @Override

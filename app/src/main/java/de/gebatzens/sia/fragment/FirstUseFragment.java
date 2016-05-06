@@ -98,18 +98,11 @@ public class FirstUseFragment extends Fragment {
                 tvsub.setText(R.string.fu_fourthpage_content);
                 break;
             case 5:
-                layout = (LinearLayout) inflater.inflate(R.layout.fu_card_finish, container, false);
-                Button bu = (Button) layout.findViewById(R.id.fu_button);
-                bu.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        GGApp.GG_APP.preferences.edit().putBoolean("first_use", true).apply();
-                        startActivity(new Intent(getActivity(), SetupActivity.class));
-                        getActivity().finish();
-                    }
-                });
                 color = Color.parseColor("#8BC34A");
                 layout.setBackgroundColor(color);
+                i.setImageResource(R.drawable.fu_finish);
+                tvhead.setText(R.string.have_fun_with_the_app);
+                tvsub.setText(R.string.fu_fourthpage_content);
                 break;
         }
 
