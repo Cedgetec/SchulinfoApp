@@ -29,7 +29,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -37,14 +38,16 @@
                 android:textColor="@color/firstuseText"
                 android:textSize="24sp"
                 android:paddingBottom="12dp"
-                android:id="@+id/fu_header"/>
+                android:id="@+id/fu_header"
+                android:gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/firstuseText"
                 android:textSize="16sp"
-                android:id="@+id/fu_text"/>
+                android:id="@+id/fu_text"
+                android:gravity="center"/>
 
         </LinearLayout>
 
