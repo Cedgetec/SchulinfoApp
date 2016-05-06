@@ -17,6 +17,14 @@
         app:tabMode="fixed"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
+        app:paddingEnd="0dp"
+        app:paddingStart="0dp"
+        app:tabPadding="0dp"
+        app:tabPaddingBottom="0dp"
+        app:tabPaddingEnd="0dp"
+        app:tabPaddingStart="0dp"
+        app:tabPaddingTop="0dp"
+        app:tabMaxWidth="0dp"
         android:layout_alignParentBottom="true"
         android:background="@color/firstuseTabView_background"/>
 
