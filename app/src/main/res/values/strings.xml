@@ -99,8 +99,6 @@
     <string name="downloading_image">Downloading image…</string>
     <string name="other_school">Other School</string>
     <string name="school_id">School ID</string>
-    <string name="start_now">Start now</string>
-    <string name="have_fun_with_the_app">Enjoy the App!</string>
     <string name="fu_firstpage_title">Your SchoolinfoApp</string>
     <string name="fu_firstpage_content">Be informed about your school everywhere and at any time.</string>
     <string name="fu_secondpage_title">Schedule changes adapted to you</string>
@@ -111,6 +109,8 @@
     <string name="fu_fourthpage_content">More features: You can read news of your school and cafeteria schedules if your school supports these features.</string>
     <string name="fu_fifthpage_title">Exam filter</string>
     <string name="fu_fifthpage_content">Mark exams affecting you to let them appear in the overview where you get an useful view of upcoming exams.</string>
+    <string name="fu_sixth_title">Enjoy the App!</string>
+    <string name="fu_sixth_content">Click on the arrow at the bottom right to get started.</string>
     <string name="user">User</string>
     <string name="please_read">Read this, please!</string>
     <string name="contact">Support</string>

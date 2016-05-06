@@ -95,8 +95,6 @@
     <string name="i_accept">Ich akzeptiere die</string>
     <string name="downloading_image">Lade Bild herunter…</string>
     <string name="school_id">Schul-ID</string>
-    <string name="start_now">Jetzt starten</string>
-    <string name="have_fun_with_the_app">Viel Spaß mit der App!</string>
     <string name="fu_firstpage_title">Deine SchulinfoApp</string>
     <string name="fu_firstpage_content">Nutze ab sofort einige neue Funktionen rund um deinen Vertretungsplan! </string>
     <string name="fu_secondpage_title">Planänderungen auf dich angepasst</string>
@@ -104,9 +102,11 @@
     <string name="fu_thirdpage_title">Der Kursfilter</string>
     <string name="fu_thirdpage_content">Trage im Filtermenü Kurse ein, die dich nicht betreffen, um sie von deiner persönlichen Übersicht auszuschließen.</string>
     <string name="fu_fourthpage_title">Noch nicht genug?</string>
-    <string name="fu_fourthpage_content">Weitere Funktionen: Falls von der Schule unterstützt, kannst du News- und Mensaplan in der App einsehen.</string>
+    <string name="fu_fourthpage_content">Weitere Funktionen: Falls von der Schule unterstützt, kannst du News und den Mensaplan in der App einsehen.</string>
     <string name="fu_fifthpage_title">Klausurenfilter</string>
     <string name="fu_fifthpage_content">Markiere deine Klausuren, um sie in der Übersicht anzeigen zu lassen. Dort kannst du dir einen praktischen Überblick verschaffen.</string>
+    <string name="fu_sixth_title">Viel Spaß mit der App!</string>
+    <string name="fu_sixth_content">Klicke auf den Pfeil unten rechts um loszulegen.</string>
     <string name="user">User</string>
     <string name="please_read">Wichtig: Bitte lesen!</string>
     <string name="contact">Kontakt</string>

@@ -16,22 +16,18 @@
 
 package de.gebatzens.sia.fragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import de.gebatzens.sia.FirstUseActivity;
-import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
-import de.gebatzens.sia.SetupActivity;
 
 public class FirstUseFragment extends Fragment {
 
@@ -101,8 +97,8 @@ public class FirstUseFragment extends Fragment {
                 color = Color.parseColor("#8BC34A");
                 layout.setBackgroundColor(color);
                 i.setImageResource(R.drawable.fu_finish);
-                tvhead.setText(R.string.have_fun_with_the_app);
-                tvsub.setText(R.string.fu_fourthpage_content);
+                tvhead.setText(R.string.fu_sixth_title);
+                tvsub.setText(R.string.fu_sixth_content);
                 break;
         }
 

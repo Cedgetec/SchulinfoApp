@@ -26,7 +26,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.ImageView;
 
-import de.gebatzens.sia.dialog.FilterDialog;
 import de.gebatzens.sia.fragment.FirstUseAdapter;
 import de.gebatzens.sia.fragment.FirstUseFragment;
 
