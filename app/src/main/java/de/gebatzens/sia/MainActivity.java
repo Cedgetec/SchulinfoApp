@@ -22,6 +22,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -213,6 +214,10 @@ public class MainActivity extends AppCompatActivity {
         if(fragments.get(GGApp.GG_APP.getFragmentIndex()).getData() == null)
             GGApp.GG_APP.refreshAsync(null, true, fragments.get(GGApp.GG_APP.getFragmentIndex()));
 
+        if("Summer".equals(GGApp.GG_APP.getCurrentThemeName())){
+            ImageView summerImage = (ImageView) findViewById(R.id.summer_image);
+            summerImage.setVisibility(View.VISIBLE);
+        }
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

@@ -28,6 +28,12 @@
     </style>
 
     <!-- Custom application themes -->
+    <style name="AppThemeSummer" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/ThemeSummerColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ThemeSummerColorPrimaryDark</item>
+        <item name="colorAccent">@color/ThemeSummerColorAccent</item>
+        <item name="alertDialogTheme">@style/Theme.AlertDialog.Summer</item>
+    </style>
     <style name="AppThemeWinter" parent="AppTheme.Base">
         <item name="colorPrimary">@color/ThemeWinterColorPrimary</item>
         <item name="colorPrimaryDark">@color/ThemeWinterColorPrimaryDark</item>
@@ -158,6 +164,9 @@
     </style>
 
     <!-- Custom popup themes -->
+    <style name="Theme.AlertDialog.Summer" parent="Theme.AlertDialog.Base">
+        <item name="colorAccent">@color/ThemeSummerColorAccent</item>
+    </style>
     <style name="Theme.AlertDialog.Winter" parent="Theme.AlertDialog.Base">
         <item name="colorAccent">@color/ThemeWinterColorAccent</item>
     </style>

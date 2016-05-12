@@ -34,6 +34,10 @@
     <!-- Theme colors -->
     <color name="ThemeStartAppColorPrimaryDark">#c9c9c9</color>
 
+    <color name="ThemeSummerColorPrimary">#009ee7</color>
+    <color name="ThemeSummerColorPrimaryDark">#0086d2</color>
+    <color name="ThemeSummerColorAccent">#009ee7</color>
+
     <color name="ThemeWinterColorPrimary">#1973ac</color>
     <color name="ThemeWinterColorPrimaryDark">#156191</color>
     <color name="ThemeWinterColorAccent">#1973ac</color>
@@ -115,6 +119,17 @@
     <color name="ThemeSetupColorAccent">#3073D4</color>
 
     <!-- Custom card colors -->
+    <string-array name="CardviewColorSummer" translatable="false" tools:ignore="UnusedResources">
+        <item>#3d94ff</item>
+        <item>#0097ed</item>
+        <item>#006fae</item>
+        <item>#0079b1</item>
+        <item>#1f80ae</item>
+        <item>#1a7ab1</item>
+        <item>#008ee0</item>
+        <item>#4f8ee0</item>
+        <item>#698ee0</item>
+    </string-array>
     <string-array name="CardviewColorWinter" translatable="false" tools:ignore="UnusedResources">
         <item>#4493c1</item>
         <item>#33759c</item>

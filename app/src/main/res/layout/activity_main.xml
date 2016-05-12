@@ -33,6 +33,14 @@
             </android.support.design.widget.CoordinatorLayout>
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/summer_palm"
+            android:adjustViewBounds="true"
+            android:visibility="invisible"
+            android:id="@+id/summer_image"/>
+
         <de.gebatzens.sia.view.SnowView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

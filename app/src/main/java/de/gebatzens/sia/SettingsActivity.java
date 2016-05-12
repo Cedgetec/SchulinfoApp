@@ -204,6 +204,10 @@ public class SettingsActivity extends AppCompatActivity {
                         themeIds.add(0, st);
                         themeNames.add(0, getString(R.string.winter));
                         break;
+                    case "Summer":
+                        themeIds.add(0, st);
+                        themeNames.add(0, getString(R.string.summer));
+                        break;
                 }
             }
 

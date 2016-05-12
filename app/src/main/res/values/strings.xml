@@ -204,6 +204,7 @@
         <item>Dark Grey</item>
     </string-array>
     <string name="winter">Winter</string>
+    <string name="summer">Summer</string>
 
     <string-array name="notification_color_names">
         <item>Disabled</item>
