@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/summer_palm"
             android:adjustViewBounds="true"
+            android:alpha="0.2"
             android:visibility="invisible"
             android:id="@+id/summer_image"/>
 
