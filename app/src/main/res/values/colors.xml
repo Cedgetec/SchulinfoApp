@@ -35,7 +35,7 @@
     <color name="ThemeStartAppColorPrimaryDark">#c9c9c9</color>
 
     <color name="ThemeSummerColorPrimary">#009ee7</color>
-    <color name="ThemeSummerColorPrimaryDark">#0086d2</color>
+    <color name="ThemeSummerColorPrimaryDark">#007db7</color>
     <color name="ThemeSummerColorAccent">#009ee7</color>
 
     <color name="ThemeWinterColorPrimary">#1973ac</color>
