@@ -29,7 +29,6 @@
     <color name="chip_background">#E0E0E0</color>
     <color name="SwipeRefreshLayout_background">#ffffff</color>
     <color name="filterEditButton_background">#737373</color>
-    <color name="textColorDayNight">#000</color>
 
     <!-- Theme colors -->
     <color name="ThemeStartAppColorPrimaryDark">#c9c9c9</color>

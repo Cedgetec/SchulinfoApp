@@ -17,6 +17,7 @@ package de.gebatzens.sia.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -237,7 +238,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 return new RecyclerView.ViewHolder(wrapper) {};
             case AdapterEntry.HEADER:
                 HeaderViewHolder hv = createHeader(LayoutInflater.from(parent.getContext()));
-                hv.update();
+                hv.update(LayoutInflater.from(parent.getContext()));
                 return hv;
             case AdapterEntry.HEADER_SPINNER:
                 SpinnerHeaderViewHolder shv = createSpinnerHeader(LayoutInflater.from(parent.getContext()));
@@ -466,18 +467,16 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         /**
          * This method is quite expensive. It should not be called on every RecyclerView bind.
          */
-        public void update() {
+        public void update(LayoutInflater inflater) {
             l3.removeAllViews();
 
             Filter.FilterList filters = GGApp.GG_APP.filters;
-            LayoutInflater inflater = LayoutInflater.from(GGApp.GG_APP);
             int chars = 0;
             int chips = 0;
 
             for(Filter.IncludingFilter inc : filters.including) {
                 String text = chars > 8 ? "+" + (filters.including.size() - chips) + "" : inc.getFilter();
-
-                TextView tv2 = frag.createPrimaryTextView(text, chars > 8 ? 20 : 15, inflater, l3);
+                TextView tv2 = chars > 8 ? frag.createSecondaryTextView(text, 20, inflater, l3) : frag.createPrimaryTextView(text, 15, inflater, l3);
                 LinearLayout.LayoutParams pa = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 pa.setMargins(SubstPagerFragment.toPixels(chars > 8 ? 10 : 5), 0, chars > 8 ? SubstPagerFragment.toPixels(-20) : 0, 0);
                 tv2.setLayoutParams(pa);
@@ -485,8 +484,6 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 if (chars <= 8) {
                     tv2.setBackgroundResource(R.drawable.chip_background);
                 } else {
-                    tv2.setTextColor(Color.parseColor("#A0A0A0"));
-                    // tv2.setText(Html.fromHtml(text));
                     tv2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
