@@ -34,9 +34,9 @@
     <!-- Theme colors -->
     <color name="ThemeStartAppColorPrimaryDark">#c9c9c9</color>
 
-    <color name="ThemeSummerColorPrimary">#009ee7</color>
-    <color name="ThemeSummerColorPrimaryDark">#007db7</color>
-    <color name="ThemeSummerColorAccent">#009ee7</color>
+    <color name="ThemeSummerColorPrimary">#FF9800</color>
+    <color name="ThemeSummerColorPrimaryDark">#F57C00</color>
+    <color name="ThemeSummerColorAccent">#FF9800</color>
 
     <color name="ThemeWinterColorPrimary">#1973ac</color>
     <color name="ThemeWinterColorPrimaryDark">#156191</color>
@@ -122,10 +122,9 @@
     <string-array name="CardviewColorSummer" translatable="false" tools:ignore="UnusedResources">
         <item>#3d94ff</item>
         <item>#0097ed</item>
-        <item>#006fae</item>
-        <item>#0079b1</item>
-        <item>#1f80ae</item>
-        <item>#1a7ab1</item>
+        <item>#0080c9</item>
+        <item>#0085c2</item>
+        <item>#009fea</item>
         <item>#008ee0</item>
         <item>#4f8ee0</item>
         <item>#698ee0</item>

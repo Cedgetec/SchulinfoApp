@@ -9,9 +9,9 @@
     <!-- Theme colors -->
     <color name="ThemeStartAppColorPrimaryDark">#141414</color>
 
-    <color name="ThemeSummerColorPrimary">#009ee7</color>
-    <color name="ThemeSummerColorPrimaryDark">#007db7</color>
-    <color name="ThemeSummerColorAccent">#009ee7</color>
+    <color name="ThemeSummerColorPrimary">#F57C00</color>
+    <color name="ThemeSummerColorPrimaryDark">#E65100</color>
+    <color name="ThemeSummerColorAccent">#F57C00</color>
 
     <color name="ThemeWinterColorPrimary">#145c8a</color>
     <color name="ThemeWinterColorPrimaryDark">#114e75</color>
@@ -95,15 +95,14 @@
 
     <!-- Custom card colors -->
     <string-array name="CardviewColorSummer" translatable="false" tools:ignore="UnusedResources">
-        <item>#3d94ff</item>
-        <item>#0097ed</item>
-        <item>#006fae</item>
-        <item>#0079b1</item>
-        <item>#1f80ae</item>
-        <item>#1a7ab1</item>
-        <item>#008ee0</item>
-        <item>#4f8ee0</item>
-        <item>#698ee0</item>
+        <item>#2862ab</item>
+        <item>#02659e</item>
+        <item>#0080c9</item>
+        <item>#085274</item>
+        <item>#007bb4</item>
+        <item>#017fc7</item>
+        <item>#396db1</item>
+        <item>#43598b</item>
     </string-array>
     <string-array name="CardviewColorWinter" translatable="false" tools:ignore="UnusedResources">
         <item>#33759c</item>

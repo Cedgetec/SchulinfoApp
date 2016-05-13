@@ -38,11 +38,15 @@
             android:layout_height="190dp"
             android:src="@drawable/summer_palm"
             android:adjustViewBounds="true"
-            android:alpha="0.1"
+            android:alpha="0.3"
+            android:tint="#3fb907"
             android:visibility="invisible"
             android:id="@+id/summer_image"/>
 
-
+        <de.gebatzens.sia.view.SnowView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            sia:theight="?attr/actionBarSize"/>
     </FrameLayout>
 
     <android.support.design.widget.NavigationView

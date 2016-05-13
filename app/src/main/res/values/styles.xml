@@ -18,7 +18,6 @@
 
     <!-- Setup application themes -->
     <style name="FirstUseTheme" parent="AppTheme.Base">
-        <item name="colorButtonNormal">@android:color/white</item>
         <!-- api 21 and higher -->
     </style>
 
@@ -227,5 +226,6 @@
     <style name="Theme.AlertDialog.Setup" parent="Theme.AlertDialog.Base">
         <item name="colorAccent">@color/ThemeSetupColorAccent</item>
     </style>
+
 </resources>
 

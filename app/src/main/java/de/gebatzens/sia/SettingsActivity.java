@@ -247,11 +247,11 @@ public class SettingsActivity extends AppCompatActivity {
 
                     holder.selectionIcon.setColorFilter(GGApp.GG_APP.school.getAccentColor() ,PorterDuff.Mode.SRC_ATOP);
 
-                    if(GGApp.GG_APP.school.getColor() != loadThemeColor(themeIds.get(position))) {
-                        holder.selectionIcon.setVisibility(View.GONE);
+                    if(GGApp.GG_APP.getCustomThemeName().equals(themeIds.get(position))) {
+                        holder.selectionIcon.setVisibility(View.VISIBLE);
                     }
                     else{
-                        holder.selectionIcon.setVisibility(View.VISIBLE);
+                        holder.selectionIcon.setVisibility(View.GONE);
                     }
                     return v;
                 }
