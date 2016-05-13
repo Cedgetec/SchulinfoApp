@@ -247,7 +247,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                     holder.selectionIcon.setColorFilter(GGApp.GG_APP.school.getAccentColor() ,PorterDuff.Mode.SRC_ATOP);
 
-                    if(GGApp.GG_APP.getCustomThemeName().equals(themeIds.get(position))) {
+                    if(GGApp.GG_APP.getCurrentThemeName().equals(themeIds.get(position))) {
                         holder.selectionIcon.setVisibility(View.VISIBLE);
                     }
                     else{

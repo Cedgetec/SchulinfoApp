@@ -43,7 +43,7 @@ public class FirstUseActivity extends FragmentActivity {
 
         super.onCreate(bundle);
 
-        if(("Winter".equals(GGApp.GG_APP.getCustomThemeName())) && !GGApp.GG_APP.getCustomThemeName().equals(GGApp.GG_APP.getSeasonTheme())) {
+        if(("Winter".equals(GGApp.GG_APP.getCustomThemeName()) || "Summer".equals(GGApp.GG_APP.getCustomThemeName())) && !GGApp.GG_APP.getCustomThemeName().equals(GGApp.GG_APP.getSeasonTheme())) {
             GGApp.GG_APP.setCustomThemeName("Blue");
             GGApp.GG_APP.school.loadTheme();
         }
