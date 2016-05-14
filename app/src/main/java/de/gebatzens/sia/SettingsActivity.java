@@ -18,6 +18,7 @@ package de.gebatzens.sia;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -61,6 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
     private static boolean changed, recreate;
     static String version;
     GGPFragment frag;
+    Context context;
 
     public static class GGPFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -183,9 +185,16 @@ public class SettingsActivity extends AppCompatActivity {
             Preference theme_color = findPreference("theme_color");
 
             boolean winter = GGApp.GG_APP.getCurrentThemeName().equals("Winter");
+            boolean summer = GGApp.GG_APP.getCurrentThemeName().equals("Summer");
 
             if(winter) {
                 LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_image);
+                ld.setDrawableByLayerId(R.id.settingsCircleImage, ContextCompat.getDrawable(getActivity(), R.drawable.snow_circle));
+                ((GradientDrawable) ld.getDrawable(0)).setColor(GGApp.GG_APP.school.getColor());
+                theme_color.setIcon(ld);
+            } else if (summer) {
+                LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_image);
+                ld.setDrawableByLayerId(R.id.settingsCircleImage, ContextCompat.getDrawable(getActivity(), R.drawable.boat_circle));
                 ((GradientDrawable) ld.getDrawable(0)).setColor(GGApp.GG_APP.school.getColor());
                 theme_color.setIcon(ld);
             } else {
@@ -234,10 +243,16 @@ public class SettingsActivity extends AppCompatActivity {
                     v.setTag(holder);
 
                     boolean winter = themeIds.get(position).equals("Winter");
+                    boolean summer = themeIds.get(position).equals("Summer");
 
-                    holder.icon.setBackgroundResource(winter ? R.drawable.colored_circle_image : R.drawable.colored_circle);
+                    holder.icon.setBackgroundResource(winter || summer ? R.drawable.colored_circle_image : R.drawable.colored_circle);
                     if(winter) {
                         LayerDrawable layerDrawable = (LayerDrawable) holder.icon.getBackground();
+                        layerDrawable.setDrawableByLayerId(R.id.coloredCircleImage, ContextCompat.getDrawable(getActivity(), R.drawable.snow_circle));
+                        ((GradientDrawable) layerDrawable.getDrawable(0)).setColor(loadThemeColor(themeIds.get(position)));
+                    } else if(summer) {
+                        LayerDrawable layerDrawable = (LayerDrawable) holder.icon.getBackground();
+                        layerDrawable.setDrawableByLayerId(R.id.coloredCircleImage, ContextCompat.getDrawable(getActivity(), R.drawable.boat_circle));
                         ((GradientDrawable) layerDrawable.getDrawable(0)).setColor(loadThemeColor(themeIds.get(position)));
                     } else {
                         ((GradientDrawable) holder.icon.getBackground()).setColor(loadThemeColor(themeIds.get(position)));

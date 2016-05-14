@@ -7,6 +7,7 @@
     </item>
     <item
         android:drawable="@drawable/snow_circle"
+        android:id="@+id/coloredCircleImage"
         android:bottom="5dp"
         android:left="5dp"
         android:right="5dp"
