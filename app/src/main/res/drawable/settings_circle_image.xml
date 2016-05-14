@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+    <item android:id="@+id/background">
         <shape android:shape="oval">
             <solid android:color="#000"/>
             <size
@@ -8,12 +8,11 @@
                 android:height="46dp"/>
         </shape>
     </item>
-    <item>
-        <inset android:drawable="@drawable/snow_circle"
-            android:id="@+id/settingsCircleImage"
-            android:insetTop="10dp"
-            android:insetLeft="10dp"
-            android:insetRight="10dp"
-            android:insetBottom="10dp"/>
+    <item android:id="@+id/image"
+        android:drawable="@drawable/snow_circle"
+        android:bottom="10dp"
+        android:left="10dp"
+        android:right="10dp"
+        android:top="10dp">
     </item>
 </layer-list>

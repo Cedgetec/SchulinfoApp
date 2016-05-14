@@ -18,7 +18,6 @@ package de.gebatzens.sia;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,7 +61,6 @@ public class SettingsActivity extends AppCompatActivity {
     private static boolean changed, recreate;
     static String version;
     GGPFragment frag;
-    Context context;
 
     public static class GGPFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -189,13 +187,13 @@ public class SettingsActivity extends AppCompatActivity {
 
             if(winter) {
                 LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_image);
-                ld.setDrawableByLayerId(R.id.settingsCircleImage, ContextCompat.getDrawable(getActivity(), R.drawable.snow_circle));
-                ((GradientDrawable) ld.getDrawable(0)).setColor(GGApp.GG_APP.school.getColor());
+                ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.snow_circle));
+                ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(GGApp.GG_APP.school.getColor());
                 theme_color.setIcon(ld);
             } else if (summer) {
                 LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_image);
-                ld.setDrawableByLayerId(R.id.settingsCircleImage, ContextCompat.getDrawable(getActivity(), R.drawable.boat_circle));
-                ((GradientDrawable) ld.getDrawable(0)).setColor(GGApp.GG_APP.school.getColor());
+                ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.boat_circle));
+                ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(GGApp.GG_APP.school.getColor());
                 theme_color.setIcon(ld);
             } else {
                 GradientDrawable tcgd = (GradientDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle);
@@ -247,13 +245,13 @@ public class SettingsActivity extends AppCompatActivity {
 
                     holder.icon.setBackgroundResource(winter || summer ? R.drawable.colored_circle_image : R.drawable.colored_circle);
                     if(winter) {
-                        LayerDrawable layerDrawable = (LayerDrawable) holder.icon.getBackground();
-                        layerDrawable.setDrawableByLayerId(R.id.coloredCircleImage, ContextCompat.getDrawable(getActivity(), R.drawable.snow_circle));
-                        ((GradientDrawable) layerDrawable.getDrawable(0)).setColor(loadThemeColor(themeIds.get(position)));
+                        LayerDrawable ld = (LayerDrawable) holder.icon.getBackground();
+                        ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.snow_circle));
+                        ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(loadThemeColor(themeIds.get(position)));
                     } else if(summer) {
-                        LayerDrawable layerDrawable = (LayerDrawable) holder.icon.getBackground();
-                        layerDrawable.setDrawableByLayerId(R.id.coloredCircleImage, ContextCompat.getDrawable(getActivity(), R.drawable.boat_circle));
-                        ((GradientDrawable) layerDrawable.getDrawable(0)).setColor(loadThemeColor(themeIds.get(position)));
+                        LayerDrawable ld = (LayerDrawable) holder.icon.getBackground();
+                        ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.boat_circle));
+                        ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(loadThemeColor(themeIds.get(position)));
                     } else {
                         ((GradientDrawable) holder.icon.getBackground()).setColor(loadThemeColor(themeIds.get(position)));
                     }
@@ -369,9 +367,9 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             Preference helpdesk = findPreference("helpdesk");
-            LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_with_mail_icon);
-            GradientDrawable gd = (GradientDrawable) ld.findDrawableByLayerId(R.id.first_image);
-            gd.setColor(GGApp.GG_APP.school.getColor());
+            LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_image);
+            ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.ic_mail));
+            ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(GGApp.GG_APP.school.getColor());
             helpdesk.setIcon(ld);
             helpdesk.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
