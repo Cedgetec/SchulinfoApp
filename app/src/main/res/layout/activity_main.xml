@@ -20,6 +20,11 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/summer_background_image"/>
                 <FrameLayout
                     android:id="@+id/content_fragment"
                     android:layout_width="match_parent"
@@ -36,11 +41,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="190dp"
-            android:src="@drawable/summer_palm"
             android:adjustViewBounds="true"
-            android:alpha="0.1"
-            android:visibility="invisible"
-            android:id="@+id/summer_image"/>
+            android:alpha="0.05"
+            android:id="@+id/summer_navigation_palm"/>
 
         <de.gebatzens.sia.view.SnowView
             android:layout_width="match_parent"
