@@ -137,8 +137,12 @@ public class SettingsActivity extends AppCompatActivity {
                     holder.selectionIcon = (ImageView) v.findViewById(R.id.SelectedThemeIcon);
                     v.setTag(holder);
 
-                    holder.icon.setBackgroundResource(R.drawable.colored_circle);
-                    ((GradientDrawable) holder.icon.getBackground()).setColor(Color.parseColor(ledColors.get(position)));
+                    if(position == 0) {
+                        holder.icon.setBackgroundResource(R.drawable.ic_highlight_off);
+                    } else {
+                        holder.icon.setBackgroundResource(R.drawable.colored_circle);
+                        ((GradientDrawable) holder.icon.getBackground()).setColor(Color.parseColor(ledColors.get(position)));
+                    }
 
                     holder.title.setText(ledNames.get(position));
 
@@ -147,7 +151,7 @@ public class SettingsActivity extends AppCompatActivity {
                     if(GGApp.GG_APP.getLedColor().equals(ledColors.get(position))) {
                         holder.selectionIcon.setVisibility(View.VISIBLE);
                     }
-                    else{
+                    else {
                         holder.selectionIcon.setVisibility(View.GONE);
                     }
                     return v;
