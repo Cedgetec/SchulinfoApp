@@ -203,7 +203,7 @@
     <string name="summer">Sommer</string>
 
     <string-array name="notification_color_names">
-        <item>Deaktiviert</item>
+        <item>Aus</item>
         <item>Weiß</item>
         <item>Rot</item>
         <item>Rosa</item>
