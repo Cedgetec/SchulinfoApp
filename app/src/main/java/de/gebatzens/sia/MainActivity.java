@@ -195,14 +195,8 @@ public class MainActivity extends AppCompatActivity {
         if(intent != null && intent.getBooleanExtra("reload", false))
             GGApp.GG_APP.refreshAsync(null, true, fragments.get(GGApp.GG_APP.getFragmentIndex()));
 
-
-        NotificationManager nm =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.cancel(123);
-
         setContentView(R.layout.activity_main);
 
-        //removeAllFragments();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         mContent = getFragment();
@@ -421,6 +415,8 @@ public class MainActivity extends AppCompatActivity {
         if(mContent instanceof SubstFragment) {
             ((SubstFragment) mContent).resetScrollPositions();
         }
+
+        ((NotificationManager) getSystemService(NOTIFICATION_SERVICE)).cancel(123);
     }
 
     public void updateMenu(int menu) {

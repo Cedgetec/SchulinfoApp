@@ -71,6 +71,8 @@ public class SubstListAdapter extends RecyclerView.Adapter {
     SubstPagerFragment frag;
     int cardColorIndex = 0;
 
+    boolean updateHeader = false;
+
     public SubstListAdapter(SubstPagerFragment f) {
         this.frag = f;
         entries = new ArrayList<>();
@@ -88,6 +90,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         AdapterEntry hc = new AdapterEntry();
         hc.type = AdapterEntry.HEADER_SPINNER;
         entries.add(hc);
+        updateHeader = true;
 
         if(header != null) {
             AdapterEntry ae = new AdapterEntry();
@@ -168,6 +171,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         AdapterEntry header = new AdapterEntry();
         header.type = AdapterEntry.HEADER;
         entries.add(header);
+        updateHeader = true;
 
         GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData();
         Filter.FilterList filter = GGApp.GG_APP.filters;
@@ -238,11 +242,9 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 return new RecyclerView.ViewHolder(wrapper) {};
             case AdapterEntry.HEADER:
                 HeaderViewHolder hv = createHeader(LayoutInflater.from(parent.getContext()));
-                hv.update(LayoutInflater.from(parent.getContext()));
                 return hv;
             case AdapterEntry.HEADER_SPINNER:
                 SpinnerHeaderViewHolder shv = createSpinnerHeader(LayoutInflater.from(parent.getContext()));
-                shv.update();
                 return shv;
             default:
                 return null;
@@ -264,6 +266,12 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 ((MessageViewHolder) holder).update((List<String>) ae.data);
                 break;
             case AdapterEntry.NO_ENTRIES:
+                break;
+            case AdapterEntry.HEADER:
+                ((HeaderViewHolder) holder).update(LayoutInflater.from(frag.getContext()));
+                break;
+            case AdapterEntry.HEADER_SPINNER:
+                ((SpinnerHeaderViewHolder) holder).update();
                 break;
         }
 
@@ -428,7 +436,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         return sb.toString();
     }
 
-    public static class SpinnerHeaderViewHolder extends RecyclerView.ViewHolder {
+    public class SpinnerHeaderViewHolder extends RecyclerView.ViewHolder {
 
         SubstPagerFragment frag;
         AppCompatSpinner spinner;
@@ -444,15 +452,16 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             list.add(frag.getActivity().getString(R.string.all));
             list.addAll(frag.plan.getAllClasses());
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(frag.getActivity(), android.R.layout.simple_spinner_item, list);
-            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-            spinner.setAdapter(adapter);
+            ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner.getAdapter();
+            adapter.clear();
+            adapter.addAll(list);
+            adapter.notifyDataSetChanged();
 
         }
 
     }
 
-    public static class HeaderViewHolder extends RecyclerView.ViewHolder {
+    public class HeaderViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout l3;
         SubstPagerFragment frag;
@@ -464,9 +473,6 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
         }
 
-        /**
-         * This method is quite expensive. It should not be called on every RecyclerView bind.
-         */
         public void update(LayoutInflater inflater) {
             l3.removeAllViews();
 
@@ -505,8 +511,6 @@ public class SubstListAdapter extends RecyclerView.Adapter {
     }
 
     public HeaderViewHolder createHeader(LayoutInflater inflater) {
-        Filter.FilterList filters = GGApp.GG_APP.filters;
-
         CardView cv2 = new CardView(frag.getActivity());
         CardView.LayoutParams params = new CardView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(0, 0, 0, RemoteDataFragment.toPixels(5));
@@ -564,7 +568,9 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
         final AppCompatSpinner spinClass = new AppCompatSpinner(frag.getActivity());
         spinClass.setId(R.id.spinner);
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(frag.getActivity(), android.R.layout.simple_spinner_item, new ArrayList<String>());
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinClass.setAdapter(adapter);
 
 
         l3.addView(spinClass);
