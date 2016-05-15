@@ -85,7 +85,7 @@ public class FilterDialog extends DialogFragment {
                     Snackbar.make(getActivity().getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.invalid_filter), Snackbar.LENGTH_LONG).show();
                 } else {
                     if (isMainFilterDialog()) {
-                        Filter.IncludingFilter mainFilter = null;
+                        Filter.IncludingFilter mainFilter;
                         if (getMainFilterPosition() == -1) {
                             mainFilter = new Filter.IncludingFilter(spinner.getSelectedItemPosition() == 0 ? Filter.FilterType.CLASS : Filter.FilterType.TEACHER, filtertext);
                             GGApp.GG_APP.filters.including.add(mainFilter);
@@ -221,13 +221,13 @@ public class FilterDialog extends DialogFragment {
                 Filter.FilterType currentType = isMainFilterDialog() ? (spinner.getSelectedItemPosition() == 0 ? Filter.FilterType.CLASS : Filter.FilterType.TEACHER) : Filter.FilterType.SUBJECT;
 
                 for (int i = 0; i < flist.size(); i++) {
-                    if (i == op && (!isMainFilterDialog() || getUpdatePosition() == spinner.getSelectedItemPosition())) {
+                    if (i == op && (!isMainFilterDialog() || flist.get(op).getType() == currentType)) {
                         continue;
                     }
 
                     Filter f = flist.get(i);
 
-                    if (f.getType() == currentType && f.getFilter().equals(str)) {
+                    if (f.getType() == currentType && GGApp.deleteNonAlphanumeric(f.getFilter()).equals(GGApp.deleteNonAlphanumeric(str))) {
                         ed.setError(getString(R.string.filter_exists));
                         d.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
                     } else {
