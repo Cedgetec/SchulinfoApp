@@ -20,6 +20,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -160,8 +161,7 @@ public class LoginDialog extends DialogFragment {
         }
 
         TextView acceptTermsLink = (TextView) dialog.findViewById(R.id.acceptTermsLink);
-        acceptTermsLink.setText(Html.fromHtml("<a href=\"\"> " + getString(R.string.terms_title) + "</a>"));
-        //acceptTermsLink.setMovementMethod(LinkMovementMethod.getInstance());
+        acceptTermsLink.setPaintFlags(acceptTermsLink.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
 
         acceptTermsLink.setOnClickListener(new View.OnClickListener() {
             @Override
