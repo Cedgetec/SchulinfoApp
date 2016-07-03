@@ -43,3 +43,5 @@ dependencies {
     compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
     compile 'com.google.firebase:firebase-messaging:9.0.2'
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -26,6 +26,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,6 +96,8 @@ public class GGRemote {
 
     public void logout() {
         final String token = getToken();
+
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("sia_sid_" + GGApp.GG_APP.school.sid);
 
         for(String name : GGApp.GG_APP.fileList())
             if(name.startsWith("schedule"))
@@ -419,6 +423,7 @@ public class GGRemote {
                     School.saveList();
 
                     GGApp.GG_APP.setSchool(sid);
+                    FirebaseMessaging.getInstance().subscribeToTopic("sia_sid_" + sid);
 
                     return 0;
                 case INVALID_AUTH:

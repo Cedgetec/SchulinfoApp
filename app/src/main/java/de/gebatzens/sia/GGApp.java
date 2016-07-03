@@ -41,6 +41,8 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -95,6 +97,11 @@ public class GGApp extends Application {
         //1.3 upgrade
         if(preferences.contains("notification_led")) {
             preferences.edit().putString("notification_led_color", preferences.getBoolean("notification_led", true) ? "#2196F3" : "#000000").remove("notification_led").apply();
+        }
+
+
+        if(school != null) {
+            FirebaseMessaging.getInstance().subscribeToTopic("sia_sid_" + school.sid);
         }
 
     }
