@@ -73,6 +73,8 @@ public class GGApp extends Application {
 
     public LifecycleHandler lifecycle;
 
+    public WearDataProvider wearData;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -104,8 +106,14 @@ public class GGApp extends Application {
             FirebaseMessaging.getInstance().subscribeToTopic("sia_sid_" + school.sid);
         }
 
+        wearData = new WearDataProvider();
+        wearData.updateMainFilters(filters.including);
+
     }
 
+    /**
+     * Loads saved data (if present) for each fragment
+     */
     private void loadSavedData() {
         if(school != null) {
             for(FragmentData frag : school.fragments) {
@@ -229,6 +237,7 @@ public class GGApp extends Application {
 
     }
 
+    @SuppressWarnings("MissingPermission")
     public void addToCalendar(long calId, Date date, String title) {
         //TODO getTime should be enough
         long start = date.getTime() + 1000 * 60 * 60 * 6;

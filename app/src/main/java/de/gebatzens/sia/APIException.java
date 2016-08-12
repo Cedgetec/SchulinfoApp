@@ -32,6 +32,8 @@ public class APIException extends RuntimeException {
                 return GGApp.GG_APP.getString(R.string.not_logged_in);
             case MAINTENANCE:
                 return GGApp.GG_APP.getString(R.string.maintenance);
+            case EXPIRED:
+                return GGApp.GG_APP.getString(R.string.token_expired);
             default:
                 return GGApp.GG_APP.getString(R.string.unknown_error);
         }

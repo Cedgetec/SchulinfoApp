@@ -520,6 +520,8 @@ public class GGRemote {
                     return new APIResponse(APIState.SUCCEEDED, data);
                 case "maintenance":
                     return new APIResponse(APIState.MAINTENANCE);
+                case "expired":
+                    return new APIResponse(APIState.EXPIRED);
                 case "error":
                 default:
                     return new APIResponse(APIState.ERROR);
@@ -534,7 +536,7 @@ public class GGRemote {
     }
 
     public enum APIState {
-        SUCCEEDED, ERROR, NOT_FOUND, METHOD_NOT_ALLOWED, INVALID_JSON, INVALID_AUTH, MISSING_PARAMETER, MAINTENANCE
+        SUCCEEDED, ERROR, NOT_FOUND, METHOD_NOT_ALLOWED, INVALID_JSON, INVALID_AUTH, MISSING_PARAMETER, MAINTENANCE, EXPIRED
     }
 
     public static class APIResponse {
