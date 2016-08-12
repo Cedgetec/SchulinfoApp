@@ -58,10 +58,10 @@
                 android:paddingRight="4dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:id="@+id/acceptTermsLink"
-                android:text="@string/terms_title"/>
+                android:text="@string/terms_title"
+                android:textColor="?colorAccent"
+                android:foreground="?attr/selectableItemBackground"/>
 
         </LinearLayout>
 
