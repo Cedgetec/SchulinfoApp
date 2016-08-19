@@ -52,8 +52,8 @@ public class SetupActivity extends AppCompatActivity {
                 public void run() {
                     Log.d("ggvp", "Updating school " + GGApp.GG_APP.school.name);
                     try {
-                        GGRemote.APIResponse resp = GGApp.GG_APP.remote.doRequest("/schoolInfo?token=" + GGApp.GG_APP.remote.getToken(), null);
-                        if(resp.state == GGRemote.APIState.SUCCEEDED) {
+                        SiaAPI.APIResponse resp = GGApp.GG_APP.remote.doRequest("/schoolInfo?token=" + GGApp.GG_APP.remote.getToken(), null);
+                        if(resp.state == SiaAPI.APIState.SUCCEEDED) {
                             String img = GGApp.GG_APP.school.image;
 
                             School.updateSchool((JSONObject) resp.data);

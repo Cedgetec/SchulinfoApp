@@ -18,21 +18,21 @@ package de.gebatzens.sia;
 
 public class APIException extends RuntimeException {
 
-    GGRemote.APIState state;
+    String reason;
 
-    public APIException(GGRemote.APIState state) {
+    public APIException(String reason) {
         super();
-        this.state = state;
+        this.reason = reason;
     }
 
     @Override
     public String getMessage() {
-        switch(state) {
-            case INVALID_AUTH:
+        switch(reason) {
+            case SiaAPI.API_INVALID_TOKEN:
                 return GGApp.GG_APP.getString(R.string.not_logged_in);
-            case MAINTENANCE:
+            case SiaAPI.API_MAINTENANCE:
                 return GGApp.GG_APP.getString(R.string.maintenance);
-            case EXPIRED:
+            case SiaAPI.API_TOKEN_EXPIRED:
                 return GGApp.GG_APP.getString(R.string.token_expired);
             default:
                 return GGApp.GG_APP.getString(R.string.unknown_error);

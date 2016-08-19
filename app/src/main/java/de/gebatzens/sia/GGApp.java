@@ -63,7 +63,7 @@ public class GGApp extends Application {
     public static GGApp GG_APP;
 
     public MainActivity activity;
-    public GGRemote remote;
+    public SiaAPI remote;
     public School school;
 
     public SharedPreferences preferences;
@@ -79,7 +79,7 @@ public class GGApp extends Application {
     public void onCreate() {
         super.onCreate();
         GG_APP = this;
-        remote = new GGRemote();
+        remote = new SiaAPI();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         GGBroadcast.createAlarm(this);
         filters = FilterActivity.loadFilter();

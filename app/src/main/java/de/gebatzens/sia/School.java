@@ -202,8 +202,8 @@ public class School {
         List<School> newList = new ArrayList<>();
 
         try {
-            GGRemote.APIResponse re = GGApp.GG_APP.remote.doRequest("/getSchools", null);
-            if(re.state == GGRemote.APIState.SUCCEEDED) {
+            SiaAPI.APIResponse re = GGApp.GG_APP.remote.doRequest("/getSchools", null);
+            if(re.state == SiaAPI.APIState.SUCCEEDED) {
                 LIST = new ArrayList<>();
                 JSONArray schools = (JSONArray) re.data;
                 for(int i = 0; i < schools.length(); i++) {

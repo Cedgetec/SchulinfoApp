@@ -55,13 +55,13 @@ import de.gebatzens.sia.data.Mensa;
 import de.gebatzens.sia.data.News;
 import de.gebatzens.sia.data.StaticData;
 
-public class GGRemote {
+public class SiaAPI {
 
     public static final String PREFS_NAME = "remoteprefs";
 
     SharedPreferences prefs;
 
-    public GGRemote() {
+    public SiaAPI() {
         prefs = GGApp.GG_APP.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
     }
@@ -158,7 +158,7 @@ public class GGRemote {
                     }
                 }
             } else {
-                throw new APIException(re.state);
+                throw new APIException(re.reason);
             }
         } catch(Exception e) {
             if(e instanceof IOException || e instanceof APIException) {
@@ -241,7 +241,7 @@ public class GGRemote {
 
                 }
             } else {
-                throw new APIException(re.state);
+                throw new APIException(re.reason);
             }
         } catch (final Exception e) {
             e.printStackTrace();
@@ -266,7 +266,7 @@ public class GGRemote {
             if(re.state == APIState.SUCCEEDED) {
                 data.data = Base64.decode((String) re.data, Base64.DEFAULT);
             } else {
-                throw new APIException(re.state);
+                throw new APIException(re.reason);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -303,7 +303,7 @@ public class GGRemote {
 
                 }
             } else {
-                throw new APIException(re.state);
+                throw new APIException(re.reason);
             }
 
         } catch (final Exception e) {
@@ -358,7 +358,7 @@ public class GGRemote {
                 }
                 exams.sort();
             } else {
-                throw new APIException(re.state);
+                throw new APIException(re.reason);
             }
 
         } catch (final Exception e) {
@@ -414,9 +414,9 @@ public class GGRemote {
                     edit.apply();
 
                     APIResponse resp = doRequest("/schoolInfo?token=" + data.getString("token"), null);
-                    if(resp.state == APIState.MAINTENANCE)
+                    if(resp.state == APIState.FAILED && resp.reason.equals(API_MAINTENANCE))
                         return 3;
-                    else if(resp.state != APIState.SUCCEEDED)
+                    else if(resp.state == APIState.FAILED)
                         return 4;
 
                     School.updateSchool((JSONObject) resp.data);
@@ -426,13 +426,18 @@ public class GGRemote {
                     FirebaseMessaging.getInstance().subscribeToTopic("sia_sid_" + sid);
 
                     return 0;
-                case INVALID_AUTH:
-                    return 1;
-                case MAINTENANCE:
-                    return 3;
-                default:
-                    return 4;
+                case FAILED:
+                    switch(re.reason) {
+                        case API_INVALID_TOKEN:
+                            return 1;
+                        case API_MAINTENANCE:
+                            return 3;
+                        default:
+                            return 4;
+                    }
             }
+
+            return 4;
 
         } catch (Exception e) {
             if (e instanceof IOException) {
@@ -502,54 +507,48 @@ public class GGRemote {
         try {
             json = new JSONObject(response);
             String state = json.getString("state");
-            Log.d("ggvp", "received state " + state + " " + con.getResponseCode());
-
             Object data = json.opt("data");
-            switch(state) {
-                case "not found":
-                    return new APIResponse(APIState.NOT_FOUND);
-                case "invalid json":
-                    return new APIResponse(APIState.INVALID_JSON);
-                case "invalid auth":
-                    return new APIResponse(APIState.INVALID_AUTH);
-                case "method not allowed":
-                    return new APIResponse(APIState.METHOD_NOT_ALLOWED);
-                case "missing parameter":
-                    return new APIResponse(APIState.MISSING_PARAMETER);
-                case "succeeded":
-                    return new APIResponse(APIState.SUCCEEDED, data);
-                case "maintenance":
-                    return new APIResponse(APIState.MAINTENANCE);
-                case "expired":
-                    return new APIResponse(APIState.EXPIRED);
-                case "error":
-                default:
-                    return new APIResponse(APIState.ERROR);
-            }
+            String reason = json.optString("reason", "");
+
+            Log.d("ggvp", "received state " + state + " " + con.getResponseCode() + " reason: " + reason);
+
+            return new APIResponse(state.equals("succeeded") ? APIState.SUCCEEDED : APIState.FAILED, data, reason);
 
         } catch(JSONException e) {
             Log.e("ggvp", e.toString());
             e.printStackTrace();
-            return new APIResponse(APIState.ERROR);
+            return new APIResponse(APIState.FAILED);
         }
 
     }
 
     public enum APIState {
-        SUCCEEDED, ERROR, NOT_FOUND, METHOD_NOT_ALLOWED, INVALID_JSON, INVALID_AUTH, MISSING_PARAMETER, MAINTENANCE, EXPIRED
+        SUCCEEDED, FAILED
     }
+
+    public static final String API_TOKEN_EXPIRED = "token expired";
+    public static final String API_INVALID_TOKEN = "invalid token";
+    public static final String API_NOT_FOUND = "not found";
+    public static final String API_METHOD_NOT_ALLOWED = "method not allowed";
+    public static final String API_MAINTENANCE = "maintenance";
 
     public static class APIResponse {
         APIState state;
         Object data;
+        String reason;
 
         public APIResponse(APIState state) {
-            this(state, null);
+            this(state, null, "");
         }
 
         public APIResponse(APIState state, Object data) {
+            this(state, data, "");
+        }
+
+        public APIResponse(APIState state, Object data, String reason) {
             this.state = state;
             this.data = data;
+            this.reason = reason;
         }
     }
 
