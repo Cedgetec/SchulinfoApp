@@ -17,7 +17,6 @@ package de.gebatzens.sia.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
