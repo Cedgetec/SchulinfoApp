@@ -111,7 +111,7 @@ public class SiaAPI {
         GGApp.GG_APP.school = null;
 
         prefs.edit().clear().apply();
-        GGApp.GG_APP.preferences.edit().remove("customTheme").apply();
+        GGApp.GG_APP.preferences.edit().remove("customTheme").remove("sid").apply();
 
         new Thread() {
             @Override

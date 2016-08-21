@@ -86,7 +86,7 @@ public class GGApp extends Application {
         loadSubjectMap();
         School.loadList();
 
-        //this is required because SetupActivity might change the school in background
+        //copy school: this is required because SetupActivity might change the school in background which leads to inconsistent states.
         school = School.getBySID(preferences.getString("sid", null));
         if(school != null) {
             school = new School(school);
