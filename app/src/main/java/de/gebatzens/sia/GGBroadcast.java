@@ -120,6 +120,11 @@ public class GGBroadcast extends BroadcastReceiver {
     public void updateAllFragments(GGApp gg) {
         //update every 6 hours
 
+        if(gg.school == null) {
+            //the user is not logged in
+            return;
+        }
+
         int u = gg.preferences.getInt("allFragmentsUpdate", 0);
         if(u < 24)
             u++;
