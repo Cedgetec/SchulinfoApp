@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_layout">
 
-    <de.gebatzens.sia.view.GGSwipeLayout
+    <de.gebatzens.sia.view.CustomSwipeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/refresh">
@@ -16,7 +16,7 @@
             android:id="@+id/pdf_content">
         </LinearLayout>
 
-    </de.gebatzens.sia.view.GGSwipeLayout>
+    </de.gebatzens.sia.view.CustomSwipeLayout>
 
     <View
         android:layout_width="match_parent"
