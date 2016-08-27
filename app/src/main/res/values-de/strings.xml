@@ -6,7 +6,8 @@
     <string name="schedule_change">Vertretungsplanänderung</string>
     <string name="new_entries">neue Einträge</string>
     <string name="special_messages">Besondere Mitteilungen</string>
-    <string name="no_filter_applied">Kein Filter ausgewählt</string>
+    <string name="no_filter_applied">Keine Filter ausgewählt</string>
+    <string name="small_filter_explanation">Bitte konfiguriere die Filter, um einen personalisierten Vertretungsplan zu erhalten.</string>
     <string name="filter_help">Im Hauptfilter kannst du die Klasse(n) eintragen, welche du in der Übersicht sehen willst.\n\nWenn du dann bestimmte Fächer/Kurse nicht in deiner Übersicht sehen willst, kannst du sie mit dem Kursfilter ausblenden.\nDu musst aber das auf dem Vertretungsplan verwendete Kürzel, z.B. \"lat1\" oder \"fra2\" eintragen.\nWenn du z.B. alle Lateinkurse ausblenden möchtest, schreibe einfach \"lat\".</string>
     <string name="settings">Einstellungen</string>
     <string name="again">Nochmal</string>

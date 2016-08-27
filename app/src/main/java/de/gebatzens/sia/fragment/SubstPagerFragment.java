@@ -93,8 +93,8 @@ public class SubstPagerFragment extends RemoteDataFragment {
             l.addView(tv);
             Log.w("ggvp", "bundle " + type + " " + this + " " + getParentFragment());*/
             throw new IllegalArgumentException(("index is INDEX_INVALID"));
-        } else if(index == INDEX_OVERVIEW && GGApp.GG_APP.filters.including.size() > 0) {
-            // Overview, filter applied
+        } else if(index == INDEX_OVERVIEW) {
+            // Overview
 
             recyclerView = (RecyclerView) inflater.inflate(R.layout.basic_recyclerview, l, false);
             recyclerView.setPadding(0,0,0,toPixels(5));
@@ -105,26 +105,6 @@ public class SubstPagerFragment extends RemoteDataFragment {
             sla.setToOverview();
 
             group.addView(l);
-
-        } else if(index == INDEX_OVERVIEW) {
-            //Overview, no filter applied
-
-            createMessage(l, getResources().getString(R.string.no_filter_applied), getResources().getString(R.string.settings), new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), FilterActivity.class);
-                    getActivity().startActivityForResult(i, 1);
-                }
-            });
-
-            ScrollView sv = new ScrollView(getActivity());
-            sv.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
-            sv.setFillViewport(true);
-
-            sv.addView(l);
-            group.addView(sv);
-
         } else {
             final LinearLayout l4 = new LinearLayout(getActivity());
             l4.setOrientation(LinearLayout.VERTICAL);
