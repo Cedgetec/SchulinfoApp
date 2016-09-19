@@ -15,14 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/sidInput"
-            android:singleLine="true"
+            android:maxLines="1"
             android:inputType="textFilter"
             android:hint="@string/school_id"/>
 
         <EditText android:layout_height="wrap_content"
             android:id="@+id/usernameInput"
             android:hint="@string/username"
-            android:singleLine="true"
+            android:maxLines="1"
             android:inputType="textFilter"
             android:layout_width="match_parent"/>
 

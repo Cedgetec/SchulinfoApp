@@ -16,7 +16,6 @@
 
 package de.gebatzens.sia.fragment;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
@@ -24,7 +23,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -39,7 +37,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import de.gebatzens.sia.APIException;
-import de.gebatzens.sia.FilterActivity;
 import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;

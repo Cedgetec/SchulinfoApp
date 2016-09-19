@@ -39,7 +39,6 @@ import java.util.Locale;
 import de.gebatzens.sia.FilterActivity;
 import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
-import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Filter;
 import de.gebatzens.sia.data.GGPlan;
