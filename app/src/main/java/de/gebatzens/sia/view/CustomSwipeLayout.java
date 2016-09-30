@@ -34,12 +34,12 @@ import de.gebatzens.sia.fragment.NewsFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
 import de.gebatzens.sia.fragment.SubstPagerFragment;
 
-public class GGSwipeLayout extends SwipeRefreshLayout {
+public class CustomSwipeLayout extends SwipeRefreshLayout {
 
     private int touchSlop;
     private float prevX;
 
-    public GGSwipeLayout(Context context, AttributeSet attrs) {
+    public CustomSwipeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();

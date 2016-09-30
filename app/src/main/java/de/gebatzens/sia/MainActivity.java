@@ -211,7 +211,6 @@ public class MainActivity extends AppCompatActivity {
             summerNavigationPalm.setImageResource(R.drawable.summer_palm);
             ImageView summerBackgroundImage = (ImageView) findViewById(R.id.summer_background_image);
             summerBackgroundImage.setImageResource(R.drawable.summer_background);
-            summerBackgroundImage.setAlpha(0.4f);
         }
 
         mToolBar = (Toolbar) findViewById(R.id.toolbar);

@@ -8,6 +8,7 @@
     <string name="new_entries">New entries</string>
     <string name="special_messages">Special messages</string>
     <string name="no_filter_applied">No filter applied</string>
+    <string name="small_filter_explanation">Please set up the filters to get a personalised substitution schedule.</string>
     <string name="filter_help">You can add the classes you want to appear in the overview to the main filter.\n\nThe subjects/courses filter excludes the content you don\'t want to appear in your overview, for example French or Latin. To make sure the filter recognizes your subject you have to type in the shortcut used in the substitute schedule, i.e. \"fra1\" or \"lat2\". If you want to hide every Latin subject you can simply write \"lat\."</string>
     <string name="settings">Settings</string>
     <string name="again">Try again</string>

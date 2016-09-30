@@ -167,54 +167,60 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         this.type = OVERVIEW;
         entries.clear();
 
-        AdapterEntry header = new AdapterEntry();
-        header.type = AdapterEntry.HEADER;
-        entries.add(header);
-        updateHeader = true;
+        if(GGApp.GG_APP.filters.including.size() > 0) {
+            AdapterEntry header = new AdapterEntry();
+            header.type = AdapterEntry.HEADER;
+            entries.add(header);
+            updateHeader = true;
 
-        GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData();
-        Filter.FilterList filter = GGApp.GG_APP.filters;
+            GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData();
+            Filter.FilterList filter = GGApp.GG_APP.filters;
 
-        for(GGPlan pl : plans) {
-            AdapterEntry date = new AdapterEntry();
-            date.type = AdapterEntry.LABEL;
-            date.data = translateDay(pl.date);
-            entries.add(date);
+            for (GGPlan pl : plans) {
+                AdapterEntry date = new AdapterEntry();
+                date.type = AdapterEntry.LABEL;
+                date.data = translateDay(pl.date);
+                entries.add(date);
 
-            AdapterEntry me = new AdapterEntry();
-            me.type = AdapterEntry.MESSAGES;
-            me.data = pl.special;
-            entries.add(me);
+                AdapterEntry me = new AdapterEntry();
+                me.type = AdapterEntry.MESSAGES;
+                me.data = pl.special;
+                entries.add(me);
 
-            GGPlan filtered = pl.filter(filter);
+                GGPlan filtered = pl.filter(filter);
 
-            for(Filter.IncludingFilter ifi : filter.including) {
-                if(filter.including.size() > 1) {
-                    AdapterEntry clLabel = new AdapterEntry();
-                    clLabel.type = AdapterEntry.LABEL;
-                    clLabel.data = ifi.getFilter();
-                    entries.add(clLabel);
-                }
+                for (Filter.IncludingFilter ifi : filter.including) {
+                    if (filter.including.size() > 1) {
+                        AdapterEntry clLabel = new AdapterEntry();
+                        clLabel.type = AdapterEntry.LABEL;
+                        clLabel.data = ifi.getFilter();
+                        entries.add(clLabel);
+                    }
 
-                Filter.FilterList clist = new Filter.FilterList();
-                clist.including.add(ifi);
+                    Filter.FilterList clist = new Filter.FilterList();
+                    clist.including.add(ifi);
 
-                GGPlan cf = filtered.filter(clist);
+                    GGPlan cf = filtered.filter(clist);
 
-                if(cf.size() == 0) {
-                    AdapterEntry ne = new AdapterEntry();
-                    ne.type = AdapterEntry.NO_ENTRIES;
-                    entries.add(ne);
-                }
+                    if (cf.size() == 0) {
+                        AdapterEntry ne = new AdapterEntry();
+                        ne.type = AdapterEntry.NO_ENTRIES;
+                        entries.add(ne);
+                    }
 
-                for(GGPlan.Entry e : cf) {
-                    AdapterEntry ae = new AdapterEntry();
-                    ae.data = new Object[] {e, ifi.getType() != Filter.FilterType.CLASS ? SubstPagerFragment.CARD_CLASS | SubstPagerFragment.CARD_LESSON : SubstPagerFragment.CARD_LESSON};
-                    ae.type = AdapterEntry.ENTRY;
-                    entries.add(ae);
+                    for (GGPlan.Entry e : cf) {
+                        AdapterEntry ae = new AdapterEntry();
+                        ae.data = new Object[]{e, ifi.getType() != Filter.FilterType.CLASS ? SubstPagerFragment.CARD_CLASS | SubstPagerFragment.CARD_LESSON : SubstPagerFragment.CARD_LESSON};
+                        ae.type = AdapterEntry.ENTRY;
+                        entries.add(ae);
 
+                    }
                 }
             }
+        } else {
+            AdapterEntry nf = new AdapterEntry();
+            nf.type = AdapterEntry.NO_FILTER;
+            entries.add(nf);
         }
 
         notifyDataSetChanged();
@@ -226,18 +232,13 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             case AdapterEntry.ENTRY:
                 return createCardItem(LayoutInflater.from(parent.getContext()), parent);
             case AdapterEntry.LABEL:
-                LinearLayout wrapper = new LinearLayout(frag.getActivity());
-                frag.setOrientationPadding(wrapper);
-                TextView tv = frag.createSecondaryTextView("", 27, LayoutInflater.from(parent.getContext()), wrapper);
-                tv.setId(R.id.label);
-                tv.setPadding(RemoteDataFragment.toPixels(2.8f), RemoteDataFragment.toPixels(20), 0, 0);
-                return new LabelViewHolder(wrapper);
+                return createLabel(parent);
             case AdapterEntry.MESSAGES:
                 return createSMCard(parent, LayoutInflater.from(parent.getContext()));
             case AdapterEntry.NO_ENTRIES:
-                wrapper = new LinearLayout(frag.getActivity());
+                LinearLayout wrapper = new LinearLayout(parent.getContext());
                 wrapper.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                frag.createNoEntriesCard(wrapper, LayoutInflater.from(frag.getActivity()));
+                frag.createNoEntriesCard(wrapper, LayoutInflater.from(parent.getContext()));
                 return new RecyclerView.ViewHolder(wrapper) {};
             case AdapterEntry.HEADER:
                 HeaderViewHolder hv = createHeader(LayoutInflater.from(parent.getContext()));
@@ -245,6 +246,8 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             case AdapterEntry.HEADER_SPINNER:
                 SpinnerHeaderViewHolder shv = createSpinnerHeader(LayoutInflater.from(parent.getContext()));
                 return shv;
+            case AdapterEntry.NO_FILTER:
+                return createNoFilterCard(LayoutInflater.from(parent.getContext()), parent);
             default:
                 return null;
         }
@@ -271,6 +274,8 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 break;
             case AdapterEntry.HEADER_SPINNER:
                 ((SpinnerHeaderViewHolder) holder).update();
+                break;
+            case AdapterEntry.NO_FILTER:
                 break;
         }
 
@@ -352,7 +357,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
     private class AdapterEntry {
 
-        public static final int LABEL = 0, ENTRY = 1, MESSAGES = 2, NO_ENTRIES = 3, HEADER = 4, HEADER_SPINNER = 5;
+        public static final int LABEL = 0, ENTRY = 1, MESSAGES = 2, NO_ENTRIES = 3, HEADER = 4, HEADER_SPINNER = 5, NO_FILTER = 6;
 
         Object data;
         int type;
@@ -413,6 +418,44 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
         return new SubstListAdapter.MessageViewHolder(wrapper);
 
+    }
+    public SubstListAdapter.LabelViewHolder createLabel(ViewGroup parent) {
+        LinearLayout wrapper = new LinearLayout(parent.getContext());
+        wrapper.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        frag.setOrientationPadding(wrapper);
+
+        TextView tv = frag.createSecondaryTextView("", 27, LayoutInflater.from(parent.getContext()), wrapper);
+        tv.setId(R.id.label);
+        tv.setPadding(RemoteDataFragment.toPixels(2.8f), RemoteDataFragment.toPixels(20), 0, 0);
+
+        parent.addView(wrapper);
+
+        return new SubstListAdapter.LabelViewHolder(wrapper);
+    }
+
+    public SubstListAdapter.SubstViewHolder createNoFilterCard(LayoutInflater inflater, ViewGroup parent) {
+        LinearLayout wrapper = new LinearLayout(parent.getContext());
+        wrapper.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        frag.setOrientationPadding(wrapper);
+
+        LinearLayout wrapper2 = new LinearLayout(parent.getContext());
+        wrapper2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        wrapper2.setPadding(0, RemoteDataFragment.toPixels(5), 0, 0);
+
+        CardView cv = (CardView) inflater.inflate(R.layout.no_filter_cardview, wrapper, false);
+        cv.findViewById(R.id.no_filter_card_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(frag.getActivity(), FilterActivity.class);
+                frag.startActivityForResult(i, 1);
+            }
+        });
+
+        wrapper2.addView(cv);
+        wrapper.addView(wrapper2);
+        parent.addView(wrapper);
+
+        return new SubstListAdapter.SubstViewHolder(wrapper);
     }
 
     /**

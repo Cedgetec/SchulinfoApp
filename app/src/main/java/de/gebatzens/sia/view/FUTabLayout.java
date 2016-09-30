@@ -31,15 +31,8 @@ public class FUTabLayout  extends TabLayout {
     }
 
     @Override
-    public void addTab(@NonNull Tab t, int position, boolean selected) {
-        super.addTab(t, position, selected);
-        t.setCustomView(R.layout.fu_tab);
-    }
-
-    @Override
     public void addTab(@NonNull Tab t, boolean selected) {
         super.addTab(t, selected);
         t.setCustomView(R.layout.fu_tab);
-
     }
 }
