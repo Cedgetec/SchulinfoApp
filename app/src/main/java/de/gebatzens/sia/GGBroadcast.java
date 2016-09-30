@@ -150,8 +150,9 @@ public class GGBroadcast extends BroadcastReceiver {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             for(Network n : cm.getAllNetworks()) {
                 NetworkInfo info = cm.getNetworkInfo(n);
-                if(info.getType() == ConnectivityManager.TYPE_WIFI && info.isConnected())
+                if(info != null && info.getType() == ConnectivityManager.TYPE_WIFI && info.isConnected()) {
                     return true;
+                }
             }
             return false;
         } else {
