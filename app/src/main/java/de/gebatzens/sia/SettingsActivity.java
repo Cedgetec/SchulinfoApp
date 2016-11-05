@@ -60,9 +60,9 @@ public class SettingsActivity extends AppCompatActivity {
     Toolbar mToolBar;
     private static boolean changed, recreate;
     static String version;
-    GGPFragment frag;
+    CustomPreferenceFragment frag;
 
-    public static class GGPFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+    public static class CustomPreferenceFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         @Override
         public void onCreatePreferences(Bundle s, String str) {
@@ -302,7 +302,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-            final Preference pref_username = findPreference("authentication_username");
+            Preference pref_username = findPreference("authentication_username");
 
             if(GGApp.GG_APP.school.loginNeeded) {
                 pref_username.setSummary(getString(R.string.logged_in_as, GGApp.GG_APP.remote.getUsername()));
@@ -340,7 +340,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-            final Preference pref_developers = findPreference("developers");
+            Preference pref_developers = findPreference("developers");
 
             pref_developers.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
@@ -370,12 +370,12 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-            Preference helpdesk = findPreference("helpdesk");
+            Preference contact = findPreference("contact");
             LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_image);
             ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.ic_mail));
             ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(GGApp.GG_APP.school.getColor());
-            helpdesk.setIcon(ld);
-            helpdesk.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            contact.setIcon(ld);
+            contact.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
@@ -436,19 +436,23 @@ public class SettingsActivity extends AppCompatActivity {
         changed = false;
         recreate = false;
 
-        Fragment f = getFragmentManager().findFragmentByTag("gg_settings_frag");
+        Fragment f = getFragmentManager().findFragmentByTag("settings_frag");
         if(f != null) {
             getFragmentManager().beginTransaction().remove(f).commit();
         }
 
         super.onCreate(savedInstanceState);
 
-        ViewGroup contentView = (ViewGroup) LayoutInflater.from(this).inflate(
-                R.layout.activity_settings, new LinearLayout(this), false);
+        ViewGroup contentView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.activity_settings, new LinearLayout(this), false);
+
+        setContentView(contentView);
 
         if(savedInstanceState != null) {
-            changed = savedInstanceState.getBoolean("ggs_changed");
-            recreate = savedInstanceState.getBoolean("ggs_recreate");
+            changed = savedInstanceState.getBoolean("s_changed");
+            recreate = savedInstanceState.getBoolean("s_recreate");
+        } else {
+            frag = new CustomPreferenceFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_wrapper, frag, "settings_frag").commit();
         }
 
         mToolBar = (Toolbar) contentView.findViewById(R.id.toolbar);
@@ -460,11 +464,6 @@ public class SettingsActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        frag = new GGPFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_wrapper, frag, "gg_settings_frag").commit();
-
-        setContentView(contentView);
 
     }
 
@@ -487,8 +486,8 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle b) {
         super.onSaveInstanceState(b);
-        b.putBoolean("ggs_changed", changed);
-        b.putBoolean("ggs_recreate", recreate);
+        b.putBoolean("s_changed", changed);
+        b.putBoolean("s_recreate", recreate);
     }
 
     @Override
