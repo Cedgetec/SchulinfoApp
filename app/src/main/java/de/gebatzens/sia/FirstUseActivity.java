@@ -23,6 +23,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -43,9 +44,17 @@ public class FirstUseActivity extends FragmentActivity {
 
         super.onCreate(bundle);
 
-        if(("Winter".equals(GGApp.GG_APP.getCustomThemeName()) || "Summer".equals(GGApp.GG_APP.getCustomThemeName())) && !GGApp.GG_APP.getCustomThemeName().equals(GGApp.GG_APP.getSeasonTheme())) {
-            GGApp.GG_APP.setCustomThemeName("Blue");
-            GGApp.GG_APP.school.loadTheme();
+        if(GGApp.GG_APP.getCustomThemeName() != null) {
+            if(!GGApp.GG_APP.getCustomThemeName().equals(GGApp.GG_APP.getSeasonTheme())) {
+                String themeName = GGApp.GG_APP.getSeasonTheme();
+                if(themeName.equals("Winter")) {
+                   GGApp.GG_APP.setCustomThemeName("Winter");
+                   GGApp.GG_APP.school.loadTheme();
+                } else {
+                   GGApp.GG_APP.setCustomThemeName("Summer");
+                   GGApp.GG_APP.school.loadTheme();
+                }
+            }
         }
 
         if(GGApp.GG_APP.preferences.getBoolean("first_use", false)) {

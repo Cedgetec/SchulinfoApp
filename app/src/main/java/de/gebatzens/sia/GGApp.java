@@ -422,18 +422,15 @@ public class GGApp extends Application {
     public String getSeasonTheme() {
         int m = Calendar.getInstance().get(Calendar.MONTH);
         switch(m) {
+            case Calendar.OCTOBER:
             case Calendar.NOVEMBER:
             case Calendar.DECEMBER:
             case Calendar.JANUARY:
             case Calendar.FEBRUARY:
+            case Calendar.MARCH:
                 return "Winter";
-            case Calendar.MAY:
-            case Calendar.JUNE:
-            case Calendar.JULY:
-            case Calendar.AUGUST:
-                return "Summer";
             default:
-                return null;
+                return "Summer";
         }
     }
 

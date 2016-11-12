@@ -209,17 +209,15 @@ public class SettingsActivity extends AppCompatActivity {
             final List<String> themeNames = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.theme_color_names)));
 
             String st = GGApp.GG_APP.getSeasonTheme();
-            if(st != null) {
-                switch (st) {
-                    case "Winter":
-                        themeIds.add(0, st);
-                        themeNames.add(0, getString(R.string.winter));
-                        break;
-                    case "Summer":
-                        themeIds.add(0, st);
-                        themeNames.add(0, getString(R.string.summer));
-                        break;
-                }
+            switch (st) {
+                case "Winter":
+                    themeIds.add(0, st);
+                    themeNames.add(0, getString(R.string.winter));
+                    break;
+                case "Summer":
+                    themeIds.add(0, st);
+                    themeNames.add(0, getString(R.string.summer));
+                    break;
             }
 
 
