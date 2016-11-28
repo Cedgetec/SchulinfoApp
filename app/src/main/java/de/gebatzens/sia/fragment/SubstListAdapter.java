@@ -446,8 +446,8 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         cv.findViewById(R.id.no_filter_card_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(frag.getActivity(), FilterActivity.class);
-                frag.startActivityForResult(i, 1);
+                Intent i = new Intent(GGApp.GG_APP.activity, FilterActivity.class);
+                GGApp.GG_APP.activity.startActivityForResult(i, 1);
             }
         });
 
