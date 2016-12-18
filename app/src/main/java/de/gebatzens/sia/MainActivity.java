@@ -20,7 +20,23 @@ import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.VectorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,6 +46,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -47,6 +64,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Arrays;
 import java.util.List;
 
 import de.gebatzens.sia.data.Exams;
@@ -57,6 +75,8 @@ import de.gebatzens.sia.fragment.NewsFragment;
 import de.gebatzens.sia.fragment.PDFFragment;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
+
+import static android.R.attr.bitmap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -359,6 +379,46 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        if(Build.VERSION.SDK_INT >= 25 ) {
+            ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
+            shortcutManager.removeAllDynamicShortcuts();
+
+            for (int i = 0; i < fragments.size(); i++) {
+                Drawable drawable = getDrawable(fragments.get(i).getIconRes());
+                Bitmap icon;
+                if (drawable instanceof VectorDrawable) {
+                    icon = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                    Canvas canvas = new Canvas(icon);
+                    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+                    drawable.draw(canvas);
+                } else {
+                    icon = BitmapFactory.decodeResource(getResources(), fragments.get(i).getIconRes());
+                }
+
+                Bitmap connectedIcon = Bitmap.createBitmap(icon.getWidth(), icon.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(connectedIcon);
+                Paint paint = new Paint();
+                paint.setAntiAlias(true);
+                paint.setColor(Color.parseColor("#f5f5f5"));
+                canvas.drawCircle(icon.getWidth() / 2, icon.getHeight() / 2, icon.getWidth() / 2, paint);
+                paint.setColorFilter(new PorterDuffColorFilter(GGApp.GG_APP.school.getColor(), PorterDuff.Mode.SRC_ATOP));
+                canvas.drawBitmap(icon, null, new RectF(icon.getHeight() / 4.0f, icon.getHeight() / 4.0f, icon.getHeight() - icon.getHeight() / 4.0f, icon.getHeight() - icon.getHeight() / 4.0f), paint);
+
+                Intent newTaskIntent = new Intent(this, MainActivity.class);
+                newTaskIntent.setAction(Intent.ACTION_MAIN);
+                newTaskIntent.putExtra("fragment", fragments.get(i).type.toString());
+
+                ShortcutInfo shortcut = new ShortcutInfo.Builder(this, fragments.get(i).name)
+                        .setShortLabel(fragments.get(i).name)
+                        .setLongLabel(fragments.get(i).name)
+                        .setIcon(Icon.createWithBitmap(connectedIcon))
+                        .setIntent(newTaskIntent)
+                        .build();
+
+                shortcutManager.addDynamicShortcuts(Arrays.asList(shortcut));
+            }
+        }
 
         if(GGApp.GG_APP.preferences.getBoolean("app_130_upgrade", true)) {
             if (!GGApp.GG_APP.preferences.getBoolean("first_use_filter", true)) {

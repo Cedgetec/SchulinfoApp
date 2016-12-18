@@ -21,6 +21,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ShortcutManager;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -30,6 +31,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
@@ -316,6 +318,10 @@ public class SettingsActivity extends AppCompatActivity {
                         builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                if(Build.VERSION.SDK_INT >= 25 ) {
+                                    ShortcutManager shortcutManager = getActivity().getSystemService(ShortcutManager.class);
+                                    shortcutManager.removeAllDynamicShortcuts();
+                                }
                                 GGApp.GG_APP.remote.logout();
                                 Intent i = new Intent();
                                 i.putExtra("setup", true);

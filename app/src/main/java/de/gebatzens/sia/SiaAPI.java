@@ -18,6 +18,7 @@ package de.gebatzens.sia;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ShortcutManager;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
