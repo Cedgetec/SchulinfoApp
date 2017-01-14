@@ -357,7 +357,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
     private class AdapterEntry {
 
-        public static final int LABEL = 0, ENTRY = 1, MESSAGES = 2, NO_ENTRIES = 3, HEADER = 4, HEADER_SPINNER = 5, NO_FILTER = 6;
+        public static final int LABEL = 7, ENTRY = 1, MESSAGES = 2, NO_ENTRIES = 3, HEADER = 4, HEADER_SPINNER = 5, NO_FILTER = 6;
 
         Object data;
         int type;
@@ -419,6 +419,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         return new SubstListAdapter.MessageViewHolder(wrapper);
 
     }
+
     public SubstListAdapter.LabelViewHolder createLabel(ViewGroup parent) {
         LinearLayout wrapper = new LinearLayout(parent.getContext());
         wrapper.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -427,8 +428,6 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         TextView tv = frag.createSecondaryTextView("", 27, LayoutInflater.from(parent.getContext()), wrapper);
         tv.setId(R.id.label);
         tv.setPadding(RemoteDataFragment.toPixels(2.8f), RemoteDataFragment.toPixels(20), 0, 0);
-
-        parent.addView(wrapper);
 
         return new SubstListAdapter.LabelViewHolder(wrapper);
     }
