@@ -459,14 +459,6 @@ public class SiaAPI {
         return prefs.getString("username", isLoggedIn() ? GGApp.GG_APP.getString(R.string.anonymous) : null);
     }
 
-    public String getFirstName() {
-        return prefs.getString("firstname", null);
-    }
-
-    public String getLastName() {
-        return prefs.getString("lastname", null);
-    }
-
     public boolean isLoggedIn() {
         return getToken() != null;
     }

@@ -129,15 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void removeAllFragments() {
-        List<Fragment> frags = getSupportFragmentManager().getFragments();
-        if(frags != null)
-            for(Fragment frag : frags) {
-                if(frag != null && !frag.getTag().equals("gg_content_fragment"))
-                    getSupportFragmentManager().beginTransaction().remove(frag).commit();
-            }
-    }
-
     @Override
     public void onRequestPermissionsResult(int req, @NonNull String[] permissions, @NonNull int[] results) {
         if(req == 1) {

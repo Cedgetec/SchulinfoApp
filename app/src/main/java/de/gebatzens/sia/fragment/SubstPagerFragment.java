@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,6 +101,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             final SubstListAdapter sla = new SubstListAdapter(this);
             recyclerView.setAdapter(sla);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
             l.addView(recyclerView);
             sla.setToOverview();
 
@@ -120,6 +122,9 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
             group.addView(l);
         }
+
+        recyclerView.scrollToPosition(getArguments() != null ? getArguments().getInt("recyclerview_scroll", 0) : 0);
+
     }
 
     @Override
@@ -134,6 +139,8 @@ public class SubstPagerFragment extends RemoteDataFragment {
             plan = ((GGPlan.GGPlans) getFragment().getData()).get(index);
         }
 
+        Log.d("ggvp", "SUBST PAGER FRAGMENT: " + (bundle != null ? bundle.getInt("recyclerview_scroll") : -123));
+
         LinearLayout l = new LinearLayout(getActivity());
         l.setOrientation(LinearLayout.VERTICAL);
         if(getFragment().getData() != null)
@@ -141,7 +148,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
         return l;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle b) {
+        super.onSaveInstanceState(b);
 
+        b.putInt("recyclerview_scroll", recyclerView.getScrollY());
+    }
 
     public static String getTimeDiff(Context ctx, Date old) {
         long diff = new Date().getTime() - old.getTime();
