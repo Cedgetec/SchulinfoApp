@@ -111,6 +111,17 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
+            Preference prefPrivacy = findPreference("privacy");
+            prefPrivacy.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent intent = new Intent(getActivity(), TextActivity.class);
+                    intent.putExtra("title", R.string.privacy_statement);
+                    intent.putExtra("text", R.array.privacy_content);
+                    startActivity(intent);
+                    return true;
+                }
+            });
+
             final Preference notification_led_color = findPreference("notification_led_color");
 
             final List<String> ledColors = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.notification_colors)));
@@ -439,11 +450,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         changed = false;
         recreate = false;
-
-        Fragment f = getFragmentManager().findFragmentByTag("settings_frag");
-        if(f != null) {
-            getFragmentManager().beginTransaction().remove(f).commit();
-        }
 
         super.onCreate(savedInstanceState);
 

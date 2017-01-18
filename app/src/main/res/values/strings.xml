@@ -164,6 +164,14 @@
         <item>If you have questions or suggestions, please send us an email: support@cedgetec.com</item>
     </string-array>
 
+    <string name="privacy_statement">Privacy statement</string>
+    <string-array name="privacy_content">
+        <item>Using our app is possible without an indication of personal data. The claim of individual services of our app can result in causing divergent regulations, which will now be explained separately. Your personal data (for example, name, class, courses, etc.) will be processed only in accordance with the provisions of the German data protection act. Data is personal if they can be clearly assigned to a specific person. The following regulations inform you about the type, scope and purpose of the collection, use and processing of personal data by the provider.</item>
+        <item>We point out that the Internet-based data transmission has security gaps, which means that it is impossible to completely protect you against third-party access.</item>
+        <item>In our app we offer the possibility to contact us by e-mail. In this case, the information provided by the user is stored for the purpose of processing his request. There is no transfer to third parties. We may not compare the collected data with data that may be collected by other components of our app.</item>
+        <item>You can contact us free of charge for questions regarding the collection, processing or use of your personal data and their correction, blocking, deletion or revocation of a given consent, based on the German Data Protection Act. We would like to point out that you are entitled to correct incorrect data or to delete personal data, unless it is subject to a statutory retention requirement.</item>
+    </string-array>
+
     <string-array name="subjects">
         <item>d|German</item>
         <item>e|English</item>

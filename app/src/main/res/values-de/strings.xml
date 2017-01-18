@@ -161,6 +161,14 @@
         <item>Bei Fragen und Anregungen wende dich bitte an support@cedgetec.com.</item>
     </string-array>
 
+    <string name="privacy_statement">Datenschutzerklärung</string>
+    <string-array name="privacy_content">
+        <item>Die Nutzung unserer App ist ohne eine Angabe von personenbezogenen Daten möglich. Für die Nutzung einzelner Services unserer App können sich hierfür abweichende Regelungen ergeben, die in diesem Falle nachstehend gesondert erläutert werden. Ihre personenbezogenen Daten (z.B.  Name, Klasse, Kurse, u.ä.) werden von uns nur gemäß den Bestimmungen des deutschen Datenschutzrechts verarbeitet. Daten sind dann personenbezogen, wenn sie eindeutig einer bestimmten natürlichen Person zugeordnet werden können. Nachstehende Regelungen informieren Sie insoweit über die Art, den Umfang und Zweck der Erhebung, die Nutzung und die Verarbeitung von personenbezogenen Daten durch den Anbieter.</item>
+        <item>Wir weisen darauf hin, dass die internetbasierte Datenübertragung Sicherheitslücken aufweist, ein lückenloser Schutz vor Zugriffen durch Dritte somit unmöglich ist.</item>
+        <item>Wir bieten Ihnen in unserer App die Möglichkeit, mit uns per E-Mail in Verbindung zu treten. In diesem Fall werden die vom Nutzer gemachten Angaben zum Zwecke der Bearbeitung seiner Kontaktaufnahme gespeichert. Eine Weitergabe an Dritte erfolgt nicht. Ein Abgleich der so erhobenen Daten mit Daten, die möglicherweise durch andere Komponenten unserer App erhoben werden, erfolgt ebenfalls nicht.</item>
+        <item>Sie können sich aufgrund des Bundesdatenschutzgesetzes bei Fragen zur Erhebung, Verarbeitung oder Nutzung Ihrer personenbezogenen Daten und deren Berichtigung, Sperrung, Löschung oder einem Widerruf einer erteilten Einwilligung unentgeltlich an uns wenden. Wir weisen darauf hin, dass Ihnen ein Recht auf Berichtigung falscher Daten oder Löschung personenbezogener Daten zusteht, sollte diesem Anspruch keine gesetzliche Aufbewahrungspflicht entgegenstehen.</item>
+    </string-array>
+
     <string-array name="subjects">
         <item>d|Deutsch</item>
         <item>e|Englisch</item>

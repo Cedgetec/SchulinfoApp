@@ -101,6 +101,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             final SubstListAdapter sla = new SubstListAdapter(this);
             recyclerView.setAdapter(sla);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
             l.addView(recyclerView);
             sla.setToOverview();
 
@@ -121,6 +122,9 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
             group.addView(l);
         }
+
+        recyclerView.scrollToPosition(getArguments() != null ? getArguments().getInt("recyclerview_scroll", 0) : 0);
+
     }
 
     @Override
@@ -134,6 +138,8 @@ public class SubstPagerFragment extends RemoteDataFragment {
         if(getFragment().getData() != null && index >= 0) {
             plan = ((GGPlan.GGPlans) getFragment().getData()).get(index);
         }
+
+        Log.d("ggvp", "SUBST PAGER FRAGMENT: " + (bundle != null ? bundle.getInt("recyclerview_scroll") : -123));
 
         LinearLayout l = new LinearLayout(getActivity());
         l.setOrientation(LinearLayout.VERTICAL);
@@ -163,7 +169,6 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
         }
     }
-
 
     public static String getTimeDiff(Context ctx, Date old) {
         long diff = new Date().getTime() - old.getTime();

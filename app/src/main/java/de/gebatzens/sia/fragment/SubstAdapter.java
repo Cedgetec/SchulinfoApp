@@ -78,6 +78,7 @@ public class SubstAdapter extends FragmentStatePagerAdapter {
             params.putInt("index", SubstPagerFragment.INDEX_OVERVIEW);
         else
             params.putInt("index", position - 1);
+        fragment.setRetainInstance(true);
         fragment.setArguments(params);
         return fragment;
     }
