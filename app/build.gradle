@@ -10,7 +10,9 @@ android {
         targetSdkVersion 25
         versionCode 140
         versionName "1.4.0"
+
     }
+
     
     buildTypes {
         Properties properties = new Properties()

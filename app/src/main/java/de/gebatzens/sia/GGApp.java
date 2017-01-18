@@ -81,7 +81,7 @@ public class GGApp extends Application {
         GG_APP = this;
         remote = new SiaAPI();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        GGBroadcast.createAlarm(this);
+        GGBroadcast.createAlarm(this, true);
         filters = FilterActivity.loadFilter();
         loadSubjectMap();
         School.loadList();
@@ -105,6 +105,8 @@ public class GGApp extends Application {
         if(school != null) {
             FirebaseMessaging.getInstance().subscribeToTopic("sia_sid_" + school.sid);
         }
+
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
 
         wearData = new WearDataProvider();
         wearData.updateMainFilters(filters.including);

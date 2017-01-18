@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,6 +142,27 @@ public class SubstPagerFragment extends RemoteDataFragment {
         return l;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle b) {
+        super.onSaveInstanceState(b);
+
+        b.putParcelable("spf_scroll", recyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onActivityCreated(final Bundle b) {
+        super.onActivityCreated(b);
+
+        if(b != null) {
+            recyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.getLayoutManager().onRestoreInstanceState(b.getParcelable("sfp_scroll"));
+                }
+            });
+
+        }
+    }
 
 
     public static String getTimeDiff(Context ctx, Date old) {

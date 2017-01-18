@@ -106,15 +106,21 @@ public class GGBroadcast extends BroadcastReceiver {
 
     }
 
-    public static void createAlarm(Context context) {
+    public static void createAlarm(Context context, boolean repeating) {
         Intent i = new Intent(context, GGBroadcast.class);
         i.setAction("de.gebatzens.ACTION_ALARM");
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        am.cancel(pi);
-        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
-        //am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 10000, 20000, pi);
+
+        if(repeating) {
+            am.cancel(pi);
+            am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 60000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pi);
+        } else {
+            am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, 1000, pi);
+        }
+
+
     }
 
     public void updateAllFragments(GGApp gg) {
@@ -164,8 +170,7 @@ public class GGBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-            createAlarm(context);
-
+            createAlarm(context, true);
         } else if (intent.getAction().equals("de.gebatzens.ACTION_ALARM")) {
             new AsyncTask<GGApp, Void, Void>() {
 
