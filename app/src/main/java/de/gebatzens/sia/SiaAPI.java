@@ -16,12 +16,14 @@
 
 package de.gebatzens.sia;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ShortcutManager;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Base64;
 import android.util.Log;

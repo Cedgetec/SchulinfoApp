@@ -202,7 +202,7 @@ public class School {
         List<School> newList = new ArrayList<>();
 
         try {
-            SiaAPI.APIResponse re = GGApp.GG_APP.remote.doRequest("/getSchools", null);
+            SiaAPI.APIResponse re = GGApp.GG_APP.api.doRequest("/getSchools", null);
             if(re.state == SiaAPI.APIState.SUCCEEDED) {
                 LIST = new ArrayList<>();
                 JSONArray schools = (JSONArray) re.data;

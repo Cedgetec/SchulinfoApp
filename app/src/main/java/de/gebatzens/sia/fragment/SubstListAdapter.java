@@ -173,7 +173,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             entries.add(header);
             updateHeader = true;
 
-            GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData();
+            GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
             Filter.FilterList filter = GGApp.GG_APP.filters;
 
             for (GGPlan pl : plans) {

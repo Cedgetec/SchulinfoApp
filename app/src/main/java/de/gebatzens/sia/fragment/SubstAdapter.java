@@ -60,7 +60,7 @@ public class SubstAdapter extends FragmentStatePagerAdapter {
     }
 
     public SubstPagerFragment getFragment(GGPlan plan) {
-        return (SubstPagerFragment) instantiateItem(viewPager, plans.indexOf(plan));
+        return (SubstPagerFragment) instantiateItem(viewPager, plans.indexOf(plan) + 1);
     }
 
     public void setFragmentsLoading() {

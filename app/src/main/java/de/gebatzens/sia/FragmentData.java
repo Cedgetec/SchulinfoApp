@@ -119,7 +119,7 @@ public class FragmentData {
 
     public static class FragmentList extends ArrayList<FragmentData> {
 
-        public List<FragmentData> getData(FragmentType type) {
+        public List<FragmentData> getByType(FragmentType type) {
             ArrayList<FragmentData> list = new ArrayList<>();
             for(FragmentData data : this) {
                 if (data.type == type)
@@ -129,7 +129,7 @@ public class FragmentData {
             return list;
         }
 
-        public List<FragmentData> getData(FragmentType type, String params) {
+        public List<FragmentData> getByType(FragmentType type, String params) {
             ArrayList<FragmentData> list = new ArrayList<>();
             for(FragmentData fr : this) {
                 if (fr.type == type && fr.params.equals(params))

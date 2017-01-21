@@ -101,7 +101,7 @@ public class LoginDialog extends DialogFragment {
 
                     @Override
                     protected Integer doInBackground(String... params) {
-                        return GGApp.GG_APP.remote.login(params[0], params[1], params[2]);
+                        return GGApp.GG_APP.api.login(params[0], params[1], params[2]);
 
                     }
 

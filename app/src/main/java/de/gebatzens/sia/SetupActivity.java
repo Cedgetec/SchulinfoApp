@@ -46,13 +46,13 @@ public class SetupActivity extends AppCompatActivity {
         setTheme(R.style.AppThemeSetup);
         super.onCreate(saved);
 
-        if(GGApp.GG_APP.remote.isLoggedIn()) {
+        if(GGApp.GG_APP.api.isLoggedIn()) {
             new Thread() {
                 @Override
                 public void run() {
                     Log.d("ggvp", "Updating school " + GGApp.GG_APP.school.name);
                     try {
-                        SiaAPI.APIResponse resp = GGApp.GG_APP.remote.doRequest("/schoolInfo?token=" + GGApp.GG_APP.remote.getToken(), null);
+                        SiaAPI.APIResponse resp = GGApp.GG_APP.api.doRequest("/schoolInfo?token=" + GGApp.GG_APP.api.getToken(), null);
                         if(resp.state == SiaAPI.APIState.SUCCEEDED) {
                             String img = GGApp.GG_APP.school.image;
 
@@ -82,6 +82,7 @@ public class SetupActivity extends AppCompatActivity {
         }
 
         GGApp.GG_APP.setSchool(null);
+        GGApp.GG_APP.setFragmentIndex(0);
 
         setContentView(R.layout.activity_setup);
 
@@ -213,10 +214,14 @@ public class SetupActivity extends AppCompatActivity {
                         }
                     });
                 }
+
+                //workaround for a bug that causes an endless loading screen
+                GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).setData(GGApp.GG_APP.api.getPlans(false));
+
                 if(d.isShowing())
                     d.dismiss();
                 Intent i = new Intent(SetupActivity.this, MainActivity.class);
-                i.putExtra("reload", true);
+                //i.putExtra("reload", true);
                 startActivity(i);
                 finish();
 

@@ -160,7 +160,7 @@ public class FilterDialog extends DialogFragment {
 
             if(getMainFilterPosition() == -1) {
                 ed.setText("");
-                GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData();
+                GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
 
                 //could confuse people
                 /*if(plans != null) {

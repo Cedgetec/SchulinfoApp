@@ -17,7 +17,6 @@
 package de.gebatzens.sia;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -316,13 +315,13 @@ public class SettingsActivity extends AppCompatActivity {
             Preference pref_username = findPreference("authentication_username");
 
             if(GGApp.GG_APP.school.loginNeeded) {
-                pref_username.setSummary(getString(R.string.logged_in_as, GGApp.GG_APP.remote.getUsername()));
+                pref_username.setSummary(getString(R.string.logged_in_as, GGApp.GG_APP.api.getUsername()));
             }
 
             pref_username.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    if(gg.remote.isLoggedIn()) {
+                    if(gg.api.isLoggedIn()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle(getResources().getString(R.string.logout));
                         builder.setMessage(getResources().getString(R.string.logout_confirm));
@@ -333,7 +332,7 @@ public class SettingsActivity extends AppCompatActivity {
                                     ShortcutManager shortcutManager = getActivity().getSystemService(ShortcutManager.class);
                                     shortcutManager.removeAllDynamicShortcuts();
                                 }
-                                GGApp.GG_APP.remote.logout();
+                                GGApp.GG_APP.api.logout();
                                 Intent i = new Intent();
                                 i.putExtra("setup", true);
                                 ((SettingsActivity) getActivity()).finish(RESULT_OK, i);

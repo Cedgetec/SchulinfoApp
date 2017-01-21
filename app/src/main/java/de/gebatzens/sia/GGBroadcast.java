@@ -37,14 +37,14 @@ import de.gebatzens.sia.fragment.SubstFragment;
 public class GGBroadcast extends BroadcastReceiver {
 
     public void checkForSubstUpdates(final GGApp gg) {
-        if(gg.school == null || gg.school.fragments.getData(FragmentData.FragmentType.PLAN).size() == 0) {
+        if(gg.school == null || gg.school.fragments.getByType(FragmentData.FragmentType.PLAN).size() == 0) {
             Log.i("ggvp", "school does not have a PLAN fragment");
             return;
         }
 
-        FragmentData planFrag = gg.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0);
+        FragmentData planFrag = gg.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0);
 
-        final GGPlan.GGPlans newPlans = gg.remote.getPlans(false);
+        final GGPlan.GGPlans newPlans = gg.api.getPlans(false);
         GGPlan.GGPlans oldPlans = (GGPlan.GGPlans) planFrag.getData();
         planFrag.setData(newPlans);
 

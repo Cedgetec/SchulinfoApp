@@ -63,7 +63,7 @@ public class GGApp extends Application {
     public static GGApp GG_APP;
 
     public MainActivity activity;
-    public SiaAPI remote;
+    public SiaAPI api;
     public School school;
 
     public SharedPreferences preferences;
@@ -79,7 +79,7 @@ public class GGApp extends Application {
     public void onCreate() {
         super.onCreate();
         GG_APP = this;
-        remote = new SiaAPI();
+        api = new SiaAPI();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         GGBroadcast.createAlarm(this, true);
         filters = FilterActivity.loadFilter();
@@ -342,7 +342,7 @@ public class GGApp extends Application {
                 switch(frag.type) {
                     case PLAN:
                         GGPlan.GGPlans oldPlans = (GGPlan.GGPlans) frag.getData();
-                        final GGPlan.GGPlans plans = remote.getPlans(updateFragments);
+                        final GGPlan.GGPlans plans = api.getPlans(updateFragments);
                         frag.setData(plans);
                         if(plans.throwable == null)
                             plans.save();
@@ -370,7 +370,7 @@ public class GGApp extends Application {
                         break;
                     case NEWS:
                         News on = (News) frag.getData();
-                        News news = remote.getNews(updateFragments);
+                        News news = api.getNews(updateFragments);
                         frag.setData(news);
                         if(news.throwable == null)
                             on.save();
@@ -378,14 +378,14 @@ public class GGApp extends Application {
                         break;
                     case MENSA:
                         Mensa om = (Mensa) frag.getData();
-                        Mensa mensa = remote.getMensa(updateFragments);
+                        Mensa mensa = api.getMensa(updateFragments);
                         frag.setData(mensa);
                         if(mensa.throwable == null)
                             mensa.save();
                         update = om == null || !om.equals(mensa);
                         break;
                     case EXAMS:
-                        Exams newExams = remote.getExams(updateFragments);
+                        Exams newExams = api.getExams(updateFragments);
                         Exams exams = (Exams) frag.getData();
                         if(exams != null) {
                             exams.reuseSelected(newExams);
@@ -398,7 +398,7 @@ public class GGApp extends Application {
                         break;
                     case PDF:
                         StaticData od = (StaticData) frag.getData();
-                        StaticData data = remote.downloadStaticFile(frag.getParams(), updateFragments);
+                        StaticData data = api.downloadStaticFile(frag.getParams(), updateFragments);
                         frag.setData(data);
                         if(data.throwable == null)
                             data.save();
