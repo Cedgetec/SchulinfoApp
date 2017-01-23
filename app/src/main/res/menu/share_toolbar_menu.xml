@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="de.gebatzens.sia.MainActivity" >
 
+    <item android:id="@+id/action_share"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:title="@string/share"
+        android:icon="@drawable/ic_share"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_copy"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:title="@string/copy"
         android:icon="@drawable/ic_copy"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom"/>
-
-    <item android:id="@+id/action_share"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:title="@string/share"
-        android:icon="@drawable/ic_share"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"/>
 

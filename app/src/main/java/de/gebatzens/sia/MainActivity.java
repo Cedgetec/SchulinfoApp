@@ -96,7 +96,10 @@ public class MainActivity extends AppCompatActivity {
     public Bundle savedState;
     NavigationView navigationView;
     int selectedItem;
-    private ArrayList<Shareable> shared;
+
+    // it is static to keep the list when the device gets rotated
+    // TODO: this is not good....
+    private static ArrayList<Shareable> shared = new ArrayList<>();
 
     public void updateToolbar(String s, String st) {
         mToolBar.setTitle(s);
@@ -208,8 +211,10 @@ public class MainActivity extends AppCompatActivity {
             GGApp.GG_APP.setFragmentIndex(fragments.indexOf(frag));
         }
 
-        if(intent != null && intent.getBooleanExtra("reload", false))
+        if(intent != null && intent.getBooleanExtra("reload", false)) {
             GGApp.GG_APP.refreshAsync(null, true, fragments.get(GGApp.GG_APP.getFragmentIndex()));
+            intent.removeExtra("reload");
+        }
 
         setContentView(R.layout.activity_main);
 
@@ -426,7 +431,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        shared = new ArrayList<>();
         shareToolbar = (Toolbar) findViewById(R.id.share_toolbar);
         shareToolbar.getMenu().clear();
         shareToolbar.inflateMenu(R.menu.share_toolbar_menu);
@@ -499,6 +503,19 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        if(shared.size() > 0) {
+            shareToolbar.setVisibility(View.VISIBLE);
+            updateShareToolbarText();
+        }
+
+        // if a fragment is opened via a notification or a shortcut reset the shared entries
+        // delete extra fragment because the same intent is used when the device gets rotated and the user could have opened a new fragment
+        if(intent != null && intent.hasExtra("fragment")) {
+            resetShareToolbar();
+            intent.removeExtra("fragment");
+        }
+
     }
 
     public void toggleShareToolbar(final boolean show) {
@@ -556,6 +573,18 @@ public class MainActivity extends AppCompatActivity {
         updateShareToolbarText();
     }
 
+    public void resetShareToolbar() {
+        if(shared.size() > 0) {
+            for(Shareable s : shared) {
+                s.setMarked(false);
+            }
+            shared.clear();
+            toggleShareToolbar(false);
+            mContent.updateFragment();
+        }
+
+    }
+
     public int getNumberOfMarkedItems() {
         return shared.size();
     }
@@ -569,6 +598,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if(shared.size() > 0) {
+            resetShareToolbar();
+            return;
+        }
+
         Debug.stopMethodTracing();
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);

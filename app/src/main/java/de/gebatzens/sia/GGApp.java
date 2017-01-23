@@ -43,6 +43,7 @@ import android.view.WindowManager;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -53,6 +54,7 @@ import de.gebatzens.sia.data.Filter;
 import de.gebatzens.sia.data.GGPlan;
 import de.gebatzens.sia.data.Mensa;
 import de.gebatzens.sia.data.News;
+import de.gebatzens.sia.data.Shareable;
 import de.gebatzens.sia.data.StaticData;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
@@ -338,6 +340,15 @@ public class GGApp extends Application {
         new Thread() {
             @Override
             public void run() {
+                if(activity != null) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            activity.resetShareToolbar();
+                        }
+                    });
+                }
+
                 boolean update = false;
                 switch(frag.type) {
                     case PLAN:
