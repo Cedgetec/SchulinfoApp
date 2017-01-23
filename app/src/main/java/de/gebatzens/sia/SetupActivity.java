@@ -40,6 +40,7 @@ public class SetupActivity extends AppCompatActivity {
     SchoolListAdapter adapter;
     ListView list;
     public Dialog currentLoginDialog;
+    public Bundle restoreDialog;
 
     @Override
     public void onCreate(Bundle saved) {
@@ -96,7 +97,7 @@ public class SetupActivity extends AppCompatActivity {
                 if (menuItem.getItemId() == R.id.setup_refresh) {
                     showDownloadDialog();
                 } else if(menuItem.getItemId() == R.id.setup_other_school) {
-                    showLoginDialog(null, true);
+                    showLoginDialog(false, null, true, "");
                 }
                 return true;
             }
@@ -110,7 +111,7 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 School s = School.LIST.get(position);
-                showLoginDialog(s.sid, s.loginNeeded);
+                showLoginDialog(true, s.sid, s.loginNeeded, "");
             }
         });
 
@@ -150,10 +151,15 @@ public class SetupActivity extends AppCompatActivity {
         }.start();
     }
 
-    public void showLoginDialog(String sid, boolean auth) {
+    public void showLoginDialog(boolean hideSid, String sid, boolean auth, String user) {
+
+        boolean restore = restoreDialog != null && hideSid == restoreDialog.getBoolean("hideSid");
+
         Bundle args = new Bundle();
         args.putBoolean("auth", auth);
-        args.putString("sid", sid);
+        args.putBoolean("hideSid", hideSid);
+        args.putString("sid", restore ? restoreDialog.getString("sid") : sid);
+        args.putString("user", restore ? restoreDialog.getString("user") : user);
 
         LoginDialog l = new LoginDialog();
         l.setArguments(args);
