@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 - 2016 Hauke Oldsen
+ * Copyright 2015 - 2017 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package de.gebatzens.sia.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -59,7 +60,7 @@ public class FilterDialog extends DialogFragment {
     }
 
     @Override
-    public void onAttach(Activity a) {
+    public void onAttach(Context a) {
         activity = (FilterActivity) a;
         super.onAttach(a);
     }
@@ -182,7 +183,7 @@ public class FilterDialog extends DialogFragment {
             adapter.addAll(list.including);
             spinner.setAdapter(adapter);
 
-            cb.setEnabled(false);
+            cb.setEnabled(true);
             cb.setText(getString(R.string.all_subjects_including_disabled));
 
             int p = getUpdatePosition();

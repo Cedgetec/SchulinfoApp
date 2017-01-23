@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 - 2016 Hauke Oldsen
+ * Copyright 2015 - 2017 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 
 package de.gebatzens.sia;
 
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -27,11 +25,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.gebatzens.sia.data.Filter;
+import de.gebatzens.sia.dialog.FilterDeleteDialog;
 import de.gebatzens.sia.dialog.FilterDialog;
 
 public class FilterListAdapter extends BaseAdapter {
 
-    ArrayList<? extends Filter> list;
+    public ArrayList<? extends Filter> list;
     FilterActivity c;
 
     public FilterListAdapter(FilterActivity c, ArrayList<? extends Filter> list) {
@@ -75,30 +74,8 @@ public class FilterListAdapter extends BaseAdapter {
         vg.findViewById(R.id.filter_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                builder.setTitle(c.getString(R.string.delete_filter));
-                builder.setMessage(c.getString(filter instanceof Filter.IncludingFilter ? R.string.delete_main_filter_message : R.string.delete_filter_message));
-                builder.setPositiveButton(c.getString(R.string.delete), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        c.changed = true;
-                        list.remove(position);
-                        if(filter instanceof Filter.ExcludingFilter)
-                            ((Filter.ExcludingFilter) filter).getParentFilter().excluding.remove(filter);
-
-                        c.updateData();
-                        FilterActivity.saveFilter(GGApp.GG_APP.filters);
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNegativeButton(c.getString(R.string.abort), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.create().show();
-
+                FilterDeleteDialog.newInstance(R.string.delete_filter, filter instanceof Filter.IncludingFilter ? R.string.delete_main_filter_message : R.string.delete_filter_message,
+                        R.string.ok, R.string.cancel, position, filter instanceof Filter.ExcludingFilter).show(c.getSupportFragmentManager(), "delete_dialog");
             }
         });
         return vg;
