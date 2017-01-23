@@ -17,6 +17,9 @@
 package de.gebatzens.sia;
 
 import android.app.NotificationManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -53,16 +56,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import de.gebatzens.sia.data.Exams;
+import de.gebatzens.sia.data.Shareable;
 import de.gebatzens.sia.dialog.TextDialog;
 import de.gebatzens.sia.fragment.ExamFragment;
 import de.gebatzens.sia.fragment.MensaFragment;
@@ -70,11 +81,12 @@ import de.gebatzens.sia.fragment.NewsFragment;
 import de.gebatzens.sia.fragment.PDFFragment;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
+import de.gebatzens.sia.fragment.SubstListAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
     public RemoteDataFragment mContent;
-    public Toolbar mToolBar;
+    public Toolbar mToolBar, shareToolbar;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
     View mNavigationHeader;
@@ -84,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
     public Bundle savedState;
     NavigationView navigationView;
     int selectedItem;
+    private ArrayList<Shareable> shared;
 
     public void updateToolbar(String s, String st) {
         mToolBar.setTitle(s);
@@ -411,6 +424,140 @@ public class MainActivity extends AppCompatActivity {
 
             GGApp.GG_APP.preferences.edit().putBoolean("app_130_upgrade", false).apply();
         }
+
+
+        shared = new ArrayList<>();
+        shareToolbar = (Toolbar) findViewById(R.id.share_toolbar);
+        shareToolbar.getMenu().clear();
+        shareToolbar.inflateMenu(R.menu.share_toolbar_menu);
+        shareToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleShareToolbar(false);
+                for(Shareable s : MainActivity.this.shared) {
+                    s.setMarked(false);
+                }
+                MainActivity.this.shared.clear();
+
+                mContent.updateFragment();
+            }
+        });
+
+        shareToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                toggleShareToolbar(false);
+
+                HashMap<Date, ArrayList<Shareable>> dates = new HashMap<Date, ArrayList<Shareable>>();
+
+                for(Shareable s : MainActivity.this.shared) {
+                    ArrayList<Shareable> list = dates.get(s.getDate());
+                    if(list == null) {
+                        list = new ArrayList<Shareable>();
+                        dates.put(s.getDate(), list);
+                    }
+
+                    list.add(s);
+
+                    s.setMarked(false);
+                }
+                MainActivity.this.shared.clear();
+
+                List<Date> dateList = new ArrayList<Date>(dates.keySet());
+                Collections.sort(dateList);
+                String content = "";
+
+                for(Date key : dateList) {
+                    content += SubstListAdapter.translateDay(key) + "\n\n";
+
+                    Collections.sort(dates.get(key));
+                    for(Shareable s : dates.get(key)) {
+                        content += s.getShareContent() + "\n";
+                    }
+
+                    content += "\n";
+                }
+
+                content = content.substring(0, content.length() - 1);
+
+                mContent.updateFragment();
+
+                if(item.getItemId() == R.id.action_copy) {
+                    ClipboardManager clipboard = (ClipboardManager)
+                            getSystemService(Context.CLIPBOARD_SERVICE);
+
+                    ClipData clip = ClipData.newPlainText(getString(R.string.entries), content);
+                    clipboard.setPrimaryClip(clip);
+                } else if(item.getItemId() == R.id.action_share) {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, content);
+                    sendIntent.setType("text/plain");
+                    startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+                }
+
+                return true;
+            }
+        });
+    }
+
+    public void toggleShareToolbar(final boolean show) {
+        final Toolbar shareToolbar = (Toolbar) findViewById(R.id.share_toolbar);
+
+        AlphaAnimation anim = new AlphaAnimation(show ? 0.f : 1.f, show ? 1.f : 0.f);
+        anim.setDuration(200);
+
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                if(show) {
+                    shareToolbar.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                if(!show) {
+                    shareToolbar.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        shareToolbar.startAnimation(anim);
+    }
+
+    private void updateShareToolbarText() {
+        shareToolbar.setTitle(getResources().getQuantityString(R.plurals.n_entries_marked, shared.size(), shared.size()));
+    }
+
+    public void addShareable(Shareable s) {
+        if(shared.size() == 0) {
+            this.toggleShareToolbar(true);
+        }
+
+        shared.add(s);
+
+        updateShareToolbarText();
+
+    }
+
+    public void removeShareable(Shareable s) {
+        if(shared.size() == 1) {
+            this.toggleShareToolbar(false);
+        }
+
+        shared.remove(s);
+
+        updateShareToolbarText();
+    }
+
+    public int getNumberOfMarkedItems() {
+        return shared.size();
     }
 
     @Override

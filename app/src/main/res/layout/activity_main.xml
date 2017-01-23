@@ -15,11 +15,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <include layout="@layout/toolbar" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <include layout="@layout/toolbar" />
+
+
+                <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/share_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_alignParentTop="true"
+                    android:background="?attr/colorPrimary"
+                    app:navigationIcon="@drawable/ic_arrow_back"
+                    android:theme="@style/ToolBarTheme"
+                    app:titleTextColor="@color/toolbarText"
+                    android:visibility="gone"
+                    app:subtitleTextColor="@color/toolbarText"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -49,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             sia:theight="?attr/actionBarSize"/>
+
     </FrameLayout>
 
     <android.support.design.widget.NavigationView
