@@ -153,7 +153,7 @@ public class SetupActivity extends AppCompatActivity {
 
     public void showLoginDialog(boolean hideSid, String sid, boolean auth, String user) {
 
-        boolean restore = restoreDialog != null && hideSid == restoreDialog.getBoolean("hideSid");
+        boolean restore = restoreDialog != null && hideSid == restoreDialog.getBoolean("hideSid") && (!hideSid || sid.equals(restoreDialog.getString("sid")));
 
         Bundle args = new Bundle();
         args.putBoolean("auth", auth);
