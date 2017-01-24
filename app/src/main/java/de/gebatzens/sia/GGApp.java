@@ -83,7 +83,7 @@ public class GGApp extends Application {
         GG_APP = this;
         api = new SiaAPI();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        GGBroadcast.createAlarm(this, true);
+        //GGBroadcast.createAlarm(this, true);
         filters = FilterActivity.loadFilter();
         loadSubjectMap();
         School.loadList();

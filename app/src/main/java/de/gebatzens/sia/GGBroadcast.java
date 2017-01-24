@@ -170,7 +170,7 @@ public class GGBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-            createAlarm(context, true);
+            //createAlarm(context, true);
         } else if (intent.getAction().equals("de.gebatzens.ACTION_ALARM")) {
             new AsyncTask<GGApp, Void, Void>() {
 

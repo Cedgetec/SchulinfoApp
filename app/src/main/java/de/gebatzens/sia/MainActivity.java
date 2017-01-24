@@ -570,7 +570,9 @@ public class MainActivity extends AppCompatActivity {
 
         shared.remove(s);
 
-        updateShareToolbarText();
+        if(shared.size() > 0) {
+            updateShareToolbarText();
+        }
     }
 
     public void resetShareToolbar() {
