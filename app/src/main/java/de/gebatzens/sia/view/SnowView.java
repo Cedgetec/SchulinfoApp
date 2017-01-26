@@ -24,7 +24,9 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 
+import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
 
 public class SnowView extends View {
@@ -50,7 +52,11 @@ public class SnowView extends View {
         } else {
             bitmaps = null;
         }
+    }
 
+    public void updateSnow() {
+        this.generate();
+        this.invalidate();
     }
 
     private void generate() {
@@ -61,8 +67,10 @@ public class SnowView extends View {
             return;
         }
 
+        boolean hasTabs = GGApp.GG_APP.school.fragments.get(GGApp.GG_APP.getFragmentIndex()).getType() == FragmentData.FragmentType.PLAN;
+
         for(int i = 0; i < objs.length; i++) {
-            objs[i] = new int[] {(int) (width * Math.random()), (int) (theight * Math.random() * 1.5f), (int) Math.floor(Math.random() * bitmaps.length)};
+            objs[i] = new int[] {(int) (width * Math.random()), (int) (theight * Math.random() * (hasTabs ? 1.5f : 0.8f)), (int) Math.floor(Math.random() * bitmaps.length)};
         }
     }
 

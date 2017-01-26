@@ -152,7 +152,9 @@ public class SubstPagerFragment extends RemoteDataFragment {
     public void onSaveInstanceState(Bundle b) {
         super.onSaveInstanceState(b);
 
-        b.putParcelable("spf_scroll", recyclerView.getLayoutManager().onSaveInstanceState());
+        if(recyclerView != null) {
+            b.putParcelable("spf_scroll", recyclerView.getLayoutManager().onSaveInstanceState());
+        }
     }
 
     @Override

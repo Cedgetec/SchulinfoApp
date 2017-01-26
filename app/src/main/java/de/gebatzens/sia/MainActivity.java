@@ -75,6 +75,7 @@ import de.gebatzens.sia.fragment.NewsFragment;
 import de.gebatzens.sia.fragment.PDFFragment;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
+import de.gebatzens.sia.view.SnowView;
 
 import static android.R.attr.bitmap;
 
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
     public Bundle savedState;
     NavigationView navigationView;
     int selectedItem;
+    SnowView snowView;
 
     public void updateToolbar(String s, String st) {
         mToolBar.setTitle(s);
@@ -353,6 +355,8 @@ public class MainActivity extends AppCompatActivity {
                                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.content_fragment, mContent, "gg_content_fragment");
                                 transaction.commit();
+
+                                snowView.updateSnow();
                             }
 
                             @Override
@@ -418,6 +422,8 @@ public class MainActivity extends AppCompatActivity {
 
             GGApp.GG_APP.preferences.edit().putBoolean("app_130_upgrade", false).apply();
         }
+
+        snowView = (SnowView) findViewById(R.id.snow_view);
     }
 
     @Override
