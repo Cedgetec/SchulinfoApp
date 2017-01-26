@@ -338,7 +338,7 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
 
     }
 
-    public static class Entry implements Filter.Filterable {
+    public static class Entry implements Filter.Filterable, Shareable {
 
         public String type;
         public String clazz;
@@ -350,6 +350,7 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
         public String lesson = "";
         public String room = "";
         public Date date;
+        public boolean markedForSharing = false;
 
         private String classAN;
         private String teacherAN;
@@ -401,6 +402,40 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
         @Override
         public String toString() {
             return "Entry[" + type + " " + clazz + " " + subject + " " + teacher + " " + comment + " " + lesson + " " + room + " " + repsub + "]";
+        }
+
+        @Override
+        public void setMarked(boolean m) {
+            markedForSharing = m;
+        }
+
+        @Override
+        public boolean isMarked() {
+            return markedForSharing;
+        }
+
+        @Override
+        public String getShareContent() {
+            int id;
+
+            if(teacher.equals("")) {
+                if(room.equals("")) {
+                    return GGApp.GG_APP.getResources().getString(R.string.share_content_base, this.type, this.clazz, this.lesson);
+                } else {
+                    return GGApp.GG_APP.getResources().getString(R.string.share_content_room, this.type, this.clazz, this.lesson, this.room);
+                }
+            } else {
+                if(room.equals("")) {
+                    return GGApp.GG_APP.getResources().getString(R.string.share_content_teacher, this.type, this.clazz, this.teacher, this.lesson);
+                } else {
+                    return GGApp.GG_APP.getResources().getString(R.string.share_content_teacher_room, this.type, this.clazz, this.teacher, this.lesson, this.room);
+                }
+            }
+        }
+
+        @Override
+        public Date getDate() {
+            return date;
         }
 
 
@@ -503,6 +538,15 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
                 return s;
             else
                 return t;
+        }
+
+        @Override
+        public int compareTo(Shareable shareable) {
+            if(shareable instanceof Entry) {
+                return lesson.compareTo(((Entry) shareable).lesson);
+            }
+
+            return 0;
         }
     }
 

@@ -25,6 +25,8 @@
 
     <color name="coloredCardViewText">#ffffff</color>
 
+    <color name="share">#88FFFFFF</color>
+
     <!-- DayNight colors -->
     <color name="chip_background">#E0E0E0</color>
     <color name="SwipeRefreshLayout_background">#ffffff</color>

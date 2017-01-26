@@ -119,7 +119,7 @@ public class MensaFragment extends RemoteDataFragment {
                     if(bitmap!=null) {
                         params[0].bitmap = bitmap;
                     } else {
-                        bitmap = GGApp.GG_APP.remote.getMensaImage(params[0].filename);
+                        bitmap = GGApp.GG_APP.api.getMensaImage(params[0].filename);
                         cacheSaveBitmap(params[0].filename, bitmap);
                         params[0].bitmap = bitmap;
                     }

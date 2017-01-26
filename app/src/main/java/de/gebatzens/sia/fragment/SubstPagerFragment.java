@@ -15,9 +15,7 @@
  */
 package de.gebatzens.sia.fragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,19 +49,12 @@ public class SubstPagerFragment extends RemoteDataFragment {
     public void updateFragment() {
         switch(index) {
             case INDEX_OVERVIEW:
-                if(recyclerView != null) {
-                    ((SubstListAdapter) recyclerView.getAdapter()).setToOverview();
-                } else {
-                    if(vg != null) {
-                        vg.removeAllViews();
-                        createView(LayoutInflater.from(getContext()), vg);
-                    }
-                }
+                ((SubstListAdapter) recyclerView.getAdapter()).setToOverview();
                 break;
             case INDEX_INVALID:
                 return;
             default:
-                GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData();
+                GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
                 if(plans.size() <= index) {
                     // This fragment will be deleted in a few seconds
                     break;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Hauke Oldsen
+ * Copyright 2016 - 2017 Hauke Oldsen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,7 @@ import java.util.Locale;
 import de.gebatzens.sia.FilterActivity;
 import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Filter;
 import de.gebatzens.sia.data.GGPlan;
@@ -173,7 +174,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             entries.add(header);
             updateHeader = true;
 
-            GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getData(FragmentData.FragmentType.PLAN).get(0).getData();
+            GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
             Filter.FilterList filter = GGApp.GG_APP.filters;
 
             for (GGPlan pl : plans) {
@@ -291,7 +292,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         return entries.size();
     }
 
-    public static class SubstViewHolder extends RecyclerView.ViewHolder {
+    public class SubstViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView hour, subject, header, detail;
 
@@ -304,7 +305,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             detail = (TextView) v.findViewById(R.id.cv_detail);
         }
 
-        public void update(GGPlan.Entry entry, int type) {
+        public void update(final GGPlan.Entry entry, int type) {
             hour.setText((type & SubstPagerFragment.CARD_LESSON) != 0 ? entry.lesson : entry.clazz);
             header.setText(entry.type + (entry.teacher.isEmpty() ? "" : " [" + entry.teacher + "]"));
             TextView tv = detail;
@@ -318,10 +319,46 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 subject.setVisibility(View.GONE);
             else
                 subject.setText(Html.fromHtml(subText));
+
+            cv.setForeground(entry.markedForSharing ? frag.getActivity().getResources().getDrawable(R.drawable.share_foreground) : null);
+
+            final MainActivity ma = (MainActivity) frag.getActivity();
+
+            cv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if(entry.isMarked()) {
+                        cv.setForeground(null);
+                        entry.setMarked(false);
+                        ma.removeShareable(entry);
+                    } else {
+                        cv.setForeground(frag.getActivity().getResources().getDrawable(R.drawable.share_foreground));
+                        entry.setMarked(true);
+                        ma.addShareable(entry);
+                    }
+
+                    return true;
+                }
+            });
+
+            cv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(entry.isMarked()) {
+                        entry.setMarked(false);
+                        cv.setForeground(null);
+                        ma.removeShareable(entry);
+                    } else if(ma.getNumberOfMarkedItems() > 0) {
+                        cv.setForeground(frag.getActivity().getResources().getDrawable(R.drawable.share_foreground));
+                        entry.setMarked(true);
+                        ma.addShareable(entry);
+                    }
+                }
+            });
         }
     }
 
-    public static class LabelViewHolder extends RecyclerView.ViewHolder {
+    public class LabelViewHolder extends RecyclerView.ViewHolder {
         TextView tv;
 
         public LabelViewHolder(View l) {
@@ -334,7 +371,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public static class MessageViewHolder extends RecyclerView.ViewHolder {
+    public class MessageViewHolder extends RecyclerView.ViewHolder {
         LinearLayout linearLayout;
         CardView cv;
 
@@ -370,6 +407,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         frag.setOrientationPadding(wrapper);
 
         CardView cv = (CardView) i.inflate(R.layout.basic_cardview, wrapper, false);
+        cv.setId(R.id.cvroot);
         String[] colors = GGApp.GG_APP.getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
         cv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
         cardColorIndex++;
@@ -464,7 +502,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
      * @param date
      * @return
      */
-    private String translateDay(Date date) {
+    public static String translateDay(Date date) {
         StringBuilder sb = new StringBuilder();
         SimpleDateFormat convertedDateFormat;
         if(Locale.getDefault().getLanguage().equals("en")) {

@@ -47,7 +47,7 @@ public class LoginDialog extends DialogFragment {
     SetupActivity activity;
 
     @Override
-    public void onAttach(Activity a) {
+    public void onAttach(Context a) {
         super.onAttach(a);
         activity = (SetupActivity) a;
     }
@@ -67,9 +67,9 @@ public class LoginDialog extends DialogFragment {
 
             @Override
             public void onClick(final DialogInterface dialog, int which) {
-                String user = auth ? ((EditText) ((Dialog) dialog).findViewById(R.id.usernameInput)).getText().toString() : "_anonymous";
-                String pass = auth ? ((EditText) ((Dialog) dialog).findViewById(R.id.passwordInput)).getText().toString() : "";
-                String lsid = sid == null ? ((EditText) ((Dialog) dialog).findViewById(R.id.sidInput)).getText().toString() : sid;
+                final String user = auth ? ((EditText) ((Dialog) dialog).findViewById(R.id.usernameInput)).getText().toString() : "_anonymous";
+                final String pass = auth ? ((EditText) ((Dialog) dialog).findViewById(R.id.passwordInput)).getText().toString() : "";
+                final String lsid = sid == null ? ((EditText) ((Dialog) dialog).findViewById(R.id.sidInput)).getText().toString() : sid;
 
                 new AsyncTask<String, Integer, Integer>() {
 
@@ -80,14 +80,18 @@ public class LoginDialog extends DialogFragment {
 
                     @Override
                     public void onPostExecute(Integer v) {
+                        boolean restoreDialog = false;
+
                         switch (v) {
                             case 0:
                                 activity.startDownloading();
                                 break;
                             case 1:
+                                restoreDialog = true;
                                 Snackbar.make(activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), activity.getString(R.string.username_or_password_wrong), Snackbar.LENGTH_LONG).show();
                                 break;
                             case 2:
+                                restoreDialog = true;
                                 Snackbar.make(activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), activity.getString(R.string.could_not_connect), Snackbar.LENGTH_LONG).show();
                                 break;
                             case 3:
@@ -97,11 +101,18 @@ public class LoginDialog extends DialogFragment {
                                 Snackbar.make(activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), activity.getString(R.string.unknown_error_login), Snackbar.LENGTH_LONG).show();
                                 break;
                         }
+
+                        if(restoreDialog) {
+                            activity.restoreDialog = LoginDialog.this.getArguments();
+                            activity.restoreDialog.putString("user", user);
+                            activity.restoreDialog.putString("sid", lsid);
+                        }
+
                     }
 
                     @Override
                     protected Integer doInBackground(String... params) {
-                        return GGApp.GG_APP.remote.login(params[0], params[1], params[2]);
+                        return GGApp.GG_APP.api.login(params[0], params[1], params[2]);
 
                     }
 
@@ -118,8 +129,10 @@ public class LoginDialog extends DialogFragment {
             }
         });
         Dialog d = builder.create();
-        if(auth)
+        if(auth) {
             d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        }
+
         return d;
     }
 
@@ -127,14 +140,15 @@ public class LoginDialog extends DialogFragment {
     public void onStart() {
         super.onStart();
 
+        boolean hideSid = getArguments().getBoolean("hideSid");
         String sid = getArguments().getString("sid");
         boolean auth = getArguments().getBoolean("auth");
+        String user = getArguments().getString("user");
         final AlertDialog dialog = (AlertDialog) getDialog();
 
         ((SetupActivity) getActivity()).currentLoginDialog = dialog;
 
         if(auth) {
-
             final EditText passwordInput = (EditText) dialog.findViewById(R.id.passwordInput);
             final CheckBox passwordToggle = (CheckBox) dialog.findViewById(R.id.passwordToggle);
             passwordToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -149,14 +163,18 @@ public class LoginDialog extends DialogFragment {
                     }
                 }
             });
+
+            ((EditText) dialog.findViewById(R.id.usernameInput)).setText(user);
         } else {
             dialog.findViewById(R.id.passwordInput).setVisibility(View.GONE);
             dialog.findViewById(R.id.passwordToggle).setVisibility(View.GONE);
             dialog.findViewById(R.id.usernameInput).setVisibility(View.GONE);
         }
 
-        if(sid != null) {
+        if(hideSid) {
             dialog.findViewById(R.id.sidInput).setVisibility(View.GONE);
+        } else {
+            ((EditText) dialog.findViewById(R.id.sidInput)).setText(sid);
         }
 
         TextView acceptTermsLink = (TextView) dialog.findViewById(R.id.acceptTermsLink);
