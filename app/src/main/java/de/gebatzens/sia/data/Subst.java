@@ -42,13 +42,13 @@ import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 
-public class GGPlan extends ArrayList<GGPlan.Entry> {
+public class Subst extends ArrayList<Subst.Entry> {
 
     public Date date;
     public List<String> special = new ArrayList<>();
     private List<String> classes, lessons;
 
-    public GGPlan() {
+    public Subst() {
 
     }
 
@@ -56,7 +56,7 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
         return new SimpleDateFormat("EEEE").format(date);
     }
 
-    public static class GGPlans extends ArrayList<GGPlan> implements RemoteDataFragment.RemoteData {
+    public static class GGPlans extends ArrayList<Subst> implements RemoteDataFragment.RemoteData {
 
         public Throwable throwable;
         public Date loadDate;
@@ -95,7 +95,7 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
 
             try {
                 for(int i = 0; ; i++) {
-                    GGPlan plan = new GGPlan();
+                    Subst plan = new Subst();
                     plan.load("schedule" + i);
                     add(plan);
                 }
@@ -110,8 +110,8 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
             return size() > 0;
         }
 
-        public GGPlan getPlanByDate(Date d) {
-            for(GGPlan plan : this)
+        public Subst getPlanByDate(Date d) {
+            for(Subst plan : this)
                 if(plan.date.equals(d))
                     return plan;
             return null;
@@ -132,7 +132,7 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
 
         public List<String> getAllClasses() {
             Set<String> cl = new HashSet<>();
-            for(GGPlan plan : this) {
+            for(Subst plan : this) {
                 cl.addAll(plan.getAllClasses());
             }
 
@@ -301,16 +301,16 @@ public class GGPlan extends ArrayList<GGPlan.Entry> {
 
     @Override
     public boolean equals(Object o) {
-        if(o instanceof GGPlan) {
-            GGPlan plan = (GGPlan) o;
+        if(o instanceof Subst) {
+            Subst plan = (Subst) o;
             return super.equals(plan) && plan.date.equals(date) && plan.special.equals(special);
         } else
             return false;
 
     }
 
-    public GGPlan filter(Filter.FilterList flist) {
-        GGPlan list = new GGPlan();
+    public Subst filter(Filter.FilterList flist) {
+        Subst list = new Subst();
         list.date = date;
 
         for(Entry e : this) {

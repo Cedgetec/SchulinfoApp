@@ -22,18 +22,18 @@ import android.support.v4.view.ViewPager;
 
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
-import de.gebatzens.sia.data.GGPlan;
+import de.gebatzens.sia.data.Subst;
 
 public class SubstAdapter extends FragmentStatePagerAdapter {
 
     ViewPager viewPager;
-    GGPlan.GGPlans plans;
+    Subst.GGPlans plans;
     SubstFragment fragment;
     
     public SubstAdapter(SubstFragment m, Bundle savedState, ViewPager vp) {
         super(m.getChildFragmentManager());
         this.viewPager = vp;
-        plans = (GGPlan.GGPlans) m.getFragment().getData();
+        plans = (Subst.GGPlans) m.getFragment().getData();
         GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -44,7 +44,7 @@ public class SubstAdapter extends FragmentStatePagerAdapter {
 
     }
 
-    public void update(GGPlan.GGPlans pl) {
+    public void update(Subst.GGPlans pl) {
         final int os = plans == null ? 1 : plans.size() + 1;
         plans = pl;
 
@@ -59,13 +59,13 @@ public class SubstAdapter extends FragmentStatePagerAdapter {
         return (SubstPagerFragment) instantiateItem(viewPager, 0);
     }
 
-    public SubstPagerFragment getFragment(GGPlan plan) {
+    public SubstPagerFragment getFragment(Subst plan) {
         return (SubstPagerFragment) instantiateItem(viewPager, plans.indexOf(plan) + 1);
     }
 
     public void setFragmentsLoading() {
         getOverview().setFragmentLoading();
-        for(GGPlan p : plans)
+        for(Subst p : plans)
             getFragment(p).setFragmentLoading();
     }
 

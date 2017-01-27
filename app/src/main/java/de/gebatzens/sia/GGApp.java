@@ -43,7 +43,6 @@ import android.view.WindowManager;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,10 +50,9 @@ import java.util.TimeZone;
 
 import de.gebatzens.sia.data.Exams;
 import de.gebatzens.sia.data.Filter;
-import de.gebatzens.sia.data.GGPlan;
+import de.gebatzens.sia.data.Subst;
 import de.gebatzens.sia.data.Mensa;
 import de.gebatzens.sia.data.News;
-import de.gebatzens.sia.data.Shareable;
 import de.gebatzens.sia.data.StaticData;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
@@ -126,7 +124,7 @@ public class GGApp extends Application {
 
                 switch(frag.type) {
                     case PLAN:
-                        rd = new GGPlan.GGPlans();
+                        rd = new Subst.GGPlans();
                         break;
                     case EXAMS:
                         rd = new Exams();
@@ -352,8 +350,8 @@ public class GGApp extends Application {
                 boolean update = false;
                 switch(frag.type) {
                     case PLAN:
-                        GGPlan.GGPlans oldPlans = (GGPlan.GGPlans) frag.getData();
-                        final GGPlan.GGPlans plans = api.getPlans(updateFragments);
+                        Subst.GGPlans oldPlans = (Subst.GGPlans) frag.getData();
+                        final Subst.GGPlans plans = api.getPlans(updateFragments);
                         frag.setData(plans);
                         if(plans.throwable == null)
                             plans.save();

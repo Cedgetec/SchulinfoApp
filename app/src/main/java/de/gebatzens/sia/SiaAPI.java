@@ -16,14 +16,11 @@
 
 package de.gebatzens.sia;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.ShortcutManager;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Base64;
 import android.util.Log;
@@ -53,7 +50,7 @@ import java.util.zip.GZIPInputStream;
 
 import de.gebatzens.sia.data.Exams;
 import de.gebatzens.sia.data.Filter;
-import de.gebatzens.sia.data.GGPlan;
+import de.gebatzens.sia.data.Subst;
 import de.gebatzens.sia.data.Mensa;
 import de.gebatzens.sia.data.News;
 import de.gebatzens.sia.data.StaticData;
@@ -132,9 +129,9 @@ public class SiaAPI {
 
     }
 
-    public GGPlan.GGPlans getPlans(boolean toast) {
+    public Subst.GGPlans getPlans(boolean toast) {
 
-        GGPlan.GGPlans plans = new GGPlan.GGPlans();
+        Subst.GGPlans plans = new Subst.GGPlans();
 
         String snackMessage = "";
 
@@ -146,8 +143,8 @@ public class SiaAPI {
                 while (days.hasNext()) {
                     String date = days.next();
                     JSONObject obj = ((JSONObject) re.data).getJSONObject(date);
-                    GGPlan plan = new GGPlan();
-                    plan.date = GGPlan.parseDate(date);
+                    Subst plan = new Subst();
+                    plan.date = Subst.parseDate(date);
                     plans.add(plan);
                     JSONArray entries = obj.getJSONArray("entries");
                     getPlan(entries, plan);
@@ -175,9 +172,9 @@ public class SiaAPI {
 
         }
 
-        Collections.sort(plans, new Comparator<GGPlan>() {
+        Collections.sort(plans, new Comparator<Subst>() {
             @Override
-            public int compare(GGPlan lhs, GGPlan rhs) {
+            public int compare(Subst lhs, Subst rhs) {
                 return lhs.date.compareTo(rhs.date);
             }
         });
@@ -198,9 +195,9 @@ public class SiaAPI {
         return plans;
     }
 
-    private void getPlan(JSONArray array, GGPlan p) throws Exception {
+    private void getPlan(JSONArray array, Subst p) throws Exception {
         for(int i = 0; i < array.length(); i++) {
-            GGPlan.Entry e = new GGPlan.Entry();
+            Subst.Entry e = new Subst.Entry();
             e.date = p.date;
             p.add(e);
             JSONObject entry = array.getJSONObject(i);

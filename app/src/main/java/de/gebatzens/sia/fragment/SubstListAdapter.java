@@ -42,7 +42,7 @@ import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Filter;
-import de.gebatzens.sia.data.GGPlan;
+import de.gebatzens.sia.data.Subst;
 
 public class SubstListAdapter extends RecyclerView.Adapter {
 
@@ -79,11 +79,11 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         type = PLAIN;
     }
 
-    public void updateData(GGPlan plan, int type, boolean messages) {
+    public void updateData(Subst plan, int type, boolean messages) {
         updateData(plan, type, messages, null);
     }
 
-    public void updateData(GGPlan plan, int type, boolean messages, String header) {
+    public void updateData(Subst plan, int type, boolean messages, String header) {
         this.type = type;
         entries.clear();
 
@@ -114,7 +114,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
         switch(type) {
             case PLAIN:
-                for(GGPlan.Entry e : plan) {
+                for(Subst.Entry e : plan) {
                     AdapterEntry ae = new AdapterEntry();
                     ae.data = new Object[] {e, SubstPagerFragment.CARD_LESSON};
                     ae.type = AdapterEntry.ENTRY;
@@ -131,7 +131,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
                     Filter.FilterList fl = new Filter.FilterList();
                     fl.including.add(new Filter.IncludingFilter(Filter.FilterType.LESSON, lesson));
-                    for(GGPlan.Entry e : plan.filter(fl)) {
+                    for(Subst.Entry e : plan.filter(fl)) {
                         ae = new AdapterEntry();
                         ae.data = new Object[] {e, SubstPagerFragment.CARD_CLASS};
                         ae.type = AdapterEntry.ENTRY;
@@ -150,7 +150,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
                     Filter.FilterList fl = new Filter.FilterList();
                     fl.including.add(new Filter.IncludingFilter(Filter.FilterType.CLASS, cl));
-                    for(GGPlan.Entry e : plan.filter(fl)) {
+                    for(Subst.Entry e : plan.filter(fl)) {
                         ae = new AdapterEntry();
                         ae.data = new Object[] {e, SubstPagerFragment.CARD_LESSON};
                         ae.type = AdapterEntry.ENTRY;
@@ -174,10 +174,10 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             entries.add(header);
             updateHeader = true;
 
-            GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
+            Subst.GGPlans plans = (Subst.GGPlans) GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
             Filter.FilterList filter = GGApp.GG_APP.filters;
 
-            for (GGPlan pl : plans) {
+            for (Subst pl : plans) {
                 AdapterEntry date = new AdapterEntry();
                 date.type = AdapterEntry.LABEL;
                 date.data = translateDay(pl.date);
@@ -188,7 +188,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 me.data = pl.special;
                 entries.add(me);
 
-                GGPlan filtered = pl.filter(filter);
+                Subst filtered = pl.filter(filter);
 
                 for (Filter.IncludingFilter ifi : filter.including) {
                     if (filter.including.size() > 1) {
@@ -201,7 +201,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                     Filter.FilterList clist = new Filter.FilterList();
                     clist.including.add(ifi);
 
-                    GGPlan cf = filtered.filter(clist);
+                    Subst cf = filtered.filter(clist);
 
                     if (cf.size() == 0) {
                         AdapterEntry ne = new AdapterEntry();
@@ -209,7 +209,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                         entries.add(ne);
                     }
 
-                    for (GGPlan.Entry e : cf) {
+                    for (Subst.Entry e : cf) {
                         AdapterEntry ae = new AdapterEntry();
                         ae.data = new Object[]{e, ifi.getType() != Filter.FilterType.CLASS ? SubstPagerFragment.CARD_CLASS | SubstPagerFragment.CARD_LESSON : SubstPagerFragment.CARD_LESSON};
                         ae.type = AdapterEntry.ENTRY;
@@ -260,7 +260,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         switch(ae.type) {
             case AdapterEntry.ENTRY:
                 Object[] data = (Object[]) ae.data;
-                ((SubstViewHolder) holder).update((GGPlan.Entry) data[0], (int) data[1]);
+                ((SubstViewHolder) holder).update((Subst.Entry) data[0], (int) data[1]);
                 break;
             case AdapterEntry.LABEL:
                 ((LabelViewHolder) holder).update((String) ae.data);
@@ -305,7 +305,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             detail = (TextView) v.findViewById(R.id.cv_detail);
         }
 
-        public void update(final GGPlan.Entry entry, int type) {
+        public void update(final Subst.Entry entry, int type) {
             hour.setText((type & SubstPagerFragment.CARD_LESSON) != 0 ? entry.lesson : entry.clazz);
             header.setText(entry.type + (entry.teacher.isEmpty() ? "" : " [" + entry.teacher + "]"));
             TextView tv = detail;
@@ -600,7 +600,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         l2.setMinimumHeight(RemoteDataFragment.toPixels(50));
         l2.setGravity(Gravity.CENTER_VERTICAL);
 
-        String diff = SubstPagerFragment.getTimeDiff(frag.getActivity(), ((GGPlan.GGPlans) frag.getFragment().getData()).loadDate);
+        String diff = SubstPagerFragment.getTimeDiff(frag.getActivity(), ((Subst.GGPlans) frag.getFragment().getData()).loadDate);
         TextView tv4 = frag.createPrimaryTextView(diff, 13, inflater, l2);
         tv4.setTag("gg_time");
         tv4.setPadding(RemoteDataFragment.toPixels(16), RemoteDataFragment.toPixels(0), RemoteDataFragment.toPixels(16), RemoteDataFragment.toPixels(0));
@@ -629,7 +629,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         l2.setMinimumHeight(RemoteDataFragment.toPixels(50));
         l2.setGravity(Gravity.CENTER_VERTICAL);
 
-        String diff = SubstPagerFragment.getTimeDiff(frag.getActivity(), ((GGPlan.GGPlans) frag.getFragment().getData()).loadDate);
+        String diff = SubstPagerFragment.getTimeDiff(frag.getActivity(), ((Subst.GGPlans) frag.getFragment().getData()).loadDate);
         TextView tv5 = frag.createPrimaryTextView(diff, 13, inflater, l2);
         tv5.setTag("gg_time");
         tv5.setPadding(RemoteDataFragment.toPixels(16), RemoteDataFragment.toPixels(0), RemoteDataFragment.toPixels(16), RemoteDataFragment.toPixels(0));

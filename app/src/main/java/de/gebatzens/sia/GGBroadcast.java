@@ -31,7 +31,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.gebatzens.sia.data.GGPlan;
+import de.gebatzens.sia.data.Subst;
 import de.gebatzens.sia.fragment.SubstFragment;
 
 public class GGBroadcast extends BroadcastReceiver {
@@ -44,8 +44,8 @@ public class GGBroadcast extends BroadcastReceiver {
 
         FragmentData planFrag = gg.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0);
 
-        final GGPlan.GGPlans newPlans = gg.api.getPlans(false);
-        GGPlan.GGPlans oldPlans = (GGPlan.GGPlans) planFrag.getData();
+        final Subst.GGPlans newPlans = gg.api.getPlans(false);
+        Subst.GGPlans oldPlans = (Subst.GGPlans) planFrag.getData();
         planFrag.setData(newPlans);
 
         if(newPlans.throwable != null)
@@ -70,12 +70,12 @@ public class GGBroadcast extends BroadcastReceiver {
             });
         }
 
-        List<GGPlan.Entry> diff = new ArrayList<>();
+        List<Subst.Entry> diff = new ArrayList<>();
         for(int i = 0; i < newPlans.size(); i++) {
-            GGPlan old = oldPlans.getPlanByDate(newPlans.get(i).date);
+            Subst old = oldPlans.getPlanByDate(newPlans.get(i).date);
 
             if(old != null) {
-                List<GGPlan.Entry> ne = new ArrayList<>();
+                List<Subst.Entry> ne = new ArrayList<>();
                 ne.addAll(newPlans.get(i).filter(gg.filters));
                 ne.removeAll(old.filter(gg.filters));
 
@@ -92,7 +92,7 @@ public class GGBroadcast extends BroadcastReceiver {
             Intent intent = new Intent(gg, MainActivity.class);
             intent.putExtra("fragment", "PLAN");
             if (diff.size() == 1) {
-                GGPlan.Entry entry = diff.get(0);
+                Subst.Entry entry = diff.get(0);
                 gg.createNotification(R.drawable.ic_notification, entry.lesson + ". " + gg.getString(R.string.lhour) + ": " + entry.type, entry.subject.replace("&#x2192;", ""),
                         intent, 123/*, gg.getString(R.string.affected_lessons) , today.getWeekday() + ": " + stdt,
                         tomo.getWeekday() + ": " + stdtm*/);

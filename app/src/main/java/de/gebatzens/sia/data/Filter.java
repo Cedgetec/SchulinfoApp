@@ -65,15 +65,15 @@ public abstract class Filter {
 
 
     public boolean matches(Filterable filterable) {
-        if(filterable instanceof GGPlan.Entry)
-            return matches((GGPlan.Entry) filterable);
+        if(filterable instanceof Subst.Entry)
+            return matches((Subst.Entry) filterable);
         else if(filterable instanceof Exams.ExamItem)
             return matches((Exams.ExamItem) filterable);
         else
             return false;
     }
 
-    private boolean matches(GGPlan.Entry e) {
+    private boolean matches(Subst.Entry e) {
         if(filter.isEmpty())
             return false;
 
@@ -171,9 +171,9 @@ public abstract class Filter {
         public boolean matches(Filterable f) {
             boolean b = super.matches(f);
             if(b) {
-                if(f instanceof GGPlan.Entry && getType() == FilterType.CLASS) {
-                    if(!((GGPlan.Entry) f).clazz.equals(getFilter())) {
-                        setFilter(((GGPlan.Entry) f).clazz);
+                if(f instanceof Subst.Entry && getType() == FilterType.CLASS) {
+                    if(!((Subst.Entry) f).clazz.equals(getFilter())) {
+                        setFilter(((Subst.Entry) f).clazz);
                         FilterActivity.saveFilter(GGApp.GG_APP.filters);
                     }
                 }

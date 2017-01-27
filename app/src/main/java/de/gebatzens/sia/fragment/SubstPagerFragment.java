@@ -30,7 +30,7 @@ import java.util.Date;
 import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
-import de.gebatzens.sia.data.GGPlan;
+import de.gebatzens.sia.data.Subst;
 
 public class SubstPagerFragment extends RemoteDataFragment {
 
@@ -38,7 +38,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     public static final int CARD_CLASS = 1, CARD_LESSON = 2;
 
-    GGPlan plan;
+    Subst plan;
     int index = INDEX_INVALID;
     int spinnerPos = 0, modeSpinnerPos = 0;
 
@@ -54,7 +54,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             case INDEX_INVALID:
                 return;
             default:
-                GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
+                Subst.GGPlans plans = (Subst.GGPlans) GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
                 if(plans.size() <= index) {
                     // This fragment will be deleted in a few seconds
                     break;
@@ -127,7 +127,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle bundle) {
         this.index = getArguments().getInt("index");
         if(getFragment().getData() != null && index >= 0) {
-            plan = ((GGPlan.GGPlans) getFragment().getData()).get(index);
+            plan = ((Subst.GGPlans) getFragment().getData()).get(index);
         }
 
         Log.d("ggvp", "SUBST PAGER FRAGMENT: " + (bundle != null ? bundle.getInt("recyclerview_scroll") : -123));

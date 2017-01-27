@@ -21,16 +21,9 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.ActionMenuView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -40,7 +33,7 @@ import java.util.List;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
-import de.gebatzens.sia.data.GGPlan;
+import de.gebatzens.sia.data.Subst;
 
 public class SubstFragment extends RemoteDataFragment {
 
@@ -138,7 +131,7 @@ public class SubstFragment extends RemoteDataFragment {
             @Override
             public void run() {
                 if(substAdapter != null) {
-                    substAdapter.update((GGPlan.GGPlans) getFragment().getData());
+                    substAdapter.update((Subst.GGPlans) getFragment().getData());
                     mTabLayout.setupWithViewPager(mViewPager);
                 }
             }

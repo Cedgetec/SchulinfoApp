@@ -15,7 +15,6 @@
  */
 package de.gebatzens.sia.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -43,7 +42,7 @@ import de.gebatzens.sia.FragmentData;
 import de.gebatzens.sia.GGApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Filter;
-import de.gebatzens.sia.data.GGPlan;
+import de.gebatzens.sia.data.Subst;
 
 public class FilterDialog extends DialogFragment {
 
@@ -161,7 +160,7 @@ public class FilterDialog extends DialogFragment {
 
             if(getMainFilterPosition() == -1) {
                 ed.setText("");
-                GGPlan.GGPlans plans = (GGPlan.GGPlans) GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
+                Subst.GGPlans plans = (Subst.GGPlans) GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
 
                 //could confuse people
                 /*if(plans != null) {
