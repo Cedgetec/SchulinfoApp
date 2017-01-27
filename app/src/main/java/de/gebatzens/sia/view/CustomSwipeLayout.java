@@ -27,7 +27,7 @@ import android.view.ViewConfiguration;
 import android.widget.ListView;
 
 import de.gebatzens.sia.FragmentData;
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.fragment.ExamFragment;
 import de.gebatzens.sia.fragment.NewsFragment;
@@ -55,7 +55,7 @@ public class CustomSwipeLayout extends SwipeRefreshLayout {
                 m.recycle();
                 return super.onInterceptTouchEvent(event);
             case MotionEvent.ACTION_MOVE:
-                if(GGApp.GG_APP.school.fragments.get(GGApp.GG_APP.getFragmentIndex()).getType() == FragmentData.FragmentType.PLAN) {
+                if(SIAApp.GG_APP.school.fragments.get(SIAApp.GG_APP.getFragmentIndex()).getType() == FragmentData.FragmentType.PLAN) {
                         float xd = Math.abs(event.getX() - prevX);
                         if (xd > touchSlop)
                             return false;
@@ -68,7 +68,7 @@ public class CustomSwipeLayout extends SwipeRefreshLayout {
 
     @Override
     public boolean canChildScrollUp() {
-        switch(GGApp.GG_APP.school.fragments.get(GGApp.GG_APP.getFragmentIndex()).getType()) {
+        switch(SIAApp.GG_APP.school.fragments.get(SIAApp.GG_APP.getFragmentIndex()).getType()) {
             case PLAN:
                 ViewPager vp = ((SubstFragment) ((MainActivity) getContext()).mContent).mViewPager;
                 if(vp == null)

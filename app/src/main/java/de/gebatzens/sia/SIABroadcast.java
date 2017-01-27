@@ -34,9 +34,9 @@ import java.util.List;
 import de.gebatzens.sia.data.Subst;
 import de.gebatzens.sia.fragment.SubstFragment;
 
-public class GGBroadcast extends BroadcastReceiver {
+public class SIABroadcast extends BroadcastReceiver {
 
-    public void checkForSubstUpdates(final GGApp gg) {
+    public void checkForSubstUpdates(final SIAApp gg) {
         if(gg.school == null || gg.school.fragments.getByType(FragmentData.FragmentType.PLAN).size() == 0) {
             Log.i("ggvp", "school does not have a PLAN fragment");
             return;
@@ -107,7 +107,7 @@ public class GGBroadcast extends BroadcastReceiver {
     }
 
     public static void createAlarm(Context context, boolean repeating) {
-        Intent i = new Intent(context, GGBroadcast.class);
+        Intent i = new Intent(context, SIABroadcast.class);
         i.setAction("de.gebatzens.ACTION_ALARM");
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
 
@@ -123,7 +123,7 @@ public class GGBroadcast extends BroadcastReceiver {
 
     }
 
-    public void updateAllFragments(GGApp gg) {
+    public void updateAllFragments(SIAApp gg) {
         //update every 6 hours
 
         if(gg.school == null) {
@@ -144,7 +144,7 @@ public class GGBroadcast extends BroadcastReceiver {
 
         for(FragmentData frag : gg.school.fragments) {
             if(frag.getType() != FragmentData.FragmentType.PLAN) {
-                GGApp.GG_APP.refreshAsync(null, false, frag);
+                SIAApp.GG_APP.refreshAsync(null, false, frag);
             }
         }
 
@@ -172,20 +172,20 @@ public class GGBroadcast extends BroadcastReceiver {
         if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             //createAlarm(context, true);
         } else if (intent.getAction().equals("de.gebatzens.ACTION_ALARM")) {
-            new AsyncTask<GGApp, Void, Void>() {
+            new AsyncTask<SIAApp, Void, Void>() {
 
                 @Override
-                protected Void doInBackground(GGApp... params) {
+                protected Void doInBackground(SIAApp... params) {
                     Log.d("ggvp", "checking for updates");
-                    GGApp gg = params[0];
+                    SIAApp gg = params[0];
 
-                    if(gg.getUpdateType() == GGApp.UPDATE_DISABLE) {
+                    if(gg.getUpdateType() == SIAApp.UPDATE_DISABLE) {
                         Log.w("ggvp", "update disabled");
                         return null;
                     }
 
                     boolean w = isWlanConnected(gg);
-                    if(!w && gg.getUpdateType() == GGApp.UPDATE_WLAN ) {
+                    if(!w && gg.getUpdateType() == SIAApp.UPDATE_WLAN ) {
                         Log.w("ggvp", "wlan not conected");
                         return null;
                     }
@@ -194,7 +194,7 @@ public class GGBroadcast extends BroadcastReceiver {
                     updateAllFragments(gg);
                     return null;
                 }
-            }.execute((GGApp) context.getApplicationContext());
+            }.execute((SIAApp) context.getApplicationContext());
 
         }
     }

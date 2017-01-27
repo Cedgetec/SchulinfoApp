@@ -27,7 +27,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-public class GGMessagingService extends FirebaseMessagingService {
+public class SIAMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage msg) {
@@ -37,7 +37,7 @@ public class GGMessagingService extends FirebaseMessagingService {
         if(type != null && type.equals("updateData")) {
 
             //TODO this just executes the alarm which updates all fragments
-            GGBroadcast.createAlarm(this.getApplicationContext(), false);
+            SIABroadcast.createAlarm(this.getApplicationContext(), false);
         }
     }
 

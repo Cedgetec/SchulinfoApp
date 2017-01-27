@@ -28,7 +28,7 @@ import android.widget.LinearLayout;
 import java.util.Date;
 
 import de.gebatzens.sia.FragmentData;
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Subst;
 
@@ -54,7 +54,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             case INDEX_INVALID:
                 return;
             default:
-                Subst.GGPlans plans = (Subst.GGPlans) GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
+                Subst.GGPlans plans = (Subst.GGPlans) SIAApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
                 if(plans.size() <= index) {
                     // This fragment will be deleted in a few seconds
                     break;

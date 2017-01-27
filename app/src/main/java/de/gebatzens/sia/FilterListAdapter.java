@@ -60,7 +60,7 @@ public class FilterListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 boolean m = filter instanceof Filter.IncludingFilter;
-                int mpos = GGApp.GG_APP.filters.including.indexOf(m ? filter : ((Filter.ExcludingFilter) filter).getParentFilter());
+                int mpos = SIAApp.GG_APP.filters.including.indexOf(m ? filter : ((Filter.ExcludingFilter) filter).getParentFilter());
 
                 int upos = position;
                 if(!m) {

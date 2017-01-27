@@ -25,7 +25,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import de.gebatzens.sia.FragmentData;
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
 
@@ -41,7 +41,7 @@ public class SnowView extends View {
         theight = a.getDimension(R.styleable.SnowView_theight, getHeight());
         a.recycle();
 
-        if("Winter".equals(GGApp.GG_APP.getCurrentThemeName())){
+        if("Winter".equals(SIAApp.GG_APP.getCurrentThemeName())){
             bitmaps = new Bitmap[5];
             bitmaps[0] = BitmapFactory.decodeResource(getResources(), R.drawable.snow_1);
             bitmaps[1] = BitmapFactory.decodeResource(getResources(), R.drawable.snow_2);
@@ -67,7 +67,7 @@ public class SnowView extends View {
             return;
         }
 
-        boolean hasTabs = GGApp.GG_APP.school.fragments.get(GGApp.GG_APP.getFragmentIndex()).getType() == FragmentData.FragmentType.PLAN;
+        boolean hasTabs = SIAApp.GG_APP.school.fragments.get(SIAApp.GG_APP.getFragmentIndex()).getType() == FragmentData.FragmentType.PLAN;
 
         for(int i = 0; i < objs.length; i++) {
             objs[i] = new int[] {(int) (width * Math.random()), (int) (theight * Math.random() * (hasTabs ? 1.5f : 0.8f)), (int) Math.floor(Math.random() * bitmaps.length)};
@@ -76,7 +76,7 @@ public class SnowView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if(bitmaps != null && ("Winter".equals(GGApp.GG_APP.getCurrentThemeName()))) {
+        if(bitmaps != null && ("Winter".equals(SIAApp.GG_APP.getCurrentThemeName()))) {
             for (int[] obj : objs) {
                 canvas.drawBitmap(bitmaps[obj[2]], obj[0], obj[1], null);
             }

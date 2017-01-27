@@ -38,13 +38,13 @@ import android.widget.TextView;
 
 import de.gebatzens.sia.APIException;
 import de.gebatzens.sia.FragmentData;
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.R;
 
 public abstract class RemoteDataFragment extends Fragment {
 
     public FragmentData getFragment() {
-        return GGApp.GG_APP.school.fragments.get(getArguments().getInt("fragment"));
+        return SIAApp.GG_APP.school.fragments.get(getArguments().getInt("fragment"));
     }
 
     public abstract void createView(LayoutInflater inflater, ViewGroup vg);
@@ -75,7 +75,7 @@ public abstract class RemoteDataFragment extends Fragment {
     }
 
     public static int toPixels(float dp) {
-        float scale = GGApp.GG_APP.getResources().getDisplayMetrics().density;
+        float scale = SIAApp.GG_APP.getResources().getDisplayMetrics().density;
         return (int) (dp * scale);
     }
 
@@ -115,7 +115,7 @@ public abstract class RemoteDataFragment extends Fragment {
         l.setGravity(Gravity.CENTER);
 
         ProgressBar pb = new ProgressBar(getActivity());
-        pb.getIndeterminateDrawable().setColorFilter(GGApp.GG_APP.school.getAccentColor(), PorterDuff.Mode.SRC_IN);
+        pb.getIndeterminateDrawable().setColorFilter(SIAApp.GG_APP.school.getAccentColor(), PorterDuff.Mode.SRC_IN);
         pb.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         pb.setVisibility(ProgressBar.VISIBLE);
 
@@ -232,7 +232,7 @@ public abstract class RemoteDataFragment extends Fragment {
             swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    GGApp.GG_APP.refreshAsync(new Runnable() {
+                    SIAApp.GG_APP.refreshAsync(new Runnable() {
                         @Override
                         public void run() {
                             swipeContainer.post(new Runnable() {

@@ -29,13 +29,13 @@ public class APIException extends RuntimeException {
     public String getMessage() {
         switch(reason) {
             case SiaAPI.API_INVALID_TOKEN:
-                return GGApp.GG_APP.getString(R.string.not_logged_in);
+                return SIAApp.GG_APP.getString(R.string.not_logged_in);
             case SiaAPI.API_MAINTENANCE:
-                return GGApp.GG_APP.getString(R.string.maintenance);
+                return SIAApp.GG_APP.getString(R.string.maintenance);
             case SiaAPI.API_TOKEN_EXPIRED:
-                return GGApp.GG_APP.getString(R.string.token_expired);
+                return SIAApp.GG_APP.getString(R.string.token_expired);
             default:
-                return GGApp.GG_APP.getString(R.string.unknown_error);
+                return SIAApp.GG_APP.getString(R.string.unknown_error);
         }
     }
 

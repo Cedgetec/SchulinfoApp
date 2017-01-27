@@ -39,7 +39,7 @@ import java.util.List;
 
 import de.gebatzens.sia.FilterActivity;
 import de.gebatzens.sia.FragmentData;
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Filter;
 import de.gebatzens.sia.data.Subst;
@@ -88,15 +88,15 @@ public class FilterDialog extends DialogFragment {
                         Filter.IncludingFilter mainFilter;
                         if (getMainFilterPosition() == -1) {
                             mainFilter = new Filter.IncludingFilter(spinner.getSelectedItemPosition() == 0 ? Filter.FilterType.CLASS : Filter.FilterType.TEACHER, filtertext);
-                            GGApp.GG_APP.filters.including.add(mainFilter);
+                            SIAApp.GG_APP.filters.including.add(mainFilter);
                         } else {
-                            mainFilter = GGApp.GG_APP.filters.including.get(getMainFilterPosition());
+                            mainFilter = SIAApp.GG_APP.filters.including.get(getMainFilterPosition());
                             mainFilter.setFilter(filtertext);
                             mainFilter.setType(spinner.getSelectedItemPosition() == 0 ? Filter.FilterType.CLASS : Filter.FilterType.TEACHER);
                         }
                     } else {
                         Filter.ExcludingFilter f;
-                        Filter.IncludingFilter inc = GGApp.GG_APP.filters.including.get(spinner.getSelectedItemPosition());
+                        Filter.IncludingFilter inc = SIAApp.GG_APP.filters.including.get(spinner.getSelectedItemPosition());
                         if (getUpdatePosition() == -1) {
                             f = new Filter.ExcludingFilter(Filter.FilterType.SUBJECT, filtertext, inc);
                             inc.excluding.add(f);
@@ -109,7 +109,7 @@ public class FilterDialog extends DialogFragment {
                     }
 
                     activity.updateData();
-                    FilterActivity.saveFilter(GGApp.GG_APP.filters);
+                    FilterActivity.saveFilter(SIAApp.GG_APP.filters);
                 }
                 dialog.dismiss();
             }
@@ -146,7 +146,7 @@ public class FilterDialog extends DialogFragment {
 
         final AlertDialog d = (AlertDialog) getDialog();
 
-        final Filter.FilterList list = GGApp.GG_APP.filters;
+        final Filter.FilterList list = SIAApp.GG_APP.filters;
         final AutoCompleteTextView ed = (AutoCompleteTextView) d.findViewById(R.id.filter_text);
         final AppCompatSpinner spinner = (AppCompatSpinner) d.findViewById(R.id.filter_spinner);
         final CheckBox cb = (CheckBox) d.findViewById(R.id.checkbox_contains);
@@ -160,7 +160,7 @@ public class FilterDialog extends DialogFragment {
 
             if(getMainFilterPosition() == -1) {
                 ed.setText("");
-                Subst.GGPlans plans = (Subst.GGPlans) GGApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
+                Subst.GGPlans plans = (Subst.GGPlans) SIAApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
 
                 //could confuse people
                 /*if(plans != null) {
@@ -227,7 +227,7 @@ public class FilterDialog extends DialogFragment {
 
                     Filter f = flist.get(i);
 
-                    if (f.getType() == currentType && GGApp.deleteNonAlphanumeric(f.getFilter()).equals(GGApp.deleteNonAlphanumeric(str))) {
+                    if (f.getType() == currentType && SIAApp.deleteNonAlphanumeric(f.getFilter()).equals(SIAApp.deleteNonAlphanumeric(str))) {
                         ed.setError(getString(R.string.filter_exists));
                         d.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
                     } else {

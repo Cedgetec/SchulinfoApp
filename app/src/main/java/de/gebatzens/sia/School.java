@@ -99,14 +99,14 @@ public class School {
     }
 
     public void loadTheme() {
-        String name = GGApp.GG_APP.getCustomThemeName();
+        String name = SIAApp.GG_APP.getCustomThemeName();
         if(name == null)
             name = themeName;
-        theme = GGApp.GG_APP.getResources().getIdentifier("AppTheme" + name, "style", GGApp.GG_APP.getPackageName());
-        colorArray = GGApp.GG_APP.getResources().getIdentifier("CardviewColor" + name, "array", GGApp.GG_APP.getPackageName());
-        TypedArray ta = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary});
-        TypedArray tad = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimaryDark});
-        TypedArray taa = GGApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorAccent});
+        theme = SIAApp.GG_APP.getResources().getIdentifier("AppTheme" + name, "style", SIAApp.GG_APP.getPackageName());
+        colorArray = SIAApp.GG_APP.getResources().getIdentifier("CardviewColor" + name, "array", SIAApp.GG_APP.getPackageName());
+        TypedArray ta = SIAApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary});
+        TypedArray tad = SIAApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimaryDark});
+        TypedArray taa = SIAApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorAccent});
         color = ta.getColor(0, Color.RED);
         darkColor = tad.getColor(0, Color.RED);
         accentColor = taa.getColor(0, Color.RED);
@@ -197,12 +197,12 @@ public class School {
     public static boolean fetchList() {
         Log.i("ggvp", "Downloading school list");
 
-        GGApp.GG_APP.getResources().getIdentifier("asd", "styles", GGApp.GG_APP.getPackageName());
+        SIAApp.GG_APP.getResources().getIdentifier("asd", "styles", SIAApp.GG_APP.getPackageName());
 
         List<School> newList = new ArrayList<>();
 
         try {
-            SiaAPI.APIResponse re = GGApp.GG_APP.api.doRequest("/getSchools", null);
+            SiaAPI.APIResponse re = SIAApp.GG_APP.api.doRequest("/getSchools", null);
             if(re.state == SiaAPI.APIState.SUCCEEDED) {
                 LIST = new ArrayList<>();
                 JSONArray schools = (JSONArray) re.data;
@@ -230,7 +230,7 @@ public class School {
 
     public static void saveList() {
         try {
-            OutputStream out = GGApp.GG_APP.openFileOutput("schools", Context.MODE_PRIVATE);
+            OutputStream out = SIAApp.GG_APP.openFileOutput("schools", Context.MODE_PRIVATE);
             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out));
 
             writer.setIndent("  ");
@@ -286,7 +286,7 @@ public class School {
     public static void loadList() {
         LIST.clear();
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(GGApp.GG_APP.openFileInput("schools")));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(SIAApp.GG_APP.openFileInput("schools")));
             String content = "", line = "";
             while((line = reader.readLine()) != null)
                 content += line;
@@ -316,7 +316,7 @@ public class School {
 
     public Bitmap loadImage() {
         try {
-            return BitmapFactory.decodeStream(GGApp.GG_APP.openFileInput(image));
+            return BitmapFactory.decodeStream(SIAApp.GG_APP.openFileInput(image));
         } catch (Exception e) {
             Log.w("ggvp", "school image not found " + image);
 
@@ -327,7 +327,7 @@ public class School {
                 }
             }.start();
 
-            return BitmapFactory.decodeResource(GGApp.GG_APP.getResources(), R.drawable.no_content);
+            return BitmapFactory.decodeResource(SIAApp.GG_APP.getResources(), R.drawable.no_content);
         }
     }
 
@@ -337,7 +337,7 @@ public class School {
 
         try {
             InputStream in = new URL(BuildConfig.BACKEND_SERVER + "/image?name=" + URLEncoder.encode(image, "utf-8")).openStream();
-            BitmapFactory.decodeStream(in).compress(Bitmap.CompressFormat.PNG, 90, GGApp.GG_APP.openFileOutput(image, Context.MODE_PRIVATE));
+            BitmapFactory.decodeStream(in).compress(Bitmap.CompressFormat.PNG, 90, SIAApp.GG_APP.openFileOutput(image, Context.MODE_PRIVATE));
             in.close();
             return true;
         } catch(Exception e) {

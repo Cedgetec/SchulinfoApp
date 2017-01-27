@@ -38,26 +38,26 @@ public class FirstUseActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle bundle) {
-        AppCompatDelegate.setDefaultNightMode(GGApp.GG_APP.getThemeMode());
+        AppCompatDelegate.setDefaultNightMode(SIAApp.GG_APP.getThemeMode());
         setTheme(R.style.FirstUseTheme);
         adapter = new FirstUseAdapter(getSupportFragmentManager(), FirstUseActivity.this);
 
         super.onCreate(bundle);
 
-        if(GGApp.GG_APP.getCustomThemeName() != null) {
-            if(!GGApp.GG_APP.getCustomThemeName().equals(GGApp.GG_APP.getSeasonTheme())) {
-                String themeName = GGApp.GG_APP.getSeasonTheme();
+        if(SIAApp.GG_APP.getCustomThemeName() != null) {
+            if(!SIAApp.GG_APP.getCustomThemeName().equals(SIAApp.GG_APP.getSeasonTheme())) {
+                String themeName = SIAApp.GG_APP.getSeasonTheme();
                 if(themeName.equals("Winter")) {
-                   GGApp.GG_APP.setCustomThemeName("Winter");
-                   GGApp.GG_APP.school.loadTheme();
+                    SIAApp.GG_APP.setCustomThemeName("Winter");
+                    SIAApp.GG_APP.school.loadTheme();
                 } else {
-                   GGApp.GG_APP.setCustomThemeName("Summer");
-                   GGApp.GG_APP.school.loadTheme();
+                    SIAApp.GG_APP.setCustomThemeName("Summer");
+                    SIAApp.GG_APP.school.loadTheme();
                 }
             }
         }
 
-        if(GGApp.GG_APP.preferences.getBoolean("first_use", false)) {
+        if(SIAApp.GG_APP.preferences.getBoolean("first_use", false)) {
             startActivity(new Intent(this, SetupActivity.class));
             finish();
             return;
@@ -80,7 +80,7 @@ public class FirstUseActivity extends FragmentActivity {
         iv_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GGApp.GG_APP.preferences.edit().putBoolean("first_use", true).apply();
+                SIAApp.GG_APP.preferences.edit().putBoolean("first_use", true).apply();
                 startActivity(new Intent(v.getContext(), SetupActivity.class));
                 finish();
             }
@@ -130,7 +130,7 @@ public class FirstUseActivity extends FragmentActivity {
                     iv_right.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            GGApp.GG_APP.preferences.edit().putBoolean("first_use", true).apply();
+                            SIAApp.GG_APP.preferences.edit().putBoolean("first_use", true).apply();
                             startActivity(new Intent(v.getContext(), SetupActivity.class));
                             finish();
                         }

@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Exams;
 import de.gebatzens.sia.data.Filter;
@@ -101,7 +101,7 @@ public class ExamAdapter extends RecyclerView.Adapter {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(frag.getContext(), android.R.layout.simple_spinner_item, classes);
                 adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                 classSpinner.setAdapter(adapter);
-                int selection = GGApp.GG_APP.preferences.getInt("exam_selected", 0);
+                int selection = SIAApp.GG_APP.preferences.getInt("exam_selected", 0);
                 if(selection < classes.size())
                     classSpinner.setSelection(selection);
 
@@ -117,7 +117,7 @@ public class ExamAdapter extends RecyclerView.Adapter {
 
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        GGApp.GG_APP.preferences.edit().putInt("exam_selected", position).apply();
+                        SIAApp.GG_APP.preferences.edit().putInt("exam_selected", position).apply();
 
                         if (position == 0) {
                             List<Exams.ExamItem> list = ((Exams) frag.getFragment().getData()).getSelectedItems(false);
@@ -253,7 +253,7 @@ public class ExamAdapter extends RecyclerView.Adapter {
         frag.setOrientationPadding(wrapper);
 
         CardView ecv = (CardView) i.inflate(R.layout.basic_cardview, wrapper, false);
-        String[] colors = frag.getContext().getResources().getStringArray(GGApp.GG_APP.school.getColorArray());
+        String[] colors = frag.getContext().getResources().getStringArray(SIAApp.GG_APP.school.getColorArray());
         ecv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
         cardColorIndex++;
         if(cardColorIndex == colors.length)

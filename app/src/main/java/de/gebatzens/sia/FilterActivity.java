@@ -53,7 +53,7 @@ public class FilterActivity extends AppCompatActivity {
 
     public ArrayList<Filter.ExcludingFilter> generateExcFilterList() {
         ArrayList<Filter.ExcludingFilter> list = new ArrayList<>();
-        for(Filter.IncludingFilter inc : GGApp.GG_APP.filters.including) {
+        for(Filter.IncludingFilter inc : SIAApp.GG_APP.filters.including) {
             list.addAll(inc.excluding);
         }
 
@@ -72,23 +72,23 @@ public class FilterActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle bundle) {
-        setTheme(GGApp.GG_APP.school.getTheme());
+        setTheme(SIAApp.GG_APP.school.getTheme());
         super.onCreate(bundle);
         setContentView(R.layout.activity_filter);
 
-        if(GGApp.GG_APP.preferences.getBoolean("first_use_filter", true)) {
+        if(SIAApp.GG_APP.preferences.getBoolean("first_use_filter", true)) {
             TextDialog.newInstance(R.string.explanation, R.string.filter_help).show(getSupportFragmentManager(), "filter_help");
         }
 
         sv = (ScrollView) findViewById(R.id.scrollView);
 
-        GGApp.GG_APP.preferences.edit().putBoolean("first_use_filter", false).apply();
+        SIAApp.GG_APP.preferences.edit().putBoolean("first_use_filter", false).apply();
 
         textInc = (TextView) findViewById(R.id.no_entries_inc);
         textExc = (TextView) findViewById(R.id.no_entries_exc);
 
         listViewInc = (ListView) findViewById(R.id.filter_list_inc);
-        incAdapter = new FilterListAdapter(this, GGApp.GG_APP.filters.including);
+        incAdapter = new FilterListAdapter(this, SIAApp.GG_APP.filters.including);
         textInc.setVisibility(incAdapter.getCount() != 0 ? View.GONE : View.VISIBLE);
         listViewInc.setAdapter(incAdapter);
         listViewInc.setDrawSelectorOnTop(true);
@@ -137,7 +137,7 @@ public class FilterActivity extends AppCompatActivity {
         bt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (GGApp.GG_APP.filters.including.size() == 0) {
+                if (SIAApp.GG_APP.filters.including.size() == 0) {
                     Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_main_filter), Snackbar.LENGTH_LONG).show();
                 } else {
                     FilterDialog.newInstance(false, -1, 0).show(getSupportFragmentManager(), "add_exc_filter");
@@ -156,7 +156,7 @@ public class FilterActivity extends AppCompatActivity {
         Filter.FilterList list = new Filter.FilterList();
 
         try {
-            InputStream in = GGApp.GG_APP.openFileInput("ggfilter");
+            InputStream in = SIAApp.GG_APP.openFileInput("ggfilter");
             JsonReader reader = new JsonReader(new InputStreamReader(in));
             reader.beginArray();
             boolean main = true;
@@ -215,7 +215,7 @@ public class FilterActivity extends AppCompatActivity {
         Filter.FilterList list = new Filter.FilterList();
 
         try {
-            InputStream in = GGApp.GG_APP.openFileInput("ggfilterV2");
+            InputStream in = SIAApp.GG_APP.openFileInput("ggfilterV2");
             JsonReader reader = new JsonReader(new InputStreamReader(in));
             reader.beginArray();
 
@@ -285,13 +285,13 @@ public class FilterActivity extends AppCompatActivity {
     @Override
     public void finish() {
         setResult(changed ? RESULT_OK : RESULT_CANCELED);
-        saveFilter(GGApp.GG_APP.filters);
+        saveFilter(SIAApp.GG_APP.filters);
         super.finish();
     }
 
     public static void saveFilter(Filter.FilterList list) {
         try {
-            OutputStream out = GGApp.GG_APP.openFileOutput("ggfilterV2", Context.MODE_PRIVATE);
+            OutputStream out = SIAApp.GG_APP.openFileOutput("ggfilterV2", Context.MODE_PRIVATE);
             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out));
             writer.setIndent("  ");
             writer.beginArray();

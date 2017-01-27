@@ -36,7 +36,7 @@ public class WearDataProvider {
         new Thread() {
             @Override
             public void run() {
-                GoogleApiClient apiClient = new GoogleApiClient.Builder(GGApp.GG_APP).addApi(Wearable.API).build();
+                GoogleApiClient apiClient = new GoogleApiClient.Builder(SIAApp.GG_APP).addApi(Wearable.API).build();
                 if(!apiClient.blockingConnect().isSuccess()) {
                     Log.w("ggvp", "failed to connect to gapi");
                     return;

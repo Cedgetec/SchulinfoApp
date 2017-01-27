@@ -28,7 +28,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Date;
 
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 
 public class News extends ArrayList<News.Entry> implements RemoteDataFragment.RemoteData {
@@ -43,7 +43,7 @@ public class News extends ArrayList<News.Entry> implements RemoteDataFragment.Re
     @Override
     public void save() {
         try {
-            OutputStream out = GGApp.GG_APP.openFileOutput("news", Context.MODE_PRIVATE);
+            OutputStream out = SIAApp.GG_APP.openFileOutput("news", Context.MODE_PRIVATE);
             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out));
 
             writer.setIndent("  ");
@@ -71,7 +71,7 @@ public class News extends ArrayList<News.Entry> implements RemoteDataFragment.Re
     public boolean load() {
         clear();
         try {
-            InputStream in = GGApp.GG_APP.openFileInput("news");
+            InputStream in = SIAApp.GG_APP.openFileInput("news");
             JsonReader reader = new JsonReader(new InputStreamReader(in));
             reader.beginArray();
             while(reader.hasNext()) {

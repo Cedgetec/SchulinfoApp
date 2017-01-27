@@ -31,7 +31,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 
 public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragment.RemoteData {
@@ -47,7 +47,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
         Log.d("ggvp", "Saving exams");
 
         try {
-            OutputStream out = GGApp.GG_APP.openFileOutput("exams", Context.MODE_PRIVATE);
+            OutputStream out = SIAApp.GG_APP.openFileOutput("exams", Context.MODE_PRIVATE);
             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out));
 
             writer.setIndent("  ");
@@ -130,7 +130,7 @@ public class Exams extends ArrayList<Exams.ExamItem> implements RemoteDataFragme
     public boolean load() {
         clear();
         try {
-            InputStream in = GGApp.GG_APP.openFileInput("exams");
+            InputStream in = SIAApp.GG_APP.openFileInput("exams");
             JsonReader reader = new JsonReader(new InputStreamReader(in));
             reader.beginArray();
             while(reader.hasNext()) {

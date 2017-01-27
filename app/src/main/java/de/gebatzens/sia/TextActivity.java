@@ -32,7 +32,7 @@ public class TextActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle bundle) {
-        setTheme(GGApp.GG_APP.school == null ? R.style.AppThemeSetup : GGApp.GG_APP.school.getTheme());
+        setTheme(SIAApp.GG_APP.school == null ? R.style.AppThemeSetup : SIAApp.GG_APP.school.getTheme());
         super.onCreate(bundle);
         setContentView(R.layout.activity_text);
 
@@ -81,7 +81,7 @@ public class TextActivity extends AppCompatActivity {
     }
 
     public static int toPixels(float dp) {
-        float scale = GGApp.GG_APP.getResources().getDisplayMetrics().density;
+        float scale = SIAApp.GG_APP.getResources().getDisplayMetrics().density;
         return (int) (dp * scale);
     }
 

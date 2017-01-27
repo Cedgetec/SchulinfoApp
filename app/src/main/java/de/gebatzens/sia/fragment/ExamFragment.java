@@ -25,7 +25,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Exams;
@@ -48,10 +48,10 @@ public class ExamFragment extends RemoteDataFragment {
     public void createView(final LayoutInflater inflater, ViewGroup view) {
         LinearLayout lroot = (LinearLayout) view.findViewById(R.id.exam_content);
 
-        if(GGApp.GG_APP.preferences.getBoolean("first_use_exam_filter", true)) {
+        if(SIAApp.GG_APP.preferences.getBoolean("first_use_exam_filter", true)) {
             TextDialog.newInstance(R.string.explanation, R.string.exam_explain).show(getActivity().getSupportFragmentManager(), "exam_help");
         }
-        GGApp.GG_APP.preferences.edit().putBoolean("first_use_exam_filter", false).apply();
+        SIAApp.GG_APP.preferences.edit().putBoolean("first_use_exam_filter", false).apply();
 
         recyclerView = (RecyclerView) inflater.inflate(R.layout.basic_recyclerview, lroot, false);
         recyclerView.setPadding(0,0,0,toPixels(5));

@@ -38,7 +38,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 
@@ -73,13 +73,13 @@ public class Subst extends ArrayList<Subst.Entry> {
 
         @Override
         public void save() {
-            GGApp.GG_APP.preferences.edit().putLong("substLoadDate", loadDate.getTime()).commit();
+            SIAApp.GG_APP.preferences.edit().putLong("substLoadDate", loadDate.getTime()).commit();
 
-            String[] list = GGApp.GG_APP.fileList();
+            String[] list = SIAApp.GG_APP.fileList();
 
             for(String s : list) {
                 if (s.startsWith("schedule")) {
-                    GGApp.GG_APP.deleteFile(s);
+                    SIAApp.GG_APP.deleteFile(s);
                 }
             }
 
@@ -90,7 +90,7 @@ public class Subst extends ArrayList<Subst.Entry> {
         @Override
         public boolean load() {
             isLocal = true;
-            loadDate = new Date(GGApp.GG_APP.preferences.getLong("substLoadDate", new Date().getTime()));
+            loadDate = new Date(SIAApp.GG_APP.preferences.getLong("substLoadDate", new Date().getTime()));
             clear();
 
             try {
@@ -146,7 +146,7 @@ public class Subst extends ArrayList<Subst.Entry> {
         clear();
         special.clear();
 
-        InputStream in = GGApp.GG_APP.openFileInput(file);
+        InputStream in = SIAApp.GG_APP.openFileInput(file);
         JsonReader reader = new JsonReader(new InputStreamReader(in));
         reader.beginObject();
         while(reader.hasNext()) {
@@ -219,7 +219,7 @@ public class Subst extends ArrayList<Subst.Entry> {
     public void save(String file) {
         Log.w("ggvp", "Saving " + file);
         try {
-            OutputStream out = GGApp.GG_APP.openFileOutput(file, Context.MODE_PRIVATE);
+            OutputStream out = SIAApp.GG_APP.openFileOutput(file, Context.MODE_PRIVATE);
             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
 
             writer.setIndent("  ");
@@ -360,31 +360,31 @@ public class Subst extends ArrayList<Subst.Entry> {
 
         public String getClassAN() {
             if(classAN == null)
-                classAN = GGApp.deleteNonAlphanumeric(clazz);
+                classAN = SIAApp.deleteNonAlphanumeric(clazz);
             return classAN;
         }
 
         public String getTeacherAN() {
             if(teacherAN == null)
-                teacherAN = GGApp.deleteNonAlphanumeric(teacher);
+                teacherAN = SIAApp.deleteNonAlphanumeric(teacher);
             return teacherAN;
         }
 
         public String getSubjectAN() {
             if(subjectAN == null)
-                subjectAN = GGApp.deleteNonAlphanumeric(subject);
+                subjectAN = SIAApp.deleteNonAlphanumeric(subject);
             return subjectAN;
         }
 
         public String getLessonAN() {
             if(lessonAN == null)
-                lessonAN = GGApp.deleteNonAlphanumeric(lesson);
+                lessonAN = SIAApp.deleteNonAlphanumeric(lesson);
             return lessonAN;
         }
 
         public String getCommentAN() {
             if(commentAN == null)
-                commentAN = GGApp.deleteNonAlphanumeric(comment);
+                commentAN = SIAApp.deleteNonAlphanumeric(comment);
             return commentAN;
         }
 
@@ -420,15 +420,15 @@ public class Subst extends ArrayList<Subst.Entry> {
 
             if(teacher.equals("")) {
                 if(room.equals("")) {
-                    return GGApp.GG_APP.getResources().getString(R.string.share_content_base, this.type, this.clazz, this.lesson);
+                    return SIAApp.GG_APP.getResources().getString(R.string.share_content_base, this.type, this.clazz, this.lesson);
                 } else {
-                    return GGApp.GG_APP.getResources().getString(R.string.share_content_room, this.type, this.clazz, this.lesson, this.room);
+                    return SIAApp.GG_APP.getResources().getString(R.string.share_content_room, this.type, this.clazz, this.lesson, this.room);
                 }
             } else {
                 if(room.equals("")) {
-                    return GGApp.GG_APP.getResources().getString(R.string.share_content_teacher, this.type, this.clazz, this.teacher, this.lesson);
+                    return SIAApp.GG_APP.getResources().getString(R.string.share_content_teacher, this.type, this.clazz, this.teacher, this.lesson);
                 } else {
-                    return GGApp.GG_APP.getResources().getString(R.string.share_content_teacher_room, this.type, this.clazz, this.teacher, this.lesson, this.room);
+                    return SIAApp.GG_APP.getResources().getString(R.string.share_content_teacher_room, this.type, this.clazz, this.teacher, this.lesson, this.room);
                 }
             }
         }
@@ -445,31 +445,31 @@ public class Subst extends ArrayList<Subst.Entry> {
 
             switch (type) {
                 case "entf":
-                    type = GGApp.GG_APP.getString(R.string.canceled);
+                    type = SIAApp.GG_APP.getString(R.string.canceled);
 
                     if (task.find())
-                        comment = GGApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
+                        comment = SIAApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
                     break;
                 case "eva":
-                    type = GGApp.GG_APP.getString(R.string.work_autonomous);
+                    type = SIAApp.GG_APP.getString(R.string.work_autonomous);
 
                     if (task.find())
-                        comment = GGApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
+                        comment = SIAApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
                     break;
                 case "teacher":
-                    type = GGApp.GG_APP.getString(R.string.substitute);
+                    type = SIAApp.GG_APP.getString(R.string.substitute);
 
                     if (task.find())
-                        comment = GGApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
+                        comment = SIAApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
                     break;
                 case "exam":
-                    type = GGApp.GG_APP.getString(R.string.exam);
+                    type = SIAApp.GG_APP.getString(R.string.exam);
                     break;
                 case "lesson":
-                    type = GGApp.GG_APP.getString(R.string.lesson);
+                    type = SIAApp.GG_APP.getString(R.string.lesson);
                     break;
                 case "shifted": {
-                    type = GGApp.GG_APP.getString(R.string.canceled) + " / " + GGApp.GG_APP.getResources().getString(R.string.shift);
+                    type = SIAApp.GG_APP.getString(R.string.canceled) + " / " + SIAApp.GG_APP.getResources().getString(R.string.shift);
 
                     Matcher m = Pattern.compile("shift (\\S*) (\\S*)").matcher(comment);
 
@@ -481,15 +481,15 @@ public class Subst extends ArrayList<Subst.Entry> {
                         if (sdate == null)
                             comment = "";
                         else if (sdate.equals(date))
-                            comment = GGApp.GG_APP.getString(R.string.shifted_to_today) + " " + lesson + ". " + GGApp.GG_APP.getString(R.string.lhour);
+                            comment = SIAApp.GG_APP.getString(R.string.shifted_to_today) + " " + lesson + ". " + SIAApp.GG_APP.getString(R.string.lhour);
                         else
-                            comment = GGApp.GG_APP.getString(R.string.shifted_to) + " " + new SimpleDateFormat("EEE").format(sdate) + ", " +
-                                    DateFormat.getDateInstance().format(sdate) + " " + lesson + ". " + GGApp.GG_APP.getString(R.string.lhour);
+                            comment = SIAApp.GG_APP.getString(R.string.shifted_to) + " " + new SimpleDateFormat("EEE").format(sdate) + ", " +
+                                    DateFormat.getDateInstance().format(sdate) + " " + lesson + ". " + SIAApp.GG_APP.getString(R.string.lhour);
                     }
                     break;
                 }
                 case "instead": {
-                    type = GGApp.GG_APP.getString(R.string.substitute) + " / " + GGApp.GG_APP.getResources().getString(R.string.shift);
+                    type = SIAApp.GG_APP.getString(R.string.substitute) + " / " + SIAApp.GG_APP.getResources().getString(R.string.shift);
 
                     Matcher m = Pattern.compile("instead (\\S*) (\\S*)").matcher(comment);
 
@@ -501,25 +501,25 @@ public class Subst extends ArrayList<Subst.Entry> {
                         if (idate == null)
                             comment = "";
                         else if (idate.equals(date))
-                            comment = GGApp.GG_APP.getString(R.string.instead_of) + " " + lesson + ". " + GGApp.GG_APP.getString(R.string.lhour);
+                            comment = SIAApp.GG_APP.getString(R.string.instead_of) + " " + lesson + ". " + SIAApp.GG_APP.getString(R.string.lhour);
                         else
-                            comment = GGApp.GG_APP.getString(R.string.instead_of) + " " + new SimpleDateFormat("EEE").format(idate) + ", " +
-                                    DateFormat.getDateInstance().format(idate) + " " + lesson + ". " + GGApp.GG_APP.getString(R.string.lhour);
+                            comment = SIAApp.GG_APP.getString(R.string.instead_of) + " " + new SimpleDateFormat("EEE").format(idate) + ", " +
+                                    DateFormat.getDateInstance().format(idate) + " " + lesson + ". " + SIAApp.GG_APP.getString(R.string.lhour);
                     }
 
                     break;
                 }
                 case "supervision":
-                    type = GGApp.GG_APP.getString(R.string.supervision);
+                    type = SIAApp.GG_APP.getString(R.string.supervision);
                     break;
                 case "lunch":
-                    type = GGApp.GG_APP.getString(R.string.lunch);
+                    type = SIAApp.GG_APP.getString(R.string.lunch);
                     break;
                 case "subst":
-                    type = GGApp.GG_APP.getString(R.string.substitute);
+                    type = SIAApp.GG_APP.getString(R.string.substitute);
 
                     if (task.find())
-                        comment = GGApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
+                        comment = SIAApp.GG_APP.getString(R.string.task_through) + " " + task.group(1);
                     break;
             }
 
@@ -533,7 +533,7 @@ public class Subst extends ArrayList<Subst.Entry> {
         }
 
         public static String translateSubject(String s) {
-            String t = GGApp.GG_APP.subjects.get(s.toLowerCase());
+            String t = SIAApp.GG_APP.subjects.get(s.toLowerCase());
             if(t == null)
                 return s;
             else

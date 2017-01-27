@@ -37,7 +37,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.SetupActivity;
 import de.gebatzens.sia.TextActivity;
@@ -112,7 +112,7 @@ public class LoginDialog extends DialogFragment {
 
                     @Override
                     protected Integer doInBackground(String... params) {
-                        return GGApp.GG_APP.api.login(params[0], params[1], params[2]);
+                        return SIAApp.GG_APP.api.login(params[0], params[1], params[2]);
 
                     }
 

@@ -30,7 +30,7 @@ import android.widget.TextView;
 import java.util.Date;
 import java.util.List;
 
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.MainActivity;
 import de.gebatzens.sia.R;
 import de.gebatzens.sia.data.Subst;
@@ -127,7 +127,7 @@ public class SubstFragment extends RemoteDataFragment {
 
     @Override
     public void updateFragment() {
-        GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
+        SIAApp.GG_APP.activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if(substAdapter != null) {

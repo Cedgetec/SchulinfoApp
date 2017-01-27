@@ -62,31 +62,31 @@ public class SiaAPI {
     SharedPreferences prefs;
 
     public SiaAPI() {
-        prefs = GGApp.GG_APP.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        prefs = SIAApp.GG_APP.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
     }
 
     public void showReloadSnackbar(final String msg) {
-        if(GGApp.GG_APP.activity == null)
+        if(SIAApp.GG_APP.activity == null)
             return;
 
-        GGApp.GG_APP.activity.runOnUiThread(new Runnable() {
+        SIAApp.GG_APP.activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Snackbar.make(GGApp.GG_APP.activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), msg, Snackbar.LENGTH_LONG)
+                Snackbar.make(SIAApp.GG_APP.activity.getWindow().getDecorView().findViewById(R.id.coordinator_layout), msg, Snackbar.LENGTH_LONG)
                         .setAction(R.string.again, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                final View rv = GGApp.GG_APP.activity.getWindow().getDecorView();
+                                final View rv = SIAApp.GG_APP.activity.getWindow().getDecorView();
                                 ((SwipeRefreshLayout) rv.findViewById(R.id.refresh)).setRefreshing(true);
-                                GGApp.GG_APP.refreshAsync(new Runnable() {
+                                SIAApp.GG_APP.refreshAsync(new Runnable() {
 
                                     @Override
                                     public void run() {
                                         ((SwipeRefreshLayout) rv.findViewById(R.id.refresh)).setRefreshing(false);
                                     }
 
-                                }, true, GGApp.GG_APP.school.fragments.get(GGApp.GG_APP.getFragmentIndex()));
+                                }, true, SIAApp.GG_APP.school.fragments.get(SIAApp.GG_APP.getFragmentIndex()));
                             }
                         }).show();
             }
@@ -97,21 +97,21 @@ public class SiaAPI {
     public void logout() {
         final String token = getToken();
 
-        FirebaseMessaging.getInstance().unsubscribeFromTopic("sia_sid_" + GGApp.GG_APP.school.sid);
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("sia_sid_" + SIAApp.GG_APP.school.sid);
 
-        for(String name : GGApp.GG_APP.fileList())
+        for(String name : SIAApp.GG_APP.fileList())
             if(name.startsWith("schedule"))
-                GGApp.GG_APP.deleteFile(name);
-        GGApp.GG_APP.deleteFile("news");
-        GGApp.GG_APP.deleteFile("mensa");
-        GGApp.GG_APP.deleteFile("exams");
-        GGApp.GG_APP.deleteFile("ggfilter");
-        GGApp.GG_APP.deleteFile("ggfilterV2");
-        GGApp.GG_APP.filters.clear();
-        GGApp.GG_APP.school = null;
+                SIAApp.GG_APP.deleteFile(name);
+        SIAApp.GG_APP.deleteFile("news");
+        SIAApp.GG_APP.deleteFile("mensa");
+        SIAApp.GG_APP.deleteFile("exams");
+        SIAApp.GG_APP.deleteFile("ggfilter");
+        SIAApp.GG_APP.deleteFile("ggfilterV2");
+        SIAApp.GG_APP.filters.clear();
+        SIAApp.GG_APP.school = null;
 
         prefs.edit().clear().apply();
-        GGApp.GG_APP.preferences.edit().remove("customTheme").remove("sid").apply();
+        SIAApp.GG_APP.preferences.edit().remove("customTheme").remove("sid").apply();
 
         new Thread() {
             @Override
@@ -163,9 +163,9 @@ public class SiaAPI {
         } catch(Exception e) {
             if(e instanceof IOException || e instanceof APIException) {
                 Log.w("ggvp", "Failed to get plans " + e.getMessage());
-                snackMessage = e instanceof IOException ? GGApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage();
+                snackMessage = e instanceof IOException ? SIAApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage();
             } else {
-                snackMessage = GGApp.GG_APP.getString(R.string.unknown_error);
+                snackMessage = SIAApp.GG_APP.getString(R.string.unknown_error);
                 e.printStackTrace();
             }
             plans.throwable = e;
@@ -246,7 +246,7 @@ public class SiaAPI {
         } catch (final Exception e) {
             e.printStackTrace();
             if(toast)
-                showReloadSnackbar(e instanceof IOException ? GGApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage());
+                showReloadSnackbar(e instanceof IOException ? SIAApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage());
             if(!n.load()) {
                 n.throwable = e;
             }
@@ -271,7 +271,7 @@ public class SiaAPI {
         } catch(Exception e) {
             e.printStackTrace();
             if(snack)
-                showReloadSnackbar(e instanceof IOException ? GGApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage());
+                showReloadSnackbar(e instanceof IOException ? SIAApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage());
             if(!data.load()) {
                 data.throwable = e;
             }
@@ -309,7 +309,7 @@ public class SiaAPI {
         } catch (final Exception e) {
             e.printStackTrace();
             if(toast)
-                showReloadSnackbar(e instanceof IOException ? GGApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage());
+                showReloadSnackbar(e instanceof IOException ? SIAApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage());
             if(!m.load()) {
                 m.throwable = e;
             }
@@ -364,7 +364,7 @@ public class SiaAPI {
         } catch (final Exception e) {
             e.printStackTrace();
             if(toast)
-                showReloadSnackbar(e instanceof IOException ? GGApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage());
+                showReloadSnackbar(e instanceof IOException ? SIAApp.GG_APP.getString(R.string.no_internet_connection) : e.getMessage());
 
             if(!exams.load()) {
                 exams.throwable = e;
@@ -395,13 +395,13 @@ public class SiaAPI {
                     JSONObject data = (JSONObject) re.data;
 
                     String group = prefs.getString("group", null);
-                    Filter.FilterList filters = GGApp.GG_APP.filters;
+                    Filter.FilterList filters = SIAApp.GG_APP.filters;
                     if (group != null && !group.equals("lehrer")) {
                         filters.including.add(new Filter.IncludingFilter(Filter.FilterType.CLASS, group));
                     } else if (group != null) {
                         filters.including.add(new Filter.IncludingFilter(Filter.FilterType.TEACHER, user));
                     }
-                    FilterActivity.saveFilter(GGApp.GG_APP.filters);
+                    FilterActivity.saveFilter(SIAApp.GG_APP.filters);
 
                     if(data.has("username")) {
                         if(!data.getString("username").equals(user) || !data.getString("sid").equals(sid))
@@ -422,7 +422,7 @@ public class SiaAPI {
                     School.updateSchool((JSONObject) resp.data);
                     School.saveList();
 
-                    GGApp.GG_APP.setSchool(sid);
+                    SIAApp.GG_APP.setSchool(sid);
                     FirebaseMessaging.getInstance().subscribeToTopic("sia_sid_" + sid);
 
                     return 0;
@@ -455,7 +455,7 @@ public class SiaAPI {
     }
 
     public String getUsername() {
-        return prefs.getString("username", isLoggedIn() ? GGApp.GG_APP.getString(R.string.anonymous) : null);
+        return prefs.getString("username", isLoggedIn() ? SIAApp.GG_APP.getString(R.string.anonymous) : null);
     }
 
     public boolean isLoggedIn() {

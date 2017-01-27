@@ -57,10 +57,10 @@ import de.gebatzens.sia.data.StaticData;
 import de.gebatzens.sia.fragment.RemoteDataFragment;
 import de.gebatzens.sia.fragment.SubstFragment;
 
-public class GGApp extends Application {
+public class SIAApp extends Application {
 
     public static final int UPDATE_DISABLE = 0, UPDATE_WLAN = 1, UPDATE_ALL = 2;
-    public static GGApp GG_APP;
+    public static SIAApp GG_APP;
 
     public MainActivity activity;
     public SiaAPI api;
@@ -81,7 +81,7 @@ public class GGApp extends Application {
         GG_APP = this;
         api = new SiaAPI();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        //GGBroadcast.createAlarm(this, true);
+        //SIABroadcast.createAlarm(this, true);
         filters = FilterActivity.loadFilter();
         loadSubjectMap();
         School.loadList();
@@ -184,7 +184,7 @@ public class GGApp extends Application {
 
             mBuilder.setStyle(inboxStyle);
         }
-        mBuilder.setColor(GGApp.GG_APP.school.getDarkColor());
+        mBuilder.setColor(SIAApp.GG_APP.school.getDarkColor());
         if (Color.parseColor(getLedColor()) != Color.BLACK) {
             mBuilder.setLights(Color.parseColor(getLedColor()), 1000, 1000);
         }

@@ -19,7 +19,7 @@ package de.gebatzens.sia.data;
 import java.util.ArrayList;
 
 import de.gebatzens.sia.FilterActivity;
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.R;
 
 public abstract class Filter {
@@ -50,7 +50,7 @@ public abstract class Filter {
     public void setFilter(String filter) {
         this.filter = filter;
         if(filter != null && !filter.isEmpty())
-            this.filterAN = GGApp.deleteNonAlphanumeric(filter);
+            this.filterAN = SIAApp.deleteNonAlphanumeric(filter);
         else
             this.filterAN = filter;
     }
@@ -101,19 +101,19 @@ public abstract class Filter {
             case CLASS:
                 String[] classes = item.clazz.split(",");
                 for (String s : classes) {
-                    if (filterAN.equals(GGApp.deleteNonAlphanumeric(s)))
+                    if (filterAN.equals(SIAApp.deleteNonAlphanumeric(s)))
                         return true;
                 }
                 return false;
             case TEACHER:
-                return GGApp.deleteNonAlphanumeric(item.teacher).equals(filterAN);
+                return SIAApp.deleteNonAlphanumeric(item.teacher).equals(filterAN);
             case SUBJECT:
                 if (contains)
-                    return GGApp.deleteNonAlphanumeric(item.subject).contains(filterAN);
+                    return SIAApp.deleteNonAlphanumeric(item.subject).contains(filterAN);
                 else
-                    return GGApp.deleteNonAlphanumeric(item.subject).equals(filterAN);
+                    return SIAApp.deleteNonAlphanumeric(item.subject).equals(filterAN);
             case LESSON:
-                return GGApp.deleteNonAlphanumeric(item.lesson).equals(filterAN);
+                return SIAApp.deleteNonAlphanumeric(item.lesson).equals(filterAN);
         }
         return false;
     }
@@ -122,16 +122,16 @@ public abstract class Filter {
         String s;
         switch(type) {
             case CLASS:
-                s = GGApp.GG_APP.getString(R.string.school_class);
+                s = SIAApp.GG_APP.getString(R.string.school_class);
                 break;
             case TEACHER:
-                s = GGApp.GG_APP.getString(R.string.teacher);
+                s = SIAApp.GG_APP.getString(R.string.teacher);
                 break;
             case SUBJECT:
-                s = GGApp.GG_APP.getString(R.string.subject_course_name);
+                s = SIAApp.GG_APP.getString(R.string.subject_course_name);
                 break;
             case LESSON:
-                s = GGApp.GG_APP.getString(R.string.lhour);
+                s = SIAApp.GG_APP.getString(R.string.lhour);
                 break;
             default:
                 s = "";
@@ -174,7 +174,7 @@ public abstract class Filter {
                 if(f instanceof Subst.Entry && getType() == FilterType.CLASS) {
                     if(!((Subst.Entry) f).clazz.equals(getFilter())) {
                         setFilter(((Subst.Entry) f).clazz);
-                        FilterActivity.saveFilter(GGApp.GG_APP.filters);
+                        FilterActivity.saveFilter(SIAApp.GG_APP.filters);
                     }
                 }
 
@@ -226,13 +226,13 @@ public abstract class Filter {
             String text = "";
 
             if(including.size() == 0) {
-                text = GGApp.GG_APP.getString(R.string.no_filter_active);
+                text = SIAApp.GG_APP.getString(R.string.no_filter_active);
             } else if(including.size() == 1) {
                 Filter f = including.get(0);
-                text = f.getType() == Filter.FilterType.CLASS ? GGApp.GG_APP.getString(R.string.school_class) + " " + f.getFilter() :
-                        GGApp.GG_APP.getString(R.string.teacher) + " " + f.getFilter();
+                text = f.getType() == Filter.FilterType.CLASS ? SIAApp.GG_APP.getString(R.string.school_class) + " " + f.getFilter() :
+                        SIAApp.GG_APP.getString(R.string.teacher) + " " + f.getFilter();
             } else if(pre) {
-                text = GGApp.GG_APP.getString(R.string.filters_active, including.size());
+                text = SIAApp.GG_APP.getString(R.string.filters_active, including.size());
             } else {
                 for(Filter f : including) {
                     text += f.getFilter() + ", ";

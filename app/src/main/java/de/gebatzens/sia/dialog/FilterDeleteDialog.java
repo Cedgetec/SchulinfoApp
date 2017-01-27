@@ -24,7 +24,7 @@ import android.support.v7.app.AlertDialog;
 
 import de.gebatzens.sia.FilterActivity;
 import de.gebatzens.sia.FilterListAdapter;
-import de.gebatzens.sia.GGApp;
+import de.gebatzens.sia.SIAApp;
 import de.gebatzens.sia.data.Filter;
 
 public class FilterDeleteDialog extends DialogFragment {
@@ -64,7 +64,7 @@ public class FilterDeleteDialog extends DialogFragment {
                     ((Filter.ExcludingFilter) filter).getParentFilter().excluding.remove(filter);
 
                 c.updateData();
-                FilterActivity.saveFilter(GGApp.GG_APP.filters);
+                FilterActivity.saveFilter(SIAApp.GG_APP.filters);
                 dialog.dismiss();
             }
         });
