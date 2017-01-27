@@ -94,7 +94,7 @@ public class MensaFragment extends RemoteDataFragment {
         i.inflate(R.layout.mensa_cardview_entry, mcv, true);
         if(mensa_item.isPast())
             mcv.setAlpha(0.65f);
-        String[] colors = getActivity().getResources().getStringArray(SIAApp.GG_APP.school.getColorArray());
+        String[] colors = getActivity().getResources().getStringArray(SIAApp.SIA_APP.school.getColorArray());
         ((TextView) mcv.findViewById(R.id.mcv_date)).setText(getFormatedDate(mensa_item.date));
         ((TextView) mcv.findViewById(R.id.mcv_meal)).setText(mensa_item.meal);
         ((TextView) mcv.findViewById(R.id.mcv_garnish)).setText(getResources().getString(R.string.garnish) + ": " + mensa_item.garnish.replace("mit ","").replace("mit",""));
@@ -119,7 +119,7 @@ public class MensaFragment extends RemoteDataFragment {
                     if(bitmap!=null) {
                         params[0].bitmap = bitmap;
                     } else {
-                        bitmap = SIAApp.GG_APP.api.getMensaImage(params[0].filename);
+                        bitmap = SIAApp.SIA_APP.api.getMensaImage(params[0].filename);
                         cacheSaveBitmap(params[0].filename, bitmap);
                         params[0].bitmap = bitmap;
                     }

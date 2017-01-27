@@ -126,7 +126,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
                 for(String lesson : lessons) {
                     AdapterEntry ae = new AdapterEntry();
                     ae.type = AdapterEntry.LABEL;
-                    ae.data = lesson + ". " + SIAApp.GG_APP.getString(R.string.lhour);
+                    ae.data = lesson + ". " + SIAApp.SIA_APP.getString(R.string.lhour);
                     entries.add(ae);
 
                     Filter.FilterList fl = new Filter.FilterList();
@@ -168,14 +168,14 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         this.type = OVERVIEW;
         entries.clear();
 
-        if(SIAApp.GG_APP.filters.including.size() > 0) {
+        if(SIAApp.SIA_APP.filters.including.size() > 0) {
             AdapterEntry header = new AdapterEntry();
             header.type = AdapterEntry.HEADER;
             entries.add(header);
             updateHeader = true;
 
-            Subst.GGPlans plans = (Subst.GGPlans) SIAApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
-            Filter.FilterList filter = SIAApp.GG_APP.filters;
+            Subst.GGPlans plans = (Subst.GGPlans) SIAApp.SIA_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
+            Filter.FilterList filter = SIAApp.SIA_APP.filters;
 
             for (Subst pl : plans) {
                 AdapterEntry date = new AdapterEntry();
@@ -309,7 +309,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
             hour.setText((type & SubstPagerFragment.CARD_LESSON) != 0 ? entry.lesson : entry.clazz);
             header.setText(entry.type + (entry.teacher.isEmpty() ? "" : " [" + entry.teacher + "]"));
             TextView tv = detail;
-            tv.setText(entry.comment + (entry.room.isEmpty() ? "" : (entry.comment.isEmpty() ? "" : "\n") + SIAApp.GG_APP.getString(R.string.room) + " " + entry.room));
+            tv.setText(entry.comment + (entry.room.isEmpty() ? "" : (entry.comment.isEmpty() ? "" : "\n") + SIAApp.SIA_APP.getString(R.string.room) + " " + entry.room));
             if(tv.getText().toString().trim().isEmpty())
                 tv.setVisibility(View.GONE);
 
@@ -408,7 +408,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
         CardView cv = (CardView) i.inflate(R.layout.basic_cardview, wrapper, false);
         cv.setId(R.id.cvroot);
-        String[] colors = SIAApp.GG_APP.getResources().getStringArray(SIAApp.GG_APP.school.getColorArray());
+        String[] colors = SIAApp.SIA_APP.getResources().getStringArray(SIAApp.SIA_APP.school.getColorArray());
         cv.setCardBackgroundColor(Color.parseColor(colors[cardColorIndex]));
         cardColorIndex++;
         if(cardColorIndex == colors.length)
@@ -444,7 +444,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
 
         CardView cv = (CardView) inflater.inflate(R.layout.basic_cardview, wrapper, false);
         cv.setId(R.id.cvroot);
-        cv.setCardBackgroundColor(SIAApp.GG_APP.school.getColor());
+        cv.setCardBackgroundColor(SIAApp.SIA_APP.school.getColor());
         LinearLayout ls = new LinearLayout(frag.getActivity());
         ls.setId(R.id.messages_list);
         ls.setOrientation(LinearLayout.VERTICAL);
@@ -483,8 +483,8 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         cv.findViewById(R.id.no_filter_card_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SIAApp.GG_APP.activity, FilterActivity.class);
-                SIAApp.GG_APP.activity.startActivityForResult(i, 1);
+                Intent i = new Intent(SIAApp.SIA_APP.activity, FilterActivity.class);
+                SIAApp.SIA_APP.activity.startActivityForResult(i, 1);
             }
         });
 
@@ -555,7 +555,7 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         public void update(LayoutInflater inflater) {
             l3.removeAllViews();
 
-            Filter.FilterList filters = SIAApp.GG_APP.filters;
+            Filter.FilterList filters = SIAApp.SIA_APP.filters;
             int chars = 0;
             int chips = 0;
 

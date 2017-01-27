@@ -112,7 +112,7 @@ public class LoginDialog extends DialogFragment {
 
                     @Override
                     protected Integer doInBackground(String... params) {
-                        return SIAApp.GG_APP.api.login(params[0], params[1], params[2]);
+                        return SIAApp.SIA_APP.api.login(params[0], params[1], params[2]);
 
                     }
 

@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public RemoteDataFragment getFragment() {
-        FragmentData frag = SIAApp.GG_APP.school.fragments.get(SIAApp.GG_APP.getFragmentIndex());
+        FragmentData frag = SIAApp.SIA_APP.school.fragments.get(SIAApp.SIA_APP.getFragmentIndex());
 
         RemoteDataFragment fr = null;
 
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Bundle bundle = new Bundle();
-        bundle.putInt("fragment", SIAApp.GG_APP.getFragmentIndex());
+        bundle.putInt("fragment", SIAApp.SIA_APP.getFragmentIndex());
 
         fr.setArguments(bundle);
 
@@ -156,13 +156,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showExamDialog() {
-        final List<Exams.ExamItem> exams = ((Exams) SIAApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.EXAMS).get(0).getData()).getSelectedItems(false);
+        final List<Exams.ExamItem> exams = ((Exams) SIAApp.SIA_APP.school.fragments.getByType(FragmentData.FragmentType.EXAMS).get(0).getData()).getSelectedItems(false);
         if(exams.size() == 0) {
             Snackbar.make(findViewById(R.id.coordinator_layout), R.string.no_exams_selected, Snackbar.LENGTH_SHORT).show();
             return;
         }
 
-        final long calId = SIAApp.GG_APP.getCalendarId();
+        final long calId = SIAApp.SIA_APP.getCalendarId();
         if(calId == -2) {
             return; // permission request
         }
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //TODO title could change
                 for (Exams.ExamItem e : exams) {
-                    SIAApp.GG_APP.addToCalendar(calId, e.date, getString(R.string.exam) + ": " + e.subject);
+                    SIAApp.SIA_APP.addToCalendar(calId, e.date, getString(R.string.exam) + ": " + e.subject);
                 }
             }
         });
@@ -198,23 +198,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(SIAApp.GG_APP.school.getTheme());
+        setTheme(SIAApp.SIA_APP.school.getTheme());
         super.onCreate(savedInstanceState);
         Log.w("ggvp", "CREATE NEW MAINACTIVITY");
         //Debug.startMethodTracing("sia3");
-        SIAApp.GG_APP.activity = this;
+        SIAApp.SIA_APP.activity = this;
         savedState = savedInstanceState;
 
-        final FragmentData.FragmentList fragments = SIAApp.GG_APP.school.fragments;
+        final FragmentData.FragmentList fragments = SIAApp.SIA_APP.school.fragments;
 
         Intent intent = getIntent();
         if(intent != null && intent.getStringExtra("fragment") != null) {
             FragmentData frag = fragments.getByType(FragmentData.FragmentType.valueOf(intent.getStringExtra("fragment"))).get(0);
-            SIAApp.GG_APP.setFragmentIndex(fragments.indexOf(frag));
+            SIAApp.SIA_APP.setFragmentIndex(fragments.indexOf(frag));
         }
 
         if(intent != null && intent.getBooleanExtra("reload", false)) {
-            SIAApp.GG_APP.refreshAsync(null, true, fragments.get(SIAApp.GG_APP.getFragmentIndex()));
+            SIAApp.SIA_APP.refreshAsync(null, true, fragments.get(SIAApp.SIA_APP.getFragmentIndex()));
             intent.removeExtra("reload");
         }
 
@@ -226,11 +226,11 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.content_fragment, mContent, "gg_content_fragment");
         transaction.commit();
 
-        Log.d("ggvp", "DATA: " + fragments.get(SIAApp.GG_APP.getFragmentIndex()).getData());
-        if(fragments.get(SIAApp.GG_APP.getFragmentIndex()).getData() == null)
-            SIAApp.GG_APP.refreshAsync(null, true, fragments.get(SIAApp.GG_APP.getFragmentIndex()));
+        Log.d("ggvp", "DATA: " + fragments.get(SIAApp.SIA_APP.getFragmentIndex()).getData());
+        if(fragments.get(SIAApp.SIA_APP.getFragmentIndex()).getData() == null)
+            SIAApp.SIA_APP.refreshAsync(null, true, fragments.get(SIAApp.SIA_APP.getFragmentIndex()));
 
-        if("Summer".equals(SIAApp.GG_APP.getCurrentThemeName())){
+        if("Summer".equals(SIAApp.SIA_APP.getCurrentThemeName())){
             ImageView summerNavigationPalm = (ImageView) findViewById(R.id.summer_navigation_palm);
             summerNavigationPalm.setImageResource(R.drawable.summer_palm);
             ImageView summerBackgroundImage = (ImageView) findViewById(R.id.summer_background_image);
@@ -245,12 +245,12 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.action_refresh:
                         ((SwipeRefreshLayout) mContent.getView().findViewById(R.id.refresh)).setRefreshing(true);
-                        SIAApp.GG_APP.refreshAsync(new Runnable() {
+                        SIAApp.SIA_APP.refreshAsync(new Runnable() {
                             @Override
                             public void run() {
                                 ((SwipeRefreshLayout) mContent.getView().findViewById(R.id.refresh)).setRefreshing(false);
                             }
-                        }, true, fragments.get(SIAApp.GG_APP.getFragmentIndex()));
+                        }, true, fragments.get(SIAApp.SIA_APP.getFragmentIndex()));
                         return true;
                     case R.id.action_settings:
                         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
@@ -277,10 +277,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        updateToolbar(SIAApp.GG_APP.school.name, fragments.get(SIAApp.GG_APP.getFragmentIndex()).name);
+        updateToolbar(SIAApp.SIA_APP.school.name, fragments.get(SIAApp.SIA_APP.getFragmentIndex()).name);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            SIAApp.GG_APP.setStatusBarColorTransparent(getWindow()); // because of the navigation drawer
+            SIAApp.SIA_APP.setStatusBarColorTransparent(getWindow()); // because of the navigation drawer
         }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -303,16 +303,16 @@ public class MainActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationHeader = navigationView.getHeaderView(0);
         mNavigationSchoolpictureText = (TextView) mNavigationHeader.findViewById(R.id.drawer_image_text);
-        mNavigationSchoolpictureText.setText(SIAApp.GG_APP.school.name);
+        mNavigationSchoolpictureText.setText(SIAApp.SIA_APP.school.name);
         mNavigationSchoolpicture = (ImageView) mNavigationHeader.findViewById(R.id.navigation_schoolpicture);
-        mNavigationSchoolpicture.setImageBitmap(SIAApp.GG_APP.school.loadImage());
+        mNavigationSchoolpicture.setImageBitmap(SIAApp.SIA_APP.school.loadImage());
         mNavigationSchoolpictureLink = mNavigationHeader.findViewById(R.id.navigation_schoolpicture_link);
         mNavigationSchoolpictureLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
                 mDrawerLayout.closeDrawers();
                 Intent linkIntent = new Intent(Intent.ACTION_VIEW);
-                linkIntent.setData(Uri.parse(SIAApp.GG_APP.school.website));
+                linkIntent.setData(Uri.parse(SIAApp.SIA_APP.school.website));
                 startActivity(linkIntent);
             }
         });
@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
         menu.setGroupCheckable(R.id.settings, false, false);
 
         final Menu navMenu = navigationView.getMenu();
-        selectedItem = SIAApp.GG_APP.getFragmentIndex();
+        selectedItem = SIAApp.SIA_APP.getFragmentIndex();
         if(selectedItem != -1)
             navMenu.getItem(selectedItem).setChecked(true);
 
@@ -341,10 +341,10 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(i, 1);
                 } else {
                     final int index = menuItem.getOrder();
-                    if(SIAApp.GG_APP.getFragmentIndex() != index) {
-                        SIAApp.GG_APP.setFragmentIndex(index);
+                    if(SIAApp.SIA_APP.getFragmentIndex() != index) {
+                        SIAApp.SIA_APP.setFragmentIndex(index);
                         menuItem.setChecked(true);
-                        updateToolbar(SIAApp.GG_APP.school.name, menuItem.getTitle().toString());
+                        updateToolbar(SIAApp.SIA_APP.school.name, menuItem.getTitle().toString());
                         mContent = getFragment();
                         Animation fadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
                         fadeOut.setAnimationListener(new Animation.AnimationListener() {
@@ -359,7 +359,7 @@ public class MainActivity extends AppCompatActivity {
                                 FrameLayout contentFrame = (FrameLayout) findViewById(R.id.content_fragment);
                                 contentFrame.setVisibility(View.INVISIBLE);
                                 if(fragments.get(index).getData() == null)
-                                    SIAApp.GG_APP.refreshAsync(null, true, fragments.get(index));
+                                    SIAApp.SIA_APP.refreshAsync(null, true, fragments.get(index));
 
                                 //removeAllFragments();
 
@@ -408,7 +408,7 @@ public class MainActivity extends AppCompatActivity {
                 paint.setAntiAlias(true);
                 paint.setColor(Color.parseColor("#f5f5f5"));
                 canvas.drawCircle(icon.getWidth() / 2, icon.getHeight() / 2, icon.getWidth() / 2, paint);
-                paint.setColorFilter(new PorterDuffColorFilter(SIAApp.GG_APP.school.getColor(), PorterDuff.Mode.SRC_ATOP));
+                paint.setColorFilter(new PorterDuffColorFilter(SIAApp.SIA_APP.school.getColor(), PorterDuff.Mode.SRC_ATOP));
                 canvas.drawBitmap(icon, null, new RectF(icon.getHeight() / 4.0f, icon.getHeight() / 4.0f, icon.getHeight() - icon.getHeight() / 4.0f, icon.getHeight() - icon.getHeight() / 4.0f), paint);
 
                 Intent newTaskIntent = new Intent(this, MainActivity.class);
@@ -426,12 +426,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if(SIAApp.GG_APP.preferences.getBoolean("app_130_upgrade", true)) {
-            if (!SIAApp.GG_APP.preferences.getBoolean("first_use_filter", true)) {
+        if(SIAApp.SIA_APP.preferences.getBoolean("app_130_upgrade", true)) {
+            if (!SIAApp.SIA_APP.preferences.getBoolean("first_use_filter", true)) {
                 TextDialog.newInstance(R.string.upgrade1_3title, R.string.upgrade1_3).show(getSupportFragmentManager(), "upgrade_dialog");
             }
 
-            SIAApp.GG_APP.preferences.edit().putBoolean("app_130_upgrade", false).apply();
+            SIAApp.SIA_APP.preferences.edit().putBoolean("app_130_upgrade", false).apply();
         }
 
         snowView = (SnowView) findViewById(R.id.snow_view);
@@ -634,14 +634,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        SIAApp.GG_APP.activity = null;
+        SIAApp.SIA_APP.activity = null;
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        SIAApp.GG_APP.activity = this;
+        SIAApp.SIA_APP.activity = this;
 
         if(mContent instanceof SubstFragment) {
             ((SubstFragment) mContent).resetScrollPositions();

@@ -144,7 +144,7 @@ public class SIABroadcast extends BroadcastReceiver {
 
         for(FragmentData frag : gg.school.fragments) {
             if(frag.getType() != FragmentData.FragmentType.PLAN) {
-                SIAApp.GG_APP.refreshAsync(null, false, frag);
+                SIAApp.SIA_APP.refreshAsync(null, false, frag);
             }
         }
 

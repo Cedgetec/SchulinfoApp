@@ -34,7 +34,7 @@ public class StaticData implements RemoteDataFragment.RemoteData {
 
     public void save() {
         try {
-            OutputStream out = SIAApp.GG_APP.openFileOutput("static_" + name, Context.MODE_PRIVATE);
+            OutputStream out = SIAApp.SIA_APP.openFileOutput("static_" + name, Context.MODE_PRIVATE);
             out.write(data);
             out.close();
         } catch (IOException e) {
@@ -44,7 +44,7 @@ public class StaticData implements RemoteDataFragment.RemoteData {
 
     public boolean load() {
         try {
-            InputStream in = SIAApp.GG_APP.openFileInput("static_" + name);
+            InputStream in = SIAApp.SIA_APP.openFileInput("static_" + name);
             data = new byte[(int) new File("static_" + name).length()];
             in.read(data);
             in.close();
@@ -59,7 +59,7 @@ public class StaticData implements RemoteDataFragment.RemoteData {
     }
 
     public File getFile() {
-        return SIAApp.GG_APP.getFileStreamPath("static_" + name);
+        return SIAApp.SIA_APP.getFileStreamPath("static_" + name);
     }
 
     public Throwable getThrowable() {

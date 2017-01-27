@@ -67,7 +67,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         public void onCreatePreferences(Bundle s, String str) {
-            final SIAApp gg = SIAApp.GG_APP;
+            final SIAApp gg = SIAApp.SIA_APP;
 
             addPreferencesFromResource(R.xml.preferences);
             SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
@@ -126,7 +126,7 @@ public class SettingsActivity extends AppCompatActivity {
             final List<String> ledColors = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.notification_colors)));
             final List<String> ledNames = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.notification_color_names)));
 
-            notification_led_color.setSummary(ledNames.get(ledColors.indexOf(SIAApp.GG_APP.getLedColor())));
+            notification_led_color.setSummary(ledNames.get(ledColors.indexOf(SIAApp.SIA_APP.getLedColor())));
 
             final ListAdapter adapter_notification_led_color = new ArrayAdapter<String>(
                     getActivity().getApplicationContext(), R.layout.settings_custom_list_preference, ledColors) {
@@ -158,9 +158,9 @@ public class SettingsActivity extends AppCompatActivity {
 
                     holder.title.setText(ledNames.get(position));
 
-                    holder.selectionIcon.setColorFilter(SIAApp.GG_APP.school.getAccentColor() ,PorterDuff.Mode.SRC_ATOP);
+                    holder.selectionIcon.setColorFilter(SIAApp.SIA_APP.school.getAccentColor() ,PorterDuff.Mode.SRC_ATOP);
 
-                    if(SIAApp.GG_APP.getLedColor().equals(ledColors.get(position))) {
+                    if(SIAApp.SIA_APP.getLedColor().equals(ledColors.get(position))) {
                         holder.selectionIcon.setVisibility(View.VISIBLE);
                     }
                     else {
@@ -180,7 +180,7 @@ public class SettingsActivity extends AppCompatActivity {
                     builder.setAdapter(adapter_notification_led_color, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             notification_led_color.setSummary(ledNames.get(which));
-                            SIAApp.GG_APP.setLedColor(ledColors.get(which));
+                            SIAApp.SIA_APP.setLedColor(ledColors.get(which));
                         }
 
                     });
@@ -198,29 +198,29 @@ public class SettingsActivity extends AppCompatActivity {
 
             Preference theme_color = findPreference("theme_color");
 
-            boolean winter = SIAApp.GG_APP.getCurrentThemeName().equals("Winter");
-            boolean summer = SIAApp.GG_APP.getCurrentThemeName().equals("Summer");
+            boolean winter = SIAApp.SIA_APP.getCurrentThemeName().equals("Winter");
+            boolean summer = SIAApp.SIA_APP.getCurrentThemeName().equals("Summer");
 
             if(winter) {
                 LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_image);
                 ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.snow_circle));
-                ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(SIAApp.GG_APP.school.getColor());
+                ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(SIAApp.SIA_APP.school.getColor());
                 theme_color.setIcon(ld);
             } else if (summer) {
                 LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_image);
                 ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.boat_circle));
-                ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(SIAApp.GG_APP.school.getColor());
+                ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(SIAApp.SIA_APP.school.getColor());
                 theme_color.setIcon(ld);
             } else {
                 GradientDrawable tcgd = (GradientDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle);
-                tcgd.setColor(SIAApp.GG_APP.school.getColor());
+                tcgd.setColor(SIAApp.SIA_APP.school.getColor());
                 theme_color.setIcon(tcgd);
             }
 
             final List<String> themeIds = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.theme_names)));
             final List<String> themeNames = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.theme_color_names)));
 
-            String st = SIAApp.GG_APP.getSeasonTheme();
+            String st = SIAApp.SIA_APP.getSeasonTheme();
             switch (st) {
                 case "Winter":
                     themeIds.add(0, st);
@@ -272,9 +272,9 @@ public class SettingsActivity extends AppCompatActivity {
 
                     holder.title.setText(themeNames.get(position));
 
-                    holder.selectionIcon.setColorFilter(SIAApp.GG_APP.school.getAccentColor() ,PorterDuff.Mode.SRC_ATOP);
+                    holder.selectionIcon.setColorFilter(SIAApp.SIA_APP.school.getAccentColor() ,PorterDuff.Mode.SRC_ATOP);
 
-                    if(SIAApp.GG_APP.getCurrentThemeName().equals(themeIds.get(position))) {
+                    if(SIAApp.SIA_APP.getCurrentThemeName().equals(themeIds.get(position))) {
                         holder.selectionIcon.setVisibility(View.VISIBLE);
                     }
                     else{
@@ -293,8 +293,8 @@ public class SettingsActivity extends AppCompatActivity {
 
                     builder.setAdapter(adapter_theme_color, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            SIAApp.GG_APP.setCustomThemeName(themeIds.get(which));
-                            SIAApp.GG_APP.school.loadTheme();
+                            SIAApp.SIA_APP.setCustomThemeName(themeIds.get(which));
+                            SIAApp.SIA_APP.school.loadTheme();
                             recreate = true;
                             getActivity().recreate();
                         }
@@ -314,8 +314,8 @@ public class SettingsActivity extends AppCompatActivity {
 
             Preference pref_username = findPreference("authentication_username");
 
-            if(SIAApp.GG_APP.school.loginNeeded) {
-                pref_username.setSummary(getString(R.string.logged_in_as, SIAApp.GG_APP.api.getUsername()));
+            if(SIAApp.SIA_APP.school.loginNeeded) {
+                pref_username.setSummary(getString(R.string.logged_in_as, SIAApp.SIA_APP.api.getUsername()));
             }
 
             pref_username.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -332,7 +332,7 @@ public class SettingsActivity extends AppCompatActivity {
                                     ShortcutManager shortcutManager = getActivity().getSystemService(ShortcutManager.class);
                                     shortcutManager.removeAllDynamicShortcuts();
                                 }
-                                SIAApp.GG_APP.api.logout();
+                                SIAApp.SIA_APP.api.logout();
                                 Intent i = new Intent();
                                 i.putExtra("setup", true);
                                 ((SettingsActivity) getActivity()).finish(RESULT_OK, i);
@@ -374,7 +374,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             Preference filter = findPreference("filter");
-            filter.setSummary(SIAApp.GG_APP.filters.getSummary(true));
+            filter.setSummary(SIAApp.SIA_APP.filters.getSummary(true));
             filter.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -387,14 +387,14 @@ public class SettingsActivity extends AppCompatActivity {
             Preference contact = findPreference("contact");
             LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_image);
             ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.ic_mail));
-            ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(SIAApp.GG_APP.school.getColor());
+            ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(SIAApp.SIA_APP.school.getColor());
             contact.setIcon(ld);
             contact.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                             "mailto", "support@cedgetec.com", null));
-                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SchulinfoApp " + SIAApp.GG_APP.school.name);
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "SchulinfoApp " + SIAApp.SIA_APP.school.name);
                     startActivity(Intent.createChooser(emailIntent, "E-Mail senden"));
                     return false;
                 }
@@ -412,16 +412,16 @@ public class SettingsActivity extends AppCompatActivity {
                 String b = sharedPreferences.getString(key, "nightfollowsystem");
                 switch (b){
                     case "nightauto":
-                        SIAApp.GG_APP.setThemeMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+                        SIAApp.SIA_APP.setThemeMode(AppCompatDelegate.MODE_NIGHT_AUTO);
                         break;
                     case "nightyes":
-                        SIAApp.GG_APP.setThemeMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        SIAApp.SIA_APP.setThemeMode(AppCompatDelegate.MODE_NIGHT_YES);
                         break;
                     case "nightno":
-                        SIAApp.GG_APP.setThemeMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        SIAApp.SIA_APP.setThemeMode(AppCompatDelegate.MODE_NIGHT_NO);
                         break;
                     default:
-                        SIAApp.GG_APP.setThemeMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                        SIAApp.SIA_APP.setThemeMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 }
                 recreate = true;
                 getActivity().recreate();
@@ -445,7 +445,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(SIAApp.GG_APP.school.getTheme());
+        setTheme(SIAApp.SIA_APP.school.getTheme());
 
         changed = false;
         recreate = false;
@@ -483,7 +483,7 @@ public class SettingsActivity extends AppCompatActivity {
         d.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         d.draw(canvas);
         CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                .setToolbarColor(SIAApp.GG_APP.school.getColor())
+                .setToolbarColor(SIAApp.SIA_APP.school.getColor())
                 .setSecondaryToolbarColor(Color.RED)
                 .setCloseButtonIcon(bitmap)
                 .setShowTitle(true)
@@ -504,7 +504,7 @@ public class SettingsActivity extends AppCompatActivity {
         if(req == 1 && resp == RESULT_OK) {
             changed = true;
             Preference filter = frag.findPreference("filter");
-            filter.setSummary(SIAApp.GG_APP.filters.getSummary(true));
+            filter.setSummary(SIAApp.SIA_APP.filters.getSummary(true));
         }
     }
 
@@ -527,8 +527,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public static int loadThemeColor(String name) {
-        int theme = SIAApp.GG_APP.getResources().getIdentifier("AppTheme" + name, "style", SIAApp.GG_APP.getPackageName());
-        TypedArray ta = SIAApp.GG_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary});
+        int theme = SIAApp.SIA_APP.getResources().getIdentifier("AppTheme" + name, "style", SIAApp.SIA_APP.getPackageName());
+        TypedArray ta = SIAApp.SIA_APP.obtainStyledAttributes(theme, new int [] {R.attr.colorPrimary});
         int c = ta.getColor(0, Color.RED);
         ta.recycle();
         return c;

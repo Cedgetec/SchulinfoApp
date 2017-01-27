@@ -127,7 +127,7 @@ public class SubstFragment extends RemoteDataFragment {
 
     @Override
     public void updateFragment() {
-        SIAApp.GG_APP.activity.runOnUiThread(new Runnable() {
+        SIAApp.SIA_APP.activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if(substAdapter != null) {

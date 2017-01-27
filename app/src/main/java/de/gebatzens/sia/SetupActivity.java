@@ -47,15 +47,15 @@ public class SetupActivity extends AppCompatActivity {
         setTheme(R.style.AppThemeSetup);
         super.onCreate(saved);
 
-        if(SIAApp.GG_APP.api.isLoggedIn()) {
+        if(SIAApp.SIA_APP.api.isLoggedIn()) {
             new Thread() {
                 @Override
                 public void run() {
-                    Log.d("ggvp", "Updating school " + SIAApp.GG_APP.school.name);
+                    Log.d("ggvp", "Updating school " + SIAApp.SIA_APP.school.name);
                     try {
-                        SiaAPI.APIResponse resp = SIAApp.GG_APP.api.doRequest("/schoolInfo?token=" + SIAApp.GG_APP.api.getToken(), null);
+                        SiaAPI.APIResponse resp = SIAApp.SIA_APP.api.doRequest("/schoolInfo?token=" + SIAApp.SIA_APP.api.getToken(), null);
                         if(resp.state == SiaAPI.APIState.SUCCEEDED) {
-                            String img = SIAApp.GG_APP.school.image;
+                            String img = SIAApp.SIA_APP.school.image;
 
                             School.updateSchool((JSONObject) resp.data);
                             School.saveList();
@@ -66,7 +66,7 @@ public class SetupActivity extends AppCompatActivity {
                             }
 
                             // sid could have changed
-                            SIAApp.GG_APP.preferences.edit().putString("sid", ((JSONObject) resp.data).getString("sid")).apply();
+                            SIAApp.SIA_APP.preferences.edit().putString("sid", ((JSONObject) resp.data).getString("sid")).apply();
                         }
                     } catch (Exception e) {
                         Log.e("ggvp", e.toString());
@@ -82,8 +82,8 @@ public class SetupActivity extends AppCompatActivity {
             return;
         }
 
-        SIAApp.GG_APP.setSchool(null);
-        SIAApp.GG_APP.setFragmentIndex(0);
+        SIAApp.SIA_APP.setSchool(null);
+        SIAApp.SIA_APP.setFragmentIndex(0);
 
         setContentView(R.layout.activity_setup);
 
@@ -169,7 +169,7 @@ public class SetupActivity extends AppCompatActivity {
 
     public void showDownloadDialog() {
         final ProgressDialog d = new ProgressDialog(this);
-        d.setMessage(SIAApp.GG_APP.getString(R.string.download_schools));
+        d.setMessage(SIAApp.SIA_APP.getString(R.string.download_schools));
         d.setCancelable(false);
         d.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         d.show();
@@ -203,7 +203,7 @@ public class SetupActivity extends AppCompatActivity {
 
     public void startDownloading() {
         final ProgressDialog d = new ProgressDialog(this);
-        d.setTitle(SIAApp.GG_APP.school.name);
+        d.setTitle(SIAApp.SIA_APP.school.name);
         d.setMessage(getString(R.string.downloading_image));
         d.setCancelable(false);
         d.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -212,7 +212,7 @@ public class SetupActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                if(!School.downloadImage(SIAApp.GG_APP.school.image)) {
+                if(!School.downloadImage(SIAApp.SIA_APP.school.image)) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -222,7 +222,7 @@ public class SetupActivity extends AppCompatActivity {
                 }
 
                 //workaround for a bug that causes an endless loading screen
-                SIAApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).setData(SIAApp.GG_APP.api.getPlans(false));
+                SIAApp.SIA_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).setData(SIAApp.SIA_APP.api.getPlans(false));
 
                 if(d.isShowing())
                     d.dismiss();

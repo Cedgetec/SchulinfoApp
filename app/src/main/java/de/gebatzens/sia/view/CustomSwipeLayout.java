@@ -55,7 +55,7 @@ public class CustomSwipeLayout extends SwipeRefreshLayout {
                 m.recycle();
                 return super.onInterceptTouchEvent(event);
             case MotionEvent.ACTION_MOVE:
-                if(SIAApp.GG_APP.school.fragments.get(SIAApp.GG_APP.getFragmentIndex()).getType() == FragmentData.FragmentType.PLAN) {
+                if(SIAApp.SIA_APP.school.fragments.get(SIAApp.SIA_APP.getFragmentIndex()).getType() == FragmentData.FragmentType.PLAN) {
                         float xd = Math.abs(event.getX() - prevX);
                         if (xd > touchSlop)
                             return false;
@@ -68,7 +68,7 @@ public class CustomSwipeLayout extends SwipeRefreshLayout {
 
     @Override
     public boolean canChildScrollUp() {
-        switch(SIAApp.GG_APP.school.fragments.get(SIAApp.GG_APP.getFragmentIndex()).getType()) {
+        switch(SIAApp.SIA_APP.school.fragments.get(SIAApp.SIA_APP.getFragmentIndex()).getType()) {
             case PLAN:
                 ViewPager vp = ((SubstFragment) ((MainActivity) getContext()).mContent).mViewPager;
                 if(vp == null)

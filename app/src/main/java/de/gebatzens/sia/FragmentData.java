@@ -73,7 +73,7 @@ public class FragmentData {
         }
 
         if(namer != 0) {
-            this.name = SIAApp.GG_APP.getString(namer);
+            this.name = SIAApp.SIA_APP.getString(namer);
         } else {
             this.name = "unknown";
         }

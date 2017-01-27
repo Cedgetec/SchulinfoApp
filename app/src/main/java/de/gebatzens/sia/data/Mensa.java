@@ -55,7 +55,7 @@ public class Mensa extends ArrayList<Mensa.MensaItem> implements RemoteDataFragm
 
     public void save() {
         try {
-            OutputStream out = SIAApp.GG_APP.openFileOutput("mensa", Context.MODE_PRIVATE);
+            OutputStream out = SIAApp.SIA_APP.openFileOutput("mensa", Context.MODE_PRIVATE);
             JsonWriter writer = new JsonWriter(new OutputStreamWriter(out));
 
             writer.setIndent("  ");
@@ -83,7 +83,7 @@ public class Mensa extends ArrayList<Mensa.MensaItem> implements RemoteDataFragm
     public boolean load() {
         clear();
         try {
-            InputStream in = SIAApp.GG_APP.openFileInput("mensa");
+            InputStream in = SIAApp.SIA_APP.openFileInput("mensa");
             JsonReader reader = new JsonReader(new InputStreamReader(in));
             reader.beginArray();
             while(reader.hasNext()) {

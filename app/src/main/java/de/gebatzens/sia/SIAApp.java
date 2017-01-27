@@ -60,7 +60,7 @@ import de.gebatzens.sia.fragment.SubstFragment;
 public class SIAApp extends Application {
 
     public static final int UPDATE_DISABLE = 0, UPDATE_WLAN = 1, UPDATE_ALL = 2;
-    public static SIAApp GG_APP;
+    public static SIAApp SIA_APP;
 
     public MainActivity activity;
     public SiaAPI api;
@@ -78,7 +78,7 @@ public class SIAApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        GG_APP = this;
+        SIA_APP = this;
         api = new SiaAPI();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         //SIABroadcast.createAlarm(this, true);
@@ -184,7 +184,7 @@ public class SIAApp extends Application {
 
             mBuilder.setStyle(inboxStyle);
         }
-        mBuilder.setColor(SIAApp.GG_APP.school.getDarkColor());
+        mBuilder.setColor(SIAApp.SIA_APP.school.getDarkColor());
         if (Color.parseColor(getLedColor()) != Color.BLACK) {
             mBuilder.setLights(Color.parseColor(getLedColor()), 1000, 1000);
         }

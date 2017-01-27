@@ -54,7 +54,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
             case INDEX_INVALID:
                 return;
             default:
-                Subst.GGPlans plans = (Subst.GGPlans) SIAApp.GG_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
+                Subst.GGPlans plans = (Subst.GGPlans) SIAApp.SIA_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).getData();
                 if(plans.size() <= index) {
                     // This fragment will be deleted in a few seconds
                     break;

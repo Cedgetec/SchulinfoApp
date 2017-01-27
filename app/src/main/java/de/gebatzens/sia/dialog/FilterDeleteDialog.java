@@ -64,7 +64,7 @@ public class FilterDeleteDialog extends DialogFragment {
                     ((Filter.ExcludingFilter) filter).getParentFilter().excluding.remove(filter);
 
                 c.updateData();
-                FilterActivity.saveFilter(SIAApp.GG_APP.filters);
+                FilterActivity.saveFilter(SIAApp.SIA_APP.filters);
                 dialog.dismiss();
             }
         });

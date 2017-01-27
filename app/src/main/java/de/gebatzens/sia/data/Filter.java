@@ -122,16 +122,16 @@ public abstract class Filter {
         String s;
         switch(type) {
             case CLASS:
-                s = SIAApp.GG_APP.getString(R.string.school_class);
+                s = SIAApp.SIA_APP.getString(R.string.school_class);
                 break;
             case TEACHER:
-                s = SIAApp.GG_APP.getString(R.string.teacher);
+                s = SIAApp.SIA_APP.getString(R.string.teacher);
                 break;
             case SUBJECT:
-                s = SIAApp.GG_APP.getString(R.string.subject_course_name);
+                s = SIAApp.SIA_APP.getString(R.string.subject_course_name);
                 break;
             case LESSON:
-                s = SIAApp.GG_APP.getString(R.string.lhour);
+                s = SIAApp.SIA_APP.getString(R.string.lhour);
                 break;
             default:
                 s = "";
@@ -174,7 +174,7 @@ public abstract class Filter {
                 if(f instanceof Subst.Entry && getType() == FilterType.CLASS) {
                     if(!((Subst.Entry) f).clazz.equals(getFilter())) {
                         setFilter(((Subst.Entry) f).clazz);
-                        FilterActivity.saveFilter(SIAApp.GG_APP.filters);
+                        FilterActivity.saveFilter(SIAApp.SIA_APP.filters);
                     }
                 }
 
@@ -226,13 +226,13 @@ public abstract class Filter {
             String text = "";
 
             if(including.size() == 0) {
-                text = SIAApp.GG_APP.getString(R.string.no_filter_active);
+                text = SIAApp.SIA_APP.getString(R.string.no_filter_active);
             } else if(including.size() == 1) {
                 Filter f = including.get(0);
-                text = f.getType() == Filter.FilterType.CLASS ? SIAApp.GG_APP.getString(R.string.school_class) + " " + f.getFilter() :
-                        SIAApp.GG_APP.getString(R.string.teacher) + " " + f.getFilter();
+                text = f.getType() == Filter.FilterType.CLASS ? SIAApp.SIA_APP.getString(R.string.school_class) + " " + f.getFilter() :
+                        SIAApp.SIA_APP.getString(R.string.teacher) + " " + f.getFilter();
             } else if(pre) {
-                text = SIAApp.GG_APP.getString(R.string.filters_active, including.size());
+                text = SIAApp.SIA_APP.getString(R.string.filters_active, including.size());
             } else {
                 for(Filter f : including) {
                     text += f.getFilter() + ", ";

@@ -34,7 +34,7 @@ public class SubstAdapter extends FragmentStatePagerAdapter {
         super(m.getChildFragmentManager());
         this.viewPager = vp;
         plans = (Subst.GGPlans) m.getFragment().getData();
-        SIAApp.GG_APP.activity.runOnUiThread(new Runnable() {
+        SIAApp.SIA_APP.activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 notifyDataSetChanged();
@@ -73,7 +73,7 @@ public class SubstAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         SubstPagerFragment fragment = new SubstPagerFragment();
         Bundle params = new Bundle();
-        params.putInt("fragment", SIAApp.GG_APP.school.fragments.indexOf(this.fragment.getFragment()));
+        params.putInt("fragment", SIAApp.SIA_APP.school.fragments.indexOf(this.fragment.getFragment()));
         if(position == 0)
             params.putInt("index", SubstPagerFragment.INDEX_OVERVIEW);
         else
@@ -87,7 +87,7 @@ public class SubstAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int p) {
         switch(p) {
             case 0:
-                return SIAApp.GG_APP.getResources().getString(R.string.overview);
+                return SIAApp.SIA_APP.getResources().getString(R.string.overview);
             default:
                 return plans.get(p - 1).getWeekday();
         }
