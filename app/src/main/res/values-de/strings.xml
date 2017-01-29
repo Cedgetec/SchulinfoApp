@@ -141,6 +141,7 @@
     <string name="copy">Kopieren</string>
     <string name="share">Teilen</string>
     <string name="send_to">Senden an</string>
+    <string name="legal">Rechtliches</string>
 
     <string name="share_content_base">%1$2s in der %2$2s in der %3$2s. Stunde</string>
     <string name="share_content_teacher">%1$2s in der %2$2s durch %3$2s in der %4$2s. Stunde</string>

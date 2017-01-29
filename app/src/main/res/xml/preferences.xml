@@ -40,24 +40,26 @@
             android:summary="@string/personalisation_changeColor_description"
             android:key="theme_color"/>
     </android.support.v7.preference.PreferenceCategory>
-    <android.support.v7.preference.PreferenceCategory android:title="@string/information">
-        <!--TODO: DialogPreference anstatt von Preference (aktuell buggy (Stand: Library 23.4.0))-->
-        <android.support.v7.preference.Preference
-            android:title="@string/developer"
-            android:summary="@string/developer_info"
-            android:key="developers"/>
+    <android.support.v7.preference.PreferenceCategory android:title="@string/legal">
         <android.support.v7.preference.Preference android:title="@string/terms_title"
             android:summary="@string/please_read"
             android:key="terms"/>
         <android.support.v7.preference.Preference android:title="@string/privacy_statement"
             android:summary="@string/please_read"
             android:key="privacy"/>
-        <android.support.v7.preference.Preference android:title="@string/github"
-            android:summary="https://github.com/Cedgetec/SchulinfoApp"
-            android:key="githublink"/>
         <android.support.v7.preference.Preference android:title="@string/license"
             android:summary="Apache License 2.0"
             android:key="license"/>
+    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.PreferenceCategory android:title="@string/information">
+        <!--TODO: DialogPreference anstatt von Preference (aktuell buggy (Stand: Library 23.4.0))-->
+        <android.support.v7.preference.Preference
+            android:title="@string/developer"
+            android:summary="@string/developer_info"
+            android:key="developers"/>
+        <android.support.v7.preference.Preference android:title="@string/github"
+            android:summary="https://github.com/Cedgetec/SchulinfoApp"
+            android:key="githublink"/>
         <android.support.v7.preference.Preference android:title="@string/build_version"
             android:summary="Version: x.x.x"
             android:key="buildversion"/>

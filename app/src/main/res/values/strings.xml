@@ -144,6 +144,7 @@
     <string name="copy">Copy</string>
     <string name="share">Share</string>
     <string name="send_to">Send to</string>
+    <string name="legal">Legal</string>
 
     <string name="share_content_base">%1$2s in %2$2s in lesson %3$2s</string>
     <string name="share_content_teacher">%1$2s in %2$2s by %3$2s in lesson %4$2s</string>
