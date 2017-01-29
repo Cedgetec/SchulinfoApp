@@ -8,7 +8,7 @@
             android:key="authentication_username"
             android:summary="@string/touch_to_logout" />
     </android.support.v7.preference.PreferenceCategory>
-    <android.support.v7.preference.PreferenceCategory android:title="@string/general">
+    <android.support.v7.preference.PreferenceCategory android:title="@string/notifications">
         <android.support.v7.preference.CheckBoxPreference android:title="@string/show_notifications"
             android:summary="@string/notify_class"
             android:key="notifications"

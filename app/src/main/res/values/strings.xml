@@ -48,7 +48,7 @@
     <string name="school_settings">School settings</string>
     <string name="school_class">Class</string>
     <string name="username">Username</string>
-    <string name="general">General</string>
+    <string name="notifications">Notifications</string>
     <string name="show_notifications">Show notifications</string>
     <string name="notify_class">Notify me if my class is affected</string>
     <string name="automatic_updates">Automatically update plans</string>

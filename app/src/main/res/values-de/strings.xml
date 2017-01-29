@@ -46,7 +46,7 @@
     <string name="school_settings">Schuleinstellungen</string>
     <string name="school_class">Klasse</string>
     <string name="username">Benutzername</string>
-    <string name="general">Allgemein</string>
+    <string name="notifications">Benachrichtigungen</string>
     <string name="show_notifications">Benachrichtigungen anzeigen</string>
     <string name="notify_class">Bei Planänderungen für deine Klasse</string>
     <string name="automatic_updates">Automatisch aktualisieren</string>
