@@ -47,6 +47,10 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
     @Override
     public void updateFragment() {
+        if(recyclerView == null) {
+            return;
+        }
+
         switch(index) {
             case INDEX_OVERVIEW:
                 ((SubstListAdapter) recyclerView.getAdapter()).setToOverview();
@@ -62,9 +66,7 @@ public class SubstPagerFragment extends RemoteDataFragment {
 
                 plan = plans.get(index);
 
-                if(recyclerView != null) {
-                    ((SubstListAdapter) recyclerView.getAdapter()).updateData(plan, SubstListAdapter.ALL_CLASSES, true);
-                }
+                ((SubstListAdapter) recyclerView.getAdapter()).updateData(plan, SubstListAdapter.ALL_CLASSES, true);
 
                 break;
         }
