@@ -120,7 +120,7 @@ public class FirstUseActivity extends FragmentActivity {
             @Override
             public void onPageSelected(int i) {
                 if(i > 0)
-                    iv_left.setVisibility(View.GONE);
+                    iv_left.setVisibility(View.INVISIBLE);
                 else
                     iv_left.setVisibility(View.VISIBLE);
 
