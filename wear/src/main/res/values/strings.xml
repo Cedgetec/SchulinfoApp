@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">SIAWear</string>
-    <string name="hello_round">Hello Round World!</string>
-    <string name="hello_square">SchulinfoApp Wear 1.0</string>
+    <string name="app_name">SchulinfoApp</string>
+    <string name="hello">Hello World!</string>
 </resources>
