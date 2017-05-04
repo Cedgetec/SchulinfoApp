@@ -69,14 +69,6 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/login"
-            android:parentActivityName=".SetupActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.gebatzens.sia.SetupActivity" />
-        </activity>
     </application>
 
 </manifest>
