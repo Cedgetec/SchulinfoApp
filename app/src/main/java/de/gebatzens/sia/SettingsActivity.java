@@ -83,10 +83,18 @@ public class SettingsActivity extends AppCompatActivity {
             String versionName = BuildConfig.VERSION_NAME;
             pref_buildversion.setSummary("Version: " + versionName + " (" + BuildConfig.BUILD_TYPE + ")");
 
+            Preference prefDevelopers = findPreference("developers");
+            prefDevelopers.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    createCustomTab(getActivity(), "https://cedgetec.com");
+                    return true;
+                }
+            });
+
             Preference prefGithub = findPreference("githublink");
             prefGithub.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    createCustomTab(getActivity(), "https://github.com/Cedgetec/SchulinfoAPP");
+                    createCustomTab(getActivity(), "https://github.com/Cedgetec/SchulinfoApp-android");
                     return true;
                 }
             });
@@ -350,25 +358,6 @@ public class SettingsActivity extends AppCompatActivity {
                         Snackbar.make(getActivity().getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.not_logged_in), Snackbar.LENGTH_LONG).show();
                     }
 
-                    return false;
-                }
-            });
-
-            Preference pref_developers = findPreference("developers");
-
-            pref_developers.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle(getResources().getString(R.string.developer));
-                    builder.setMessage(getResources().getString(R.string.developer_dialog));
-                    builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.create().show();
                     return false;
                 }
             });

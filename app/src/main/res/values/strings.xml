@@ -54,8 +54,7 @@
     <string name="automatic_updates">Automatically update plans</string>
     <string name="only_update_over_wireless_lan">Only update over Wi-Fi</string>
     <string name="information">Information</string>
-    <string name="developer">Developers</string>
-    <string name="developer_info">About the developers</string>
+    <string name="developed_by_cedgetec">Developed by Cedgetec</string>
     <string name="github">GitHub</string>
     <string name="license">License</string>
     <string name="build_version">Build version</string>
@@ -85,7 +84,6 @@
     <string name="supported_schools">Supported schools</string>
     <string name="anonymous">Anonymous user</string>
     <string name="download_error">An error occurred while downloading</string>
-    <string name="developer_dialog">Your substitute schedule. Built by \n\nHauke Oldsen\nLasse Rosenow\nLennart Schmidt\nFabian Schultis</string>
     <string name="dessert">Dessert</string>
     <string name="design">Design</string>
     <string name="dark_theme">Dark theme</string>
