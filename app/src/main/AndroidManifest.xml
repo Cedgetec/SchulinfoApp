@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--suppress ALL -->
+<?xml version="1.0" encoding="utf-8"?><!-- suppress ALL -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.gebatzens.sia">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
@@ -13,11 +11,10 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:name=".SIAApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:name=".SIAApp">
-
+        android:label="@string/app_name">
         <activity
             android:name=".FirstUseActivity"
             android:label="@string/app_name"
@@ -29,54 +26,57 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
-
-        <activity android:name=".SettingsActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name=".SettingsActivity"
             android:label="@string/settings"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
-
-        <activity android:name=".FilterActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name=".FilterActivity"
             android:label="@string/filter"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
-
-        <activity android:name=".SetupActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name=".SetupActivity"
             android:label="@string/supported_schools"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name=".TextActivity"
+            android:windowSoftInputMode="adjustNothing"/>
 
-        <activity android:name=".TextActivity"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
-
-        <receiver android:enabled="true" android:name=".SIABroadcast"
+        <receiver
+            android:name=".SIABroadcast"
+            android:enabled="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".SIAMessagingService">
+        <service android:name=".SIAMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".SIAInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <service
-            android:name=".SIAInstanceIdService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
-
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/login"
+            android:parentActivityName=".SetupActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.gebatzens.sia.SetupActivity" />
+        </activity>
     </application>
 
 </manifest>

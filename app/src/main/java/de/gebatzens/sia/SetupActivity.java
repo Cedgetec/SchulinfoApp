@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -44,6 +45,7 @@ public class SetupActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle saved) {
+        AppCompatDelegate.setDefaultNightMode(SIAApp.SIA_APP.getThemeMode());
         setTheme(R.style.AppThemeSetup);
         super.onCreate(saved);
 

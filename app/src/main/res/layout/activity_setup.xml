@@ -15,7 +15,7 @@
             android:layout_height="match_parent"/>
 
         <View
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="10dp"
             android:id="@+id/ShaderTabLayout"
             android:background="@drawable/toolbar_shadow"/>
