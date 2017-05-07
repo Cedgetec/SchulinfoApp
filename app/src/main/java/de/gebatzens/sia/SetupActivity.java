@@ -21,6 +21,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
@@ -38,8 +39,9 @@ import de.gebatzens.sia.dialog.LoginDialog;
 public class SetupActivity extends AppCompatActivity {
 
     Toolbar mToolBar;
-    SchoolListAdapter adapter;
+    SwipeRefreshLayout swipeRefreshLayout;
     ListView list;
+    SchoolListAdapter adapter;
     public Dialog currentLoginDialog;
     public Bundle restoreDialog;
 
@@ -97,6 +99,7 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.setup_refresh) {
+                    swipeRefreshLayout.setRefreshing(true);
                     showDownloadDialog();
                 } else if(menuItem.getItemId() == R.id.setup_other_school) {
                     showLoginDialog(false, null, true, "");
@@ -104,6 +107,19 @@ public class SetupActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.setup_swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                showDownloadDialog();
+            }
+        });
+        // Configure the refreshing colors
+        swipeRefreshLayout.setColorSchemeResources(R.color.SwipeRefreshProgressGreen,
+                R.color.SwipeRefreshProgressRed,
+                R.color.SwipeRefreshProgressBlue,
+                R.color.SwipeRefreshProgressOrange);
 
         list = (ListView) findViewById(R.id.setup_list);
         adapter = new SchoolListAdapter(this, School.LIST);
@@ -118,6 +134,7 @@ public class SetupActivity extends AppCompatActivity {
         });
 
         if(School.LIST.size() == 0) {
+            swipeRefreshLayout.setRefreshing(true);
             showDownloadDialog();
         } else {
             startDownloadThread(true);
@@ -170,12 +187,6 @@ public class SetupActivity extends AppCompatActivity {
     }
 
     public void showDownloadDialog() {
-        final ProgressDialog d = new ProgressDialog(this);
-        d.setMessage(SIAApp.SIA_APP.getString(R.string.download_schools));
-        d.setCancelable(false);
-        d.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        d.show();
-
         new Thread() {
             @Override
             public void run() {
@@ -186,19 +197,19 @@ public class SetupActivity extends AppCompatActivity {
                     public void run() {
                         adapter.list = School.LIST;
                         adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                         if (!b)
                             Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)
                                     .setAction(getString(R.string.again), new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
+                                            swipeRefreshLayout.setRefreshing(true);
                                             showDownloadDialog();
                                         }
                                     })
                                     .show();
                     }
                 });
-                if(d.isShowing())
-                    d.dismiss();
             }
         }.start();
     }
@@ -236,12 +247,4 @@ public class SetupActivity extends AppCompatActivity {
             }
         }.start();
     }
-
-    @Override
-    public void onActivityResult(int req, int res, Intent data) {
-        if(currentLoginDialog != null && currentLoginDialog.isShowing()) {
-            ((CheckBox) currentLoginDialog.findViewById(R.id.acceptTerms)).setChecked(req == 1);
-        }
-    }
-
 }
