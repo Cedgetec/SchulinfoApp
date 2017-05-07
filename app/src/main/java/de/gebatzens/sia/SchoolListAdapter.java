@@ -63,11 +63,11 @@ public class SchoolListAdapter extends BaseAdapter {
         GradientDrawable sd = (GradientDrawable) ContextCompat.getDrawable(v.getContext(), R.drawable.colored_circle);
         sd.setColor(school.getColor());
 
-        ((ImageView) v.findViewById(R.id.school_firstletter_image)).setImageDrawable(sd);
+        ((TextView) v.findViewById(R.id.school_firstletter_text)).setBackgroundDrawable(sd);
 
         ((TextView) v.findViewById(R.id.school_firstletter_text)).setText("" + school.name.charAt(0));
 
-        ((TextView) v.findViewById(R.id.school_user_number)).setText(parent.getResources().getString(R.string.user) + ": " + school.users);
+        ((TextView) v.findViewById(R.id.school_user_number)).setText(school.users + " " + parent.getResources().getString(R.string.user));
 
         return v;
     }

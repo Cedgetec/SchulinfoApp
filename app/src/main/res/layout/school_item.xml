@@ -9,26 +9,17 @@
         android:layout_height="match_parent"
         android:layout_weight="0">
 
-        <ImageView
+        <TextView
+            android:id="@+id/school_firstletter_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="16dp"
-            android:src="@drawable/colored_circle"
-            android:id="@+id/school_firstletter_image"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:background="@drawable/colored_circle"
             android:text="G"
-            android:textSize="28sp"
-            android:id="@+id/school_firstletter_text"
-            android:fontFamily="sans-serif-light"
             android:textColor="@color/schoolListIconText"
-            android:gravity="center"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:textSize="26.5sp"
+            android:includeFontPadding="false"
+            android:gravity="center" />
 
     </RelativeLayout>
 
@@ -49,24 +40,24 @@
             android:id="@+id/school_name"/>
 
         <TextView
+            android:id="@+id/school_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearance"
-            android:textColor="?attr/colorAccent"
             android:text="@string/app_name"
-            android:id="@+id/school_city"/>
+            android:textAppearance="?android:attr/textAppearance"
+            android:textColor="?attr/colorAccent" />
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/school_user_number"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearance"
-        android:textColor="?android:attr/textColorSecondary"
-        android:padding="16dp"
-        android:gravity="center"
-        android:text="User: 15"
         android:layout_weight="0"
-        android:id="@+id/school_user_number"/>
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="0 User"
+        android:textAppearance="?android:attr/textAppearance"
+        android:textColor="?android:attr/textColorSecondary" />
 
 </LinearLayout>
