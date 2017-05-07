@@ -21,6 +21,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -29,7 +30,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.ListView;
 
 import org.json.JSONObject;
@@ -47,7 +47,7 @@ public class SetupActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle saved) {
-        AppCompatDelegate.setDefaultNightMode(SIAApp.SIA_APP.getThemeMode());
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         setTheme(R.style.AppThemeSetup);
         super.onCreate(saved);
 
@@ -100,7 +100,7 @@ public class SetupActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.setup_refresh) {
                     swipeRefreshLayout.setRefreshing(true);
-                    showDownloadDialog();
+                    startDownloadSchoollistThread();
                 } else if(menuItem.getItemId() == R.id.setup_other_school) {
                     showLoginDialog(false, null, true, "");
                 }
@@ -109,17 +109,15 @@ public class SetupActivity extends AppCompatActivity {
         });
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.setup_swiperefresh);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.SwipeRefreshLayout_background));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                showDownloadDialog();
+                startDownloadSchoollistThread();
             }
         });
         // Configure the refreshing colors
-        swipeRefreshLayout.setColorSchemeResources(R.color.SwipeRefreshProgressGreen,
-                R.color.SwipeRefreshProgressRed,
-                R.color.SwipeRefreshProgressBlue,
-                R.color.SwipeRefreshProgressOrange);
+        swipeRefreshLayout.setColorSchemeResources(R.color.ThemeSetupColorAccent);
 
         list = (ListView) findViewById(R.id.setup_list);
         adapter = new SchoolListAdapter(this, School.LIST);
@@ -135,36 +133,38 @@ public class SetupActivity extends AppCompatActivity {
 
         if(School.LIST.size() == 0) {
             swipeRefreshLayout.setRefreshing(true);
-            showDownloadDialog();
+            startDownloadSchoollistThread();
         } else {
-            startDownloadThread(true);
+            startDownloadSchoollistThread();
         }
 
     }
 
-    public void startDownloadThread(final boolean update) {
+    public void startDownloadSchoollistThread() {
         new Thread() {
             @Override
             public void run() {
                 final boolean b = School.fetchList();
                 School.saveList();
-                if(update)
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                            if (!b)
-                                Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)
-                                        .setAction(getString(R.string.again), new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                startDownloadThread(true);
-                                            }
-                                        })
-                                        .show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.list = School.LIST;
+                        adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                        if (!b)
+                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)
+                                    .setAction(getString(R.string.again), new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            swipeRefreshLayout.setRefreshing(true);
+                                            startDownloadSchoollistThread();
+                                        }
+                                    })
+                                    .show();
 
-                        }
-                    });
+                    }
+                });
 
             }
         }.start();
@@ -186,35 +186,7 @@ public class SetupActivity extends AppCompatActivity {
 
     }
 
-    public void showDownloadDialog() {
-        new Thread() {
-            @Override
-            public void run() {
-                final boolean b = School.fetchList();
-                School.saveList();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.list = School.LIST;
-                        adapter.notifyDataSetChanged();
-                        swipeRefreshLayout.setRefreshing(false);
-                        if (!b)
-                            Snackbar.make(getWindow().getDecorView().findViewById(R.id.coordinator_layout), getString(R.string.no_internet_connection), Snackbar.LENGTH_LONG)
-                                    .setAction(getString(R.string.again), new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            swipeRefreshLayout.setRefreshing(true);
-                                            showDownloadDialog();
-                                        }
-                                    })
-                                    .show();
-                    }
-                });
-            }
-        }.start();
-    }
-
-    public void startDownloading() {
+    public void startDownloadingSchool() {
         final ProgressDialog d = new ProgressDialog(this);
         d.setTitle(SIAApp.SIA_APP.school.name);
         d.setMessage(getString(R.string.downloading_image));

@@ -83,7 +83,7 @@ public class LoginDialog extends DialogFragment {
 
                         switch (v) {
                             case 0:
-                                activity.startDownloading();
+                                activity.startDownloadingSchool();
                                 break;
                             case 1:
                                 restoreDialog = true;
