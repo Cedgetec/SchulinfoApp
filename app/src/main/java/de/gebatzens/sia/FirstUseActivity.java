@@ -45,14 +45,16 @@ public class FirstUseActivity extends FragmentActivity {
         super.onCreate(bundle);
 
         if(SIAApp.SIA_APP.getCustomThemeName() != null) {
-            if(!SIAApp.SIA_APP.getCustomThemeName().equals(SIAApp.SIA_APP.getSeasonTheme())) {
+            if(SIAApp.SIA_APP.getCustomThemeName().equals("Summer") || SIAApp.SIA_APP.getCustomThemeName().equals("Winter")) {
                 String themeName = SIAApp.SIA_APP.getSeasonTheme();
-                if(themeName.equals("Winter")) {
-                    SIAApp.SIA_APP.setCustomThemeName("Winter");
-                    SIAApp.SIA_APP.school.loadTheme();
-                } else {
-                    SIAApp.SIA_APP.setCustomThemeName("Summer");
-                    SIAApp.SIA_APP.school.loadTheme();
+                if (!SIAApp.SIA_APP.getCustomThemeName().equals(themeName)) {
+                    if (themeName.equals("Winter")) {
+                        SIAApp.SIA_APP.setCustomThemeName("Winter");
+                        SIAApp.SIA_APP.school.loadTheme();
+                    } else {
+                        SIAApp.SIA_APP.setCustomThemeName("Summer");
+                        SIAApp.SIA_APP.school.loadTheme();
+                    }
                 }
             }
         }
