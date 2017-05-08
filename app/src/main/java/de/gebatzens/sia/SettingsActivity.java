@@ -216,7 +216,7 @@ public class SettingsActivity extends AppCompatActivity {
                 theme_color.setIcon(ld);
             } else if (summer) {
                 LayerDrawable ld = (LayerDrawable) ContextCompat.getDrawable(getActivity(), R.drawable.settings_circle_image);
-                ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.boat_circle));
+                ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.ic_boat));
                 ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(SIAApp.SIA_APP.school.getColor());
                 theme_color.setIcon(ld);
             } else {
@@ -272,7 +272,7 @@ public class SettingsActivity extends AppCompatActivity {
                         ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(loadThemeColor(themeIds.get(position)));
                     } else if(summer) {
                         LayerDrawable ld = (LayerDrawable) holder.icon.getBackground();
-                        ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.boat_circle));
+                        ld.setDrawableByLayerId(R.id.image, ContextCompat.getDrawable(getActivity(), R.drawable.ic_boat));
                         ((GradientDrawable) ld.findDrawableByLayerId(R.id.background)).setColor(loadThemeColor(themeIds.get(position)));
                     } else {
                         ((GradientDrawable) holder.icon.getBackground()).setColor(loadThemeColor(themeIds.get(position)));
