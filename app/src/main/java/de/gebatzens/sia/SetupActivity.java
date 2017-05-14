@@ -34,6 +34,7 @@ import android.widget.ListView;
 
 import org.json.JSONObject;
 
+import de.gebatzens.sia.data.Subst;
 import de.gebatzens.sia.dialog.LoginDialog;
 
 public class SetupActivity extends AppCompatActivity {
@@ -207,7 +208,9 @@ public class SetupActivity extends AppCompatActivity {
                 }
 
                 //workaround for a bug that causes an endless loading screen
-                SIAApp.SIA_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).setData(SIAApp.SIA_APP.api.getPlans(false));
+                Subst.GGPlans subst = SIAApp.SIA_APP.api.getPlans(false);
+                subst.save();
+                SIAApp.SIA_APP.school.fragments.getByType(FragmentData.FragmentType.PLAN).get(0).setData(subst);
 
                 if(d.isShowing())
                     d.dismiss();

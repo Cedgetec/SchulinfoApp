@@ -24,6 +24,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -215,6 +216,7 @@ public abstract class RemoteDataFragment extends Fragment {
         super.onViewCreated(v, b);
 
         if(getFragment().getData() == null && getContentView() != null) {
+            Log.d("ggvp", "Creating loading view because there is no data available");
             getContentView().addView(createLoadingView());
         }
 
