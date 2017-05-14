@@ -21,6 +21,7 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -308,10 +309,13 @@ public class SubstListAdapter extends RecyclerView.Adapter {
         public void update(final Subst.Entry entry, int type) {
             hour.setText((type & SubstPagerFragment.CARD_LESSON) != 0 ? entry.lesson : entry.clazz);
             header.setText(entry.type + (entry.teacher.isEmpty() ? "" : " [" + entry.teacher + "]"));
-            TextView tv = detail;
-            tv.setText(entry.comment + (entry.room.isEmpty() ? "" : (entry.comment.isEmpty() ? "" : "\n") + SIAApp.SIA_APP.getString(R.string.room) + " " + entry.room));
-            if(tv.getText().toString().trim().isEmpty())
-                tv.setVisibility(View.GONE);
+            String detailText = (entry.comment + (entry.room.isEmpty() ? "" : (entry.comment.isEmpty() ? "" : "\n") + SIAApp.SIA_APP.getString(R.string.room) + " " + entry.room)).trim();
+            if(detailText.isEmpty()) {
+                detail.setVisibility(View.GONE);
+            } else {
+                detail.setText(detailText);
+                detail.setVisibility(View.VISIBLE);
+            }
 
             String subText = ((type & (SubstPagerFragment.CARD_LESSON | SubstPagerFragment.CARD_CLASS)) == (SubstPagerFragment.CARD_LESSON | SubstPagerFragment.CARD_CLASS) ? entry.clazz + " " : "") + entry.subject;
 
